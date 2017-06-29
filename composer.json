@@ -1,0 +1,25 @@
+{
+  "name": "darrynten/sage-one-php",
+  "description": "PHP Client for the Sage One API",
+  "type": "library",
+  "require": {
+    "php": "^7.0",
+    "guzzlehttp/guzzle": "^6.2.1",
+    "darrynten/any-cache": "^1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~5.0",
+    "mockery/mockery": "dev-master",
+    "internations/http-mock": "^0.8.1"
+  },
+  "config": {
+    "bin-dir": "bin"
+  },
+  "autoload": {
+    "psr-4": {
+      "DarrynTen\\SageOne\\": "src/",
+      "DarrynTen\\SageOne\\Tests\\": "tests/"
+    },
+    "exclude-from-classmap": ["/Tests/"]
+  }
+}

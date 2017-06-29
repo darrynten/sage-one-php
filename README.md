@@ -1,0 +1,271 @@
+# sage-one-php
+
+![Travis Build Status](https://travis-ci.org/darrynten/sage-one-php.svg?branch=master)
+![StyleCI Status](https://styleci.io/repos/x/shield?branch=master)
+[![codecov](https://codecov.io/gh/darrynten/sage-one-php/branch/master/graph/badge.svg)](https://codecov.io/gh/darrynten/sage-one-php)
+![Packagist Version](https://img.shields.io/packagist/v/darrynten/sage-one-php.svg)
+![MIT License](https://img.shields.io/github/license/darrynten/sage-one-php.svg)
+
+[SageOne API](https://accounting.sageone.co.za/api/1.1.2/Help) client for PHP
+
+This is a 100% fully unit tested and (mostly) fully featured unofficial PHP
+client for SageOne
+
+> "Simple Online Accounting & Payroll software"
+
+```bash
+composer require darrynten/sage-one-php
+```
+
+PHP 7.0+
+
+## Basic use
+
+# TODO
+
+### Definitions
+
+# TODO
+
+## Features
+
+This is the basic outline of the project and is a work in progress.
+
+Checkboxes have been placed at each section, please check them off
+in this readme when submitting a pull request for the features you
+have covered.
+
+### Application base
+
+* Guzzle is used for the communications
+* The library has 100% test coverage
+* The library supports framework-agnostic caching so you don't have to
+worry about which framework your package that uses this package is going
+to end up in.
+
+The client is not 100% complete and is a work in progress, details below.
+
+### Authentication
+
+This API uses basic webforms authentication. To authenticate a user prior to calling a method, you will need to add a standard HTTP authorization header to the request.
+
+This will require the username and password, separated by a colon(:) and Base64 encoded.
+
+Here is an example:
+
+Username: demo@pastelmybusiness.co.za
+Password: Password123
+
+Results in
+
+Authorization header: Basic ZGVtb0BwYXN0ZWxteW1vbmV5LmNvLnphOlBhc3N3b3JkMTIz
+
+You would need to initialise the client with your username and password.
+
+```php
+$this->sage = new SageOne('username', 'password');
+```
+
+## Documentation
+
+There are over 100 API endpoints.
+
+This will eventually fully mimic the documentation available on the site.
+https://accounting.sageone.co.za/api/1.1.2
+
+Each section must have a short explaination and some example code like on
+the API docs page.
+
+Checked off bits are complete.
+
+- [ ] Account
+- [ ] Accountant Event
+- [ ] Accountant Note
+- [ ] Accountant Task
+- [ ] Accountant Task Recurrence
+- [ ] Account Balance
+- [ ] Account Category
+- [ ] Account Note
+- [ ] Account Note Attachment
+- [ ] Account Opening Balance
+- [ ] Account Payment
+- [ ] Account Receipt
+- [ ] Additional Item Price
+- [ ] Additional Price List
+- [ ] Allocation
+- [ ] Analysis Category
+- [ ] Analysis Type
+- [ ] Asset
+- [ ] Asset Category
+- [ ] Asset Location
+- [ ] Asset Note
+- [ ] Attachment
+- [ ] Bank Account
+- [ ] Bank Account Category
+- [ ] Bank Account Note
+- [ ] Bank Account Note Attachment
+- [ ] Bank Account Opening Balance
+- [ ] Bank Account Transaction Listing
+- [ ] Bank Import Mapping
+- [ ] Bank Statement Transaction
+- [ ] Bank Transaction
+- [ ] Bank Transaction Attachment
+- [ ] BAS Report
+- [ ] Budget
+- [ ] Cash Movement
+- [ ] Company
+- [ ] Company Entity Type
+- [ ] Company Note
+- [ ] Core Events
+- [ ] Core Tokens
+- [ ] CRM Activity
+- [ ] CRM Activity Category
+- [ ] Currency
+- [ ] Customer
+- [ ] Customer Additional Contact Detail
+- [ ] Customer Adjustment
+- [ ] Customer Ageing
+- [ ] Customer Category
+- [ ] Customer Note
+- [ ] Customer Note Attachment
+- [ ] Customer Opening Balance
+- [ ] Customer Receipt
+- [ ] Customer Return
+- [ ] Customer Return Attachment
+- [ ] Customer Sales History
+- [ ] Customer Statement
+- [ ] Customer Transaction Listing
+- [ ] Customer Write Off
+- [ ] Customer Zone
+- [ ] Date Format
+- [ ] Detailed Ledger Transaction
+- [ ] Developer Data
+- [ ] Document File Attachment
+- [ ] Document Header Note
+- [ ] Document History
+- [ ] Document Message
+- [ ] Document User Defined Fields
+- [ ] Email Signature Template
+- [ ] Email Template Place Holder
+- [ ] Exchange Rates
+- [ ] Final Accounts
+- [ ] Financial Year
+- [ ] Income Vs Expense
+- [ ] Item
+- [ ] Item Adjustment
+- [ ] Item Attachment
+- [ ] Item Category
+- [ ] Item Movement
+- [ ] Item Note
+- [ ] Item Note Attachment
+- [ ] Item Opening Balance
+- [ ] Item Report Group
+- [ ] Journal Entry
+- [ ] Localization
+- [ ] Login
+- [ ] Outstanding Customer Document
+- [ ] Outstanding Supplier Document
+- [ ] Price Listing Report
+- [ ] Process Bank And Credit Card Mapping
+- [ ] Purchase Order
+- [ ] Purchase Order Attachment
+- [ ] Purchases By Item
+- [ ] Quote
+- [ ] Quote Attachment
+- [ ] Recurring Invoice
+- [ ] Reporting Group
+- [ ] Sales By Item
+- [ ] Sales By Sales Representative
+- [ ] Sales Representative
+- [ ] Sales Representative Note
+- [ ] Schedule Frequency
+- [ ] Secretarial Company Role
+- [ ] Secretarial Share Class
+- [ ] Secretarial Shareholder
+- [ ] Secretarial Stake Holder
+- [ ] Supplier
+- [ ] Supplier Additional Contact Detail
+- [ ] Supplier Adjustment
+- [ ] Supplier Ageing
+- [ ] Supplier Bank Detail
+- [ ] Supplier Category
+- [ ] Supplier Invoice
+- [ ] Supplier Invoice Attachment
+- [ ] Supplier Note
+- [ ] Supplier Note Attachment
+- [ ] Supplier Opening Balance
+- [ ] Supplier Payment
+- [ ] Supplier Purchase History
+- [ ] Supplier Return
+- [ ] Supplier Return Attachment
+- [ ] Supplier Statement
+- [ ] Supplier Transaction Listing
+- [ ] Support Login Audit
+- [ ] Take On Balance
+- [ ] Tax Invoice
+- [ ] Tax Invoice Attachment
+- [ ] Tax Period
+- [ ] Tax Type
+- [ ] Time Tracking Customer
+- [ ] Time Tracking Expense
+- [ ] Time Tracking Project
+- [ ] Time Tracking Task
+- [ ] Time Tracking Timesheet
+- [ ] Time Tracking User
+- [ ] To Do List
+- [ ] Top Customers By Outstanding Balance
+- [ ] Top Customers By Sales
+- [ ] Top Purchased Items
+- [ ] Top Selling Items
+- [ ] Top Selling Items By Value On Hand
+- [ ] Top Suppliers By Outstanding Balance
+- [ ] Top Suppliers By Purchases
+- [ ] Trial Balance
+- [ ] Trial Balance Export Mapping
+- [ ] User Defined Field
+- [ ] VAT201 Report
+
+# Roadmap
+
+- [ ] Base
+- [ ] 
+
+## Caching
+
+### Request Limits
+
+All Sage One companies have a request limit of 5000 API requests per day. A maximum of 100 results will be returned for list methods, regardless of the parameter sent through.
+
+[Details](https://www.sageone.co.za/request-limit-faq/)
+
+Because of this some of them can
+benefit from being cached. All caching should be off by default and only
+used if explicity set.
+
+### Details
+
+These run through the `darrynten/any-cache` package, and no extra config
+is needed. Please ensure that any features that include caching have it
+be optional and initially set to `false` to avoid unexpected behaviour.
+
+### Rate Limiting and Queueing
+
+# TODO
+
+## Contributing and Testing
+
+There is currently 100% test coverage in the project, please ensure that
+when contributing you update the tests. For more info see CONTRIBUTING.md
+
+We would love help getting decent documentation going, please get in touch
+if you have any ideas.
+
+## Additional Documentation
+
+* [SageOne Developer Zone](https://www.sageone.co.za/developer-zone/)
+* [SageOne API Overview](https://www.sageone.co.za/api-overview/)
+* [SageOne API Samples](https://www.sageone.co.za/api-samples/)
+
+## Acknowledgements
+
+* [Dmitry Semenov](https://github.com/mxnr)
