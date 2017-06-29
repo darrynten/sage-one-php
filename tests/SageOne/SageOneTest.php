@@ -78,6 +78,7 @@ class SageOneTest extends \PHPUnit_Framework_TestCase
     {
         $this->expectException(ApiException::class);
         $request = new SageOne([]);
+        $this->assertEquals($request->config->version, '1.1.2');
     }
 
     public function testMissingPassword()
@@ -86,6 +87,7 @@ class SageOneTest extends \PHPUnit_Framework_TestCase
         $request = new SageOne([
             'username' => 'username'
         ]);
+        $this->assertEquals($request->config->version, '1.1.2');
     }
 
     public function testMissingKey()
@@ -95,6 +97,7 @@ class SageOneTest extends \PHPUnit_Framework_TestCase
             'username' => 'username',
             'password' => 'password'
         ]);
+        $this->assertEquals($request->config->version, '1.1.2');
     }
 
     public function testRequestGetterResult()

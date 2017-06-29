@@ -37,9 +37,9 @@ class RequestHandler
     /**
      * The SageOne url
      *
-     * @var string $url
+     * @var string $endpoint
      */
-    private $url = '//accounting.sageone.co.za';
+    private $endpoint = '//accounting.sageone.co.za';
 
     /**
      * The version of the SageOne API
@@ -122,7 +122,7 @@ class RequestHandler
                 foreach ($parameters as $key => $value) {
                     $options['query'][$key] = $value;
                 }
-            } else {
+            } else if ($method === 'POST' || $method === 'PUT' || $method === 'DELETE') {
                 // Otherwise send JSON in the body
                 $options['json'] = (object)$parameters;
             }
