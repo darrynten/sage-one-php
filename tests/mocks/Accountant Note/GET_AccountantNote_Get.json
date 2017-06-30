@@ -1,0 +1,48 @@
+{
+  "TotalResults": 1,
+  "ReturnedResults": 2,
+  "Results": [
+    {
+      "ID": 1,
+      "Subject": "sample string 2",
+      "EntryDate": "2017-06-30",
+      "ActionDate": "2017-06-30",
+      "Status": 1,
+      "Note": "sample string 3",
+      "HasAttachments": true,
+      "UserId": 4,
+      "CompanyId": 5,
+      "CompanyName": "sample string 6",
+      "ToAccountant": "sample string 7",
+      "StatusText": "Due Today",
+      "CreatedByUserId": 1,
+      "CreatedBy": "sample string 8",
+      "LastModified": "sample string 9",
+      "CategoryId": 1,
+      "Category": "Meeting",
+      "DocumentHeaderId": 1,
+      "IsOwner": true
+    },
+    {
+      "ID": 1,
+      "Subject": "sample string 2",
+      "EntryDate": "2017-06-30",
+      "ActionDate": "2017-06-30",
+      "Status": 1,
+      "Note": "sample string 3",
+      "HasAttachments": true,
+      "UserId": 4,
+      "CompanyId": 5,
+      "CompanyName": "sample string 6",
+      "ToAccountant": "sample string 7",
+      "StatusText": "Due Today",
+      "CreatedByUserId": 1,
+      "CreatedBy": "sample string 8",
+      "LastModified": "sample string 9",
+      "CategoryId": 1,
+      "Category": "Meeting",
+      "DocumentHeaderId": 1,
+      "IsOwner": true
+    }
+  ]
+}

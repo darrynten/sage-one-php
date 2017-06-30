@@ -1,0 +1,8 @@
+{
+  "CompanyId": 1,
+  "UserId": 1,
+  "FromDate": "2017-06-30",
+  "ToDate": "2017-06-30",
+  "ImpersonateUserId": 1,
+  "ActiveConsoleCompanies": true
+}
