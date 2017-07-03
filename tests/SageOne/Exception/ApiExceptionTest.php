@@ -49,9 +49,20 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(10, sizeof(ExceptionMessages::$strings));
     }
 
+    public function testBadVerbException()
+    {
+        $this->expectException(ApiException::class);
+        $this->expectExceptionCode(405);
+
+        $request = new RequestHandler($this->config);
+        $request->request('XXX', 'Fail', 'Fail', ['foo' => 'bar']);
+    }
+
     public function testApiException()
     {
         $this->expectException(ApiException::class);
+        $this->expectExceptionCode(404);
+
         $request = new RequestHandler($this->config);
         $request->request('GET', 'Fail', 'Fail', ['foo' => 'bar']);
     }
@@ -59,6 +70,8 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
     public function testApiPostException()
     {
         $this->expectException(ApiException::class);
+        $this->expectExceptionCode(404);
+
         $request = new RequestHandler($this->config);
         $request->request('POST', 'Fail', 'Fail', ['foo' => 'bar']);
     }
@@ -66,6 +79,8 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
     public function testApiPutException()
     {
         $this->expectException(ApiException::class);
+        $this->expectExceptionCode(404);
+
         $request = new RequestHandler($this->config);
         $request->request('PUT', 'Fail', 'Fail', ['foo' => 'bar']);
     }
@@ -73,6 +88,8 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
     public function testApiDeleteException()
     {
         $this->expectException(ApiException::class);
+        $this->expectExceptionCode(404);
+
         $request = new RequestHandler($this->config);
         $request->request('DELETE', 'Fail', 'Fail', ['foo' => 'bar']);
     }
@@ -80,18 +97,21 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
     public function testApiJsonException()
     {
         $this->expectException(ApiException::class);
+        $this->expectExceptionCode('419');
+        $this->expectExceptionMessage('419: I\'m a teapot - Teapot - errors: {"code":419}');
 
         throw new ApiException(
             json_encode(
                 [
                     'errors' => [
-                        'code' => 1,
+                        'code' => 419,
                     ],
-                    'status' => '404',
-                    'title' => 'Not Found',
-                    'detail' => 'Detail'
+                    'status' => '419',
+                    'title' => 'I\'m a teapot',
+                    'detail' => 'Teapot'
                 ]
-            )
+            ),
+            419
         );
     }
 
@@ -117,7 +137,7 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
         $localClient = new Client();
 
         try {
-            $localResult = $localClient->request(
+            $localClient->request(
                 'GET',
                 'http://localhost:8082/1.1.2/Fail/400?apikey=key',
                 []
@@ -183,7 +203,7 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
         $localClient = new Client();
 
         try {
-            $localResult = $localClient->request(
+            $localClient->request(
                 'GET',
                 'http://localhost:8082/1.1.2/Fail/401?apikey=key',
                 []
@@ -249,7 +269,7 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
         $localClient = new Client();
 
         try {
-            $localResult = $localClient->request(
+            $localClient->request(
                 'GET',
                 'http://localhost:8082/1.1.2/Fail/402?apikey=key',
                 []
@@ -314,7 +334,7 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
         $localClient = new Client();
 
         try {
-            $localResult = $localClient->request(
+            $localClient->request(
                 'GET',
                 'http://localhost:8082/1.1.2/Fail/404?apikey=key',
                 []
@@ -380,7 +400,7 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
         $localClient = new Client();
 
         try {
-            $localResult = $localClient->request(
+            $localClient->request(
                 'GET',
                 'http://localhost:8082/1.1.2/Fail/405?apikey=key',
                 []
@@ -446,7 +466,7 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
         $localClient = new Client();
 
         try {
-            $localResult = $localClient->request(
+            $localClient->request(
                 'GET',
                 'http://localhost:8082/1.1.2/Fail/409?apikey=key',
                 []
@@ -511,7 +531,7 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
         $localClient = new Client();
 
         try {
-            $localResult = $localClient->request(
+            $localClient->request(
                 'GET',
                 'http://localhost:8082/1.1.2/Fail/415?apikey=key',
                 []
@@ -576,7 +596,7 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
         $localClient = new Client();
 
         try {
-            $localResult = $localClient->request(
+            $localClient->request(
                 'GET',
                 'http://localhost:8082/1.1.2/Fail/429?apikey=key',
                 []
@@ -642,7 +662,7 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
         $localClient = new Client();
 
         try {
-            $localResult = $localClient->request(
+            $localClient->request(
                 'GET',
                 'http://localhost:8082/1.1.2/Fail/500?apikey=key',
                 []

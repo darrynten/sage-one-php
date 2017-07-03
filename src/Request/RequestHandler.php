@@ -87,6 +87,18 @@ class RequestHandler
     private $tokenType;
 
     /**
+     * Valid HTTP Verbs for this API
+     *
+     * @var array $verbs
+     */
+    private $verbs = [
+        'GET',
+        'POST',
+        'PUT',
+        'DELETE'
+    ];
+
+    /**
      * Request handler constructor
      *
      * @param array $config The connection config
@@ -118,7 +130,10 @@ class RequestHandler
      */
     public function handleRequest(string $method, string $uri, array $options, array $parameters = [])
     {
-        // Are we going a GET or a POST/PUT/DELETE?
+        if (!in_array($method, $this->verbs)) {
+            throw new ApiException('405 Bad HTTP Verb', 405);
+        }
+
         if (!empty($parameters)) {
             if ($method === 'GET') {
                 // Send as get params
@@ -128,8 +143,6 @@ class RequestHandler
             } elseif ($method === 'POST' || $method === 'PUT' || $method === 'DELETE') {
                 // Otherwise send JSON in the body
                 $options['json'] = (object)$parameters;
-            } else {
-                throw new ApiException('405 Bad HTTP Verb', 405);
             }
         }
 
