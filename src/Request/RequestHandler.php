@@ -125,9 +125,11 @@ class RequestHandler
                 foreach ($parameters as $key => $value) {
                     $options['query'][$key] = $value;
                 }
-            } else if ($method === 'POST' || $method === 'PUT' || $method === 'DELETE') {
+            } elseif ($method === 'POST' || $method === 'PUT' || $method === 'DELETE') {
                 // Otherwise send JSON in the body
                 $options['json'] = (object)$parameters;
+            } else {
+                throw new ApiException('405 Bad HTTP Verb', 405);
             }
         }
 

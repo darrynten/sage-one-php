@@ -148,11 +148,14 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
         $reflectedClient->setAccessible(true);
         $reflectedClient->setValue($request, $mockClient);
 
-        $expectedExceptionMessage = '400: A malformed request was sent through or when a validation rule failed. Validation messages are returned in the response body. - Client error: `GET http://localhost:8082/1.1.2/Fail/400?apikey=key` resulted in a `400 Bad Request` response:
-{}';
+        $expected = '400: A malformed request was sent through or when a '
+                  . 'validation rule failed. Validation messages are returned '
+                  . 'in the response body. - Client error: '
+                  . '`GET http://localhost:8082/1.1.2/Fail/400?apikey=key` '
+                  . "resulted in a `400 Bad Request` response:\n{}";
 
         $this->expectException(ApiException::class);
-        $this->expectExceptionMessage($expectedExceptionMessage);
+        $this->expectExceptionMessage($expected);
         $this->expectExceptionCode(400);
 
         $request->request('GET', 'Fail', '400');
@@ -211,10 +214,14 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
         $reflectedClient->setAccessible(true);
         $reflectedClient->setValue($request, $mockClient);
 
-        $expectedExceptionMessage = '401: The user is not correctly authenticated and the call requires authentication. The user does not have access rights for this method. - Client error: `GET http://localhost:8082/1.1.2/Fail/401?apikey=key` resulted in a `401 Unauthorized` response';
+        $expected = '401: The user is not correctly authenticated and the call '
+                  . 'requires authentication. The user does not have access '
+                  . 'rights for this method. - Client error: '
+                  . '`GET http://localhost:8082/1.1.2/Fail/401?apikey=key` '
+                  . 'resulted in a `401 Unauthorized` response';
 
         $this->expectException(ApiException::class);
-        $this->expectExceptionMessage($expectedExceptionMessage);
+        $this->expectExceptionMessage($expected);
         $this->expectExceptionCode(401);
 
         $request->request('GET', 'Fail', '401');
@@ -273,10 +280,13 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
         $reflectedClient->setAccessible(true);
         $reflectedClient->setValue($request, $mockClient);
 
-        $expectedExceptionMessage = '402: The registration has expired and payment is required. - Client error: `GET http://localhost:8082/1.1.2/Fail/402?apikey=key` resulted in a `402 Payment Required` response';
+        $expected = '402: The registration has expired and payment is required. '
+                  . '- Client error: '
+                  . '`GET http://localhost:8082/1.1.2/Fail/402?apikey=key` '
+                  . 'resulted in a `402 Payment Required` response';
 
         $this->expectException(ApiException::class);
-        $this->expectExceptionMessage($expectedExceptionMessage);
+        $this->expectExceptionMessage($expected);
         $this->expectExceptionCode(402);
 
         $request->request('GET', 'Fail', '402');
@@ -335,10 +345,14 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
         $reflectedClient->setAccessible(true);
         $reflectedClient->setValue($request, $mockClient);
 
-        $expectedExceptionMessage = '404: The requested entity was not found. Entities are bound to companies. Ensure the entity belongs to the company. - Client error: `GET http://localhost:8082/1.1.2/Fail/404?apikey=key` resulted in a `404 Not Found` response';
+        $expected = '404: The requested entity was not found. Entities are '
+                  . 'bound to companies. Ensure the entity belongs to the '
+                  . 'company. - Client error: '
+                  . '`GET http://localhost:8082/1.1.2/Fail/404?apikey=key` '
+                  . 'resulted in a `404 Not Found` response';
 
         $this->expectException(ApiException::class);
-        $this->expectExceptionMessage($expectedExceptionMessage);
+        $this->expectExceptionMessage($expected);
         $this->expectExceptionCode(404);
 
         $request->request('GET', 'Fail', '404');
@@ -397,10 +411,14 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
         $reflectedClient->setAccessible(true);
         $reflectedClient->setValue($request, $mockClient);
 
-        $expectedExceptionMessage = '405: HTTP Verb is not specified or incorrect verb is used. Or The user does not have access to the specified method. This applies to invited users. - Client error: `GET http://localhost:8082/1.1.2/Fail/405?apikey=key` resulted in a `405 Method Not Allowed` response';
+        $expected = '405: HTTP Verb is not specified or incorrect verb is used. '
+                  . 'Or The user does not have access to the specified method. '
+                  . 'This applies to invited users. - Client error: '
+                  . '`GET http://localhost:8082/1.1.2/Fail/405?apikey=key` '
+                  . 'resulted in a `405 Method Not Allowed` response';
 
         $this->expectException(ApiException::class);
-        $this->expectExceptionMessage($expectedExceptionMessage);
+        $this->expectExceptionMessage($expected);
         $this->expectExceptionCode(405);
 
         $request->request('GET', 'Fail', '405');
@@ -459,10 +477,13 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
         $reflectedClient->setAccessible(true);
         $reflectedClient->setValue($request, $mockClient);
 
-        $expectedExceptionMessage = '409: Attempting to delete an item that is currently in use. - Client error: `GET http://localhost:8082/1.1.2/Fail/409?apikey=key` resulted in a `409 Conflict` response';
+        $expected = '409: Attempting to delete an item that is currently in use. '
+                  . '- Client error: '
+                  . '`GET http://localhost:8082/1.1.2/Fail/409?apikey=key` '
+                  . 'resulted in a `409 Conflict` response';
 
         $this->expectException(ApiException::class);
-        $this->expectExceptionMessage($expectedExceptionMessage);
+        $this->expectExceptionMessage($expected);
         $this->expectExceptionCode(409);
 
         $request->request('GET', 'Fail', '409');
@@ -521,10 +542,13 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
         $reflectedClient->setAccessible(true);
         $reflectedClient->setValue($request, $mockClient);
 
-        $expectedExceptionMessage = '415: A valid Content-Type header such as application/json is required on all requests. - Client error: `GET http://localhost:8082/1.1.2/Fail/415?apikey=key` resulted in a `415 Unsupported Media Type` response';
+        $expected = '415: A valid Content-Type header such as application/json '
+                  . 'is required on all requests. - Client error: '
+                  . '`GET http://localhost:8082/1.1.2/Fail/415?apikey=key` '
+                  . 'resulted in a `415 Unsupported Media Type` response';
 
         $this->expectException(ApiException::class);
-        $this->expectExceptionMessage($expectedExceptionMessage);
+        $this->expectExceptionMessage($expected);
         $this->expectExceptionCode(415);
 
         $request->request('GET', 'Fail', '415');
@@ -583,10 +607,14 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
         $reflectedClient->setAccessible(true);
         $reflectedClient->setValue($request, $mockClient);
 
-        $expectedExceptionMessage = '429: The limit of 100 requests per minute per company is exceeded or more there are more than 20 failed login attempts. - Client error: `GET http://localhost:8082/1.1.2/Fail/429?apikey=key` resulted in a `429 Too Many Requests` response';
+        $expected = '429: The limit of 100 requests per minute per company is '
+                  . 'exceeded or more there are more than 20 failed login '
+                  . 'attempts. - Client error: '
+                  . '`GET http://localhost:8082/1.1.2/Fail/429?apikey=key` '
+                  . 'resulted in a `429 Too Many Requests` response';
 
         $this->expectException(ApiException::class);
-        $this->expectExceptionMessage($expectedExceptionMessage);
+        $this->expectExceptionMessage($expected);
         $this->expectExceptionCode(429);
 
         $request->request('GET', 'Fail', '429');
@@ -645,10 +673,12 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
         $reflectedClient->setAccessible(true);
         $reflectedClient->setValue($request, $mockClient);
 
-        $expectedExceptionMessage = '500: Internal server error - Server error: `GET http://localhost:8082/1.1.2/Fail/500?apikey=key` resulted in a `500 Internal Server Error` response';
+        $expected = '500: Internal server error - Server error: '
+                  . '`GET http://localhost:8082/1.1.2/Fail/500?apikey=key` '
+                  . 'resulted in a `500 Internal Server Error` response';
 
         $this->expectException(ApiException::class);
-        $this->expectExceptionMessage($expectedExceptionMessage);
+        $this->expectExceptionMessage($expected);
         $this->expectExceptionCode(500);
 
         $request->request('GET', 'Fail', '500');
