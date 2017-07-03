@@ -1,0 +1,20 @@
+{
+  "TotalResults": 1,
+  "ReturnedResults": 2,
+  "Results": [
+    {
+      "CompanyId": 1,
+      "TotalTasks": 2,
+      "TotalNotes": 3,
+      "EventDate": "2017-06-30",
+      "ID": 5
+    },
+    {
+      "CompanyId": 1,
+      "TotalTasks": 2,
+      "TotalNotes": 3,
+      "EventDate": "2017-06-30",
+      "ID": 5
+    }
+  ]
+}

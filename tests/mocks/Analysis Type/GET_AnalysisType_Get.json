@@ -1,0 +1,40 @@
+{
+  "TotalResults": 1,
+  "ReturnedResults": 2,
+  "Results": [
+    {
+      "ID": 1,
+      "Description": "sample string 2",
+      "AnalysisCategories": [
+        {
+          "ID": 1,
+          "AnalysisTypeId": 2,
+          "Description": "sample string 3"
+        },
+        {
+          "ID": 1,
+          "AnalysisTypeId": 2,
+          "Description": "sample string 3"
+        }
+      ],
+      "Active": true
+    },
+    {
+      "ID": 1,
+      "Description": "sample string 2",
+      "AnalysisCategories": [
+        {
+          "ID": 1,
+          "AnalysisTypeId": 2,
+          "Description": "sample string 3"
+        },
+        {
+          "ID": 1,
+          "AnalysisTypeId": 2,
+          "Description": "sample string 3"
+        }
+      ],
+      "Active": true
+    }
+  ]
+}
