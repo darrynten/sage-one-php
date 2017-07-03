@@ -54,6 +54,10 @@ class BaseModel
         if (!$this->features['get']) {
             throw new ModelException('Model does not support the `get` call', 102);
         }
+
+        $result = $this->request->request('GET', $this->endpoint, sprintf('Get/%s', $id));
+
+        return $result;
     }
 
     public function save()
@@ -63,11 +67,15 @@ class BaseModel
         }
     }
 
-    public function delete()
+    public function delete(string $id)
     {
         if (!$this->features['delete']) {
             throw new ModelException('Model does not support the `delete` call', 104);
         }
+
+        $result = $this->request->request('DELETE', $this->endpoint, sprintf('Get/%s', $id));
+
+        return $result;
     }
 
     public function loadFromJson(string $json)
