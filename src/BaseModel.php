@@ -15,6 +15,11 @@ use DarrynTen\SageOne\Request\RequestHandler;
 
 class BaseModel
 {
+    /**
+     * A request object
+     *
+     * TODO this should be refactored out
+     */
     protected $request;
 
     /**
@@ -38,6 +43,17 @@ class BaseModel
         $this->request = new RequestHandler($config);
     }
 
+    /**
+     * Returns 'all' of something
+     *
+     * All methods that retrieve a collection follow the same pattern, and this
+     * method here allows any compatible method to be called with something like:
+     *
+     * $account = new Account;
+     * $allAccounts = $account->all();
+     *
+     * @return object A collection of entities
+     */
     public function all()
     {
         if (!$this->features['all']) {
@@ -49,6 +65,17 @@ class BaseModel
         return $results;
     }
 
+    /**
+     * Returns 'one' of something
+     *
+     * All methods that retrieve a single entity follow the same pattern, and this
+     * method here allows any compatible method to be called with something like:
+     *
+     * $account = new Account;
+     * $singleAccount = $account->get(11);
+     *
+     * @return object A single entity
+     */
     public function get(string $id)
     {
         if (!$this->features['get']) {
@@ -60,22 +87,31 @@ class BaseModel
         return $result;
     }
 
-    public function save()
-    {
-        if (!$this->features['save']) {
-            throw new ModelException('Model does not support the `save` call', 103);
-        }
-    }
-
+    /**
+     * Delete an entity
+     *
+     * All methods that retrieve a single entity follow the same pattern, and this
+     * method here allows any compatible method to be called with something like:
+     *
+     * $account = new Account;
+     * $account->delete(11);
+     *
+     * @return void
+     */
     public function delete(string $id)
     {
         if (!$this->features['delete']) {
             throw new ModelException('Model does not support the `delete` call', 104);
         }
 
-        $result = $this->request->request('DELETE', $this->endpoint, sprintf('Get/%s', $id));
+        $result = $this->request->request('DELETE', $this->endpoint, sprintf('Delete/%s', $id));
+    }
 
-        return $result;
+    public function save()
+    {
+        if (!$this->features['save']) {
+            throw new ModelException('Model does not support the `save` call', 103);
+        }
     }
 
     public function loadFromJson(string $json)
