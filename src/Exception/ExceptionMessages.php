@@ -2,6 +2,11 @@
 
 namespace DarrynTen\SageOne\Exception;
 
+/**
+ * Exception message strings for the ApiException object that gets throws.
+ *
+ * Maps to the SageOne docs.
+ */
 class ExceptionMessages
 {
     public static $strings = [

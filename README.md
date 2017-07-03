@@ -78,23 +78,53 @@ the API docs page.
 
 Checked off bits are complete.
 
+# NB initial delivery consists of only these calls:
+
+- [x] Base
+- [x] Exception Handling
 - [ ] Account
+  - [ ] Account Balance
+  - [ ] Account Category
+  - [ ] Account Note
+  - [ ] Account Note Attachment
+  - [ ] Account Opening Balance
+  - [ ] Account Payment
+  - [ ] Account Receipt
+- [ ] Analysis Category
+- [ ] Analysis Type
+- [ ] Company
+  - [ ] Company Entity Type
+  - [ ] Company Note
+- [ ] Currency
+- [ ] Exchange Rates
+- [ ] Supplier
+  - [ ] Supplier Additional Contact Detail
+  - [ ] Supplier Adjustment
+  - [ ] Supplier Ageing
+  - [ ] Supplier Bank Detail
+  - [ ] Supplier Category
+  - [ ] Supplier Invoice
+  - [ ] Supplier Invoice Attachment
+  - [ ] Supplier Note
+  - [ ] Supplier Note Attachment
+  - [ ] Supplier Opening Balance
+  - [ ] Supplier Payment
+  - [ ] Supplier Purchase History
+  - [ ] Supplier Return
+  - [ ] Supplier Return Attachment
+  - [ ] Supplier Statement
+  - [ ] Supplier Transaction Listing
+- [ ] Tax Type
+
+### Future Planned Roadmap
+
 - [ ] Accountant Event
 - [ ] Accountant Note
 - [ ] Accountant Task
 - [ ] Accountant Task Recurrence
-- [ ] Account Balance
-- [ ] Account Category
-- [ ] Account Note
-- [ ] Account Note Attachment
-- [ ] Account Opening Balance
-- [ ] Account Payment
-- [ ] Account Receipt
 - [ ] Additional Item Price
 - [ ] Additional Price List
 - [ ] Allocation
-- [ ] Analysis Category
-- [ ] Analysis Type
 - [ ] Asset
 - [ ] Asset Category
 - [ ] Asset Location
@@ -113,9 +143,6 @@ Checked off bits are complete.
 - [ ] BAS Report
 - [ ] Budget
 - [ ] Cash Movement
-- [ ] Company
-- [ ] Company Entity Type
-- [ ] Company Note
 - [ ] Core Events
 - [ ] Core Tokens
 - [ ] CRM Activity
@@ -147,7 +174,6 @@ Checked off bits are complete.
 - [ ] Document User Defined Fields
 - [ ] Email Signature Template
 - [ ] Email Template Place Holder
-- [ ] Exchange Rates
 - [ ] Final Accounts
 - [ ] Financial Year
 - [ ] Income Vs Expense
@@ -183,29 +209,11 @@ Checked off bits are complete.
 - [ ] Secretarial Share Class
 - [ ] Secretarial Shareholder
 - [ ] Secretarial Stake Holder
-- [ ] Supplier
-- [ ] Supplier Additional Contact Detail
-- [ ] Supplier Adjustment
-- [ ] Supplier Ageing
-- [ ] Supplier Bank Detail
-- [ ] Supplier Category
-- [ ] Supplier Invoice
-- [ ] Supplier Invoice Attachment
-- [ ] Supplier Note
-- [ ] Supplier Note Attachment
-- [ ] Supplier Opening Balance
-- [ ] Supplier Payment
-- [ ] Supplier Purchase History
-- [ ] Supplier Return
-- [ ] Supplier Return Attachment
-- [ ] Supplier Statement
-- [ ] Supplier Transaction Listing
 - [ ] Support Login Audit
 - [ ] Take On Balance
 - [ ] Tax Invoice
 - [ ] Tax Invoice Attachment
 - [ ] Tax Period
-- [ ] Tax Type
 - [ ] Time Tracking Customer
 - [ ] Time Tracking Expense
 - [ ] Time Tracking Project
@@ -225,10 +233,6 @@ Checked off bits are complete.
 - [ ] User Defined Field
 - [ ] VAT201 Report
 
-# Roadmap
-
-- [ ] Base
-- [ ] 
 
 ## Caching
 
@@ -269,3 +273,4 @@ if you have any ideas.
 ## Acknowledgements
 
 * [Dmitry Semenov](https://github.com/mxnr)
+* [Karolin Gaedeke](https://github.com/KaroZA)
