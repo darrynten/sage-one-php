@@ -2,11 +2,19 @@
 
 namespace DarrynTen\SageOne\Tests\SageOne;
 
+use InterNations\Component\HttpMock\PHPUnit\HttpMockTrait;
+use GuzzleHttp\Client;
+use ReflectionClass;
 use DarrynTen\SageOne\Request\RequestHandler;
 use DarrynTen\SageOne\Exception\ApiException;
+use DarrynTen\SageOne\Exception\ExceptionMessages;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
 
 class ApiExceptionTest extends \PHPUnit_Framework_TestCase
 {
+    use HttpMockTrait;
+
     private $config = [
         'username' => 'username',
         'password' => 'password',
@@ -15,6 +23,31 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
         'version' => '1.1.2',
         'clientId' => null
     ];
+
+    public static function setUpBeforeClass()
+    {
+        static::setUpHttpMockBeforeClass('8082', 'localhost');
+    }
+
+    public static function tearDownAfterClass()
+    {
+        static::tearDownHttpMockAfterClass();
+    }
+
+    public function setUp()
+    {
+        $this->setUpHttpMock();
+    }
+
+    public function tearDown()
+    {
+        $this->tearDownHttpMock();
+    }
+
+    public function testApiExceptionMessages()
+    {
+        $this->assertEquals(10, sizeof(ExceptionMessages::$strings));
+    }
 
     public function testApiException()
     {
@@ -61,6 +94,567 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
             )
         );
     }
+
+    public function testApi400()
+    {
+        $this->http->mock
+            ->when()
+                ->methodIs('GET')
+                ->pathIs('/1.1.2/Fail/400?apikey=key')
+            ->then()
+                ->statusCode(400)
+                // TODO actual error responses
+                ->body('{}')
+            ->end();
+        $this->http->setUp();
+
+        $request = new RequestHandler($this->config);
+
+        /**
+         * We make a local client to connect to our mock and get the
+         * expected result
+         */
+        $localClient = new Client();
+
+        try {
+            $localResult = $localClient->request(
+                'GET',
+                'http://localhost:8082/1.1.2/Fail/400?apikey=key',
+                []
+            );
+        } catch (ClientException $exception) {
+        }
+
+        /**
+         * We then make a mock client, and tell the mock client that it
+         * should return what the local client got from the mock
+         */
+        $mockClient = \Mockery::mock(
+            'Client'
+        );
+
+        $mockClient->shouldReceive('request')
+            ->once()
+            ->andThrow($exception);
+
+        /**
+         * Insert the mocked client into the request class via reflection
+         *
+         * This will pass the desired mock object back to the assertion
+         * as it replaces the legit Client() object
+         */
+        $reflection = new ReflectionClass($request);
+        $reflectedClient = $reflection->getProperty('client');
+        $reflectedClient->setAccessible(true);
+        $reflectedClient->setValue($request, $mockClient);
+
+        $expectedExceptionMessage = '400: A malformed request was sent through or when a validation rule failed. Validation messages are returned in the response body. - Client error: `GET http://localhost:8082/1.1.2/Fail/400?apikey=key` resulted in a `400 Bad Request` response:
+{}';
+
+        $this->expectException(ApiException::class);
+        $this->expectExceptionMessage($expectedExceptionMessage);
+        $this->expectExceptionCode(400);
+
+        $request->request('GET', 'Fail', '400');
+    }
+
+    public function testApi401()
+    {
+        $this->http->mock
+            ->when()
+                ->methodIs('GET')
+                ->pathIs('/1.1.2/Fail/401?apikey=key')
+            ->then()
+                ->statusCode(401)
+                // TODO actual error responses
+                ->body(null)
+            ->end();
+        $this->http->setUp();
+
+        $request = new RequestHandler($this->config);
+
+        /**
+         * We make a local client to connect to our mock and get the
+         * expected result
+         */
+        $localClient = new Client();
+
+        try {
+            $localResult = $localClient->request(
+                'GET',
+                'http://localhost:8082/1.1.2/Fail/401?apikey=key',
+                []
+            );
+        } catch (ClientException $exception) {
+        }
+
+        /**
+         * We then make a mock client, and tell the mock client that it
+         * should return what the local client got from the mock
+         */
+        $mockClient = \Mockery::mock(
+            'Client'
+        );
+
+        $mockClient->shouldReceive('request')
+            ->once()
+            ->andThrow($exception);
+
+        /**
+         * Insert the mocked client into the request class via reflection
+         *
+         * This will pass the desired mock object back to the assertion
+         * as it replaces the legit Client() object
+         */
+        $reflection = new ReflectionClass($request);
+        $reflectedClient = $reflection->getProperty('client');
+        $reflectedClient->setAccessible(true);
+        $reflectedClient->setValue($request, $mockClient);
+
+        $expectedExceptionMessage = '401: The user is not correctly authenticated and the call requires authentication. The user does not have access rights for this method. - Client error: `GET http://localhost:8082/1.1.2/Fail/401?apikey=key` resulted in a `401 Unauthorized` response';
+
+        $this->expectException(ApiException::class);
+        $this->expectExceptionMessage($expectedExceptionMessage);
+        $this->expectExceptionCode(401);
+
+        $request->request('GET', 'Fail', '401');
+    }
+
+    public function testApi402()
+    {
+        $this->http->mock
+            ->when()
+                ->methodIs('GET')
+                ->pathIs('/1.1.2/Fail/402?apikey=key')
+            ->then()
+                ->statusCode(402)
+                // TODO actual error responses
+                ->body(null)
+            ->end();
+        $this->http->setUp();
+
+        $request = new RequestHandler($this->config);
+
+        /**
+         * We make a local client to connect to our mock and get the
+         * expected result
+         */
+        $localClient = new Client();
+
+        try {
+            $localResult = $localClient->request(
+                'GET',
+                'http://localhost:8082/1.1.2/Fail/402?apikey=key',
+                []
+            );
+        } catch (ClientException $exception) {
+        }
+
+        /**
+         * We then make a mock client, and tell the mock client that it
+         * should return what the local client got from the mock
+         */
+        $mockClient = \Mockery::mock(
+            'Client'
+        );
+
+        $mockClient->shouldReceive('request')
+            ->once()
+            ->andThrow($exception);
+
+        /**
+         * Insert the mocked client into the request class via reflection
+         *
+         * This will pass the desired mock object back to the assertion
+         * as it replaces the legit Client() object
+         */
+        $reflection = new ReflectionClass($request);
+        $reflectedClient = $reflection->getProperty('client');
+        $reflectedClient->setAccessible(true);
+        $reflectedClient->setValue($request, $mockClient);
+
+        $expectedExceptionMessage = '402: The registration has expired and payment is required. - Client error: `GET http://localhost:8082/1.1.2/Fail/402?apikey=key` resulted in a `402 Payment Required` response';
+
+        $this->expectException(ApiException::class);
+        $this->expectExceptionMessage($expectedExceptionMessage);
+        $this->expectExceptionCode(402);
+
+        $request->request('GET', 'Fail', '402');
+    }
+
+    public function testApi404()
+    {
+        $this->http->mock
+            ->when()
+                ->methodIs('GET')
+                ->pathIs('/1.1.2/Fail/404?apikey=key')
+            ->then()
+                ->statusCode(404)
+                // TODO actual error responses
+                ->body(null)
+            ->end();
+        $this->http->setUp();
+
+        $request = new RequestHandler($this->config);
+
+        /**
+         * We make a local client to connect to our mock and get the
+         * expected result
+         */
+        $localClient = new Client();
+
+        try {
+            $localResult = $localClient->request(
+                'GET',
+                'http://localhost:8082/1.1.2/Fail/404?apikey=key',
+                []
+            );
+        } catch (ClientException $exception) {
+        }
+
+        /**
+         * We then make a mock client, and tell the mock client that it
+         * should return what the local client got from the mock
+         */
+        $mockClient = \Mockery::mock(
+            'Client'
+        );
+
+        $mockClient->shouldReceive('request')
+            ->once()
+            ->andThrow($exception);
+
+        /**
+         * Insert the mocked client into the request class via reflection
+         *
+         * This will pass the desired mock object back to the assertion
+         * as it replaces the legit Client() object
+         */
+        $reflection = new ReflectionClass($request);
+        $reflectedClient = $reflection->getProperty('client');
+        $reflectedClient->setAccessible(true);
+        $reflectedClient->setValue($request, $mockClient);
+
+        $expectedExceptionMessage = '404: The requested entity was not found. Entities are bound to companies. Ensure the entity belongs to the company. - Client error: `GET http://localhost:8082/1.1.2/Fail/404?apikey=key` resulted in a `404 Not Found` response';
+
+        $this->expectException(ApiException::class);
+        $this->expectExceptionMessage($expectedExceptionMessage);
+        $this->expectExceptionCode(404);
+
+        $request->request('GET', 'Fail', '404');
+    }
+
+    public function testApi405()
+    {
+        $this->http->mock
+            ->when()
+                ->methodIs('GET')
+                ->pathIs('/1.1.2/Fail/405?apikey=key')
+            ->then()
+                ->statusCode(405)
+                // TODO actual error responses
+                ->body(null)
+            ->end();
+        $this->http->setUp();
+
+        $request = new RequestHandler($this->config);
+
+        /**
+         * We make a local client to connect to our mock and get the
+         * expected result
+         */
+        $localClient = new Client();
+
+        try {
+            $localResult = $localClient->request(
+                'GET',
+                'http://localhost:8082/1.1.2/Fail/405?apikey=key',
+                []
+            );
+        } catch (ClientException $exception) {
+        }
+
+        /**
+         * We then make a mock client, and tell the mock client that it
+         * should return what the local client got from the mock
+         */
+        $mockClient = \Mockery::mock(
+            'Client'
+        );
+
+        $mockClient->shouldReceive('request')
+            ->once()
+            ->andThrow($exception);
+
+        /**
+         * Insert the mocked client into the request class via reflection
+         *
+         * This will pass the desired mock object back to the assertion
+         * as it replaces the legit Client() object
+         */
+        $reflection = new ReflectionClass($request);
+        $reflectedClient = $reflection->getProperty('client');
+        $reflectedClient->setAccessible(true);
+        $reflectedClient->setValue($request, $mockClient);
+
+        $expectedExceptionMessage = '405: HTTP Verb is not specified or incorrect verb is used. Or The user does not have access to the specified method. This applies to invited users. - Client error: `GET http://localhost:8082/1.1.2/Fail/405?apikey=key` resulted in a `405 Method Not Allowed` response';
+
+        $this->expectException(ApiException::class);
+        $this->expectExceptionMessage($expectedExceptionMessage);
+        $this->expectExceptionCode(405);
+
+        $request->request('GET', 'Fail', '405');
+    }
+
+    public function testApi409()
+    {
+        $this->http->mock
+            ->when()
+                ->methodIs('GET')
+                ->pathIs('/1.1.2/Fail/409?apikey=key')
+            ->then()
+                ->statusCode(409)
+                // TODO actual error responses
+                ->body(null)
+            ->end();
+        $this->http->setUp();
+
+        $request = new RequestHandler($this->config);
+
+        /**
+         * We make a local client to connect to our mock and get the
+         * expected result
+         */
+        $localClient = new Client();
+
+        try {
+            $localResult = $localClient->request(
+                'GET',
+                'http://localhost:8082/1.1.2/Fail/409?apikey=key',
+                []
+            );
+        } catch (ClientException $exception) {
+        }
+
+        /**
+         * We then make a mock client, and tell the mock client that it
+         * should return what the local client got from the mock
+         */
+        $mockClient = \Mockery::mock(
+            'Client'
+        );
+
+        $mockClient->shouldReceive('request')
+            ->once()
+            ->andThrow($exception);
+
+        /**
+         * Insert the mocked client into the request class via reflection
+         *
+         * This will pass the desired mock object back to the assertion
+         * as it replaces the legit Client() object
+         */
+        $reflection = new ReflectionClass($request);
+        $reflectedClient = $reflection->getProperty('client');
+        $reflectedClient->setAccessible(true);
+        $reflectedClient->setValue($request, $mockClient);
+
+        $expectedExceptionMessage = '409: Attempting to delete an item that is currently in use. - Client error: `GET http://localhost:8082/1.1.2/Fail/409?apikey=key` resulted in a `409 Conflict` response';
+
+        $this->expectException(ApiException::class);
+        $this->expectExceptionMessage($expectedExceptionMessage);
+        $this->expectExceptionCode(409);
+
+        $request->request('GET', 'Fail', '409');
+    }
+
+    public function testApi415()
+    {
+        $this->http->mock
+            ->when()
+                ->methodIs('GET')
+                ->pathIs('/1.1.2/Fail/415?apikey=key')
+            ->then()
+                ->statusCode(415)
+                // TODO actual error responses
+                ->body(null)
+            ->end();
+        $this->http->setUp();
+
+        $request = new RequestHandler($this->config);
+
+        /**
+         * We make a local client to connect to our mock and get the
+         * expected result
+         */
+        $localClient = new Client();
+
+        try {
+            $localResult = $localClient->request(
+                'GET',
+                'http://localhost:8082/1.1.2/Fail/415?apikey=key',
+                []
+            );
+        } catch (ClientException $exception) {
+        }
+
+        /**
+         * We then make a mock client, and tell the mock client that it
+         * should return what the local client got from the mock
+         */
+        $mockClient = \Mockery::mock(
+            'Client'
+        );
+
+        $mockClient->shouldReceive('request')
+            ->once()
+            ->andThrow($exception);
+
+        /**
+         * Insert the mocked client into the request class via reflection
+         *
+         * This will pass the desired mock object back to the assertion
+         * as it replaces the legit Client() object
+         */
+        $reflection = new ReflectionClass($request);
+        $reflectedClient = $reflection->getProperty('client');
+        $reflectedClient->setAccessible(true);
+        $reflectedClient->setValue($request, $mockClient);
+
+        $expectedExceptionMessage = '415: A valid Content-Type header such as application/json is required on all requests. - Client error: `GET http://localhost:8082/1.1.2/Fail/415?apikey=key` resulted in a `415 Unsupported Media Type` response';
+
+        $this->expectException(ApiException::class);
+        $this->expectExceptionMessage($expectedExceptionMessage);
+        $this->expectExceptionCode(415);
+
+        $request->request('GET', 'Fail', '415');
+    }
+
+    public function testApi429()
+    {
+        $this->http->mock
+            ->when()
+                ->methodIs('GET')
+                ->pathIs('/1.1.2/Fail/429?apikey=key')
+            ->then()
+                ->statusCode(429)
+                // TODO actual error responses
+                ->body(null)
+            ->end();
+        $this->http->setUp();
+
+        $request = new RequestHandler($this->config);
+
+        /**
+         * We make a local client to connect to our mock and get the
+         * expected result
+         */
+        $localClient = new Client();
+
+        try {
+            $localResult = $localClient->request(
+                'GET',
+                'http://localhost:8082/1.1.2/Fail/429?apikey=key',
+                []
+            );
+        } catch (ClientException $exception) {
+        }
+
+        /**
+         * We then make a mock client, and tell the mock client that it
+         * should return what the local client got from the mock
+         */
+        $mockClient = \Mockery::mock(
+            'Client'
+        );
+
+        $mockClient->shouldReceive('request')
+            ->once()
+            ->andThrow($exception);
+
+        /**
+         * Insert the mocked client into the request class via reflection
+         *
+         * This will pass the desired mock object back to the assertion
+         * as it replaces the legit Client() object
+         */
+        $reflection = new ReflectionClass($request);
+        $reflectedClient = $reflection->getProperty('client');
+        $reflectedClient->setAccessible(true);
+        $reflectedClient->setValue($request, $mockClient);
+
+        $expectedExceptionMessage = '429: The limit of 100 requests per minute per company is exceeded or more there are more than 20 failed login attempts. - Client error: `GET http://localhost:8082/1.1.2/Fail/429?apikey=key` resulted in a `429 Too Many Requests` response';
+
+        $this->expectException(ApiException::class);
+        $this->expectExceptionMessage($expectedExceptionMessage);
+        $this->expectExceptionCode(429);
+
+        $request->request('GET', 'Fail', '429');
+    }
+
+    public function testApi500()
+    {
+        $this->http->mock
+            ->when()
+                ->methodIs('GET')
+                ->pathIs('/1.1.2/Fail/500?apikey=key')
+            ->then()
+                ->statusCode(500)
+                // TODO actual error responses
+                ->body(null)
+            ->end();
+        $this->http->setUp();
+
+        $request = new RequestHandler($this->config);
+
+        /**
+         * We make a local client to connect to our mock and get the
+         * expected result
+         */
+        $localClient = new Client();
+
+        try {
+            $localResult = $localClient->request(
+                'GET',
+                'http://localhost:8082/1.1.2/Fail/500?apikey=key',
+                []
+            );
+        } catch (ServerException $exception) {
+        }
+
+        /**
+         * We then make a mock client, and tell the mock client that it
+         * should return what the local client got from the mock
+         */
+        $mockClient = \Mockery::mock(
+            'Client'
+        );
+
+        $mockClient->shouldReceive('request')
+            ->once()
+            ->andThrow($exception);
+
+        /**
+         * Insert the mocked client into the request class via reflection
+         *
+         * This will pass the desired mock object back to the assertion
+         * as it replaces the legit Client() object
+         */
+        $reflection = new ReflectionClass($request);
+        $reflectedClient = $reflection->getProperty('client');
+        $reflectedClient->setAccessible(true);
+        $reflectedClient->setValue($request, $mockClient);
+
+        $expectedExceptionMessage = '500: Internal server error - Server error: `GET http://localhost:8082/1.1.2/Fail/500?apikey=key` resulted in a `500 Internal Server Error` response';
+
+        $this->expectException(ApiException::class);
+        $this->expectExceptionMessage($expectedExceptionMessage);
+        $this->expectExceptionCode(500);
+
+        $request->request('GET', 'Fail', '500');
+    }
+
+
 
     // test requests
 }

@@ -12,9 +12,12 @@
 namespace DarrynTen\SageOne\Request;
 
 use DarrynTen\SageOne\Exception\ApiException;
+use DarrynTen\SageOne\Exception\ExceptionMessages;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
 
 /**
  * RequestHandler Class
@@ -131,14 +134,26 @@ class RequestHandler
         // Let's go
         try {
             $response = $this->client->request($method, $uri, $options);
-
-            // All good
-            return json_decode($response->getBody(), true);
         } catch (RequestException $exception) {
-            $message = $exception->getMessage();
-
-            throw new ApiException($message, $exception->getCode(), $exception);
+            $this->handleException($exception);
         }
+
+        return json_decode($response->getBody(), true);
+    }
+
+    private function handleException($exception)
+    {
+        $code = $exception->getCode();
+        $message = $exception->getMessage();
+
+        $title = sprintf(
+            '%s: %s - %s',
+            $code,
+            ExceptionMessages::$strings[$code],
+            $message
+        );
+
+        throw new ApiException($title, $exception->getCode(), $exception);
     }
 
     /**
