@@ -1,13 +1,14 @@
 <?php
 
-namespace DarrynTen\SageOne\Tests\SageOne\Request;
+namespace DarrynTen\SageOne\Tests\SageOne\Models;
 
+use DarrynTen\SageOne\Models\Account;
 use DarrynTen\SageOne\Request\RequestHandler;
 use InterNations\Component\HttpMock\PHPUnit\HttpMockTrait;
 use GuzzleHttp\Client;
 use ReflectionClass;
 
-class RequestHandlerTest extends \PHPUnit_Framework_TestCase
+class AccountModelTest extends \PHPUnit_Framework_TestCase
 {
     use HttpMockTrait;
 
@@ -42,11 +43,11 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function testInstanceOf()
     {
-        $request = new RequestHandler($this->config);
-        $this->assertInstanceOf(RequestHandler::class, $request);
+        $request = new Account($this->config);
+        $this->assertInstanceOf(Account::class, $request);
     }
 
-    public function testRequest()
+    public function testGetAll()
     {
         $data = file_get_contents(__DIR__ . '/../../mocks/Account/GET_Account_Get.json');
 
@@ -96,10 +97,29 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
         $reflectedClient->setAccessible(true);
         $reflectedClient->setValue($request, $mockClient);
 
-        // Call it
+        $accountModel = new Account($this->config);
+
+        /**
+         * We then reflect into the account model
+         */
+        $accountReflection = new ReflectionClass($accountModel);
+        $reflectedRequest = $accountReflection->getProperty('request');
+        $reflectedRequest->setAccessible(true);
+        $reflectedRequest->setValue($accountModel, $request);
+
+
+        $allAccounts = $accountModel->all();
+
+        $this->assertEquals(3, sizeof($allAccounts));
+        $this->assertArrayHasKey('Results', $allAccounts);
+        $this->assertEquals(2, sizeof($allAccounts['Results']));
+        $this->assertEquals('sample string 2', $allAccounts['Results'][0]['Name']);
+        $this->assertTrue($allAccounts['Results'][0]['Active']);
+
+        // Final check
         $this->assertEquals(
             json_decode($data, true),
-            $request->request('GET', 'Account', 'Get', [])
+            $allAccounts
         );
     }
 
@@ -119,8 +139,6 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
         $this->http->setUp();
 
         $request = new RequestHandler($this->config);
-
-        // TODO these are copy-pastes (naughty)
 
         /**
          * We make a local client to connect to our mock and get the

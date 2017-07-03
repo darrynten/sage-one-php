@@ -11,6 +11,8 @@
 
 namespace DarrynTen\SageOne\Models;
 
+use DarrynTen\SageOne\BaseModel;
+
 class Account extends BaseModel
 {
     /**
@@ -136,8 +138,27 @@ class Account extends BaseModel
      */
     public $defaultTaxType;
 
-    public function __construct()
+    /**
+     * The API Endpoint
+     */
+    protected $endpoint = 'Account';
+
+    /**
+     * Features supported by the endpoint
+     *
+     * These features enable and disable certain calls from the base model
+     *
+     * @var array $features
+     */
+    protected $features = [
+        'all' => true,
+        'get' => true,
+        'save' => true,
+        'delete' => true
+    ];
+
+    public function __construct(array $config)
     {
-        parent::__construct();
+        parent::__construct($config);
     }
 }
