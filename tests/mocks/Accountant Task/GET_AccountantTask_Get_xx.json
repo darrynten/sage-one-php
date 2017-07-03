@@ -1,0 +1,18 @@
+{
+  "AccountantTaskRecurrenceId": 1,
+  "CompanyId": 2,
+  "CompanyName": "sample string 3",
+  "UserId": 4,
+  "Name": "sample string 5",
+  "Notes": "sample string 6",
+  "StatusType": 7,
+  "ReminderType": 8,
+  "ReminderDaysBefore": 1,
+  "AutomaticallyChangeStatusWhenStart": true,
+  "NotificationDate": "2017-06-30",
+  "Notified": true,
+  "StartDate": "2017-06-30",
+  "EndDate": "2017-06-30",
+  "Duration": 1,
+  "ID": 13
+}
