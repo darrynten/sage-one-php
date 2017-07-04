@@ -1,0 +1,26 @@
+{
+  "TotalResults": 1,
+  "ReturnedResults": 2,
+  "Results": [
+    {
+      "ID": 1,
+      "Name": "sample string 2",
+      "Percentage": 3.1,
+      "IsDefault": true,
+      "HasActivity": true,
+      "IsManualTax": true,
+      "Created": "2017-07-04",
+      "Modified": "2017-07-04"
+    },
+    {
+      "ID": 1,
+      "Name": "sample string 2",
+      "Percentage": 3.1,
+      "IsDefault": true,
+      "HasActivity": true,
+      "IsManualTax": true,
+      "Created": "2017-07-04",
+      "Modified": "2017-07-04"
+    }
+  ]
+}
