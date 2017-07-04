@@ -170,77 +170,77 @@ class Account extends BaseModel
      */
     protected $fields = [
         'id' => [
-            'type' => integer,
+            'type' => 'integer',
             'nullable' => false,
             'persistable' => true,
         ],
         'name' => [
-            'type' => string,
+            'type' => 'string',
             'nullable' => false,
             'persistable' => true,
         ],
         'category' => [
-            'type' => AccountCategory,
+            'type' => 'AccountCategory',
             'nullable' => false,
             'persistable' => true,
         ],
         'active' => [
-            'type' => boolean,
+            'type' => 'boolean',
             'nullable' => false,
             'persistable' => true,
         ],
         'balance' => [
-            'type' => double,
+            'type' => 'double',
             'nullable' => false,
             'persistable' => false,
         ],
         'description' => [
-            'type' => string,
+            'type' => 'string',
             'nullable' => false,
             'persistable' => true,
         ],
         'reportingGroupId' => [
-            'type' => integer,
+            'type' => 'integer',
             'nullable' => true,
             'persistable' => true,
         ],
         'unallocatedAccount' => [
-            'type' => boolean,
+            'type' => 'boolean',
             'nullable' => false,
             'persistable' => false,
         ],
         'isTaxLocked' => [
-            'type' => boolean,
+            'type' => 'boolean',
             'nullable' => false,
             'persistable' => false,
         ],
         'modified' => [
-            'type' => DateTime,
+            'type' => 'DateTime',
             'nullable' => true,
             'persistable' => false,
         ],
         'created' => [
-            'type' => DateTime,
+            'type' => 'DateTime',
             'nullable' => false,
             'persistable' => false,
         ],
         'accountType' => [
-            'type' => integer,
+            'type' => 'integer',
             'nullable' => false,
             'persistable' => false,
         ],
         'hasActivity' => [
-            'type' => boolean,
+            'type' => 'boolean',
             'nullable' => false,
             'persistable' => false,
         ],
         'defaultTaxTypeId' => [
-            'type' => integer,
+            'type' => 'integer',
             'nullable' => true,
             'persistable' => true,
         ],
         'defaultTaxType' => [
-            'type' => TaxType,
+            'type' => 'TaxType',
             'nullable' => true,
             'persistable' => true,
         ]

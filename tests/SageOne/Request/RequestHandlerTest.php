@@ -17,7 +17,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
         'key' => 'key',
         'endpoint' => '//localhost:8082',
         'version' => '1.1.2',
-        'clientId' => null
+        'companyId' => null
     ];
 
     public static function setUpBeforeClass()
@@ -304,7 +304,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
                 '//accounting.sageone.co.za/1.1.2/Account/Save/',
                 [
                     'headers' => [
-                        'Authorization' => 'Basic Og==',
+                        'Authorization' => 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=',
                     ],
                     'query' => [
                         'apikey' => 'key'
@@ -312,6 +312,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
                 ],
                 []
             )
+            // TODO not the actual response...
             ->andReturn('OK');
 
         $this->assertEquals(
@@ -326,7 +327,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
                 '//accounting.sageone.co.za/1.1.2/Account/Get/111/',
                 [
                     'headers' => [
-                        'Authorization' => 'Basic Og==',
+                        'Authorization' => 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=',
                     ],
                     'query' => [
                         'apikey' => 'key'

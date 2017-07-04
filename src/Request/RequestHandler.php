@@ -110,7 +110,11 @@ class RequestHandler
         $this->key = $config['key'];
         $this->endpoint = $config['endpoint'];
         $this->version = $config['version'];
-        $this->companyId = $config['companyId'] || null;
+
+        if (isset($config['companyId'])) {
+            $this->companyId = $config['companyId'];
+        }
+
         $this->client = new Client();
     }
 
@@ -199,7 +203,7 @@ class RequestHandler
      */
     private function requestToken()
     {
-        $this->token = base64_encode($this->clientId . ':' . $this->clientSecret);
+        $this->token = base64_encode($this->username . ':' . $this->password);
         $this->tokenType = 'Basic';
     }
 

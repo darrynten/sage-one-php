@@ -13,8 +13,7 @@ class BaseModelTest extends \PHPUnit_Framework_TestCase
         'key' => 'key',
         'endpoint' => '//localhost:8082',
         'version' => '1.1.2',
-        'clientId' => null,
-        'clientSecret' => null,
+        'companyId' => null
     ];
 
     public function testAllException()

@@ -29,18 +29,55 @@ class TaxType extends BaseModel
      */
     protected $endpoint = 'TaxType';
 
+    /**
+     * Tax type name
+     *
+     * @var string $name
+     */
     public $name;
 
+    /**
+     * Tax percentage
+     *
+     * @var decimal $percentage
+     */
     public $percentage;
 
+    /**
+     * Is default tax type
+     *
+     * @var boolean $isDefault
+     */
     public $isDefault;
 
+    /**
+     * Has activity
+     *
+     * READ ONLY
+     *
+     * @var boolean $hasActivity
+     */
     public $hasActivity;
 
+    /**
+     * Is a manual tax type
+     *
+     * @var boolean $isManualTax
+     */
     public $isManualTax;
 
+    /**
+     * Date created
+     *
+     * @var DateTime $created
+     */
     public $created;
 
+    /**
+     * Date modified
+     *
+     * @var DateTime $modified
+     */
     public $modified = null;
 
     /**
@@ -66,42 +103,42 @@ class TaxType extends BaseModel
      */
     protected $fields = [
         'id' => [
-            'type' => integer,
+            'type' => 'integer',
             'nullable' => false,
             'persistable' => true,
         ],
         'name' => [
-            'type' => string,
+            'type' => 'string',
             'nullable' => false,
             'persistable' => true,
         ],
         'percentage' => [
-            'type' => double,
+            'type' => 'double',
             'nullable' => false,
             'persistable' => true,
         ],
         'isDefault' => [
-            'type' => boolean,
+            'type' => 'boolean',
             'nullable' => false,
             'persistable' => true,
         ],
         'hasActivity' => [
-            'type' => boolean,
+            'type' => 'boolean',
             'nullable' => false,
             'persistable' => false,
         ],
         'isManualTax' => [
-            'type' => boolean,
+            'type' => 'boolean',
             'nullable' => false,
             'persistable' => true,
         ],
         'created' => [
-            'type' => DateTime,
+            'type' => 'DateTime',
             'nullable' => false,
             'persistable' => false,
         ],
         'modified' => [
-            'type' => DateTime,
+            'type' => 'DateTime',
             'nullable' => true,
             'persistable' => false,
         ],

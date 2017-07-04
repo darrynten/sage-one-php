@@ -62,32 +62,32 @@ class AccountCategory extends BaseModel
      */
     protected $fields = [
         'id' => [
-            'type' => integer,
+            'type' => 'integer',
             'nullable' => false,
             'persistable' => true,
         ],
         'comment' => [
-            'type' => string,
+            'type' => 'string',
             'nullable' => false,
             'persistable' => true,
         ],
         'order' => [
-            'type' => integer,
+            'type' => 'integer',
             'nullable' => true,
             'persistable' => true,
         ],
         'description' => [
-            'type' => string,
+            'type' => 'string',
             'nullable' => false,
             'persistable' => true,
         ],
         'modified' => [
-            'type' => DateTime,
+            'type' => 'DateTime',
             'nullable' => true,
             'persistable' => false,
         ],
         'created' => [
-            'type' => DateTime,
+            'type' => 'DateTime',
             'nullable' => true,
             'persistable' => false,
         ],
