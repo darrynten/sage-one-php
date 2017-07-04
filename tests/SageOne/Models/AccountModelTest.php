@@ -315,9 +315,8 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
 
         $accountModel->name = 'New Name';
 
-        die(var_dump($accountModel->toJson()));
-
         $accountModel->save();
+        // (var_dump($accountModel->toJson()));
 
         // $this->assertEquals(
             // $data,

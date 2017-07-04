@@ -90,7 +90,6 @@ class BaseModel
 
         $result = $this->request->request('GET', $this->endpoint, sprintf('Get/%s', $id));
 
-        // die(var_dump($resultObject));
         $this->loadResult($result);
     }
 
@@ -149,13 +148,10 @@ class BaseModel
                     } else {
                         // if (!$this->$key) {
                         // }
-                        try {
-                            var_dump($this->$key);
-                            $result[$remoteKey] = $this->$key->toObject();
-                        } catch (Exception $e) {
-                            die(var_dump('NULL?', $key, $config, $result, $remoteKey, $e));
-                          
+                        if (is_null($this->$key)) {
+                            die(var_dump('NULL?', $key, $this, $config, $result, $remoteKey, $e));
                         }
+                        $result[$remoteKey] = $this->$key->toObject();
                     }
                 }
             }
@@ -187,7 +183,9 @@ class BaseModel
         // Make a new instance of the class and load the item
         $instance = new $class($this->config);
 
-        return $instance->loadResult($resultItem);
+        $instance->loadResult($resultItem);
+
+        return $instance;
     }
 
     public function loadResult(\stdClass $result)
