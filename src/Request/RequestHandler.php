@@ -156,6 +156,14 @@ class RequestHandler
         return json_decode($response->getBody(), false);
     }
 
+    /**
+     * Handles all API exceptions, and adds the official exception terms
+     * to the message.
+     *
+     * @param RequestException the original exception
+     *
+     * @throws ApiException
+     */
     private function handleException($exception)
     {
         $code = $exception->getCode();
