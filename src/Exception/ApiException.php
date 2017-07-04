@@ -36,7 +36,7 @@ class ApiException extends Exception
                 $messageObject->detail
             );
             if (!empty($messageObject->errors)) {
-                $message .= ' ' . serialize($messageObject->errors);
+                $message .= ' - errors: ' . json_encode($messageObject->errors);
             }
         }
 
