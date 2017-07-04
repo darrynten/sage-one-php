@@ -3,6 +3,8 @@
 namespace DarrynTen\SageOne\Tests\SageOne\Models;
 
 use DarrynTen\SageOne\Models\Account;
+use DarrynTen\SageOne\Models\AccountCategory;
+use DarrynTen\SageOne\Models\TaxType;
 use DarrynTen\SageOne\Request\RequestHandler;
 use InterNations\Component\HttpMock\PHPUnit\HttpMockTrait;
 use GuzzleHttp\Client;
@@ -107,14 +109,13 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
         $reflectedRequest->setAccessible(true);
         $reflectedRequest->setValue($accountModel, $request);
 
+        $allAccounts = json_decode($accountModel->all(), true);
 
-        $allAccounts = $accountModel->all();
-
-        $this->assertEquals(3, sizeof($allAccounts));
+        $this->assertEquals(3, count($allAccounts));
         $this->assertArrayHasKey('Results', $allAccounts);
-        $this->assertEquals(2, sizeof($allAccounts['Results']));
+        $this->assertEquals(2, count($allAccounts['Results']));
         $this->assertEquals('sample string 2', $allAccounts['Results'][0]['Name']);
-        $this->assertTrue($allAccounts['Results'][0]['Active']);
+        $this->assertTrue($allAccounts['Results'][1]['Active']);
 
         // Final check
         $this->assertEquals(
@@ -123,16 +124,14 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testRequestWithCompanyId()
+    public function testGetId()
     {
         $data = file_get_contents(__DIR__ . '/../../mocks/Account/GET_Account_Get_xx.json');
-
-        $this->config['companyId'] = 8;
 
         $this->http->mock
             ->when()
             ->methodIs('GET')
-            ->pathIs('/1.1.2/Account/Get/11?companyId=8&apikey=key')
+            ->pathIs('/1.1.2/Account/Get/11?apikey=key')
             ->then()
             ->body($data)
             ->end();
@@ -148,8 +147,8 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
 
         $localResult = $localClient->request(
             'GET',
-            'http://localhost:8082/1.1.2/Account/Get/11?companyId=8&apikey=key',
-            [ 'key' => 'value' ]
+            'http://localhost:8082/1.1.2/Account/Get/11?apikey=key',
+            []
         );
 
         /**
@@ -175,13 +174,79 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
         $reflectedClient->setAccessible(true);
         $reflectedClient->setValue($request, $mockClient);
 
-        $this->assertEquals(
-            json_decode($data, true),
-            $request->request('GET', 'Account', 'Get/11', ['key' => 'value'])
-        );
+        $accountModel = new Account($this->config);
+
+        /**
+         * We then reflect into the account model
+         */
+        $accountReflection = new ReflectionClass($accountModel);
+        $reflectedRequest = $accountReflection->getProperty('request');
+        $reflectedRequest->setAccessible(true);
+        $reflectedRequest->setValue($accountModel, $request);
+
+        // Check defaults
+        $this->assertNull($accountModel->id);
+        $this->assertNull($accountModel->name);
+        $this->assertNull($accountModel->created);
+        $this->assertNull($accountModel->balance);
+        $this->assertNull($accountModel->category);
+        $this->assertNull($accountModel->defaultTaxType);
+
+        // Fetch an id
+        $accountModel->get(11);
+
+        // Make sure related models are of the right types
+        $this->assertInstanceOf(Account::class, $accountModel);
+        $this->assertInstanceOf(AccountCategory::class, $accountModel->category);
+        $this->assertInstanceOf(TaxType::class, $accountModel->defaultTaxType);
+        $this->assertInstanceOf(\DateTime::class, $accountModel->created);
+
+        // Ensure the instance has expected properties
+        $this->assertObjectHasAttribute('id', new Account($this->config));
+
+        // Expected lengths
+        $this->assertEquals(20, count((array)$accountModel));
+        $this->assertEquals(11, count((array)$accountModel->category));
+        $this->assertEquals(13, count((array)$accountModel->defaultTaxType));
+
+        // Check values on all child properties to match the mock it received
+        $this->assertEquals($accountModel->id, 11);
+        $this->assertEquals($accountModel->category->order, 6);
+        $this->assertEquals($accountModel->defaultTaxType->id, 1);
+        $this->assertEquals($accountModel->defaultTaxType->hasActivity, true);
+        $this->assertEquals($accountModel->created->format('Y-m-d'), '2017-06-30');
+        $this->assertEquals($accountModel->modified->getTimezone()->getName(), 'UTC');
+        $this->assertEquals($accountModel->category->created->format('Y-m-d'), '2017-06-30');
+        $this->assertEquals($accountModel->defaultTaxType->modified->format('Y-m-d'), '2017-06-30');
+
+        // Check any protected/private properties via reflection
+        $reflect = new ReflectionClass($accountModel);
+
+        $reflectValue = $reflect->getProperty('features');
+        $reflectValue->setAccessible(true);
+        $value = $reflectValue->getValue(new Account($this->config));
+        $this->assertArrayHasKey('all', $value);
+        $this->assertEquals(4, sizeof($value));
+        $this->assertEquals(true, $value['all']);
+        $this->assertEquals(true, $value['get']);
+        $this->assertEquals(true, $value['save']);
+        $this->assertEquals(true, $value['delete']);
+
+        $reflectValue = $reflect->getProperty('fields');
+        $reflectValue->setAccessible(true);
+        $value = $reflectValue->getValue(new Account($this->config));
+        $this->assertEquals(15, sizeof($value));
+        $this->assertEquals(3, sizeof($value['name']));
+        $this->assertEquals(true, $value['name']['persistable']);
+        $this->assertEquals(false, $value['category']['nullable']);
+
+        $reflectValue = $reflect->getProperty('endpoint');
+        $reflectValue->setAccessible(true);
+        $value = $reflectValue->getValue(new Account($this->config));
+        $this->assertEquals('Account', $value);
     }
 
-    public function testRequestPostWithJson()
+    public function testSave()
     {
         $parameters = ['data123' => 'value'];
         $data = '{\'key\':\'data\'}';
@@ -234,10 +299,30 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
         $reflectedClient->setAccessible(true);
         $reflectedClient->setValue($request, $mockClient);
 
-        $this->assertEquals(
-            json_decode($data),
-            $request->request('POST', 'Account', 'Save', [], $parameters)
-        );
+        $accountModel = new Account($this->config);
+
+        /**
+         * We then reflect into the account model
+         */
+        $accountReflection = new ReflectionClass($accountModel);
+        $reflectedRequest = $accountReflection->getProperty('request');
+        $reflectedRequest->setAccessible(true);
+        $reflectedRequest->setValue($accountModel, $request);
+
+        // Load an id
+        $data = json_decode(file_get_contents(__DIR__ . '/../../mocks/Account/GET_Account_Get_xx.json'));
+        $accountModel->loadResult($data);
+
+        $accountModel->name = 'New Name';
+
+        die(var_dump($accountModel->toJson()));
+
+        $accountModel->save();
+
+        // $this->assertEquals(
+            // $data,
+            // $request->request('POST', 'Account', 'Save', [], $parameters)
+        // );
     }
 
     public function testRequestDelete()

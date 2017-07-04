@@ -13,6 +13,8 @@ namespace DarrynTen\SageOne\Models;
 
 use DarrynTen\SageOne\BaseModel;
 
+use DarrynTen\SageOne\Models\AccountCategory;
+
 class Account extends BaseModel
 {
     /**
@@ -48,9 +50,9 @@ class Account extends BaseModel
      *
      * READ ONLY
      *
-     * @var float $balance
+     * @var double $balance
      */
-    private $balance;
+    public $balance;
 
     /**
      * Description of the account
@@ -73,18 +75,18 @@ class Account extends BaseModel
      *
      * READ ONLY
      *
-     * @var bool $unallocatedAccount
+     * @var boolean $unallocatedAccount
      */
-    private $unallocatedAccount;
+    public $unallocatedAccount;
 
     /**
      * Tax locked flag
      *
      * READ ONLY
      *
-     * @var bool $isTaxLocked
+     * @var boolean $isTaxLocked
      */
-    private $isTaxLocked;
+    public $isTaxLocked;
 
     /**
      * Date the account was last modified
@@ -93,18 +95,18 @@ class Account extends BaseModel
      *
      * Nullable
      *
-     * @var date $modified
+     * @var DateTime $modified
      */
-    private $modified = null;
+    public $modified = null;
 
     /**
      * Date the account was created
      *
      * READ ONLY
      *
-     * @var date $created
+     * @var DateTime $created
      */
-    private $created;
+    public $created;
 
     /**
      * The account type reference
@@ -120,28 +122,129 @@ class Account extends BaseModel
      *
      * READ ONLY
      *
-     * @var bool $hasActivity
+     * @var boolean $hasActivity
      */
-    private $hasActivity;
+    public $hasActivity;
 
     /**
      * Default tax type ID reference
      *
      * @var int $defaultTaxTypeId
      */
-    public $defaultTaxTypeId;
+    public $defaultTaxTypeId = null;
 
     /**
      * Actual model of the default tax type
      *
      * @var TaxType $defaultTaxType
      */
-    public $defaultTaxType;
+    public $defaultTaxType = null;
 
     /**
      * The API Endpoint
+     *
+     * @var string $endpoint
      */
     protected $endpoint = 'Account';
+
+    /**
+     * Defines all possible fields.
+     *
+     * Used by the base class to decide what gets submitted in a save call,
+     * validation, etc
+     *
+     * All must include a type, whether or not it's nullable, and whether or
+     * not it's persistable.
+     *
+     * NB: Naming convention for keys is to lowercase the first character of the
+     * field returned by Sage (they use PascalCase and we use camelCase)
+     *
+     * `ID` is automatically converted to `id`
+     *
+     * Details on writable properties for Account:
+     * https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=Account
+     *
+     * TODO check why/if ID is truly writable!
+     *
+     * @var array $fields
+     */
+    protected $fields = [
+        'id' => [
+            'type' => integer,
+            'nullable' => false,
+            'persistable' => true,
+        ],
+        'name' => [
+            'type' => string,
+            'nullable' => false,
+            'persistable' => true,
+        ],
+        'category' => [
+            'type' => AccountCategory,
+            'nullable' => false,
+            'persistable' => true,
+        ],
+        'active' => [
+            'type' => boolean,
+            'nullable' => false,
+            'persistable' => true,
+        ],
+        'balance' => [
+            'type' => double,
+            'nullable' => false,
+            'persistable' => false,
+        ],
+        'description' => [
+            'type' => string,
+            'nullable' => false,
+            'persistable' => true,
+        ],
+        'reportingGroupId' => [
+            'type' => integer,
+            'nullable' => true,
+            'persistable' => true,
+        ],
+        'unallocatedAccount' => [
+            'type' => boolean,
+            'nullable' => false,
+            'persistable' => false,
+        ],
+        'isTaxLocked' => [
+            'type' => boolean,
+            'nullable' => false,
+            'persistable' => false,
+        ],
+        'modified' => [
+            'type' => DateTime,
+            'nullable' => true,
+            'persistable' => false,
+        ],
+        'created' => [
+            'type' => DateTime,
+            'nullable' => false,
+            'persistable' => false,
+        ],
+        'accountType' => [
+            'type' => integer,
+            'nullable' => false,
+            'persistable' => false,
+        ],
+        'hasActivity' => [
+            'type' => boolean,
+            'nullable' => false,
+            'persistable' => false,
+        ],
+        'defaultTaxTypeId' => [
+            'type' => integer,
+            'nullable' => true,
+            'persistable' => true,
+        ],
+        'defaultTaxType' => [
+            'type' => TaxType,
+            'nullable' => true,
+            'persistable' => true,
+        ]
+    ];
 
     /**
      * Features supported by the endpoint
@@ -154,7 +257,7 @@ class Account extends BaseModel
         'all' => true,
         'get' => true,
         'save' => true,
-        'delete' => true
+        'delete' => true,
     ];
 
     public function __construct(array $config)

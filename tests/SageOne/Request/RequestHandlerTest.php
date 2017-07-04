@@ -98,7 +98,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
 
         // Call it
         $this->assertEquals(
-            json_decode($data, true),
+            json_decode($data),
             $request->request('GET', 'Account', 'Get', [])
         );
     }
@@ -158,7 +158,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
         $reflectedClient->setValue($request, $mockClient);
 
         $this->assertEquals(
-            json_decode($data, true),
+            json_decode($data),
             $request->request('GET', 'Account', 'Get/11', ['key' => 'value'])
         );
     }
