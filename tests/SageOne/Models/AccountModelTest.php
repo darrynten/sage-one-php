@@ -438,12 +438,11 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
             )
             ->andReturn('OK');
 
-            $result = $request->request('GET', 'Account', 'Get/111', ['keyx' => 'value']);
+        $result = $request->request('GET', 'Account', 'Get/111', ['keyx' => 'value']);
 
         $this->assertEquals(
             'OK',
             $result
         );
-
     }
 }
