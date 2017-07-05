@@ -35,6 +35,36 @@ Checkboxes have been placed at each section, please check them off
 in this readme when submitting a pull request for the features you
 have covered.
 
+### Basic ORM-style mapping
+
+Related models are auto-loaded and are all queryable, mutable, and persistable.
+
+I'm sure there will be a recursion issue because of this at some point!
+
+Some examples
+
+```php
+$account = new Account($config);
+
+// get
+$account->all(); // fetches ALL
+$account->get($id); // fetches that ID
+
+// related models
+echo $account->category->id;
+
+// dates
+echo $account->defaultTaxType->modified->format('Y-m-d');
+
+// assign
+$account->name = 'New Name';
+
+// save, delete
+$account->save(); // incomplete
+$account->category->save(); // saving a child does not save the parent and vice-versa
+$account->delete();
+```
+
 ### Application base
 
 * Guzzle is used for the communications (I think we should replace?)
