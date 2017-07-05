@@ -110,7 +110,7 @@ class BaseModel
             throw new ModelException('Model does not support the `delete` call', 104);
         }
 
-        $result = $this->request->request('DELETE', $this->endpoint, sprintf('Delete/%s', $id));
+        $this->request->request('DELETE', $this->endpoint, sprintf('Delete/%s', $id));
     }
 
     public function save()
@@ -120,7 +120,7 @@ class BaseModel
         }
 
         // TODO
-        $result = $this->request->request('POST', $this->endpoint, 'Save');
+        $this->request->request('POST', $this->endpoint, 'Save');
     }
 
     public function toJson()
