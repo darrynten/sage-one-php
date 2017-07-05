@@ -37,7 +37,7 @@ have covered.
 
 ### Application base
 
-* Guzzle is used for the communications
+* Guzzle is used for the communications (I think we should replace?)
 * The library has 100% test coverage
 * The library supports framework-agnostic caching so you don't have to
 worry about which framework your package that uses this package is going
@@ -45,30 +45,9 @@ to end up in.
 
 The client is not 100% complete and is a work in progress, details below.
 
-### Authentication
-
-This API uses basic webforms authentication. To authenticate a user prior to calling a method, you will need to add a standard HTTP authorization header to the request.
-
-This will require the username and password, separated by a colon(:) and Base64 encoded.
-
-Here is an example:
-
-Username: demo@pastelmybusiness.co.za
-Password: Password123
-
-Results in
-
-Authorization header: Basic ZGVtb0BwYXN0ZWxteW1vbmV5LmNvLnphOlBhc3N3b3JkMTIz
-
-You would need to initialise the client with your username and password.
-
-```php
-$this->sage = new SageOne('username', 'password');
-```
-
 ## Documentation
 
-There are over 100 API endpoints.
+There are over 100 API endpoints, initial focus is only on a handful of these
 
 This will eventually fully mimic the documentation available on the site.
 https://accounting.sageone.co.za/api/1.1.2
@@ -78,45 +57,210 @@ the API docs page.
 
 Checked off bits are complete.
 
-# NB initial delivery consists of only these calls:
+# Note
+
+The API calls are mostly _very_ generic, so there is a base model in place that
+all other models extend off, which covers the following functionalities:
+
+- GET Model/Get
+- GET Model/Get/{id}
+- DELETE Model/Delete/{id}
+- POST Model/Save ** Incomplete **
+
+This means that it's trivial to add new models that only use these calls (or a
+combination of any of them) as there is a very simple 'recipe' to constructing
+a basic model.
+
+As such we only need to focus on the tricky bits.
+
+### Basic model template
+
+[Account Example Docs](https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=Account)
+
+There's a table at that link that looks something like this
+
+```
+Name             | Type             | Additional Information
+-------------------------------------------------------------------
+Name             | string           | None.
+Category         | AccountCategory  | None.
+Balance          | decimal          | Read Only / System Generated
+ReportingGroupId | nullable integer | None.
+```
+
+We'll be using that for this example (docblocks excluded from example but are
+required)
+
+```php
+/**
+ * The name of the class is the `modelName=` value from the URL
+ */
+class Account extends BaseModel
+{
+    /**
+     * Properties from the table, public
+     *
+     * We lowercase the first letter but leave the rest
+     */
+    public $id;
+    public $name;
+    public $reportingGroupId;
+
+    // If something is read only we mark it in the docblock:
+    /**
+     * Balance
+     *
+     * READ ONLY
+     *
+     * @var double $balance
+     */
+    public $balance;
+
+    // rest of properties...
+
+    // The name of the endpoint (same as filename), protected
+    protected $endpoint = 'Account';
+
+    /**
+     * Field definitions
+     * 
+     * Used by the base class to decide what gets submitted in a save call,
+     * validation, etc
+     *
+     * All must include a type, whether or not it's nullable, and whether or
+     * not it's persistable.
+     *
+     * - Nullable is `true` if the word 'nullable' is in the 'type' column
+     * - Persistable is `true` if the word 'None.' is in the Additional Info column.
+     * - Type has the following rules
+     *   - `date` becomes "DateTime"
+     *   - `nullable` is removed, i.e. "nullable integer" is only "integer"
+     *   - Multiword linked terms are concatenated, eg:
+     *     - "Account Category" becomes "AccountCategory"
+     *     - "Tax Type" becomes "TaxType"
+     *
+     * Details on writable properties for Account:
+     * https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=Account
+     * @var array $fields
+     */
+    protected $fields = [
+        'id' => [
+            'type' => 'integer',
+            'nullable' => false,
+            'persistable' => true,
+        ],
+        'name' => [
+            'type' => 'string',
+            'nullable' => false,
+            'persistable' => true,
+        ],
+        'category' => [
+            'type' => 'AccountCategory',
+            'nullable' => false,
+            'persistable' => true,
+        ],
+        'reportingGroupId' => [
+            'type' => 'integer',
+            'nullable' => true,
+            'persistable' => true,
+        ],
+        'isTaxLocked' => [
+            'type' => 'boolean',
+            'nullable' => false,
+            'persistable' => false,
+        ],
+        // etc etc etc
+    ];
+
+    /**
+     * Features supported by the endpoint
+     *
+     * These features enable and disable the CRUD calls based on what is
+     * supported by the SageOne API
+     *
+     * Most models use at least one of these features, with a fair amount
+     * using all the functionality.
+     *
+     * @var array $features
+     */
+    protected $features = [
+        'all' => true,
+        'get' => true,
+        'save' => true,
+        'delete' => true,
+    ];
+
+    // Construct
+    public function __construct(array $config)
+    {
+        parent::__construct($config);
+    }
+
+    // Add methods for non-standard calls, like:
+    // GET Account/GetAccountsByCategoryId/{id}
+    public function getAccountsByCategoryId($id)
+    {
+        // etc ...
+    }
+}
+```
+
+Following that template will very quickly create models for the project.
+
+# NB initial delivery consists of only these models:
+
+Models marked with an asterix are pure CRUD models
 
 - [x] Base
 - [x] Exception Handling
-- [ ] Account
-  - [ ] Account Balance
-  - [ ] Account Category
-  - [ ] Account Note
-  - [ ] Account Note Attachment
-  - [ ] Account Opening Balance
-  - [ ] Account Payment
-  - [ ] Account Receipt
-- [ ] Analysis Category
-- [ ] Analysis Type
-- [ ] Company
-  - [ ] Company Entity Type
-  - [ ] Company Note
-- [ ] Currency
-- [ ] Exchange Rates
-- [ ] Supplier
-  - [ ] Supplier Additional Contact Detail
-  - [ ] Supplier Adjustment
-  - [ ] Supplier Ageing
-  - [ ] Supplier Bank Detail
-  - [ ] Supplier Category
-  - [ ] Supplier Invoice
-  - [ ] Supplier Invoice Attachment
-  - [ ] Supplier Note
-  - [ ] Supplier Note Attachment
-  - [ ] Supplier Opening Balance
-  - [ ] Supplier Payment
-  - [ ] Supplier Purchase History
-  - [ ] Supplier Return
-  - [ ] Supplier Return Attachment
-  - [ ] Supplier Statement
-  - [ ] Supplier Transaction Listing
-- [ ] Tax Type
+- [x] CRUD
+- [ ] Pagination
+- [ ] Models
+  - [x] Account
+    - [ ] Account Balance
+    - [x] Account Category *
+    - [ ] Account Note *
+    - [ ] Account Note Attachment
+    - [ ] Account Opening Balance *
+    - [ ] Account Payment *
+    - [ ] Account Receipt *
+  - [ ] Analysis Category
+  - [ ] Analysis Type
+  - [ ] Company
+    - [ ] Company Entity Type *
+    - [ ] Company Note
+  - [ ] Currency *
+  - [ ] Exchange Rates
+  - [ ] Supplier *
+    - [ ] Supplier Additional Contact Detail
+    - [ ] Supplier Adjustment
+    - [ ] Supplier Ageing
+    - [ ] Supplier Bank Detail *
+    - [ ] Supplier Category *
+    - [ ] Supplier Invoice
+    - [ ] Supplier Invoice Attachment
+    - [ ] Supplier Note *
+    - [ ] Supplier Note Attachment
+    - [ ] Supplier Opening Balance *
+    - [ ] Supplier Payment
+    - [ ] Supplier Purchase History
+    - [ ] Supplier Return
+    - [ ] Supplier Return Attachment
+    - [ ] Supplier Statement *
+    - [ ] Supplier Transaction Listing
+  - [x] Tax Type *
 
-### Future Planned Roadmap
+# ==== END OF INITIAL DELIVERY ====
+
+## Deliverables
+
+* Full, extensive, verbose, and defensive unit tests
+* Mocks if there are none for the model in the `tests/mocks` directory (convention
+can be inferred from the existing names in the folders)
+
+### Future Planned Roadmap, as and when needed
+
+Please feel free to open PRs for any of the following :)
 
 - [ ] Accountant Event
 - [ ] Accountant Note
@@ -233,7 +377,6 @@ Checked off bits are complete.
 - [ ] User Defined Field
 - [ ] VAT201 Report
 
-
 ## Caching
 
 ### Request Limits
@@ -245,6 +388,8 @@ All Sage One companies have a request limit of 5000 API requests per day. A maxi
 Because of this some of them can
 benefit from being cached. All caching should be off by default and only
 used if explicity set.
+
+No caching has been implemented yet but support is in place
 
 ### Details
 

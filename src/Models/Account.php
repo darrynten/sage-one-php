@@ -13,8 +13,6 @@ namespace DarrynTen\SageOne\Models;
 
 use DarrynTen\SageOne\BaseModel;
 
-use DarrynTen\SageOne\Models\AccountCategory;
-
 class Account extends BaseModel
 {
     /**
