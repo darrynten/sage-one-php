@@ -153,15 +153,15 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
 
         $exampleModel = new Example($this->config);
         $exampleBadFields = [
+            'exampleWithCamel' => [
+                'type' => 'SomeInvalidClass',
+                'nullable' => true,
+                'persistable' => true,
+            ],
             'id' => [
                 'type' => 'integerzzz',
                 'nullable' => false,
                 'persistable' => true,
-            ],
-            'exampleWithCamel' => [
-                'type' => 'SomeInvalidClass',
-                'nullable' => true,
-                'persistable' => false,
             ],
         ];
 
@@ -171,6 +171,7 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
         $reflectedModel->setValue($exampleModel, $exampleBadFields);
 
         $exampleModel->id = 12;
+        $exampleModel->exampleWithCamel = null;
         $exampleModel->toJson();
     }
 
