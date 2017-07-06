@@ -1,8 +1,8 @@
 # sage-one-php
 
-![Travis Build Status](https://travis-ci.org/darrynten/sage-one-php.svg?branch=master)
-![StyleCI Status](https://styleci.io/repos/x/shield?branch=master)
-[![codecov](https://codecov.io/gh/darrynten/sage-one-php/branch/master/graph/badge.svg)](https://codecov.io/gh/darrynten/sage-one-php)
+![Travis Build Status](https://travis-ci.org/darrynten/sage-one-php.svg?branch=dev)
+![StyleCI Status](https://styleci.io/repos/95722049/shield?branch=dev)
+[![codecov](https://codecov.io/gh/darrynten/sage-one-php/branch/dev/graph/badge.svg)](https://codecov.io/gh/darrynten/sage-one-php)
 ![Packagist Version](https://img.shields.io/packagist/v/darrynten/sage-one-php.svg)
 ![MIT License](https://img.shields.io/github/license/darrynten/sage-one-php.svg)
 
