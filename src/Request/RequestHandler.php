@@ -111,7 +111,7 @@ class RequestHandler
         $this->endpoint = $config['endpoint'];
         $this->version = $config['version'];
 
-        if (isset($config['companyId'])) {
+        if (array_key_exists('companyId', $config)) {
             $this->companyId = $config['companyId'];
         }
 
