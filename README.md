@@ -3,6 +3,9 @@
 ![Travis Build Status](https://travis-ci.org/darrynten/sage-one-php.svg?branch=dev)
 ![StyleCI Status](https://styleci.io/repos/95722049/shield?branch=dev)
 [![codecov](https://codecov.io/gh/darrynten/sage-one-php/branch/dev/graph/badge.svg)](https://codecov.io/gh/darrynten/sage-one-php)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c7241610533c472e950b4fb4385b712c)](https://www.codacy.com/app/darrynten/sage-one-php?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=darrynten/sage-one-php&amp;utm_campaign=Badge_Grade)
+[![Code Climate](https://codeclimate.com/github/darrynten/sage-one-php/badges/gpa.svg)](https://codeclimate.com/github/darrynten/sage-one-php)
+[![Issue Count](https://codeclimate.com/github/darrynten/sage-one-php/badges/issue_count.svg)](https://codeclimate.com/github/darrynten/sage-one-php)
 ![Packagist Version](https://img.shields.io/packagist/v/darrynten/sage-one-php.svg)
 ![MIT License](https://img.shields.io/github/license/darrynten/sage-one-php.svg)
 
