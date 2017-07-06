@@ -51,7 +51,7 @@ abstract class BaseModel
         'double',
     ];
 
-    protected $config;
+    protected $config = null;
 
     public function __construct(array $config)
     {
