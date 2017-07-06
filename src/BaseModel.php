@@ -157,6 +157,8 @@ abstract class BaseModel
      * $account = new Account;
      * $account->delete(11);
      *
+     * @param integer $id The ID to delete
+     *
      * @return void
      */
     public function delete(string $id)
