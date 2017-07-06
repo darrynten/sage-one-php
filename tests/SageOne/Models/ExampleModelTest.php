@@ -370,6 +370,5 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
             'OK',
             $result
         );
-
     }
 }
