@@ -241,9 +241,8 @@ abstract class BaseModel
         // So if the class doesn't exist, throw
         if (!class_exists($class)) {
             $this->throwException(ModelException::UNEXPECTED_PREPARE_CLASS, sprintf(
-                'Received unexpected namespaced class "%s" with config "%s" when preparing an object row',
-                $class,
-                var_dump($config)
+                'Received unexpected namespaced class "%s" when preparing an object row',
+                $class
             ));
         }
 
@@ -311,10 +310,8 @@ abstract class BaseModel
         // So if the class doesn't exist, throw
         if (!class_exists($class)) {
             $this->throwException(ModelException::PROPERTY_WITHOUT_CLASS, sprintf(
-                'Received namespaced class "%s" with config "%s" when resultitem "%s" has actual type "%s"',
+                'Received namespaced class "%s" when defined type is "%s"',
                 $class,
-                var_dump($config),
-                var_dump($resultItem),
                 gettype($resultItem)
             ));
         }

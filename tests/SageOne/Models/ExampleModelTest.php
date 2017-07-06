@@ -115,6 +115,65 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
         $exampleModel->xxx = 'xxx';
     }
 
+    public function testBadClass()
+    {
+        $this->expectException(ModelException::class);
+        $this->expectExceptionMessage('Model "Example" Received namespaced class "DarrynTen\SageOne\Models\SomeInvalidClass" when defined type is "string" Property is referencing an undefined, non-primitive class');
+        $this->expectExceptionCode(10110);
+
+        $exampleModel = new Example($this->config);
+        $exampleBadFields = [
+            'id' => [
+                'type' => 'integer',
+                'nullable' => false,
+                'persistable' => true,
+            ],
+            'exampleWithCamel' => [
+                'type' => 'SomeInvalidClass',
+                'nullable' => true,
+                'persistable' => false,
+            ],
+        ];
+
+        $reflection = new ReflectionClass($exampleModel);
+        $reflectedModel = $reflection->getProperty('fields');
+        $reflectedModel->setAccessible(true);
+        $reflectedModel->setValue($exampleModel, $exampleBadFields);
+
+        // Test
+        $data = json_decode(file_get_contents(__DIR__ . '/../../mocks/Example/GET_Example_Get_xx.json'));
+        $exampleModel->loadResult($data);
+    }
+
+    public function testBadExportable()
+    {
+        $this->expectException(ModelException::class);
+        $this->expectExceptionMessage('Model "Example" Received unexpected namespaced class "DarrynTen\SageOne\Models\integerzzz');
+        $this->expectExceptionCode(10115);
+
+        $exampleModel = new Example($this->config);
+        $exampleBadFields = [
+            'id' => [
+                'type' => 'integerzzz',
+                'nullable' => false,
+                'persistable' => true,
+            ],
+            'exampleWithCamel' => [
+                'type' => 'SomeInvalidClass',
+                'nullable' => true,
+                'persistable' => false,
+            ],
+        ];
+
+        $reflection = new ReflectionClass($exampleModel);
+        $reflectedModel = $reflection->getProperty('fields');
+        $reflectedModel->setAccessible(true);
+        $reflectedModel->setValue($exampleModel, $exampleBadFields);
+
+        $exampleModel->id = 12;
+        $exampleModel->toJson();
+    }
+
     public function testCustomMethod()
     {
         $exampleModel = new Example($this->config);
