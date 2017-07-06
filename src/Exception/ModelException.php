@@ -30,6 +30,8 @@ class ModelException extends Exception
     const NULL_WITHOUT_NULLABLE = 10111;
     const INVALID_LOAD_RESULT_PAYLOAD = 10112;
     const SETTING_UNDEFINED_PROPERTY = 10113;
+    const SETTING_READ_ONLY_PROPERTY = 10114;
+    const UNEXPECTED_PREPARE_CLASS = 10115;
 
     /**
      * @inheritdoc

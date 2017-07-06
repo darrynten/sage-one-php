@@ -51,6 +51,8 @@ abstract class BaseModel
         'double',
     ];
 
+    protected $config;
+
     public function __construct(array $config)
     {
         // TODO can't be spawning a million of these and passing in
@@ -61,8 +63,17 @@ abstract class BaseModel
 
     public function __set($key, $value)
     {
-        if (!array_key_exists($key, $this->fields) && ($key !== 'config')) {
+        if ($key === 'config') {
+            $this->config = $config;
+            return;
+        }
+
+        if (!array_key_exists($key, $this->fields)) {
             $this->throwException(ModelException::SETTING_UNDEFINED_PROPERTY, sprintf('key %s', $key));
+        }
+
+        if ($this->fields[$key]['persistable'] === false) {
+            $this->throwException(ModelException::SETTING_READ_ONLY_PROPERTY, sprintf('key %s', $key));
         }
 
         $this->$key = $value;
@@ -177,7 +188,7 @@ abstract class BaseModel
     private function prepareObjectRow($key, $config)
     {
         if (is_null($this->$key) && $this->fields[$key]['nullable']) {
-            return;
+            return null;
         }
 
         if (is_null($this->$key) && !$this->fields[$key]['nullable']) {
@@ -187,22 +198,24 @@ abstract class BaseModel
         if ($this->isValidPrimitive($this->$key, $config['type'])) {
             return $this->$key;
         }
-        $class = $this->getModelWithNamespace($config['type']);
 
+        // If it's a date we return a valid format
         if ($config['type'] === 'DateTime') {
             return $this->$key->format('Y-m-d');
-            // $result[$remoteKey] = $this->$key->format('Y-m-d');
-        } elseif (!class_exists($class)) {
-            die(var_dump('clas', $class, $this->$key, $config));
-        } else {
-            // if (!$this->$key) {
-            // }
-            if (is_null($this->$key)) {
-                die(var_dump('NULL?', $key, $this, $config, $result, $remoteKey, $e));
-            }
-            // $result[$remoteKey] = $this->$key->toObject();
-            return $this->$key->toObject();
         }
+
+        $class = $this->getModelWithNamespace($config['type']);
+
+        // So if the class doesn't exist, throw
+        if (!class_exists($class)) {
+            $this->throwException(ModelException::UNEXPECTED_PREPARE_CLASS, sprintf(
+                'Received unexpected namespaced class "%s" with config "%s" when preparing an object row',
+                $class,
+                var_dump($config)
+            ));
+        }
+
+        return $this->$key->toObject();
     }
 
     private function toObject()

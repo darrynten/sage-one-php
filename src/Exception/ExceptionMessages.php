@@ -22,6 +22,8 @@ class ExceptionMessages
         10111 => 'Property is null without nullable permission',
         10112 => 'A property is missing in the loadResult payload',
         10113 => 'Attempting to set a property that is not defined in the model',
+        10114 => 'Attempting to set a read-only property',
+        10115 => 'Unexpected class encountered while preparing row',
     ];
 
     // Maps to standard HTTP error codes

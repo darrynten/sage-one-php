@@ -244,6 +244,34 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
         $reflectValue->setAccessible(true);
         $value = $reflectValue->getValue(new Account($this->config));
         $this->assertEquals('Account', $value);
+
+        // Test retrieving valid json
+        $json = $accountModel->toJson();
+        $this->assertEquals('string', gettype($json));
+        $this->assertEquals(json_decode($data), json_decode($json));
+    }
+
+    public function testInject()
+    {
+        // Test injecting a result
+        $data = json_decode(file_get_contents(__DIR__ . '/../../mocks/Account/GET_Account_Get_xx.json'));
+
+        $accountModel = new Account($this->config);
+        $accountModel->loadResult($data);
+
+        // Expected lengths after loading
+        $this->assertCount(21, (array)$accountModel);
+
+        // Check values on all child properties to match the mock it received
+        $this->assertEquals($accountModel->id, 11);
+        $this->assertEquals($accountModel->name, 'sample string 2');
+
+        // Valid set
+        $accountModel->name = 'Account Test';
+        $this->assertEquals($accountModel->name, 'Account Test');
+
+        $newJson = $accountModel->toJson();
+        $this->assertFalse($newJson === $data);
     }
 
     public function testSave()
