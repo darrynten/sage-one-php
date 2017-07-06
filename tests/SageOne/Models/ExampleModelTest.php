@@ -115,6 +115,13 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
         $exampleModel->xxx = 'xxx';
     }
 
+    public function testCustomMethod()
+    {
+        $exampleModel = new Example($this->config);
+        $result = $exampleModel->anExampleCustomMethod();
+        $this->assertEquals('Example Model Custom Method Call', $result);
+    }
+
     /**
      * Test injecting a bad result
      */

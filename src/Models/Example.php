@@ -146,13 +146,10 @@ class Example extends BaseModel
      * Custom Method Example
      *
      * Custom Method Description
-     *
-     * @var string $variable
-     * @var integer $integerVariable
      */
-    private function anExampleCustomMethod()
+    public function anExampleCustomMethod()
     {
         // Write code that deals with all other calls
-        var_dump('Example Model Custom Method Call');
+        return 'Example Model Custom Method Call';
     }
 }

@@ -69,23 +69,10 @@ abstract class BaseModel
      */
     public function __set($key, $value)
     {
-        // Always allow config to be set
-        if ($key === 'config') {
-            $this->config = $config;
-            return;
-        }
-
         // Properties must be in fields map
         if (!array_key_exists($key, $this->fields)) {
             $this->throwException(ModelException::SETTING_UNDEFINED_PROPERTY, sprintf('key %s', $key));
         }
-
-        // Properties must be persistable
-        if ($this->fields[$key]['persistable'] === false) {
-            $this->throwException(ModelException::SETTING_READ_ONLY_PROPERTY, sprintf('key %s', $key));
-        }
-
-        $this->$key = $value;
     }
 
     /**
