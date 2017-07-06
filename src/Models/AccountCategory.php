@@ -29,14 +29,43 @@ class AccountCategory extends BaseModel
      */
     protected $endpoint = 'AccountCategory';
 
+    /**
+     * A comment on the AccountCategory
+     *
+     * @var string $comment
+     */
     public $comment;
 
+    /**
+     * The order
+     *
+     * @var integer $order
+     */
     public $order;
 
+    /**
+     * The description
+     *
+     * @var string $description
+     */
     public $description;
 
+    /**
+     * Date the account category was created
+     *
+     * READ ONLY
+     *
+     * @var DateTime $created
+     */
     public $created = null;
 
+    /**
+     * Date the account category was modified
+     *
+     * READ ONLY
+     *
+     * @var DateTime $created
+     */
     public $modified = null;
 
     /**
@@ -54,7 +83,7 @@ class AccountCategory extends BaseModel
      * `ID` is automatically converted to `id`
      *
      * Details on writable properties for Account:
-     * https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=Account
+     * https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=AccountCategory
      *
      * TODO check why/if ID is truly writable!
      *
@@ -73,7 +102,7 @@ class AccountCategory extends BaseModel
         ],
         'order' => [
             'type' => 'integer',
-            'nullable' => true,
+            'nullable' => false,
             'persistable' => true,
         ],
         'description' => [
