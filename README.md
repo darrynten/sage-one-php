@@ -237,6 +237,9 @@ class Account extends BaseModel
 
 Following that template will very quickly create models for the project.
 
+There is *also* an example test (ExampleModelTest.php) and an example mock
+folder to help you get going quickly.
+
 # NB initial delivery consists of only these models:
 
 Models marked with an asterix are pure CRUD models
@@ -285,6 +288,7 @@ Models marked with an asterix are pure CRUD models
 
 ## Deliverables
 
+* 100% Test Coverage
 * Full, extensive, verbose, and defensive unit tests
 * Mocks if there are none for the model in the `tests/mocks` directory (convention
 can be inferred from the existing names in the folders)
