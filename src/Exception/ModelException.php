@@ -12,6 +12,7 @@
 namespace DarrynTen\SageOne\Exception;
 
 use Exception;
+use DarrynTen\SageOne\Exception\ExceptionMessages;
 
 /**
  * Model exception for SageOne
@@ -20,12 +21,28 @@ use Exception;
  */
 class ModelException extends Exception
 {
+    const NO_GET_ALL_SUPPORT = 10101;
+    const NO_GET_ONE_SUPPORT = 10102;
+    const NO_SAVE_SUPPORT = 10103;
+    const NO_DELETE_SUPPORT = 10104;
+
+    const PROPERTY_WITHOUT_CLASS = 10110;
+    const NULL_WITHOUT_NULLABLE = 10111;
+    const INVALID_LOAD_RESULT_PAYLOAD = 10112;
+    const SETTING_UNDEFINED_PROPERTY = 10113;
 
     /**
      * @inheritdoc
      */
-    public function __construct($message = 'Model Exception', $code = 100)
+    public function __construct($endpoint, $code = 10100, $extra = '')
     {
+        $message = sprintf(
+            'Model "%s" %s %s',
+            $endpoint,
+            $extra,
+            ExceptionMessages::$modelErrorMessages[$code]
+        );
+
         parent::__construct($message, $code);
     }
 }

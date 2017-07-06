@@ -14,8 +14,7 @@ namespace DarrynTen\SageOne;
 use DarrynTen\SageOne\Request\RequestHandler;
 use DarrynTen\SageOne\Exception\ModelException;
 
-// TODO Should be abstract
-class BaseModel
+abstract class BaseModel
 {
     /**
      * A request object
@@ -38,12 +37,35 @@ class BaseModel
         'delete' => false
     ];
 
+    /**
+     * Valid primitive types
+     *
+     * Used to verify field definitions
+     *
+     * @var array $validPrimitiveTypes
+     */
+    private $validPrimitiveTypes = [
+        'string',
+        'integer',
+        'boolean',
+        'double',
+    ];
+
     public function __construct(array $config)
     {
         // TODO can't be spawning a million of these and passing in
         // config the whole time
         $this->request = new RequestHandler($config);
         $this->config = $config;
+    }
+
+    public function __set($key, $value)
+    {
+        if (!array_key_exists($key, $this->fields) && ($key !== 'config')) {
+            $this->throwException(ModelException::SETTING_UNDEFINED_PROPERTY, sprintf('key %s', $key));
+        }
+
+        $this->$key = $value;
     }
 
     /**
@@ -63,12 +85,17 @@ class BaseModel
     public function all()
     {
         if (!$this->features['all']) {
-            throw new ModelException('Model does not support the `all` call', 101);
+            $this->throwException(ModelException::NO_GET_ALL_SUPPORT);
         }
 
         $results = $this->request->request('GET', $this->endpoint, 'Get');
 
         return json_encode($results);
+    }
+
+    public function throwException($code, $message = '')
+    {
+        throw new ModelException($this->endpoint, $code, $message);
     }
 
     /**
@@ -85,7 +112,7 @@ class BaseModel
     public function get(string $id)
     {
         if (!$this->features['get']) {
-            throw new ModelException('Model does not support the `get` call', 102);
+            $this->throwException(ModelException::NO_GET_ONE_SUPPORT, sprintf('id %s', $id));
         }
 
         $result = $this->request->request('GET', $this->endpoint, sprintf('Get/%s', $id));
@@ -106,8 +133,8 @@ class BaseModel
      */
     public function delete(string $id)
     {
-        if (!$this->features['delete']) {
-            throw new ModelException('Model does not support the `delete` call', 104);
+        if (!$this->features['all']) {
+            $this->throwException(ModelException::NO_DELETE_SUPPORT, sprintf('id %s', $id));
         }
 
         $this->request->request('DELETE', $this->endpoint, sprintf('Delete/%s', $id));
@@ -115,8 +142,8 @@ class BaseModel
 
     public function save()
     {
-        if (!$this->features['save']) {
-            throw new ModelException('Model does not support the `save` call', 103);
+        if (!$this->features['all']) {
+            $this->throwException(ModelException::NO_SAVE_SUPPORT);
         }
 
         // TODO
@@ -128,42 +155,85 @@ class BaseModel
         return json_encode($this->toObject());
     }
 
+    /**
+     * Switches between our id format and sages id format
+     *
+     * Sage is PascalCase ours is camelCase
+     *
+     * @var string $localKey
+     */
+    private function getRemoteKey($localKey)
+    {
+        $remoteKey = ucfirst($localKey);
+
+        // Unless id - theirs is uppercase ours is lowercase
+        if ($localKey === 'id') {
+            $remoteKey = 'ID';
+        }
+
+        return $remoteKey;
+    }
+
+    private function prepareObjectRow($key, $config)
+    {
+        if (is_null($this->$key) && $this->fields[$key]['nullable']) {
+            return;
+        }
+
+        if (is_null($this->$key) && !$this->fields[$key]['nullable']) {
+            $this->throwException(ModelException::NULL_WITHOUT_NULLABLE, sprintf('key %s', $key));
+        }
+
+        if ($this->isValidPrimitive($this->$key, $config['type'])) {
+            return $this->$key;
+        }
+        $class = $this->getModelWithNamespace($config['type']);
+
+        if ($config['type'] === 'DateTime') {
+            return $this->$key->format('Y-m-d');
+            // $result[$remoteKey] = $this->$key->format('Y-m-d');
+        } elseif (!class_exists($class)) {
+            die(var_dump('clas', $class, $this->$key, $config));
+        } else {
+            // if (!$this->$key) {
+            // }
+            if (is_null($this->$key)) {
+                die(var_dump('NULL?', $key, $this, $config, $result, $remoteKey, $e));
+            }
+            // $result[$remoteKey] = $this->$key->toObject();
+            return $this->$key->toObject();
+        }
+    }
+
     private function toObject()
     {
         $result = [];
-        foreach ($this->fields as $key => $config) {
-            if ($key === 'id') {
-                $result['ID'] = $this->id;
-            } else {
-                $remoteKey = ucfirst($key);
-
-                if ($config['type'] === gettype($this->$key)) {
-                    $result[$remoteKey] = $this->$key;
-                } else {
-                    $class = $this->getModelWithNamespace($config['type']);
-
-                    if ($config['type'] === 'DateTime') {
-                        $result[$remoteKey] = $this->$key->format('Y-m-d');
-                    } elseif (!class_exists($class)) {
-                        die('class not exist');
-                    } else {
-                        // if (!$this->$key) {
-                        // }
-                        if (is_null($this->$key)) {
-                            die(var_dump('NULL?', $key, $this, $config, $result, $remoteKey, $e));
-                        }
-                        $result[$remoteKey] = $this->$key->toObject();
-                    }
-                }
-            }
+        foreach ($this->fields as $localKey => $config) {
+            $remoteKey = $this->getRemoteKey($localKey);
+            $result[$remoteKey] = $this->prepareObjectRow($localKey, $config);
         }
         return $result;
     }
 
-    private function processResultItem($resultItem, $config)
+    /**
+     * Check if the type matches a valid primitive
+     *
+     * @var string $type
+     */
+    private function isValidPrimitive($resultItem, $definedType)
     {
         // The type of the item matches the required type
-        if ($config['type'] === gettype($resultItem)) {
+        $itemType = gettype($resultItem);
+        if (in_array($itemType, $this->validPrimitiveTypes) && ($itemType === $definedType)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private function processResultItem($resultItem, $config)
+    {
+        if ($this->isValidPrimitive($resultItem, $config['type'])) {
             return $resultItem;
         }
 
@@ -177,13 +247,17 @@ class BaseModel
 
         // So if the class doesn't exist, throw
         if (!class_exists($class)) {
-            die(var_dump('NO CLASS', $class, $config, gettype($resultItem), $resultItem));
-            throw new ModelException('Model contains a model property defined without a corresponding class', 110);
+            $this->throwException(ModelException::PROPERTY_WITHOUT_CLASS, sprintf(
+                'Received namespaced class "%s" with config "%s" when resultitem "%s" has actual type "%s"',
+                $class,
+                var_dump($config),
+                var_dump($resultItem),
+                gettype($resultItem)
+            ));
         }
 
         // Make a new instance of the class and load the item
         $instance = new $class($this->config);
-
         $instance->loadResult($resultItem);
 
         return $instance;
@@ -192,18 +266,16 @@ class BaseModel
     public function loadResult(\stdClass $result)
     {
         foreach ($this->fields as $key => $config) {
-            // Sage is PascalCase ours is camelCase
-            $remoteKey = ucfirst($key);
+            $remoteKey = $this->getRemoteKey($key);
 
-            // Unless id - theirs is uppercase ours is lowercase
-            if ($key === 'id') {
-                $remoteKey = 'ID';
+            if (!property_exists($result, $remoteKey)) {
+                $this->throwException(ModelException::INVALID_LOAD_RESULT_PAYLOAD, sprintf(
+                    'Defined key "%s" not present in payload',
+                    $key
+                ));
             }
 
-            // Load up the value from the object
-            $resultItem = $result->$remoteKey;
-
-            $value = $this->processResultItem($resultItem, $config);
+            $value = $this->processResultItem($result->$remoteKey, $config);
 
             $this->$key = $value;
         }

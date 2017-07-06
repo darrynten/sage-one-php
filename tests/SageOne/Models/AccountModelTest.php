@@ -205,9 +205,9 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
         $this->assertObjectHasAttribute('id', new Account($this->config));
 
         // Expected lengths
-        $this->assertEquals(20, count((array)$accountModel));
-        $this->assertEquals(11, count((array)$accountModel->category));
-        $this->assertEquals(13, count((array)$accountModel->defaultTaxType));
+        $this->assertCount(21, (array)$accountModel);
+        $this->assertCount(12, (array)$accountModel->category);
+        $this->assertCount(14, (array)$accountModel->defaultTaxType);
 
         // Check values on all child properties to match the mock it received
         $this->assertEquals($accountModel->id, 11);

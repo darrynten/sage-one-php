@@ -245,6 +245,7 @@ Models marked with an asterix are pure CRUD models
 - [x] Exception Handling
 - [x] CRUD
 - [ ] Pagination
+- [ ] Rate Limiting
 - [ ] Models
   - [x] Account
     - [ ] Account Balance
