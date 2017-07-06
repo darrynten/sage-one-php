@@ -402,10 +402,18 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
         $reflectedClient->setAccessible(true);
         $reflectedClient->setValue($request, $mockClient);
 
-        $this->assertEquals(
-            null,
-            $request->request('DELETE', 'Account', 'Delete/11', [])
-        );
+        $accountModel = new Account($this->config);
+
+        /**
+         * We then reflect into the account model
+         */
+        $accountReflection = new ReflectionClass($accountModel);
+        $reflectedRequest = $accountReflection->getProperty('request');
+        $reflectedRequest->setAccessible(true);
+        $reflectedRequest->setValue($accountModel, $request);
+
+        $accountModel->delete(11);
+        // TODO not sure how to validate this worked...
     }
 
     public function testRequestWithAuth()

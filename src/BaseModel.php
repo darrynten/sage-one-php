@@ -150,7 +150,7 @@ abstract class BaseModel
      */
     public function delete(string $id)
     {
-        if (!$this->features['all']) {
+        if (!$this->features['delete']) {
             $this->throwException(ModelException::NO_DELETE_SUPPORT, sprintf('id %s', $id));
         }
 
