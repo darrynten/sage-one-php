@@ -157,7 +157,7 @@ class RequestHandler
             $this->handleException($exception);
         }
 
-        return json_decode($response->getBody(), false);
+        return json_decode($response->getBody());
     }
 
     /**
