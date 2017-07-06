@@ -61,17 +61,26 @@ abstract class BaseModel
         $this->config = $config;
     }
 
+    /**
+     * Ensure attempted sets are valid
+     *
+     * @var string $key The property
+     * @var mixed $value The desired value
+     */
     public function __set($key, $value)
     {
+        // Always allow config to be set
         if ($key === 'config') {
             $this->config = $config;
             return;
         }
 
+        // Properties must be in fields map
         if (!array_key_exists($key, $this->fields)) {
             $this->throwException(ModelException::SETTING_UNDEFINED_PROPERTY, sprintf('key %s', $key));
         }
 
+        // Properties must be persistable
         if ($this->fields[$key]['persistable'] === false) {
             $this->throwException(ModelException::SETTING_READ_ONLY_PROPERTY, sprintf('key %s', $key));
         }
@@ -104,6 +113,14 @@ abstract class BaseModel
         return json_encode($results);
     }
 
+    /**
+     * Properly handles and throws ModelExceptions
+     *
+     * @var integer $code The exception code
+     * @var string $message Any additional information
+     *
+     * @throws ModelException
+     */
     public function throwException($code, $message = '')
     {
         throw new ModelException($this->endpoint, $code, $message);
@@ -151,16 +168,28 @@ abstract class BaseModel
         $this->request->request('DELETE', $this->endpoint, sprintf('Delete/%s', $id));
     }
 
+    /**
+     * Submits a save call to Sage
+     *
+     * TODO: Actually perform this action!
+     */
     public function save()
     {
         if (!$this->features['all']) {
             $this->throwException(ModelException::NO_SAVE_SUPPORT);
         }
 
-        // TODO
+        // TODO Submission Body and Validation
         $this->request->request('POST', $this->endpoint, 'Save');
     }
 
+    /**
+     * Returns a JSON representation of the Model
+     *
+     * Conforms 100% to Sage responses and can load into other copies
+     *
+     * @return string JSON representation of the Model
+     */
     public function toJson()
     {
         return json_encode($this->toObject());
@@ -172,6 +201,8 @@ abstract class BaseModel
      * Sage is PascalCase ours is camelCase
      *
      * @var string $localKey
+     *
+     * @return string Remote key
      */
     private function getRemoteKey($localKey)
     {
@@ -185,16 +216,27 @@ abstract class BaseModel
         return $remoteKey;
     }
 
+    /**
+     * Prepare an object row for export
+     *
+     * @var string $key The objects key
+     * @var array $config The configuration for the object field
+     *
+     * @return mixed
+     */
     private function prepareObjectRow($key, $config)
     {
+        // If null and allowed to be null, return null
         if (is_null($this->$key) && $this->fields[$key]['nullable']) {
             return null;
         }
 
+        // If null and can't be null then throw
         if (is_null($this->$key) && !$this->fields[$key]['nullable']) {
             $this->throwException(ModelException::NULL_WITHOUT_NULLABLE, sprintf('key %s', $key));
         }
 
+        // If it's a valid primitive
         if ($this->isValidPrimitive($this->$key, $config['type'])) {
             return $this->$key;
         }
@@ -204,6 +246,7 @@ abstract class BaseModel
             return $this->$key->format('Y-m-d');
         }
 
+        // At this stage we would be dealing with a related Model
         $class = $this->getModelWithNamespace($config['type']);
 
         // So if the class doesn't exist, throw
@@ -215,9 +258,18 @@ abstract class BaseModel
             ));
         }
 
+        // And finally return an Object representation of the related Model
         return $this->$key->toObject();
     }
 
+    /**
+     * Turns the model into an object for exporting.
+     *
+     * Loops through valid fields and exports only those, so as to match the
+     * Sage API responses.
+     *
+     * @return object
+     */
     private function toObject()
     {
         $result = [];
@@ -232,10 +284,11 @@ abstract class BaseModel
      * Check if the type matches a valid primitive
      *
      * @var string $type
+     *
+     * @return boolean
      */
     private function isValidPrimitive($resultItem, $definedType)
     {
-        // The type of the item matches the required type
         $itemType = gettype($resultItem);
         if (in_array($itemType, $this->validPrimitiveTypes) && ($itemType === $definedType)) {
             return true;
@@ -244,6 +297,14 @@ abstract class BaseModel
         return false;
     }
 
+    /**
+     * Process an item during loading a payload
+     *
+     * @var $resultItem The item to load
+     * @var $config The configuration for the item
+     *
+     * @return mixed
+     */
     private function processResultItem($resultItem, $config)
     {
         if ($this->isValidPrimitive($resultItem, $config['type'])) {
@@ -273,14 +334,26 @@ abstract class BaseModel
         $instance = new $class($this->config);
         $instance->loadResult($resultItem);
 
+        // Return that instance
         return $instance;
     }
 
+    /**
+     * Loads up a result from an object
+     *
+     * The object can be created by json_decode of a Sage response
+     *
+     * Used for restoring and loading related models
+     *
+     * @var object $result A raw object representation
+     */
     public function loadResult(\stdClass $result)
     {
+        // We only care about entires that are defined in the model
         foreach ($this->fields as $key => $config) {
             $remoteKey = $this->getRemoteKey($key);
 
+            // If the payload is missing an item
             if (!property_exists($result, $remoteKey)) {
                 $this->throwException(ModelException::INVALID_LOAD_RESULT_PAYLOAD, sprintf(
                     'Defined key "%s" not present in payload',
@@ -294,6 +367,13 @@ abstract class BaseModel
         }
     }
 
+    /**
+     * Used to determine namespace for related models
+     *
+     * @var string Name of the model
+     *
+     * @return string The full namespace for a Model
+     */
     private function getModelWithNamespace(string $model)
     {
         return sprintf(

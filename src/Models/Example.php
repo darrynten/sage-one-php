@@ -131,10 +131,12 @@ class Example extends BaseModel
     /**
      * Any additional construction you may need to do
      *
+     * @var array $config
      */
     public function __construct(array $config)
     {
         // Your code here
+        // Only include if you need to modify constructor
 
         // This must always happen
         parent::__construct($config);

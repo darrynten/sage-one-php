@@ -257,9 +257,4 @@ class Account extends BaseModel
         'save' => true,
         'delete' => true,
     ];
-
-    public function __construct(array $config)
-    {
-        parent::__construct($config);
-    }
 }

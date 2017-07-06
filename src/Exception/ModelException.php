@@ -21,11 +21,13 @@ use DarrynTen\SageOne\Exception\ExceptionMessages;
  */
 class ModelException extends Exception
 {
+    // Methods
     const NO_GET_ALL_SUPPORT = 10101;
     const NO_GET_ONE_SUPPORT = 10102;
     const NO_SAVE_SUPPORT = 10103;
     const NO_DELETE_SUPPORT = 10104;
 
+    // Properies
     const PROPERTY_WITHOUT_CLASS = 10110;
     const NULL_WITHOUT_NULLABLE = 10111;
     const INVALID_LOAD_RESULT_PAYLOAD = 10112;
@@ -34,7 +36,11 @@ class ModelException extends Exception
     const UNEXPECTED_PREPARE_CLASS = 10115;
 
     /**
-     * @inheritdoc
+     * Custom Model exception handler
+     *
+     * @var string $endpoint The name of the model
+     * @var integer $code The error code (as per above)
+     * @var string $extra Any additional information to be included
      */
     public function __construct($endpoint, $code = 10100, $extra = '')
     {
