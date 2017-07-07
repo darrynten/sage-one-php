@@ -10,7 +10,7 @@ ruleset:
     merge: true
     message: "I'll take care of that for you"
 
-  short_description:
+  short_description_pull:
     name: "Mark PRs with short descriptions"
     events: pull_request
     close: false
@@ -19,7 +19,7 @@ ruleset:
     message: >
       @{{ user.login }}, this PR has been flagged because the description was too short. Please ensure your commit message is at least 50 characters long, and is sufficiently descriptive. Thanks!
 
-  short_description:
+  short_description_issue:
     name: "Close issues with short descriptions"
     events: issues
     close: true
