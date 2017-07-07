@@ -9,6 +9,25 @@ namespace DarrynTen\SageOne\Exception;
  */
 class ExceptionMessages
 {
+    // Moode codes 10xxx
+    public static $modelErrorMessages = [
+        // Methods
+        10100 => 'Undefined model exception',
+        10101 => 'Get all is not supported',
+        10102 => 'Get single is not supported',
+        10103 => 'Save is not supported',
+        10104 => 'Delete is not supported',
+        // Properties
+        10110 => 'Property is referencing an undefined, non-primitive class',
+        10111 => 'Property is null without nullable permission',
+        10112 => 'A property is missing in the loadResult payload',
+        10113 => 'Attempting to set a property that is not defined in the model',
+        10114 => 'Attempting to set a read-only property',
+        10115 => 'Unexpected class encountered while preparing row',
+        10116 => 'Attempting to get an undefined property',
+    ];
+
+    // Maps to standard HTTP error codes
     public static $strings = [
         400 => 'A malformed request was sent through or when a validation rule '
              . 'failed. Validation messages are returned in the response body.',

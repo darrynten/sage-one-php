@@ -110,7 +110,11 @@ class RequestHandler
         $this->key = $config['key'];
         $this->endpoint = $config['endpoint'];
         $this->version = $config['version'];
-        $this->companyId = $config['companyId'] || null;
+
+        if (array_key_exists('companyId', $config)) {
+            $this->companyId = $config['companyId'];
+        }
+
         $this->client = new Client();
     }
 
@@ -153,7 +157,7 @@ class RequestHandler
             $this->handleException($exception);
         }
 
-        return json_decode($response->getBody(), true);
+        return json_decode($response->getBody());
     }
 
     /**
@@ -199,7 +203,7 @@ class RequestHandler
      */
     private function requestToken()
     {
-        $this->token = base64_encode($this->clientId . ':' . $this->clientSecret);
+        $this->token = base64_encode($this->username . ':' . $this->password);
         $this->tokenType = 'Basic';
     }
 

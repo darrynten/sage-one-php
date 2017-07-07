@@ -1,5 +1,9 @@
 language: php
 
+addons:
+  code_climate:
+    repo_token: 6b6332b313557456f1fcf49cd1b9fbddfa0c042e43d92a9d19080f8ab32e1de8
+
 php:
   - 7.0
   - 7.1
@@ -13,3 +17,4 @@ script:
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
+  - vendor/bin/test-reporter

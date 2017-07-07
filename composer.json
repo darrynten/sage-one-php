@@ -11,7 +11,8 @@
     "phpunit/phpunit": "~5.0",
     "mockery/mockery": "dev-master",
     "internations/http-mock": "^0.8.1",
-    "codacy/coverage": "dev-master"
+    "codacy/coverage": "dev-master",
+    "codeclimate/php-test-reporter": "dev-master"
   },
   "config": {
     "bin-dir": "bin"

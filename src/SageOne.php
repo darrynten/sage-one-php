@@ -32,7 +32,7 @@ class SageOne
     /**
      * API Request Handler
      *
-     * @var RequestHandler $clientId
+     * @var RequestHandler $request
      */
     private $request;
 
