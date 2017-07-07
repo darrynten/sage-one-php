@@ -8,6 +8,16 @@ ruleset:
       - user.login = "darrynten"
       - body matches "/^LGTM/"
     merge: true
+    message: "I'll take care of that for you"
+
+  short_description:
+    name: "Mark PRs with short descriptions"
+    events: pull_request
+    close: false
+    label: invalid
+    when: length(body) < 50
+    message: >
+      @{{ user.login }}, this PR has been flagged because the description was too short. Please ensure your commit message is at least 50 characters long, and is sufficiently descriptive. Thanks!
 
   short_description:
     name: "Close issues with short descriptions"
@@ -17,6 +27,12 @@ ruleset:
     when: length(body) < 50
     message: >
       @{{ user.login }}, this issue has been closed because the description was too short. Please ensure your comment is at least 50 characters long, and is sufficiently descriptive. Thanks!
+
+  remove_invalid:
+    name: "Remove `invalid` label when issues/PRs are reopened"
+    events: [ issues, pull_request ]
+    label: -invalid
+    when: action = "reopened"
 
   broken_links:
     name: "Check for broken links in README.md"
@@ -30,6 +46,16 @@ ruleset:
       - files has "README.md"
       - count(diff_links.broken) > 0
 
+  name: "Auto-merge my updates to `README.md`"
+    events: pull_request
+    when:
+      - action = "opened"
+      - files has "README.md"
+      - changed_files = 1
+      - user.login = "darrynten"
+    merge: true
+    message: "I'll merge that in for you @{{ user.login }}"
+
   style_screenshots:
     name: "Require screenshot when there are style changes"
     events: pull_request
@@ -38,7 +64,7 @@ ruleset:
       we can review the new look and feel. Thanks!
     when:
       - action = "opened"
-      - count(filter(files, "[name=/\.css$/]")) > 0
+      - count(filter(files, "[name=/\.(css|scss)$/]")) > 0
       - not(body matches "/!\[image\]\(.*?\)/")
 
   require_unit_tests:
