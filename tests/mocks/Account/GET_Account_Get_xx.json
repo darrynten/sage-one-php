@@ -1,0 +1,33 @@
+{
+  "Name": "sample string 2",
+  "Category": {
+    "Comment": "sample string 1",
+    "Order": 6,
+    "Description": "sample string 7",
+    "ID": 8,
+    "Modified": "2017-06-30",
+    "Created": "2017-06-30"
+  },
+  "Active": true,
+  "Balance": 4.0,
+  "Description": "sample string 5",
+  "ReportingGroupId": 1,
+  "UnallocatedAccount": true,
+  "IsTaxLocked": true,
+  "Modified": "2017-06-30",
+  "Created": "2017-06-30",
+  "AccountType": 9,
+  "HasActivity": true,
+  "DefaultTaxTypeId": 1,
+  "DefaultTaxType": {
+    "ID": 1,
+    "Name": "sample string 2",
+    "Percentage": 3.1,
+    "IsDefault": true,
+    "HasActivity": true,
+    "IsManualTax": true,
+    "Created": "2017-06-30",
+    "Modified": "2017-06-30"
+  },
+  "ID": 11
+}

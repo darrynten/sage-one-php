@@ -12,9 +12,12 @@
 namespace DarrynTen\SageOne\Request;
 
 use DarrynTen\SageOne\Exception\ApiException;
+use DarrynTen\SageOne\Exception\ExceptionMessages;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ServerException;
 
 /**
  * RequestHandler Class
@@ -84,6 +87,18 @@ class RequestHandler
     private $tokenType;
 
     /**
+     * Valid HTTP Verbs for this API
+     *
+     * @var array $verbs
+     */
+    private $verbs = [
+        'GET',
+        'POST',
+        'PUT',
+        'DELETE'
+    ];
+
+    /**
      * Request handler constructor
      *
      * @param array $config The connection config
@@ -95,7 +110,11 @@ class RequestHandler
         $this->key = $config['key'];
         $this->endpoint = $config['endpoint'];
         $this->version = $config['version'];
-        $this->companyId = $config['companyId'] || null;
+
+        if (array_key_exists('companyId', $config)) {
+            $this->companyId = $config['companyId'];
+        }
+
         $this->client = new Client();
     }
 
@@ -115,14 +134,17 @@ class RequestHandler
      */
     public function handleRequest(string $method, string $uri, array $options, array $parameters = [])
     {
-        // Are we going a GET or a POST/PUT/DELETE?
+        if (!in_array($method, $this->verbs)) {
+            throw new ApiException('405 Bad HTTP Verb', 405);
+        }
+
         if (!empty($parameters)) {
             if ($method === 'GET') {
                 // Send as get params
                 foreach ($parameters as $key => $value) {
                     $options['query'][$key] = $value;
                 }
-            } else if ($method === 'POST' || $method === 'PUT' || $method === 'DELETE') {
+            } elseif ($method === 'POST' || $method === 'PUT' || $method === 'DELETE') {
                 // Otherwise send JSON in the body
                 $options['json'] = (object)$parameters;
             }
@@ -131,14 +153,34 @@ class RequestHandler
         // Let's go
         try {
             $response = $this->client->request($method, $uri, $options);
-
-            // All good
-            return json_decode($response->getBody(), true);
         } catch (RequestException $exception) {
-            $message = $exception->getMessage();
-
-            throw new ApiException($message, $exception->getCode(), $exception);
+            $this->handleException($exception);
         }
+
+        return json_decode($response->getBody());
+    }
+
+    /**
+     * Handles all API exceptions, and adds the official exception terms
+     * to the message.
+     *
+     * @param RequestException the original exception
+     *
+     * @throws ApiException
+     */
+    private function handleException($exception)
+    {
+        $code = $exception->getCode();
+        $message = $exception->getMessage();
+
+        $title = sprintf(
+            '%s: %s - %s',
+            $code,
+            ExceptionMessages::$strings[$code],
+            $message
+        );
+
+        throw new ApiException($title, $exception->getCode(), $exception);
     }
 
     /**
@@ -161,7 +203,7 @@ class RequestHandler
      */
     private function requestToken()
     {
-        $this->token = base64_encode($this->clientId . ':' . $this->clientSecret);
+        $this->token = base64_encode($this->username . ':' . $this->password);
         $this->tokenType = 'Basic';
     }
 
