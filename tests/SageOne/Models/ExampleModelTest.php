@@ -57,7 +57,7 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
         $this->expectExceptionCode(10101);
 
         $model = new Example($this->config);
-        $all = $model->all();
+        $model->all();
     }
 
     public function testGetException()
@@ -67,7 +67,7 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
         $this->expectExceptionCode(10102);
 
         $model = new Example($this->config);
-        $all = $model->get(11);
+        $model->get(11);
     }
 
     public function testSaveException()
@@ -77,7 +77,7 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
         $this->expectExceptionCode(10103);
 
         $model = new Example($this->config);
-        $all = $model->save();
+        $model->save();
     }
 
     public function testDeleteException()
@@ -87,7 +87,7 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
         $this->expectExceptionCode(10104);
 
         $model = new Example($this->config);
-        $all = $model->delete(11);
+        $model->delete(11);
     }
 
     public function testCustomExceptions()
