@@ -46,7 +46,7 @@ ruleset:
       - files has "README.md"
       - count(diff_links.broken) > 0
 
-  name: "Auto-merge my updates to `README.md`"
+  name: "Auto-merge my updates to README.md"
     events: pull_request
     when:
       - action = "opened"
