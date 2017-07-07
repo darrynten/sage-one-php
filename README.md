@@ -143,11 +143,11 @@ class Account extends BaseModel
     /**
      * Balance
      *
-     * READ ONLY
+     * READ ONLY (these become protected)
      *
      * @var double $balance
      */
-    public $balance;
+    protected $balance;
 
     // rest of properties...
 
@@ -223,7 +223,7 @@ class Account extends BaseModel
         'delete' => true,
     ];
 
-    // Construct
+    // Construct (if you need to modify construction)
     public function __construct(array $config)
     {
         parent::__construct($config);
