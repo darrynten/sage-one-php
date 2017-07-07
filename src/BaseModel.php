@@ -7,6 +7,7 @@
  * @author   Darryn Ten <darrynten@github.com>
  * @license  MIT <https://github.com/darrynten/sage-one-php/blob/master/LICENSE>
  * @link     https://github.com/darrynten/sage-one-php
+ * @version  PHP 7+
  */
 
 namespace DarrynTen\SageOne;
@@ -14,6 +15,17 @@ namespace DarrynTen\SageOne;
 use DarrynTen\SageOne\Request\RequestHandler;
 use DarrynTen\SageOne\Exception\ModelException;
 
+/**
+ * This is the base class for all the Sage Models.
+ *
+ * This class covers all/get/save/delete calls for all models that require it.
+ *
+ * It also handles conversion between our Model objects, and JSON that is
+ * compliant with the Sage API format.
+ *
+ * In order to provide ORM type functionality we support re-hydrating any
+ * model with its defined JSON fragment.
+ */
 abstract class BaseModel
 {
     /**
@@ -51,8 +63,20 @@ abstract class BaseModel
         'double',
     ];
 
+    /**
+     * A models configuration is stored here
+     *
+     * @var array $config
+     */
     protected $config = null;
 
+    /**
+     * Make a new model
+     *
+     * Setup a request handler and bind the config
+     *
+     * @param array $config The config for the model
+     */
     public function __construct(array $config)
     {
         // TODO can't be spawning a million of these and passing in
