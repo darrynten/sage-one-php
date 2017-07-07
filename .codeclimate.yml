@@ -17,6 +17,8 @@ engines:
     checks:
       Naming/ShortVariable:
         enabled: false
+      Design/TooManyFields:
+        enabled: false
 ratings:
   paths:
   - "**.inc"
