@@ -300,7 +300,7 @@ abstract class BaseModel
         }
 
         // If it's a date we return a new DateTime object
-        if ($config['type'] === 'DateTime') {
+        if ($config['type'] === \DateTime::class) {
             return new \DateTime($resultItem);
         }
 
