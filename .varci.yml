@@ -48,14 +48,14 @@ ruleset:
 
   merge_my_readme_changes:
     name: "Auto-merge my updates to README.md"
-      events: pull_request
-      when:
-        - action = "opened"
-        - files has "README.md"
-        - changed_files = 1
-        - user.login = "darrynten"
-      merge: true
-      message: "I'll merge that in for you @{{ user.login }}"
+    events: pull_request
+    when:
+      - action = "opened"
+      - files has "README.md"
+      - changed_files = 1
+      - user.login = "darrynten"
+    merge: true
+    message: "I'll merge that in for you @{{ user.login }}"
 
   style_screenshots:
     name: "Require screenshot when there are style changes"
