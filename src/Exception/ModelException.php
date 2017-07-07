@@ -40,7 +40,7 @@ class ModelException extends Exception
      * Custom Model exception handler
      *
      * @var string $endpoint The name of the model
-     * @var integer $code The error code (as per above)
+     * @var integer $code The error code (as per above) [10100 is Generic code]
      * @var string $extra Any additional information to be included
      */
     public function __construct($endpoint, $code = 10100, $extra = '')

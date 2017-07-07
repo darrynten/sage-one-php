@@ -57,7 +57,7 @@ class AccountCategory extends BaseModel
      *
      * @var DateTime $created
      */
-    public $created = null;
+    protected  $created = null;
 
     /**
      * Date the account category was modified
@@ -66,7 +66,7 @@ class AccountCategory extends BaseModel
      *
      * @var DateTime $created
      */
-    public $modified = null;
+    protected $modified = null;
 
     /**
      * Defines all possible fields.
