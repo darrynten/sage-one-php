@@ -66,6 +66,8 @@ abstract class BaseModel
      *
      * @var string $key The property
      * @var mixed $value The desired value
+     *
+     * @thows ModelException
      */
     public function __set($key, $value)
     {
@@ -85,6 +87,16 @@ abstract class BaseModel
         }
     }
 
+    /**
+     * __get
+     *
+     * We protect read-only properties, so we use this magic method in order
+     * to return read-only properties that are defined in the field mapping
+     *
+     * @param string $key Desired property
+     *
+     * @thows ModelException
+     */
     public function __get($key)
     {
         if (array_key_exists($key, $this->fields)) {
@@ -160,6 +172,7 @@ abstract class BaseModel
             $this->throwException(ModelException::NO_DELETE_SUPPORT, sprintf('id %s', $id));
         }
 
+        // TODO Response handle?
         $this->request->request('DELETE', $this->endpoint, sprintf('Delete/%s', $id));
     }
 
