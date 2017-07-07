@@ -24,6 +24,7 @@ class ExceptionMessages
         10113 => 'Attempting to set a property that is not defined in the model',
         10114 => 'Attempting to set a read-only property',
         10115 => 'Unexpected class encountered while preparing row',
+        10116 => 'Attempting to get an undefined property',
     ];
 
     // Maps to standard HTTP error codes

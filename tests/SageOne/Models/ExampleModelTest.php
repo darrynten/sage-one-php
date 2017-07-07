@@ -105,16 +105,6 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
         $exampleModel->toJson();
     }
 
-    public function testBadSet()
-    {
-        $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('Model "Example" key xxx Attempting to set a property that is not defined in the model');
-        $this->expectExceptionCode(10113);
-
-        $exampleModel = new Example($this->config);
-        $exampleModel->xxx = 'xxx';
-    }
-
     public function testBadClass()
     {
         $this->expectException(ModelException::class);
@@ -173,6 +163,71 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
         $exampleModel->id = 12;
         $exampleModel->exampleWithCamel = null;
         $exampleModel->toJson();
+    }
+
+    public function testCannotSet()
+    {
+        $this->expectException(ModelException::class);
+        $this->expectExceptionMessage('Model "Example" key exampleWithCamel value xx Attempting to set a read-only property');
+        $this->expectExceptionCode(10114);
+
+        $exampleModel = new Example($this->config);
+
+        $exampleModel->id = 12;
+        $exampleModel->exampleWithCamel = 'xx';
+    }
+
+    public function testSetUndefined()
+    {
+        $this->expectException(ModelException::class);
+        $this->expectExceptionMessage('Model "Example" key xxx value xxx Attempting to set a property that is not defined in the model');
+        $this->expectExceptionCode(10113);
+
+        $exampleModel = new Example($this->config);
+        $exampleModel->xxx = 'xxx';
+    }
+
+    public function testGetUndefined()
+    {
+        $this->expectException(ModelException::class);
+        $this->expectExceptionMessage('Model "Example" key xxx Attempting to get an undefined property');
+        $this->expectExceptionCode(10116);
+
+        $exampleModel = new Example($this->config);
+        $throw = $exampleModel->xxx;
+    }
+
+    public function testCannotNullify()
+    {
+        $this->expectException(ModelException::class);
+        $this->expectExceptionMessage('Model "Example" attempting to nullify key exampleWithCamel Property is null without nullable permission');
+        $this->expectExceptionCode(10111);
+
+        $exampleModel = new Example($this->config);
+
+        // Disable nulling and persisting on exampleWithCamel
+        $exampleFields = [
+            'exampleWithCamel' => [
+                'type' => 'string',
+                'nullable' => false,
+                'persistable' => true,
+            ],
+            'id' => [
+                'type' => 'integer',
+                'nullable' => false,
+                'persistable' => false,
+            ],
+        ];
+
+        $reflection = new ReflectionClass($exampleModel);
+        $reflectedModel = $reflection->getProperty('fields');
+        $reflectedModel->setAccessible(true);
+        $reflectedModel->setValue($exampleModel, $exampleFields);
+
+        $exampleModel->id = 2;
+        $exampleModel->exampleWithCamel = null;
+
+        // die(var_dump($exampleModel));
     }
 
     public function testCustomMethod()

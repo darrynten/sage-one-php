@@ -57,7 +57,7 @@ class TaxType extends BaseModel
      *
      * @var boolean $hasActivity
      */
-    public $hasActivity;
+    protected $hasActivity;
 
     /**
      * Is a manual tax type

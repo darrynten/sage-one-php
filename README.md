@@ -287,6 +287,8 @@ Models marked with an asterix are pure CRUD models
     - [ ] Supplier Transaction Listing
   - [x] Tax Type *
 
+And any related models not listed, so if ExampleModel has a reference to ExampleCategory but that is not on the list above it too must get processed
+
 # ==== END OF INITIAL DELIVERY ====
 
 ## Deliverables

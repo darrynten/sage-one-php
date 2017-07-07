@@ -35,14 +35,14 @@ class Example extends BaseModel
      * Example description
      *
      * READ ONLY [this must only be present when dealing with a read-only property)
-     * This is an indicator to developers that props are not persistable
+     * and the property *must* be protected
      *
      * The `= null;` must only remain for properties `nullable` in the docs
      * This is as an indicator to developers that a field is nullable
      *
      * @var string $exampleWithCamel
      */
-    public $exampleWithCamel = null;
+    protected $exampleWithCamel = null;
 
     // etc etc etc
 

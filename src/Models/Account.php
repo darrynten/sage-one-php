@@ -50,7 +50,7 @@ class Account extends BaseModel
      *
      * @var double $balance
      */
-    public $balance;
+    protected $balance;
 
     /**
      * Description of the account
@@ -75,7 +75,7 @@ class Account extends BaseModel
      *
      * @var boolean $unallocatedAccount
      */
-    public $unallocatedAccount;
+    protected $unallocatedAccount;
 
     /**
      * Tax locked flag
@@ -84,7 +84,7 @@ class Account extends BaseModel
      *
      * @var boolean $isTaxLocked
      */
-    public $isTaxLocked;
+    protected $isTaxLocked;
 
     /**
      * Date the account was last modified
@@ -95,7 +95,7 @@ class Account extends BaseModel
      *
      * @var DateTime $modified
      */
-    public $modified = null;
+    protected $modified = null;
 
     /**
      * Date the account was created
@@ -104,7 +104,7 @@ class Account extends BaseModel
      *
      * @var DateTime $created
      */
-    public $created;
+    protected $created;
 
     /**
      * The account type reference
@@ -113,7 +113,7 @@ class Account extends BaseModel
      *
      * @var int $accountType
      */
-    public $accountType;
+    protected $accountType;
 
     /**
      * Account activity flag
@@ -122,7 +122,7 @@ class Account extends BaseModel
      *
      * @var boolean $hasActivity
      */
-    public $hasActivity;
+    protected $hasActivity;
 
     /**
      * Default tax type ID reference

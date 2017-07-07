@@ -71,8 +71,27 @@ abstract class BaseModel
     {
         // Properties must be in fields map
         if (!array_key_exists($key, $this->fields)) {
-            $this->throwException(ModelException::SETTING_UNDEFINED_PROPERTY, sprintf('key %s', $key));
+            $this->throwException(ModelException::SETTING_UNDEFINED_PROPERTY, sprintf('key %s value %s', $key, $value));
         }
+
+        // Properties must be writable
+        if (!$this->fields[$key]['persistable']) {
+            $this->throwException(ModelException::SETTING_READ_ONLY_PROPERTY, sprintf('key %s value %s', $key, $value));
+        }
+
+        // Null values must be nullable
+        if (!$this->fields[$key]['nullable'] && is_null($value)) {
+            $this->throwException(ModelException::NULL_WITHOUT_NULLABLE, sprintf('attempting to nullify key %s', $key));
+        }
+    }
+
+    public function __get($key)
+    {
+        if (array_key_exists($key, $this->fields)) {
+            return $this->$key;
+        }
+
+        $this->throwException(ModelException::GETTING_UNDEFINED_PROPERTY, sprintf('key %s', $key));
     }
 
     /**
@@ -98,19 +117,6 @@ abstract class BaseModel
         $results = $this->request->request('GET', $this->endpoint, 'Get');
 
         return json_encode($results);
-    }
-
-    /**
-     * Properly handles and throws ModelExceptions
-     *
-     * @var integer $code The exception code
-     * @var string $message Any additional information
-     *
-     * @throws ModelException
-     */
-    public function throwException($code, $message = '')
-    {
-        throw new ModelException($this->endpoint, $code, $message);
     }
 
     /**
@@ -269,23 +275,6 @@ abstract class BaseModel
     }
 
     /**
-     * Check if the type matches a valid primitive
-     *
-     * @var string $type
-     *
-     * @return boolean
-     */
-    private function isValidPrimitive($resultItem, $definedType)
-    {
-        $itemType = gettype($resultItem);
-        if (in_array($itemType, $this->validPrimitiveTypes) && ($itemType === $definedType)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
      * Process an item during loading a payload
      *
      * @var $resultItem The item to load
@@ -351,6 +340,36 @@ abstract class BaseModel
 
             $this->$key = $value;
         }
+    }
+
+    /**
+     * Check if the type matches a valid primitive
+     *
+     * @var string $type
+     *
+     * @return boolean
+     */
+    private function isValidPrimitive($resultItem, $definedType)
+    {
+        $itemType = gettype($resultItem);
+        if (in_array($itemType, $this->validPrimitiveTypes) && ($itemType === $definedType)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Properly handles and throws ModelExceptions
+     *
+     * @var integer $code The exception code
+     * @var string $message Any additional information
+     *
+     * @throws ModelException
+     */
+    public function throwException($code, $message = '')
+    {
+        throw new ModelException($this->endpoint, $code, $message);
     }
 
     /**
