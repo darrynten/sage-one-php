@@ -230,6 +230,35 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
         // die(var_dump($exampleModel));
     }
 
+    public function testUnloadedProperties()
+    {
+        $exampleModel = new Example($this->config);
+
+        $exampleFields = [
+            'exampleWithCamel' => [
+                'type' => 'string',
+                'nullable' => false,
+                'persistable' => true,
+                'default' => 'some default value'
+            ],
+            'id' => [
+                'type' => 'integer',
+                'nullable' => false,
+                'persistable' => true,
+            ],
+        ];
+
+        $reflection = new ReflectionClass($exampleModel);
+        $reflectedModel = $reflection->getProperty('fields');
+        $reflectedModel->setAccessible(true);
+        $reflectedModel->setValue($exampleModel, $exampleFields);
+
+        $this->assertNull($exampleModel->id);
+        $this->assertEquals('some default value', $exampleModel->exampleWithCamel);
+        $exampleModel->exampleWithCamel = 'none default value';
+        $this->assertEquals('none default value', $exampleModel->exampleWithCamel);
+    }
+
     public function testCustomMethod()
     {
         $exampleModel = new Example($this->config);

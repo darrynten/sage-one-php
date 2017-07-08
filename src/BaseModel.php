@@ -130,19 +130,17 @@ abstract class BaseModel
     public function __get($key)
     {
         if (array_key_exists($key, $this->fields)) {
-            if (!array_key_exists($key, $this->fieldsData)) {
-                // we have not loaded any data into model
-                // so fieldsData array can be empty
-                if (array_key_exists('default', $this->fields[$key])) {
-                    // if we have some specific default value
-                    // other than null
-                    return $this->fields[$key]['default'];
-                }
-                // Accessing $obj->key when no default data is set returns null
-                // so we return it as default value for any described but not loaded property
-                return null;
+            if (array_key_exists($key, $this->fieldsData)) {
+                // there is some data loaded so we return it
+                return $this->fieldsData[$key];
             }
-            return $this->fieldsData[$key];
+            if (array_key_exists('default', $this->fields[$key])) {
+                // there is some default value
+                return $this->fields[$key]['default'];
+            }
+            // Accessing $obj->key when no default data is set returns null
+            // so we return it as default value for any described but not loaded property
+            return null;
         }
 
         $this->throwException(ModelException::GETTING_UNDEFINED_PROPERTY, sprintf('key %s', $key));
