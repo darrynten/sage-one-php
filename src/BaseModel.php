@@ -207,7 +207,7 @@ abstract class BaseModel
      */
     public function save()
     {
-        if (!$this->features['all']) {
+        if (!$this->features['save']) {
             $this->throwException(ModelException::NO_SAVE_SUPPORT);
         }
 

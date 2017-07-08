@@ -551,4 +551,28 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
 
         $model->delete($id);
     }
+
+    public function verifySaveException(string $class)
+    {
+        $className = $this->getClassName($class);
+
+        $this->expectException(ModelException::class);
+        $this->expectExceptionMessage('Model "' . $className . '"  Save is not supported');
+        $this->expectExceptionCode(10103);
+
+        $model = new $class($this->config);
+        $model->save();
+    }
+
+    public function verifyDeleteException(string $class)
+    {
+        $className = $this->getClassName($class);
+
+        $this->expectException(ModelException::class);
+        $this->expectExceptionMessage('Model "' . $className . '" id 1 Delete is not supported');
+        $this->expectExceptionCode(10104);
+
+        $model = new $class($this->config);
+        $model->delete(1);
+    }
 }
