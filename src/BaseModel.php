@@ -212,7 +212,7 @@ abstract class BaseModel
         }
 
         // TODO Submission Body and Validation
-        $this->request->request('POST', $this->endpoint, 'Save');
+        return $this->request->request('POST', $this->endpoint, 'Save');
     }
 
     /**
