@@ -409,10 +409,11 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     public function verifyDelete(string $class, int $id, callable $whatToCheck)
     {
         $className = $this->getClassName($class);
+        $url = '/1.1.2/' . $className . '/Delete/' . $id . '?apikey=key';
         $this->http->mock
             ->when()
             ->methodIs('DELETE')
-            ->pathIs("/1.1.2/{$className}/Delete/{$id}?apikey=key")
+            ->pathIs($url)
             ->then()
             ->body(null)
             ->end();
@@ -429,7 +430,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
 
         $localResult = $localClient->request(
             'DELETE',
-            "http://localhost:8082/1.1.2/{$className}/Delete/{$id}?apikey=key",
+            'http://localhost:8082' . $url,
             []
         );
 
