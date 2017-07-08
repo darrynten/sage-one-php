@@ -258,7 +258,7 @@ Models marked with an asterix are pure CRUD models
   - [x] Account
     - [ ] Account Balance
     - [x] Account Category *
-    - [ ] Account Note *
+    - [x] Account Note *
     - [ ] Account Note Attachment
     - [ ] Account Opening Balance *
     - [ ] Account Payment *
@@ -268,7 +268,7 @@ Models marked with an asterix are pure CRUD models
   - [ ] Company
     - [ ] Company Entity Type *
     - [ ] Company Note
-  - [ ] Currency *
+  - [x] Currency *
   - [ ] Exchange Rates
   - [ ] Supplier *
     - [ ] Supplier Additional Contact Detail
@@ -461,3 +461,4 @@ if you have any ideas.
 
 * [Dmitry Semenov](https://github.com/mxnr)
 * [Karolin Gaedeke](https://github.com/KaroZA)
+* [Vitaliy Likhachev](https://github.com/make-it-git)
