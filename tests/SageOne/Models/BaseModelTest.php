@@ -430,7 +430,6 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
 
         $request = new RequestHandler($this->config);
 
-
         /**
          * We make a local client to connect to our mock and get the
          * expected result
@@ -493,7 +492,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     public function verifyDelete(string $class, int $id, callable $whatToCheck)
     {
         $className = $this->getClassName($class);
-        $url = '/1.1.2/' . $className . '/Delete/' . $id . '?apikey=key';
+        $url = sprintf('/1.1.2/%s/Delete/%s?apikey=key', $className, $id);
         $this->http->mock
             ->when()
             ->methodIs('DELETE')
@@ -504,7 +503,6 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $this->http->setUp();
 
         $request = new RequestHandler($this->config);
-
 
         /**
          * We make a local client to connect to our mock and get the
