@@ -265,8 +265,14 @@ class CurrencyModelTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Currency::class, $currencyModel);
 
         // Ensure the instance has expected properties
-        $this->assertObjectHasAttribute('id', new Currency($this->config));
-
+        $this->assertObjectHasAttribute('id', $currencyModel);
+        $this->assertEquals('integer', gettype($currencyModel->id));
+        $this->assertObjectHasAttribute('code', $currencyModel);
+        $this->assertEquals('string', gettype($currencyModel->code));
+        $this->assertObjectHasAttribute('description', $currencyModel);
+        $this->assertEquals('string', gettype($currencyModel->description));
+        $this->assertObjectHasAttribute('symbol', $currencyModel);
+        $this->assertEquals('string', gettype($currencyModel->symbol));
 
         // Check values on all child properties to match the mock it received
         $this->assertEquals($currencyModel->id, 11);
