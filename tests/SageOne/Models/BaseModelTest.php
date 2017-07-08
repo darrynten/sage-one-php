@@ -190,7 +190,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         foreach ($attributes as $name => $options) {
             $this->assertEquals(true, is_array($value[$name]));
             $this->assertEquals($options['type'], $value[$name]['type'],
-                "Model $className Key $name Expected type {$options['type']} Got {$value[$name]['type']}");
+                "Model {$className} Key {$name} Expected type {$options['type']} got {$value[$name]['type']}");
             $this->assertEquals('boolean', gettype($value[$name]['nullable']));
             $this->assertEquals('boolean', gettype($value[$name]['persistable']));
 
@@ -198,14 +198,14 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
             $nullableText = $nullable ? 'true': 'false';
             $nullableOptionText = $value[$name]['nullable'] ? 'true' : 'false';
             $this->assertEquals($nullable, $value[$name]['nullable'],
-                "Model $className Key $name Expected nullable to be {$nullableText} got {$nullableOptionText}");
+                "Model {$className} Key {$name} Expected nullable to be {$nullableText} got {$nullableOptionText}");
 
             $persistable = isset($options['persistable']);
             $persistableText = $persistable ? 'true' : 'false';
             $persistableOptionText = $value[$name]['persistable'] ? 'true' : 'false';
 
             $this->assertEquals($persistable, $value[$name]['persistable'],
-                "Model $className Key $name Expected persistable to be {$persistableText} got {$persistableOptionText}");
+                "Model {$className} Key {$name} Expected persistable to be {$persistableText} got {$persistableOptionText}");
         }
     }
 
