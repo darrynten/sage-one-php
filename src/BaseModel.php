@@ -225,12 +225,12 @@ abstract class BaseModel
      */
     public function save()
     {
-        if (!$this->features['all']) {
+        if (!$this->features['save']) {
             $this->throwException(ModelException::NO_SAVE_SUPPORT);
         }
 
         // TODO Submission Body and Validation
-        $this->request->request('POST', $this->endpoint, 'Save');
+        return $this->request->request('POST', $this->endpoint, 'Save');
     }
 
     /**

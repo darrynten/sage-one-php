@@ -1,0 +1,18 @@
+{
+  "TotalResults": 1,
+  "ReturnedResults": 2,
+  "Results": [
+      {
+      "ID": 1,
+      "Code": "code 1",
+      "Description": "description 1",
+      "Symbol": "symbol 1"
+    },
+    {
+      "ID": 2,
+      "Code": "code 2",
+      "Description": "description 2",
+      "Symbol": "symbol 2"
+    }
+  ]
+}
