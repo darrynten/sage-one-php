@@ -122,7 +122,7 @@ class CurrencyModelTest extends \PHPUnit_Framework_TestCase
         $currencyModel = new Currency($this->config);
 
         /**
-         * We then reflect into the example model
+         * We then reflect into the currency model
          */
         $currencyReflection = new ReflectionClass($currencyModel);
         $reflectedRequest = $currencyReflection->getProperty('request');
@@ -279,7 +279,5 @@ class CurrencyModelTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($currencyModel->code, 'code 11');
         $this->assertEquals($currencyModel->description, 'description 11');
         $this->assertEquals($currencyModel->symbol, 'symbol 11');
-
-        // Check any protected/private properties via reflection
     }
 }
