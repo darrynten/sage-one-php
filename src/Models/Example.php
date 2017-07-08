@@ -16,6 +16,12 @@ namespace DarrynTen\SageOne\Models;
 
 use DarrynTen\SageOne\BaseModel;
 
+/**
+ * Example Model
+ *
+ * Details on writable properties for Example:
+ * https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=Example
+ */
 class Example extends BaseModel
 {
     //////////////////////////// Public Properties

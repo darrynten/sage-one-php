@@ -13,6 +13,12 @@ namespace DarrynTen\SageOne\Models;
 
 use DarrynTen\SageOne\BaseModel;
 
+/**
+ * Account Model
+ *
+ * Details on writable properties for Account:
+ * https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=Account
+ */
 class Account extends BaseModel
 {
     /**

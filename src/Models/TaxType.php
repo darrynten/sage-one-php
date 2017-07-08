@@ -13,6 +13,12 @@ namespace DarrynTen\SageOne\Models;
 
 use DarrynTen\SageOne\BaseModel;
 
+/**
+ * Tax Type
+ *
+ * Details on writable properties for Tax Type:
+ * https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=TaxType
+ */
 class TaxType extends BaseModel
 {
     /**
