@@ -265,8 +265,8 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
 
     public function testSave()
     {
-        $parameters = ['data123' => 'value'];
-        $data = '{\'key\':\'data\'}';
+        $data = file_get_contents(__DIR__ . '/../../mocks/Account/POST_Account_Save_RESP.json');
+        $parameters = json_decode(file_get_contents(__DIR__ . '/../../mocks/Account/POST_Account_Save_REQ.json'), true);
 
         $this->http->mock
             ->when()
@@ -332,7 +332,10 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
 
         $accountModel->name = 'New Name';
 
-        $accountModel->save();
+        $expectedResponse = json_decode(file_get_contents(__DIR__ . '/../../mocks/Account/POST_Account_Save_RESP.json'));
+
+        $response = $accountModel->save();
+        $this->assertEquals($expectedResponse->ID, $response->ID);
         // (var_dump($accountModel->toJson()));
 
         // $this->assertEquals(

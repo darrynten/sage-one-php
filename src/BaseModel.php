@@ -222,6 +222,8 @@ abstract class BaseModel
      * Submits a save call to Sage
      *
      * TODO: Actually perform this action!
+     *
+     * @return stdClass Representaion of response
      */
     public function save()
     {
