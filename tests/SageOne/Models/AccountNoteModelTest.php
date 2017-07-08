@@ -43,7 +43,7 @@ class AccountNoteModelTest extends BaseModelTest
 
     public function testInject()
     {
-        $this->verifyInject(AccountNote::class, function($model, $data) {
+        $this->verifyInject(AccountNote::class, function ($model, $data) {
             $this->assertEquals($model->id, 2);
             $this->assertEquals($model->userId, 1);
             $this->assertEquals($model->accountId, 1);
@@ -101,7 +101,7 @@ class AccountNoteModelTest extends BaseModelTest
 
     public function testGetAll()
     {
-        $this->verifyGetAll(AccountNote::class, function($results, $data) {
+        $this->verifyGetAll(AccountNote::class, function ($results, $data) {
             $this->assertEquals(2, count($results));
             $this->assertEquals(1, $results[0]['AccountId']);
             $this->assertEquals(1, $results[0]['UserId']);
@@ -119,7 +119,7 @@ class AccountNoteModelTest extends BaseModelTest
 
     public function testGetId()
     {
-        $this->verifyGetId(AccountNote::class, 2, function($model) {
+        $this->verifyGetId(AccountNote::class, 2, function ($model) {
             $this->assertEquals(2, $model->id);
             $this->assertEquals(1, $model->accountId);
             $this->assertEquals(1, $model->userId);
@@ -134,7 +134,7 @@ class AccountNoteModelTest extends BaseModelTest
 
     public function testSave()
     {
-        $this->verifySave(AccountNote::class, function($response) {
+        $this->verifySave(AccountNote::class, function ($response) {
             $this->assertEquals(2, $response->ID);
             // TODO Do actual checks
         });
@@ -142,7 +142,7 @@ class AccountNoteModelTest extends BaseModelTest
 
     public function testDelete()
     {
-        $this->verifyDelete(AccountNote::class, 11, function() {
+        $this->verifyDelete(AccountNote::class, 11, function () {
             // TODO do actual checks
         });
     }

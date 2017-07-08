@@ -118,7 +118,6 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $obj = new \stdClass;
         $obj->ID = 1;
         $model->loadResult($obj);
-
     }
 
     protected function verifyAttributes(string $class, array $attributes)
