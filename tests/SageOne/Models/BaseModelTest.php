@@ -54,12 +54,22 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         return $className;
     }
 
+    /**
+     * Verifies that passed $class (as string) is instance of $class
+     *
+     * @param string $class Full path to the class
+     */
     protected function verifyInstanceOf(string $class)
     {
         $request = new $class($this->config);
         $this->assertInstanceOf($class, $request);
     }
 
+    /**
+     * Verifies that when we try to set undefined property it throws expected exception
+     *
+     * @param string $class Full path to the class
+     */
     protected function verifySetUndefined(string $class)
     {
         $className = $this->getClassName($class);
@@ -72,6 +82,11 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $model->doesNotExist = 'xyz';
     }
 
+    /**
+     * Verifies that when we try to get undefined property it throws expected exception
+     *
+     * @param string $class Full path to the class
+     */
     protected function verifyGetUndefined(string $class)
     {
         $className = $this->getClassName($class);
@@ -84,6 +99,12 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $throw = $model->doesNotExist;
     }
 
+    /**
+     * Verifies that when we try to set property to null and it can not be null it throws expected exception
+     *
+     * @param string $class Full path to the class
+     * @param string $key Valid not nullable field for this class
+     */
     protected function verifyCanNotNullify(string $class, string $key)
     {
         $className = $this->getClassName($class);
@@ -96,6 +117,12 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $model->{$key} = null;
     }
 
+    /**
+     * Verifies that when we try to set property to null and it can be null it does not throw exception
+     *
+     * @param string $class Full path to the class
+     * @param string $key Valid nullable field for this class
+     */
     protected function verifyCanNullify(string $class, string $key)
     {
         $className = $this->getClassName($class);
@@ -105,6 +132,12 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($model->{$key});
     }
 
+    /**
+     * Verifies that when we try to load data for model without required fields it throws expected exception
+     *
+     * @param string $class Full path to the class
+     * @param string $key Valid field for this $class (because of the loading logic it should be first field in $fields attribute after 'id'
+     */
     protected function verifyBadImport(string $class, string $key)
     {
         $className = $this->getClassName($class);
@@ -120,6 +153,18 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $model->loadResult($obj);
     }
 
+    /**
+     * Verifies that all fields has expected types, nullable and persistable properties
+     *
+     * @param string $class Full path to the class
+     * @param array $attributes
+     *      Contains data in the following format
+     *      ['name of the key' =>
+     *          'type' => 'name of the type, like integer or DateTime',
+     *          'nullable' => true, // if field can be null, optional, if omitted expected to disallow nulls
+     *          'persistable' => true // if field is not read only, optional, if omitted expected to be read only
+     *      ]
+     */
     protected function verifyAttributes(string $class, array $attributes)
     {
         $model = new $class($this->config);
@@ -164,6 +209,13 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * Verifies that features are set as expected
+     * Available features are: all, get, save, delete
+     *
+     * @param string $class Full path to the class
+     * @param array $features
+     */
     protected function verifyFeatures(string $class, array $features)
     {
         $model = new $class($this->config);
@@ -187,6 +239,12 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * Verifies that we can load object from passed data (data should be valid, of course)
+     *
+     * @param string $class Full path to the class
+     * @param callable $whatToCheck Verifies fields on loaded model
+     */
     protected function verifyInject(string $class, callable $whatToCheck)
     {
         $className = $this->getClassName($class);
@@ -198,6 +256,12 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $whatToCheck($model, $data);
     }
 
+    /**
+     * Verifies that we can load list of models
+     *
+     * @param string $class Full path to the class
+     * @param callable $whatToCheck Verifies fields on result
+     */
     protected function verifyGetAll(string $class, callable $whatToCheck)
     {
         $className = $this->getClassName($class);
@@ -269,6 +333,13 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $whatToCheck($allInstances['Results'], $data);
     }
 
+    /**
+     * Verifies that we can load single model
+     *
+     * @param string $class Full path to the class
+     * @param ind $id id of the model
+     * @param callable $whatToCheck Verifies fields on single model
+     */
     protected function verifyGetId(string $class, int $id, callable $whatToCheck)
     {
         $className = $this->getClassName($class);
@@ -336,6 +407,12 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $whatToCheck($model);
     }
 
+    /**
+     * Verifies that we can save model
+     *
+     * @param string $class Full path to the class
+     * @param callable $whatToCheck Verifies response after saving model
+     */
     protected function verifySave(string $class, callable $whatToCheck)
     {
         $className = $this->getClassName($class);
@@ -352,7 +429,6 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $this->http->setUp();
 
         $request = new RequestHandler($this->config);
-
 
         /**
          * We make a local client to connect to our mock and get the
@@ -406,10 +482,17 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $whatToCheck($response);
     }
 
+    /**
+     * Verifies that we can delete model
+     *
+     * @param string $class Full path to the class
+     * @param int $id Id of the model
+     * @param callable $whatToCheck Verifies response
+     */
     public function verifyDelete(string $class, int $id, callable $whatToCheck)
     {
         $className = $this->getClassName($class);
-        $url = '/1.1.2/' . $className . '/Delete/' . $id . '?apikey=key';
+        $url = sprintf('/1.1.2/%s/Delete/%s?apikey=key', $className, $id);
         $this->http->mock
             ->when()
             ->methodIs('DELETE')
@@ -420,7 +503,6 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $this->http->setUp();
 
         $request = new RequestHandler($this->config);
-
 
         /**
          * We make a local client to connect to our mock and get the
