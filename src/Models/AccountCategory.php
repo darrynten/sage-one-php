@@ -22,57 +22,11 @@ use DarrynTen\SageOne\BaseModel;
 class AccountCategory extends BaseModel
 {
     /**
-     * The ID of the account
-     *
-     * @var int $id
-     */
-    public $id;
-
-    /**
      * The API Endpoint
      *
      * @var string $endpoint
      */
     protected $endpoint = 'AccountCategory';
-
-    /**
-     * A comment on the AccountCategory
-     *
-     * @var string $comment
-     */
-    public $comment;
-
-    /**
-     * The order
-     *
-     * @var integer $order
-     */
-    public $order;
-
-    /**
-     * The description
-     *
-     * @var string $description
-     */
-    public $description;
-
-    /**
-     * Date the account category was created
-     *
-     * READ ONLY
-     *
-     * @var DateTime $created
-     */
-    protected $created = null;
-
-    /**
-     * Date the account category was modified
-     *
-     * READ ONLY
-     *
-     * @var DateTime $created
-     */
-    protected $modified = null;
 
     /**
      * Defines all possible fields.

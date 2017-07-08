@@ -71,6 +71,13 @@ abstract class BaseModel
     protected $config = null;
 
     /**
+     * A models fields are stored here
+     *
+     * @var array $fieldsData
+     */
+    private $fieldsData = [];
+
+    /**
      * Make a new model
      *
      * Setup a request handler and bind the config
@@ -109,13 +116,12 @@ abstract class BaseModel
         if (!$this->fields[$key]['nullable'] && is_null($value)) {
             $this->throwException(ModelException::NULL_WITHOUT_NULLABLE, sprintf('attempting to nullify key %s', $key));
         }
+
+        $this->fieldsData[$key] = $value;
     }
 
     /**
      * __get
-     *
-     * We protect read-only properties, so we use this magic method in order
-     * to return read-only properties that are defined in the field mapping
      *
      * @param string $key Desired property
      *
@@ -124,7 +130,19 @@ abstract class BaseModel
     public function __get($key)
     {
         if (array_key_exists($key, $this->fields)) {
-            return $this->$key;
+            if (!array_key_exists($key, $this->fieldsData)) {
+                // we have not loaded any data into model
+                // so fieldsData array can be empty
+                if (array_key_exists('default', $this->fields[$key])) {
+                    // if we have some specific default value
+                    // other than null
+                    return $this->fields[$key]['default'];
+                }
+                // Accessing $obj->key when no default data is set returns null
+                // so we return it as default value for any described but not loaded property
+                return null;
+            }
+            return $this->fieldsData[$key];
         }
 
         $this->throwException(ModelException::GETTING_UNDEFINED_PROPERTY, sprintf('key %s', $key));
@@ -258,24 +276,26 @@ abstract class BaseModel
      */
     private function prepareObjectRow($key, $config)
     {
+        $value = $this->__get($key);
+
         // If null and allowed to be null, return null
-        if (is_null($this->$key) && $this->fields[$key]['nullable']) {
+        if (is_null($value) && $this->fields[$key]['nullable']) {
             return null;
         }
 
         // If null and can't be null then throw
-        if (is_null($this->$key) && !$this->fields[$key]['nullable']) {
+        if (is_null($value) && !$this->fields[$key]['nullable']) {
             $this->throwException(ModelException::NULL_WITHOUT_NULLABLE, sprintf('key %s', $key));
         }
 
         // If it's a valid primitive
-        if ($this->isValidPrimitive($this->$key, $config['type'])) {
+        if ($this->isValidPrimitive($value, $config['type'])) {
             return $this->$key;
         }
 
         // If it's a date we return a valid format
         if ($config['type'] === 'DateTime') {
-            return $this->$key->format('Y-m-d');
+            return $value->format('Y-m-d');
         }
 
         // At this stage we would be dealing with a related Model
@@ -290,7 +310,7 @@ abstract class BaseModel
         }
 
         // And finally return an Object representation of the related Model
-        return $this->$key->toObject();
+        return $value->toObject();
     }
 
     /**
@@ -375,7 +395,7 @@ abstract class BaseModel
 
             $value = $this->processResultItem($result->$remoteKey, $config);
 
-            $this->$key = $value;
+            $this->fieldsData[$key] = $value;
         }
     }
 

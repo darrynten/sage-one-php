@@ -27,29 +27,6 @@ class Example extends BaseModel
     //////////////////////////// Public Properties
     // remove these 2 comments before merging
 
-    /**
-     * The ID of the account
-     *
-     * @var int $id
-     */
-    public $id;
-
-
-    /**
-     * Example title
-     *
-     * Example description
-     *
-     * READ ONLY [this must only be present when dealing with a read-only property)
-     * and the property *must* be protected
-     *
-     * The `= null;` must only remain for properties `nullable` in the docs
-     * This is as an indicator to developers that a field is nullable
-     *
-     * @var string $exampleWithCamel
-     */
-    protected $exampleWithCamel = null;
-
     // etc etc etc
 
     //////////////////////////// End Properties

@@ -22,69 +22,11 @@ use DarrynTen\SageOne\BaseModel;
 class TaxType extends BaseModel
 {
     /**
-     * The ID of the account
-     *
-     * @var int $id
-     */
-    public $id;
-
-    /**
      * The API Endpoint
      *
      * @var string $endpoint
      */
     protected $endpoint = 'TaxType';
-
-    /**
-     * Tax type name
-     *
-     * @var string $name
-     */
-    public $name;
-
-    /**
-     * Tax percentage
-     *
-     * @var decimal $percentage
-     */
-    public $percentage;
-
-    /**
-     * Is default tax type
-     *
-     * @var boolean $isDefault
-     */
-    public $isDefault;
-
-    /**
-     * Has activity
-     *
-     * READ ONLY
-     *
-     * @var boolean $hasActivity
-     */
-    protected $hasActivity;
-
-    /**
-     * Is a manual tax type
-     *
-     * @var boolean $isManualTax
-     */
-    public $isManualTax;
-
-    /**
-     * Date created
-     *
-     * @var DateTime $created
-     */
-    public $created;
-
-    /**
-     * Date modified
-     *
-     * @var DateTime $modified
-     */
-    public $modified = null;
 
     /**
      * Defines all possible fields.

@@ -201,14 +201,6 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(TaxType::class, $accountModel->defaultTaxType);
         $this->assertInstanceOf(\DateTime::class, $accountModel->created);
 
-        // Ensure the instance has expected properties
-        $this->assertObjectHasAttribute('id', new Account($this->config));
-
-        // Expected lengths
-        $this->assertCount(21, (array)$accountModel);
-        $this->assertCount(12, (array)$accountModel->category);
-        $this->assertCount(14, (array)$accountModel->defaultTaxType);
-
         // Check values on all child properties to match the mock it received
         $this->assertEquals($accountModel->id, 11);
         $this->assertEquals($accountModel->category->order, 6);
@@ -258,9 +250,6 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
 
         $accountModel = new Account($this->config);
         $accountModel->loadResult($data);
-
-        // Expected lengths after loading
-        $this->assertCount(21, (array)$accountModel);
 
         // Check values on all child properties to match the mock it received
         $this->assertEquals($accountModel->id, 11);

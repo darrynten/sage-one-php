@@ -215,7 +215,7 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
             'id' => [
                 'type' => 'integer',
                 'nullable' => false,
-                'persistable' => false,
+                'persistable' => true,
             ],
         ];
 
@@ -313,10 +313,6 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
         $reflectedRequest = $exampleReflection->getProperty('request');
         $reflectedRequest->setAccessible(true);
         $reflectedRequest->setValue($exampleModel, $request);
-
-        // Make sure you have all the attributes
-        $this->assertObjectHasAttribute('id', new Example($this->config));
-        $this->assertObjectHasAttribute('exampleWithCamel', new Example($this->config));
         // etc
 
         // Check default values
@@ -356,9 +352,6 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
         // Test injecting a result
         $data = json_decode(file_get_contents(__DIR__ . '/../../mocks/Example/GET_Example_Get_xx.json'));
         $exampleModel->loadResult($data);
-
-        // Expected lengths after loading
-        $this->assertCount(8, (array)$exampleModel);
 
         // Check values on all child properties to match the mock it received
         $this->assertEquals($exampleModel->id, 1);
