@@ -23,22 +23,22 @@ class Currency extends BaseModel
      *
      * @var int $id
      */
-    public $id;
+    protected $id;
 
     /**
      * @var string $code
      */
-    public $code;
+    protected $code;
 
     /**
      * @var string $description
      */
-    public $description;
+    protected $description;
 
     /**
      * @var string $symbol
      */
-    public $symbol;
+    protected $symbol;
 
     /**
      * The API Endpoint
