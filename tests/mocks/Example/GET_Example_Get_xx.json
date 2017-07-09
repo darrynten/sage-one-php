@@ -1,4 +1,6 @@
 {
   "ID": 1,
-  "ExampleWithCamel": "exampleWithCamel"
+  "ExampleWithCamel": "exampleWithCamel",
+  "StringRange": "example",
+  "IntegerRange": 134522342
 }

@@ -75,7 +75,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $className = $this->getClassName($class);
 
         $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('Model "' . $className . '" key doesNotExist value xyz Attempting to set a property that is not defined in the model');
+        $this->expectExceptionMessage("Model {$className} key doesNotExist value xyz Attempting to set a property that is not defined in the model");
         $this->expectExceptionCode(10113);
 
         $model = new $class($this->config);
@@ -92,7 +92,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $className = $this->getClassName($class);
 
         $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('Model "' . $className . '" key doesNotExist Attempting to get an undefined property');
+        $this->expectExceptionMessage("Model {$className} key doesNotExist Attempting to get an undefined property");
         $this->expectExceptionCode(10116);
 
         $model = new $class($this->config);
@@ -110,7 +110,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $className = $this->getClassName($class);
 
         $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('Model "' . $className . '" attempting to nullify key ' . $key . ' Property is null without nullable permission');
+        $this->expectExceptionMessage("Model {$className} attempting to nullify key {$key} Property is null without nullable permission");
         $this->expectExceptionCode(10111);
 
         $model = new $class($this->config);
@@ -145,7 +145,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $model = new $class($this->config);
 
         $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('Model "' . $className . '" Defined key "' . $key . '" not present in payload A property is missing in the loadResult payload');
+        $this->expectExceptionMessage("Model {$className} Defined key {$key} not present in payload A property is missing in the loadResult payload");
         $this->expectExceptionCode(10112);
 
         $obj = new \stdClass;
@@ -173,7 +173,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         foreach ($attributes as $name => $options) {
             $this->assertObjectHasAttribute($name, $model);
             if (isset($options['nullable'])) {
-                $this->assertNull($model->{$name}, "Model $className Key $name is not null");
+                $this->assertNull($model->{$name}, "Model {$className} Key {$name} is not null");
             }
         }
 
@@ -569,7 +569,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $className = $this->getClassName($class);
 
         $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('Model "' . $className . '"  Save is not supported');
+        $this->expectExceptionMessage("Model {$className}  Save is not supported");
         $this->expectExceptionCode(10103);
 
         $model = new $class($this->config);
@@ -581,7 +581,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $className = $this->getClassName($class);
 
         $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('Model "' . $className . '" id 1 Delete is not supported');
+        $this->expectExceptionMessage("Model {$className} id 1 Delete is not supported");
         $this->expectExceptionCode(10104);
 
         $model = new $class($this->config);
