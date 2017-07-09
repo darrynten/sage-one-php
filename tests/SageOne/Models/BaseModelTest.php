@@ -189,23 +189,32 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
 
         foreach ($attributes as $name => $options) {
             $this->assertEquals(true, is_array($value[$name]));
-            $this->assertEquals($options['type'], $value[$name]['type'],
-                "Model {$className} Key {$name} Expected type {$options['type']} got {$value[$name]['type']}");
+            $this->assertEquals(
+                $options['type'],
+                $value[$name]['type'],
+                "Model {$className} Key {$name} Expected type {$options['type']} got {$value[$name]['type']}"
+            );
             $this->assertEquals('boolean', gettype($value[$name]['nullable']));
             $this->assertEquals('boolean', gettype($value[$name]['readonly']));
 
             $nullable = isset($options['nullable']);
             $nullableText = $nullable ? 'true': 'false';
             $nullableOptionText = $value[$name]['nullable'] ? 'true' : 'false';
-            $this->assertEquals($nullable, $value[$name]['nullable'],
-                "Model {$className} Key {$name} Expected nullable to be {$nullableText} got {$nullableOptionText}");
+            $this->assertEquals(
+                $nullable,
+                $value[$name]['nullable'],
+                "Model {$className} Key {$name} Expected nullable to be {$nullableText} got {$nullableOptionText}"
+            );
 
             $readonly = isset($options['readonly']);
             $readonlyText = $readonly ? 'true' : 'false';
             $readonlyOptionText = $value[$name]['readonly'] ? 'true' : 'false';
 
-            $this->assertEquals($readonly, $value[$name]['readonly'],
-                "Model {$className} Key {$name} Expected readonly to be {$readonlyText} got {$readonlyOptionText}");
+            $this->assertEquals(
+                $readonly,
+                $value[$name]['readonly'],
+                "Model {$className} Key {$name} Expected readonly to be {$readonlyText} got {$readonlyOptionText}"
+            );
         }
     }
 
@@ -234,8 +243,11 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         foreach (['all', 'get', 'save', 'delete'] as $feature) {
             $expected = $features[$feature] ? 'true' : 'false';
             $actual = $value[$feature] ? 'true' : 'false';
-            $this->assertEquals($features[$feature], $value[$feature],
-                "Model {$className} Feature {$feature} expected {$expected} got {$actual}");
+            $this->assertEquals(
+                $features[$feature],
+                $value[$feature],
+                "Model {$className} Feature {$feature} expected {$expected} got {$actual}"
+            );
         }
     }
 
