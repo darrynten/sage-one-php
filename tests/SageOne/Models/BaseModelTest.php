@@ -161,8 +161,8 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
      *      Contains data in the following format
      *      ['name of the key' =>
      *          'type' => 'name of the type, like integer or DateTime',
-     *          'nullable' => true, // if field can be null, optional, if omitted expected to disallow nulls
-     *          'readonly' => false // if field is not read only, optional, if omitted expected to be read only
+     *          'nullable' => true, // if field can be null
+     *          'readonly' => false // if field is not read only
      *      ]
      */
     protected function verifyAttributes(string $class, array $attributes)
