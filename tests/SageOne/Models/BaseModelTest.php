@@ -197,7 +197,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals('boolean', gettype($value[$name]['nullable']));
             $this->assertEquals('boolean', gettype($value[$name]['readonly']));
 
-            $nullable = isset($options['nullable']);
+            $nullable = $options['nullable'];
             $nullableText = $nullable ? 'true': 'false';
             $nullableOptionText = $value[$name]['nullable'] ? 'true' : 'false';
             $this->assertEquals(
@@ -206,7 +206,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
                 "Model {$className} Key {$name} Expected nullable to be {$nullableText} got {$nullableOptionText}"
             );
 
-            $readonly = isset($options['readonly']);
+            $readonly = $options['readonly'];
             $readonlyText = $readonly ? 'true' : 'false';
             $readonlyOptionText = $value[$name]['readonly'] ? 'true' : 'false';
 

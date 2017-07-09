@@ -63,31 +63,49 @@ class AccountNoteModelTest extends BaseModelTest
     {
         $this->verifyAttributes(AccountNote::class, [
             'id' => [
-                'type' => 'integer', 'readonly' => false
-            ],
-            'userId' => [
-                'type' => 'integer', 'nullable' => true, 'readonly' => false
+                'type' => 'integer',
+                'nullable' => false,
+                'readonly' => false,
             ],
             'accountId' => [
-                'type' => 'integer', 'readonly' => false
+                'type' => 'integer',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'userId' => [
+                'type' => 'integer',
+                'nullable' => true,
+                'readonly' => false,
             ],
             'subject' => [
-                'type' => 'string', 'readonly' => false
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
             ],
             'entryDate' => [
-                'type' => 'DateTime', 'nullable' => true, 'readonly' => false
+                'type' => 'DateTime',
+                'nullable' => true,
+                'readonly' => false,
             ],
             'actionDate' => [
-                'type' => 'DateTime', 'readonly' => false
+                'type' => 'DateTime',
+                'nullable' => false,
+                'readonly' => false,
             ],
             'status' => [
-                'type' => 'boolean', 'nullable' => true, 'readonly' => false
+                'type' => 'boolean',
+                'nullable' => true,
+                'readonly' => false,
             ],
             'note' => [
-                'type' => 'string', 'readonly' => false
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
             ],
             'hasAttachments' => [
-                'type' => 'boolean', 'nullable' => true, 'readonly' => false
+                'type' => 'boolean',
+                'nullable' => true,
+                'readonly' => false,
             ]
         ]);
     }
