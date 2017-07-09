@@ -25,6 +25,11 @@ class ExceptionMessages
         10114 => 'Attempting to set a read-only property',
         10115 => 'Unexpected class encountered while preparing row',
         10116 => 'Attempting to get an undefined property',
+        // Validation
+        10120 => 'Integer value is out of range',
+        10121 => 'String length is out of range',
+        10122 => 'String did not match validation regex',
+        10123 => 'Validation type is invalid',
     ];
 
     // Maps to standard HTTP error codes

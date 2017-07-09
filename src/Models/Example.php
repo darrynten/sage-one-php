@@ -82,7 +82,7 @@ class Example extends BaseModel
             'nullable' => true,
             'readonly' => false,
             'min' => 1,
-            'max' => 100,
+            'max' => 10,
         ],
         'integerRange' => [
             'type' => 'integer',
@@ -103,7 +103,7 @@ class Example extends BaseModel
             'readonly' => false,
             'min' => 0,
             'max' => 100,
-            'regex' => "/^[A-Za-z0-9,!#\$%&'\*\+/=\?\^_`\{\|}~-]+(\.[A-Za-z0-9,!#\$%&'\*\+/=\?\^_`\{\|}~-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.([A-Za-z]{2,})$/",
+            'regex' => "/^[A-Za-z0-9,!#\$%&'\*\+\/=\?\^_`\{\|}~-]+(\.[A-Za-z0-9,!#\$%&'\*\+\/=\?\^_`\{\|}~-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.([A-Za-z]{2,})$/"
         ]
         // etc ...
     ];

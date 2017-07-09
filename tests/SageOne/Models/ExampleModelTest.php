@@ -177,6 +177,54 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
         $exampleModel->exampleWithCamel = 'xx';
     }
 
+    public function testBadIntegerRange()
+    {
+        $this->expectException(ModelException::class);
+        $this->expectExceptionMessage('Model "Example" value -1 out of min(1) max(2147483647) Integer value is out of range');
+        $this->expectExceptionCode(10120);
+
+        $exampleModel = new Example($this->config);
+
+        $exampleModel->id = 13;
+        $exampleModel->integerRange = -1;
+    }
+
+    public function testBadStringLength()
+    {
+        $this->expectException(ModelException::class);
+        $this->expectExceptionMessage('Model "Example" value This string is too long! out of min(1) max(10) String length is out of range');
+        $this->expectExceptionCode(10121);
+
+        $exampleModel = new Example($this->config);
+
+        $exampleModel->id = 139393939393;
+        $exampleModel->stringRange = 'This string is too long!';
+    }
+
+    public function testBadRangeType()
+    {
+        $this->expectException(ModelException::class);
+        $this->expectExceptionMessage('Model "Example" value  is type NULL Validation type is invalid');
+        $this->expectExceptionCode(10123);
+
+        $exampleModel = new Example($this->config);
+
+        $exampleModel->id = 939393;
+        $exampleModel->stringRange = null;
+    }
+
+    public function testBadRegexSet()
+    {
+        $this->expectException(ModelException::class);
+        $this->expectExceptionMessage('Model "Example" value bademail failed to validate String did not match validation regex');
+        $this->expectExceptionCode(10122);
+
+        $exampleModel = new Example($this->config);
+
+        $exampleModel->id = 1386847;
+        $exampleModel->emailAddress = 'bademail';
+    }
+
     public function testSetUndefined()
     {
         $this->expectException(ModelException::class);
@@ -226,8 +274,6 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
 
         $exampleModel->id = 2;
         $exampleModel->exampleWithCamel = null;
-
-        // die(var_dump($exampleModel));
     }
 
     public function testUnloadedProperties()
