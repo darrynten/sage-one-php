@@ -24,13 +24,6 @@ use DarrynTen\SageOne\BaseModel;
  */
 class Example extends BaseModel
 {
-    //////////////////////////// Public Properties
-    // remove these 2 comments before merging
-
-    // etc etc etc
-
-    //////////////////////////// End Properties
-    // remove these 2 lines before merging
 
     /**
      * The API Endpoint
@@ -84,6 +77,34 @@ class Example extends BaseModel
             'nullable' => true,
             'persistable' => false,
         ],
+        'stringRange' => [
+            'type' => 'string',
+            'nullable' => true,
+            'persistable' => true,
+            'min' => 1,
+            'max' => 100,
+        ],
+        'integerRange' => [
+            'type' => 'integer',
+            'nullable' => false,
+            'persistable' => true,
+            'min' => 1,
+            'max' => 2147483647,
+        ],
+        'requiredString' => [
+            'type' => 'string',
+            'nullable' => false,
+            'persistable' => true,
+            'required' => true,
+        ],
+        'emailAddress' => [
+            'type' => 'string',
+            'nullable' => false,
+            'persistable' => true,
+            'min' => 0,
+            'max' => 100,
+            'regex' => "/^[A-Za-z0-9,!#\$%&'\*\+/=\?\^_`\{\|}~-]+(\.[A-Za-z0-9,!#\$%&'\*\+/=\?\^_`\{\|}~-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.([A-Za-z]{2,})$/",
+        ]
         // etc ...
     ];
 
