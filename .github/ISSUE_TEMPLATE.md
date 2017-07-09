@@ -17,7 +17,7 @@ been opened, or maybe even closed.
 Remember to include step-by-step reproduction instructions.
 
 Include any and all relevant error messages, codes, line numbers, commit
-hashes, Pull Request or Issye numbers, filenames, etc.
+hashes, Pull Request or Issue numbers, filenames, etc.
 
 You must delete everything above, including this line.
 
