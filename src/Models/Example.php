@@ -84,12 +84,23 @@ class Example extends BaseModel
             'min' => 1,
             'max' => 10,
         ],
+        'stringWithDefault' => [
+            'type' => 'string',
+            'nullable' => true,
+            'readonly' => false,
+            'default' => 'some default value',
+        ],
         'integerRange' => [
             'type' => 'integer',
             'nullable' => false,
             'readonly' => false,
             'min' => 1,
             'max' => 2147483647,
+        ],
+        'someBoolean' => [
+            'type' => 'boolean',
+            'nullable' => false,
+            'readonly' => false,
         ],
         'requiredString' => [
             'type' => 'string',
@@ -104,7 +115,7 @@ class Example extends BaseModel
             'min' => 0,
             'max' => 100,
             'regex' => "/^[A-Za-z0-9,!#\$%&'\*\+\/=\?\^_`\{\|}~-]+(\.[A-Za-z0-9,!#\$%&'\*\+\/=\?\^_`\{\|}~-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.([A-Za-z]{2,})$/"
-        ]
+        ],
         // etc ...
     ];
 

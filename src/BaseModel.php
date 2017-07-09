@@ -122,7 +122,10 @@ abstract class BaseModel
     private function validateRegex($value, $regex)
     {
         if (!preg_match($regex, $value)) {
-            $this->throwException(ModelException::STRING_REGEX_MISMATCH, sprintf('value %s failed to validate', $value));
+            $this->throwException(
+                ModelException::STRING_REGEX_MISMATCH,
+                sprintf('value %s failed to validate', $value)
+            );
         }
     }
 
@@ -140,7 +143,15 @@ abstract class BaseModel
     {
         if (gettype($value) === 'integer') {
             if (($value < $min) || ($value > $max)) {
-                $this->throwException(ModelException::INTEGER_OUT_OF_RANGE, sprintf('value %s out of min(%s) max(%s)', $value, $min, $max));
+                $this->throwException(
+                    ModelException::INTEGER_OUT_OF_RANGE,
+                    sprintf(
+                        'value %s out of min(%s) max(%s)',
+                        $value,
+                        $min,
+                        $max
+                    )
+                );
             }
 
             return;
@@ -148,14 +159,29 @@ abstract class BaseModel
 
         if (gettype($value) === 'string') {
             if ((strlen($value) < $min) || (strlen($value) > $max)) {
-                $this->throwException(ModelException::STRING_LENGTH_OUT_OF_RANGE, sprintf('value %s out of min(%s) max(%s)', $value, $min, $max));
+                $this->throwException(
+                    ModelException::STRING_LENGTH_OUT_OF_RANGE,
+                    sprintf(
+                        'value %s out of min(%s) max(%s)',
+                        $value,
+                        $min,
+                        $max
+                    )
+                );
             }
 
             return;
         }
 
         // Unknown type for validation
-        $this->throwException(ModelException::VALIDATION_TYPE_ERROR, sprintf('value %s is type %s', $value, gettype($value)));
+        $this->throwException(
+            ModelException::VALIDATION_TYPE_ERROR,
+            sprintf(
+                'value %s is type %s',
+                $value,
+                gettype($value)
+            )
+        );
     }
 
     /**
@@ -168,14 +194,16 @@ abstract class BaseModel
     public function __get($key)
     {
         if (array_key_exists($key, $this->fields)) {
+            // there is some data loaded so we return it
             if (array_key_exists($key, $this->fieldsData)) {
-                // there is some data loaded so we return it
                 return $this->fieldsData[$key];
             }
+
+            // there is some default value
             if (array_key_exists('default', $this->fields[$key])) {
-                // there is some default value
                 return $this->fields[$key]['default'];
             }
+
             // Accessing $obj->key when no default data is set returns null
             // so we return it as default value for any described but not loaded property
             return null;
@@ -396,7 +424,8 @@ abstract class BaseModel
             $this->throwException(ModelException::PROPERTY_WITHOUT_CLASS, sprintf(
                 'Received namespaced class "%s" when defined type is "%s"',
                 $class,
-                gettype($resultItem)
+                gettype($resultItem),
+                $resultItem
             ));
         }
 
@@ -452,6 +481,7 @@ abstract class BaseModel
     private function isValidPrimitive($resultItem, $definedType)
     {
         $itemType = gettype($resultItem);
+
         if (in_array($itemType, $this->validPrimitiveTypes) && ($itemType === $definedType)) {
             return true;
         }

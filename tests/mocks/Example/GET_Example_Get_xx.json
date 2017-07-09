@@ -4,5 +4,7 @@
   "StringRange": "example",
   "IntegerRange": 134522342,
   "RequiredString": "required information",
-  "EmailAddress": "user@example.com"
+  "EmailAddress": "user@example.com",
+  "StringWithDefault": "default string changed",
+  "SomeBoolean": true
 }
