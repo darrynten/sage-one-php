@@ -3,21 +3,23 @@
 Thanks for submitting an issue! Follow these guidelines to ensure a
 quick resolution to your problem.
 
-Before your submit your issue, please consider whether or not you are
+Before opening an issue, please consider whether or not you are
 able to fork this repository and resolve it yourself. If so it may be
-better to open a PR for the fix (and add yourself as a contributor).
+better to open a Pull Request for the fix (and add yourself as a 
+contributor).
 
 If your issue is a question then this is not the place to submit it.
 You can ask questions about this project on StackOverflow.
 
-Before you open an issue please check to ensure one has not already been
-opened (or closed even), and please include step-by-step reproduction
-instructions.
+Before you open an issue, please check that your issue has not already
+been opened, or maybe even closed.
+
+Remember to include step-by-step reproduction instructions.
 
 Include any and all relevant error messages, codes, line numbers, commit
-hashes, PR numbers, filenames, etc.
+hashes, Pull Request or Issye numbers, filenames, etc.
 
-You must delete everything above (and including) this line.
+You must delete everything above, including this line.
 
 ## Overview
 
@@ -38,10 +40,14 @@ You must delete everything above (and including) this line.
 
 ...
 
-## What steps will reproduce the problem?
+## Which steps would reproduce this problem?
 
 1.
 2.
 3.
+
+## Additional Information
+
+...
 
 Alert the following people: @darrynten 
