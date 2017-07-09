@@ -53,16 +53,16 @@ class CurrencyModelTest extends BaseModelTest
     {
         $this->verifyAttributes(Currency::class, [
             'id' => [
-                'type' => 'integer', 'persistable' => true
+                'type' => 'integer', 'readonly' => false
             ],
             'code' => [
-                'type' => 'string', 'persistable' => true
+                'type' => 'string', 'readonly' => false
             ],
             'description' => [
-                'type' => 'string', 'persistable' => true
+                'type' => 'string', 'readonly' => false
             ],
             'symbol' => [
-                'type' => 'string', 'persistable' => true
+                'type' => 'string', 'readonly' => false
             ]
         ]);
     }

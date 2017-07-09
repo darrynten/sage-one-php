@@ -229,7 +229,7 @@ class AccountModelTest extends \PHPUnit_Framework_TestCase
         $value = $reflectValue->getValue(new Account($this->config));
         $this->assertEquals(15, sizeof($value));
         $this->assertEquals(3, sizeof($value['name']));
-        $this->assertEquals(true, $value['name']['persistable']);
+        $this->assertEquals(false, $value['name']['readonly']);
         $this->assertEquals(false, $value['category']['nullable']);
 
         $reflectValue = $reflect->getProperty('endpoint');

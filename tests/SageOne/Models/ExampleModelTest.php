@@ -116,12 +116,12 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
             'id' => [
                 'type' => 'integer',
                 'nullable' => false,
-                'persistable' => true,
+                'readonly' => false,
             ],
             'exampleWithCamel' => [
                 'type' => 'SomeInvalidClass',
                 'nullable' => true,
-                'persistable' => false,
+                'readonly' => true,
             ],
         ];
 
@@ -146,12 +146,12 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
             'exampleWithCamel' => [
                 'type' => 'SomeInvalidClass',
                 'nullable' => true,
-                'persistable' => true,
+                'readonly' => false,
             ],
             'id' => [
                 'type' => 'integerzzz',
                 'nullable' => false,
-                'persistable' => true,
+                'readonly' => false,
             ],
         ];
 
@@ -210,12 +210,12 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
             'exampleWithCamel' => [
                 'type' => 'string',
                 'nullable' => false,
-                'persistable' => true,
+                'readonly' => false,
             ],
             'id' => [
                 'type' => 'integer',
                 'nullable' => false,
-                'persistable' => true,
+                'readonly' => false,
             ],
         ];
 
@@ -238,13 +238,13 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
             'exampleWithCamel' => [
                 'type' => 'string',
                 'nullable' => false,
-                'persistable' => true,
+                'readonly' => false,
                 'default' => 'some default value'
             ],
             'id' => [
                 'type' => 'integer',
                 'nullable' => false,
-                'persistable' => true,
+                'readonly' => false,
             ],
         ];
 
@@ -357,13 +357,13 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
         $reflectValue->setAccessible(true);
         $value = $reflectValue->getValue(new Example($this->config));
 
-        $this->assertCount(2, $value);
+        $this->assertCount(6, $value);
         $this->assertEquals('integer', $value['id']['type']);
         $this->assertEquals('boolean', gettype($value['exampleWithCamel']['nullable']));
         $this->assertEquals(true, is_array($value['exampleWithCamel']));
         $this->assertFalse($value['id']['nullable']);
-        $this->assertFalse($value['exampleWithCamel']['persistable']);
-        $this->assertTrue($value['id']['persistable']);
+        $this->assertTrue($value['exampleWithCamel']['readonly']);
+        $this->assertFalse($value['id']['readonly']);
         $this->assertTrue($value['exampleWithCamel']['nullable']);
         // etc etc...
 

@@ -41,12 +41,12 @@ class Example extends BaseModel
      * validation, etc
      *
      * All must include a type, whether or not it's nullable, and whether or
-     * not it's persistable.
+     * not it's readonly.
      *
      * Documentation -> Model Conversion Rules:
      *
-     * - Nullable is `true` if the word 'nullable' is in the 'type' column
-     * - Persistable is `true` if the word 'None.' is in the Additional Info column.
+     * - nullable is `true` if the word 'nullable' is in the 'type' column
+     * - readonly is `true` if the word 'Read Only/System Generated' is in the Additional Info column.
      * - Type has the following rules
      *   - `date` becomes "DateTime"
      *   - `nullable` is removed, i.e. "nullable integer" is only "integer"
@@ -70,37 +70,37 @@ class Example extends BaseModel
         'id' => [
             'type' => 'integer',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'exampleWithCamel' => [
             'type' => 'string',
             'nullable' => true,
-            'persistable' => false,
+            'readonly' => true,
         ],
         'stringRange' => [
             'type' => 'string',
             'nullable' => true,
-            'persistable' => true,
+            'readonly' => false,
             'min' => 1,
             'max' => 100,
         ],
         'integerRange' => [
             'type' => 'integer',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
             'min' => 1,
             'max' => 2147483647,
         ],
         'requiredString' => [
             'type' => 'string',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
             'required' => true,
         ],
         'emailAddress' => [
             'type' => 'string',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
             'min' => 0,
             'max' => 100,
             'regex' => "/^[A-Za-z0-9,!#\$%&'\*\+/=\?\^_`\{\|}~-]+(\.[A-Za-z0-9,!#\$%&'\*\+/=\?\^_`\{\|}~-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.([A-Za-z]{2,})$/",

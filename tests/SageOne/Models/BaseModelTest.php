@@ -154,7 +154,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Verifies that all fields has expected types, nullable and persistable properties
+     * Verifies that all fields has expected types, nullable and read only properties
      *
      * @param string $class Full path to the class
      * @param array $attributes
@@ -162,7 +162,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
      *      ['name of the key' =>
      *          'type' => 'name of the type, like integer or DateTime',
      *          'nullable' => true, // if field can be null, optional, if omitted expected to disallow nulls
-     *          'persistable' => true // if field is not read only, optional, if omitted expected to be read only
+     *          'readonly' => false // if field is not read only, optional, if omitted expected to be read only
      *      ]
      */
     protected function verifyAttributes(string $class, array $attributes)
@@ -192,7 +192,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals($options['type'], $value[$name]['type'],
                 "Model {$className} Key {$name} Expected type {$options['type']} got {$value[$name]['type']}");
             $this->assertEquals('boolean', gettype($value[$name]['nullable']));
-            $this->assertEquals('boolean', gettype($value[$name]['persistable']));
+            $this->assertEquals('boolean', gettype($value[$name]['readonly']));
 
             $nullable = isset($options['nullable']);
             $nullableText = $nullable ? 'true': 'false';
@@ -200,12 +200,12 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals($nullable, $value[$name]['nullable'],
                 "Model {$className} Key {$name} Expected nullable to be {$nullableText} got {$nullableOptionText}");
 
-            $persistable = isset($options['persistable']);
-            $persistableText = $persistable ? 'true' : 'false';
-            $persistableOptionText = $value[$name]['persistable'] ? 'true' : 'false';
+            $readonly = isset($options['readonly']);
+            $readonlyText = $readonly ? 'true' : 'false';
+            $readonlyOptionText = $value[$name]['readonly'] ? 'true' : 'false';
 
-            $this->assertEquals($persistable, $value[$name]['persistable'],
-                "Model {$className} Key {$name} Expected persistable to be {$persistableText} got {$persistableOptionText}");
+            $this->assertEquals($readonly, $value[$name]['readonly'],
+                "Model {$className} Key {$name} Expected readonly to be {$readonlyText} got {$readonlyOptionText}");
         }
     }
 

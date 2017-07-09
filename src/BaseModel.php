@@ -108,7 +108,7 @@ abstract class BaseModel
         }
 
         // Properties must be writable
-        if (!$this->fields[$key]['persistable']) {
+        if ($this->fields[$key]['readonly']) {
             $this->throwException(ModelException::SETTING_READ_ONLY_PROPERTY, sprintf('key %s value %s', $key, $value));
         }
 

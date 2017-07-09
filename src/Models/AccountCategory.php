@@ -35,7 +35,7 @@ class AccountCategory extends BaseModel
      * validation, etc
      *
      * All must include a type, whether or not it's nullable, and whether or
-     * not it's persistable.
+     * not it's readonly.
      *
      * NB: Naming convention for keys is to lowercase the first character of the
      * field returned by Sage (they use PascalCase and we use camelCase)
@@ -53,32 +53,32 @@ class AccountCategory extends BaseModel
         'id' => [
             'type' => 'integer',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'comment' => [
             'type' => 'string',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'order' => [
             'type' => 'integer',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'description' => [
             'type' => 'string',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'modified' => [
             'type' => 'DateTime',
             'nullable' => true,
-            'persistable' => false,
+            'readonly' => true,
         ],
         'created' => [
             'type' => 'DateTime',
             'nullable' => true,
-            'persistable' => false,
+            'readonly' => true,
         ],
     ];
 

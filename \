@@ -161,10 +161,10 @@ class Account extends BaseModel
      * validation, etc
      *
      * All must include a type, whether or not it's nullable, and whether or
-     * not it's readonly.
+     * not it's persistable.
      *
-     * - nullable is `true` if the word 'nullable' is in the 'type' column
-     * - readonly is `true` if the word 'Read-Only/System Generated' is in the Additional Info column otherwise it is `false`
+     * - Nullable is `true` if the word 'nullable' is in the 'type' column
+     * - Persistable is `true` if the word 'None.' is in the Additional Info column.
      * - Type has the following rules
      *   - `date` becomes "DateTime"
      *   - `nullable` is removed, i.e. "nullable integer" is only "integer"
@@ -180,27 +180,27 @@ class Account extends BaseModel
         'id' => [
             'type' => 'integer',
             'nullable' => false,
-            'readonly' => true,
+            'persistable' => true,
         ],
         'name' => [
             'type' => 'string',
             'nullable' => false,
-            'readonly' => false,
+            'persistable' => true,
         ],
         'category' => [
             'type' => 'AccountCategory',
             'nullable' => false,
-            'readonly' => false,
+            'persistable' => true,
         ],
         'reportingGroupId' => [
             'type' => 'integer',
             'nullable' => true,
-            'readonly' => false,
+            'persistable' => true,
         ],
         'isTaxLocked' => [
             'type' => 'boolean',
             'nullable' => false,
-            'readonly' => true,
+            'persistable' => false,
         ],
         // etc etc etc
     ];
