@@ -15,7 +15,6 @@ use DarrynTen\SageOne\Exception\ValidationException;
  */
 trait Validation
 {
-
     protected $validPrimitiveTypes = [
         'string',
         'integer',
