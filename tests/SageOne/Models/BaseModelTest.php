@@ -8,6 +8,7 @@ use GuzzleHttp\Client;
 use ReflectionClass;
 
 use DarrynTen\SageOne\Exception\ModelException;
+use DarrynTen\SageOne\Models\ModelCollection;
 
 abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
 {
@@ -274,14 +275,13 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $model = $this->setUpRequestMock($class, $path, 'GET',
             sprintf('%s/GET_%s_Get.json', $className, $className));
 
-        $allInstances = json_decode($model->all(), true);
+        $allInstances = $model->all();
+        $this->assertInstanceOf(ModelCollection::class, $allInstances);
+        $this->assertObjectHasAttribute('totalResults', $allInstances);
+        $this->assertObjectHasAttribute('returnedResults', $allInstances);
+        $this->assertObjectHasAttribute('results', $allInstances);
 
-        $this->assertEquals(3, count($allInstances));
-        $this->assertArrayHasKey('Results', $allInstances);
-        $this->assertArrayHasKey('ReturnedResults', $allInstances);
-        $this->assertArrayHasKey('TotalResults', $allInstances);
-
-        $whatToCheck($allInstances['Results']);
+        $whatToCheck($allInstances->results);
     }
 
     /**

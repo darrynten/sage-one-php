@@ -12,6 +12,7 @@
 namespace DarrynTen\SageOne\Models;
 
 use DarrynTen\SageOne\BaseModel;
+use DarrynTen\SageOne\Models\ModelCollection;
 
 /**
  * Account Model
@@ -144,33 +145,33 @@ class Account extends BaseModel
     /**
      * Returns the list of Accounts including system accounts.
      *
-     * @return json A collection of entities in raw json from Sage
+     * @return ModelCollection A collection of entities
      */
     public function getWithSystemAccounts()
     {
         $results = $this->request->request('GET', $this->endpoint, 'GetWithSystemAccounts');
-        return json_encode($results, JSON_PRESERVE_ZERO_FRACTION);
+        return new ModelCollection(Account::class, $this->config, $results);
     }
 
     /**
      * Returns a list of Accounts based on the Category identifier.
      *
-     * @return json A collection of entities in raw json from Sage
+     * @return ModelCollection A collection of entities
      */
     public function getAccountsByCategoryId(string $id)
     {
         $results = $this->request->request('GET', $this->endpoint, sprintf('GetAccountsByCategoryId/%s', $id));
-        return json_encode($results, JSON_PRESERVE_ZERO_FRACTION);
+        return new ModelCollection(Account::class, $this->config, $results);
     }
 
     /**
      * Returns a list of all accounts
      *
-     * @return json A collection of entities in raw json from Sage
+     * @return ModelCollection A collection of entities
      */
     public function getChartofAccounts()
     {
         $results = $this->request->request('GET', $this->endpoint, 'GetChartofAccounts');
-        return json_encode($results, JSON_PRESERVE_ZERO_FRACTION);
+        return new ModelCollection(Account::class, $this->config, $results);
     }
 }
