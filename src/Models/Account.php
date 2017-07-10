@@ -151,4 +151,10 @@ class Account extends BaseModel
         $results = $this->request->request('GET', $this->endpoint, 'GetWithSystemAccounts');
         return json_encode($results, JSON_PRESERVE_ZERO_FRACTION);
     }
+
+    public function getAccountsByCategoryId(string $id)
+    {
+        $results = $this->request->request('GET', $this->endpoint, sprintf('GetAccountsByCategoryId/%s', $id));
+        return json_encode($results, JSON_PRESERVE_ZERO_FRACTION);
+    }
 }

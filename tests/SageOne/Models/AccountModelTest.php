@@ -288,4 +288,18 @@ class AccountModelTest extends BaseModelTest
         $this->assertInstanceOf(TaxType::class, $account->defaultTaxType);
         $this->assertInstanceOf(AccountCategory::class, $account->category);
     }
+
+    public function testGetAccountsByCategoryId()
+    {
+        $account = $this->setUpRequestMock(Account::class, 'Account/GetAccountsByCategoryId/8', 'GET', 'Account/GET_Account_GetAccountsByCategoryId_xx.json');
+        $allAccounts = json_decode($account->getAccountsByCategoryId(8));
+
+        $account = new Account($this->config);
+        $account->loadResult($allAccounts->Results[0]);
+        $this->assertInstanceOf(Account::class, $account);
+        $this->assertEquals(11, $account->id);
+        $this->assertEquals(8, $account->category->id);
+        $this->assertInstanceOf(TaxType::class, $account->defaultTaxType);
+        $this->assertInstanceOf(AccountCategory::class, $account->category);
+    }
 }
