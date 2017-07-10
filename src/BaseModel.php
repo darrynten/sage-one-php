@@ -551,7 +551,6 @@ abstract class BaseModel
         }
     }
 
-
     /**
      * Properly handles and throws ModelExceptions
      *
