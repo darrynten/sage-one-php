@@ -24,13 +24,36 @@ class ModelCollectionTest extends BaseModelTest
         $undefinedProperty = $collection->undefinedProperty;
     }
 
-    public function testRequiredProperties()
+    public function testRequiredTotalResults()
     {
         $this->expectException(ModelCollectionException::class);
         $this->expectExceptionMessage('Missing required property in object TotalResults');
         $this->expectExceptionCode(10301);
 
         $results = new \stdClass;
+        $collection = new ModelCollection(Example::class, $this->config, $results);
+    }
+
+    public function testRequireReturnedResults()
+    {
+        $this->expectException(ModelCollectionException::class);
+        $this->expectExceptionMessage('Missing required property in object ReturnedResults');
+        $this->expectExceptionCode(10301);
+
+        $results = new \stdClass;
+        $results->TotalResults = 1;
+        $collection = new ModelCollection(Example::class, $this->config, $results);
+    }
+
+    public function testRequireResults()
+    {
+        $this->expectException(ModelCollectionException::class);
+        $this->expectExceptionMessage('Missing required property in object Results');
+        $this->expectExceptionCode(10301);
+
+        $results = new \stdClass;
+        $results->TotalResults = 1;
+        $results->ReturnedResults = 1;
         $collection = new ModelCollection(Example::class, $this->config, $results);
     }
 
