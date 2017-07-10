@@ -13,9 +13,15 @@ use DarrynTen\SageOne\Exception\ValidationException;
  * @license  MIT <https://github.com/darrynten/sage-one-php/LICENSE>
  * @link     https://github.com/darrynten/sage-one-php
  */
-class Validation
+trait Validation
 {
 
+    protected $validPrimitiveTypes = [
+        'string',
+        'integer',
+        'boolean',
+        'double',
+    ];
     /**
      * Check if the type matches a valid primitive
      *
@@ -24,18 +30,11 @@ class Validation
      *
      * @return boolean
      */
-    public static function isValidPrimitive($item, $definedType)
+    public function isValidPrimitive($item, $definedType)
     {
-        static $validPrimitiveTypes = [
-            'string',
-            'integer',
-            'boolean',
-            'double',
-        ];
-
         $itemType = gettype($item);
 
-        if (in_array($itemType, $validPrimitiveTypes) && ($itemType === $definedType)) {
+        if (in_array($itemType, $this->validPrimitiveTypes) && ($itemType === $definedType)) {
             return true;
         }
 
@@ -48,7 +47,7 @@ class Validation
      * @param string $value
      * @param string $regex
      */
-    public static function validateRegex($value, $regex)
+    public function validateRegex($value, $regex)
     {
         if (!preg_match($regex, $value)) {
             throw new ValidationException(
@@ -68,7 +67,7 @@ class Validation
      * @param integer $min
      * @param integer $max
      */
-    public static function validateRange($value, $min, $max)
+    public function validateRange($value, $min, $max)
     {
         if (gettype($value) === 'integer') {
             if (($value < $min) || ($value > $max)) {

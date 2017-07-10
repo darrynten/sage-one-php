@@ -29,6 +29,7 @@ use DarrynTen\SageOne\Validation;
  */
 abstract class BaseModel
 {
+    use Validation;
     /**
      * A request object
      *
@@ -271,7 +272,7 @@ abstract class BaseModel
         }
 
         // If it's a valid primitive
-        if (Validation::isValidPrimitive($value, $config['type'])) {
+        if ($this->isValidPrimitive($value, $config['type'])) {
             return $this->$key;
         }
 
@@ -323,7 +324,7 @@ abstract class BaseModel
      */
     private function processResultItem($resultItem, $config)
     {
-        if (Validation::isValidPrimitive($resultItem, $config['type'])) {
+        if ($this->isValidPrimitive($resultItem, $config['type'])) {
             return $resultItem;
         }
 
@@ -440,12 +441,12 @@ abstract class BaseModel
     {
         // If values have a defined min/max then validate
         if ((array_key_exists('min', $this->fields[$key])) && (array_key_exists('max', $this->fields[$key]))) {
-            Validation::validateRange($value, $this->fields[$key]['min'], $this->fields[$key]['max']);
+            $this->validateRange($value, $this->fields[$key]['min'], $this->fields[$key]['max']);
         }
 
         // If values have a defined regex then validate
         if (array_key_exists('regex', $this->fields[$key])) {
-            Validation::validateRegex($value, $this->fields[$key]['regex']);
+            $this->validateRegex($value, $this->fields[$key]['regex']);
         }
     }
 
