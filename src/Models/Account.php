@@ -152,9 +152,25 @@ class Account extends BaseModel
         return json_encode($results, JSON_PRESERVE_ZERO_FRACTION);
     }
 
+    /**
+     * Returns a list of Accounts based on the Category identifier.
+     *
+     * @return json A collection of entities in raw json from Sage
+     */
     public function getAccountsByCategoryId(string $id)
     {
         $results = $this->request->request('GET', $this->endpoint, sprintf('GetAccountsByCategoryId/%s', $id));
+        return json_encode($results, JSON_PRESERVE_ZERO_FRACTION);
+    }
+
+    /**
+     * Returns a list of all accounts
+     *
+     * @return json A collection of entities in raw json from Sage
+     */
+    public function getChartofAccounts()
+    {
+        $results = $this->request->request('GET', $this->endpoint, 'GetChartofAccounts');
         return json_encode($results, JSON_PRESERVE_ZERO_FRACTION);
     }
 }
