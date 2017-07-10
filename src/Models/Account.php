@@ -22,129 +22,6 @@ use DarrynTen\SageOne\BaseModel;
 class Account extends BaseModel
 {
     /**
-     * The ID of the account
-     *
-     * @var int $id
-     */
-    public $id;
-
-    /**
-     * The name of the account
-     *
-     * @var string $name
-     */
-    public $name;
-
-    /**
-     * The category of the account
-     *
-     * @var AccountCategory $category
-     */
-    public $category;
-
-    /**
-     * Active flag
-     *
-     * @var bool $active
-     */
-    public $active;
-
-    /**
-     * Balance
-     *
-     * READ ONLY
-     *
-     * @var double $balance
-     */
-    protected $balance;
-
-    /**
-     * Description of the account
-     *
-     * @var string $description
-     */
-    public $description;
-
-    /**
-     * Reporting group ID
-     *
-     * Nullable
-     *
-     * @var int $reportingGroupId
-     */
-    public $reportingGroupId = null;
-
-    /**
-     * Unallocated account flag
-     *
-     * READ ONLY
-     *
-     * @var boolean $unallocatedAccount
-     */
-    protected $unallocatedAccount;
-
-    /**
-     * Tax locked flag
-     *
-     * READ ONLY
-     *
-     * @var boolean $isTaxLocked
-     */
-    protected $isTaxLocked;
-
-    /**
-     * Date the account was last modified
-     *
-     * READ ONLY
-     *
-     * Nullable
-     *
-     * @var DateTime $modified
-     */
-    protected $modified = null;
-
-    /**
-     * Date the account was created
-     *
-     * READ ONLY
-     *
-     * @var DateTime $created
-     */
-    protected $created;
-
-    /**
-     * The account type reference
-     *
-     * READ ONLY
-     *
-     * @var int $accountType
-     */
-    protected $accountType;
-
-    /**
-     * Account activity flag
-     *
-     * READ ONLY
-     *
-     * @var boolean $hasActivity
-     */
-    protected $hasActivity;
-
-    /**
-     * Default tax type ID reference
-     *
-     * @var int $defaultTaxTypeId
-     */
-    public $defaultTaxTypeId = null;
-
-    /**
-     * Actual model of the default tax type
-     *
-     * @var TaxType $defaultTaxType
-     */
-    public $defaultTaxType = null;
-
-    /**
      * The API Endpoint
      *
      * @var string $endpoint
@@ -158,7 +35,7 @@ class Account extends BaseModel
      * validation, etc
      *
      * All must include a type, whether or not it's nullable, and whether or
-     * not it's persistable.
+     * not it's readonly.
      *
      * NB: Naming convention for keys is to lowercase the first character of the
      * field returned by Sage (they use PascalCase and we use camelCase)
@@ -176,77 +53,77 @@ class Account extends BaseModel
         'id' => [
             'type' => 'integer',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'name' => [
             'type' => 'string',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'category' => [
             'type' => 'AccountCategory',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'active' => [
             'type' => 'boolean',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'balance' => [
             'type' => 'double',
             'nullable' => false,
-            'persistable' => false,
+            'readonly' => true,
         ],
         'description' => [
             'type' => 'string',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'reportingGroupId' => [
             'type' => 'integer',
             'nullable' => true,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'unallocatedAccount' => [
             'type' => 'boolean',
             'nullable' => false,
-            'persistable' => false,
+            'readonly' => true,
         ],
         'isTaxLocked' => [
             'type' => 'boolean',
             'nullable' => false,
-            'persistable' => false,
+            'readonly' => true,
         ],
         'modified' => [
             'type' => 'DateTime',
             'nullable' => true,
-            'persistable' => false,
+            'readonly' => true,
         ],
         'created' => [
             'type' => 'DateTime',
             'nullable' => false,
-            'persistable' => false,
+            'readonly' => true,
         ],
         'accountType' => [
             'type' => 'integer',
             'nullable' => false,
-            'persistable' => false,
+            'readonly' => true,
         ],
         'hasActivity' => [
             'type' => 'boolean',
             'nullable' => false,
-            'persistable' => false,
+            'readonly' => true,
         ],
         'defaultTaxTypeId' => [
             'type' => 'integer',
             'nullable' => true,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'defaultTaxType' => [
             'type' => 'TaxType',
             'nullable' => true,
-            'persistable' => true,
+            'readonly' => false,
         ]
     ];
 

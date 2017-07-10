@@ -22,69 +22,11 @@ use DarrynTen\SageOne\BaseModel;
 class TaxType extends BaseModel
 {
     /**
-     * The ID of the account
-     *
-     * @var int $id
-     */
-    public $id;
-
-    /**
      * The API Endpoint
      *
      * @var string $endpoint
      */
     protected $endpoint = 'TaxType';
-
-    /**
-     * Tax type name
-     *
-     * @var string $name
-     */
-    public $name;
-
-    /**
-     * Tax percentage
-     *
-     * @var decimal $percentage
-     */
-    public $percentage;
-
-    /**
-     * Is default tax type
-     *
-     * @var boolean $isDefault
-     */
-    public $isDefault;
-
-    /**
-     * Has activity
-     *
-     * READ ONLY
-     *
-     * @var boolean $hasActivity
-     */
-    protected $hasActivity;
-
-    /**
-     * Is a manual tax type
-     *
-     * @var boolean $isManualTax
-     */
-    public $isManualTax;
-
-    /**
-     * Date created
-     *
-     * @var DateTime $created
-     */
-    public $created;
-
-    /**
-     * Date modified
-     *
-     * @var DateTime $modified
-     */
-    public $modified = null;
 
     /**
      * Defines all possible fields.
@@ -93,7 +35,7 @@ class TaxType extends BaseModel
      * validation, etc
      *
      * All must include a type, whether or not it's nullable, and whether or
-     * not it's persistable.
+     * not it's readonly.
      *
      * NB: Naming convention for keys is to lowercase the first character of the
      * field returned by Sage (they use PascalCase and we use camelCase)
@@ -111,42 +53,42 @@ class TaxType extends BaseModel
         'id' => [
             'type' => 'integer',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'name' => [
             'type' => 'string',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'percentage' => [
             'type' => 'double',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'isDefault' => [
             'type' => 'boolean',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'hasActivity' => [
             'type' => 'boolean',
             'nullable' => false,
-            'persistable' => false,
+            'readonly' => true,
         ],
         'isManualTax' => [
             'type' => 'boolean',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'created' => [
             'type' => 'DateTime',
             'nullable' => false,
-            'persistable' => false,
+            'readonly' => true,
         ],
         'modified' => [
             'type' => 'DateTime',
             'nullable' => true,
-            'persistable' => false,
+            'readonly' => true,
         ],
     ];
 
