@@ -106,47 +106,47 @@ class AccountNote extends BaseModel
         'id' => [
             'type' => 'integer',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'accountId' => [
             'type' => 'integer',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'userId' => [
             'type' => 'integer',
             'nullable' => true,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'subject' => [
             'type' => 'string',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'entryDate' => [
             'type' => 'DateTime',
             'nullable' => true,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'actionDate' => [
             'type' => 'DateTime',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'status' => [
             'type' => 'boolean',
             'nullable' => true,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'note' => [
             'type' => 'string',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'hasAttachments' => [
             'type' => 'boolean',
             'nullable' => true,
-            'persistable' => true,
+            'readonly' => false,
         ]
     ];
 
