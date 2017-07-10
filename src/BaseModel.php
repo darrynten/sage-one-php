@@ -234,7 +234,7 @@ abstract class BaseModel
 
         $results = $this->request->request('GET', $this->endpoint, 'Get');
 
-        return json_encode($results);
+        return json_encode($results, JSON_PRESERVE_ZERO_FRACTION);
     }
 
     /**
@@ -308,7 +308,7 @@ abstract class BaseModel
      */
     public function toJson()
     {
-        return json_encode($this->toObject());
+        return json_encode($this->toObject(), JSON_PRESERVE_ZERO_FRACTION);
     }
 
     /**

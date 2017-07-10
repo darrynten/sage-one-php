@@ -3,474 +3,276 @@
 namespace DarrynTen\SageOne\Tests\SageOne\Models;
 
 use DarrynTen\SageOne\Models\Account;
-use DarrynTen\SageOne\Models\AccountCategory;
 use DarrynTen\SageOne\Models\TaxType;
+use DarrynTen\SageOne\Models\AccountCategory;
 use DarrynTen\SageOne\Request\RequestHandler;
-use InterNations\Component\HttpMock\PHPUnit\HttpMockTrait;
 use GuzzleHttp\Client;
 use ReflectionClass;
 
-class AccountModelTest extends \PHPUnit_Framework_TestCase
+use DarrynTen\SageOne\Exception\ModelException;
+
+class AccountModelTest extends BaseModelTest
 {
-    use HttpMockTrait;
-
-    private $config = [
-        'username' => 'username',
-        'password' => 'password',
-        'key' => 'key',
-        'endpoint' => '//localhost:8082',
-        'version' => '1.1.2',
-        'companyId' => null
-    ];
-
-    public static function setUpBeforeClass()
-    {
-        static::setUpHttpMockBeforeClass('8082', 'localhost');
-    }
-
-    public static function tearDownAfterClass()
-    {
-        static::tearDownHttpMockAfterClass();
-    }
-
-    public function setUp()
-    {
-        $this->setUpHttpMock();
-    }
-
-    public function tearDown()
-    {
-        $this->tearDownHttpMock();
-    }
-
     public function testInstanceOf()
     {
-        $request = new Account($this->config);
-        $this->assertInstanceOf(Account::class, $request);
+        $this->verifyInstanceOf(Account::class);
     }
 
-    public function testGetAll()
+    public function testSetUndefined()
     {
-        $data = file_get_contents(__DIR__ . '/../../mocks/Account/GET_Account_Get.json');
-
-        $this->http->mock
-            ->when()
-                ->methodIs('GET')
-                ->pathIs('/1.1.2/Account/Get?apikey=key')
-            ->then()
-                ->body($data)
-            ->end();
-        $this->http->setUp();
-
-        $request = new RequestHandler($this->config);
-
-        /**
-         * We make a local client to connect to our mock and get the
-         * expected result
-         */
-        $localClient = new Client();
-
-        $localResult = $localClient->request(
-            'GET',
-            'http://localhost:8082/1.1.2/Account/Get?apikey=key',
-            []
-        );
-
-        /**
-         * We then make a mock client, and tell the mock client that it
-         * should return what the local client got from the mock
-         */
-        $mockClient = \Mockery::mock(
-            'Client'
-        );
-
-        $mockClient->shouldReceive('request')
-            ->once()
-            ->andReturn($localResult);
-
-        /**
-         * Insert the mocked client into the request class via reflection
-         *
-         * This will pass the desired mock object back to the assertion
-         * as it replaces the legit Client() object
-         */
-        $reflection = new ReflectionClass($request);
-        $reflectedClient = $reflection->getProperty('client');
-        $reflectedClient->setAccessible(true);
-        $reflectedClient->setValue($request, $mockClient);
-
-        $accountModel = new Account($this->config);
-
-        /**
-         * We then reflect into the account model
-         */
-        $accountReflection = new ReflectionClass($accountModel);
-        $reflectedRequest = $accountReflection->getProperty('request');
-        $reflectedRequest->setAccessible(true);
-        $reflectedRequest->setValue($accountModel, $request);
-
-        $allAccounts = json_decode($accountModel->all(), true);
-
-        $this->assertEquals(3, count($allAccounts));
-        $this->assertArrayHasKey('Results', $allAccounts);
-        $this->assertEquals(2, count($allAccounts['Results']));
-        $this->assertEquals('sample string 2', $allAccounts['Results'][0]['Name']);
-        $this->assertTrue($allAccounts['Results'][1]['Active']);
-
-        // Final check
-        $this->assertEquals(
-            json_decode($data, true),
-            $allAccounts
-        );
+        $this->verifySetUndefined(Account::class);
     }
 
-    public function testGetId()
+    public function testGetUndefined()
     {
-        $data = file_get_contents(__DIR__ . '/../../mocks/Account/GET_Account_Get_xx.json');
+        $this->verifyGetUndefined(Account::class);
+    }
 
-        $this->http->mock
-            ->when()
-            ->methodIs('GET')
-            ->pathIs('/1.1.2/Account/Get/11?apikey=key')
-            ->then()
-            ->body($data)
-            ->end();
-        $this->http->setUp();
+    public function testCanNotNullify()
+    {
+        $this->verifyCanNotNullify(Account::class, 'name');
+    }
 
-        $request = new RequestHandler($this->config);
+    public function testCanNullify()
+    {
+        $this->verifyCanNullify(Account::class, 'reportingGroupId');
+    }
 
-        /**
-         * We make a local client to connect to our mock and get the
-         * expected result
-         */
-        $localClient = new Client();
-
-        $localResult = $localClient->request(
-            'GET',
-            'http://localhost:8082/1.1.2/Account/Get/11?apikey=key',
-            []
-        );
-
-        /**
-         * We then make a mock client, and tell the mock client that it
-         * should return what the local client got from the mock
-         */
-        $mockClient = \Mockery::mock(
-            'Client'
-        );
-
-        $mockClient->shouldReceive('request')
-            ->once()
-            ->andReturn($localResult);
-
-        /**
-         * Insert the mocked client into the request class via reflection
-         *
-         * This will pass the desired mock object back to the assertion
-         * as it replaces the legit Client() object
-         */
-        $reflection = new ReflectionClass($request);
-        $reflectedClient = $reflection->getProperty('client');
-        $reflectedClient->setAccessible(true);
-        $reflectedClient->setValue($request, $mockClient);
-
-        $accountModel = new Account($this->config);
-
-        /**
-         * We then reflect into the account model
-         */
-        $accountReflection = new ReflectionClass($accountModel);
-        $reflectedRequest = $accountReflection->getProperty('request');
-        $reflectedRequest->setAccessible(true);
-        $reflectedRequest->setValue($accountModel, $request);
-
-        // Check defaults
-        $this->assertNull($accountModel->id);
-        $this->assertNull($accountModel->name);
-        $this->assertNull($accountModel->created);
-        $this->assertNull($accountModel->balance);
-        $this->assertNull($accountModel->category);
-        $this->assertNull($accountModel->defaultTaxType);
-
-        // Fetch an id
-        $accountModel->get(11);
-
-        // Make sure related models are of the right types
-        $this->assertInstanceOf(Account::class, $accountModel);
-        $this->assertInstanceOf(AccountCategory::class, $accountModel->category);
-        $this->assertInstanceOf(TaxType::class, $accountModel->defaultTaxType);
-        $this->assertInstanceOf(\DateTime::class, $accountModel->created);
-
-        // Check values on all child properties to match the mock it received
-        $this->assertEquals($accountModel->id, 11);
-        $this->assertEquals($accountModel->category->order, 6);
-        $this->assertEquals($accountModel->defaultTaxType->id, 1);
-        $this->assertEquals($accountModel->defaultTaxType->hasActivity, true);
-        $this->assertEquals($accountModel->created->format('Y-m-d'), '2017-06-30');
-        $this->assertEquals($accountModel->modified->getTimezone()->getName(), 'UTC');
-        $this->assertEquals($accountModel->category->created->format('Y-m-d'), '2017-06-30');
-        $this->assertEquals($accountModel->defaultTaxType->modified->format('Y-m-d'), '2017-06-30');
-
-        // Check any protected/private properties via reflection
-        $reflect = new ReflectionClass($accountModel);
-
-        $reflectValue = $reflect->getProperty('features');
-        $reflectValue->setAccessible(true);
-        $value = $reflectValue->getValue(new Account($this->config));
-        $this->assertArrayHasKey('all', $value);
-        $this->assertEquals(4, sizeof($value));
-        $this->assertEquals(true, $value['all']);
-        $this->assertEquals(true, $value['get']);
-        $this->assertEquals(true, $value['save']);
-        $this->assertEquals(true, $value['delete']);
-
-        $reflectValue = $reflect->getProperty('fields');
-        $reflectValue->setAccessible(true);
-        $value = $reflectValue->getValue(new Account($this->config));
-        $this->assertEquals(15, sizeof($value));
-        $this->assertEquals(3, sizeof($value['name']));
-        $this->assertEquals(false, $value['name']['readonly']);
-        $this->assertEquals(false, $value['category']['nullable']);
-
-        $reflectValue = $reflect->getProperty('endpoint');
-        $reflectValue->setAccessible(true);
-        $value = $reflectValue->getValue(new Account($this->config));
-        $this->assertEquals('Account', $value);
-
-        // Test retrieving valid json
-        $json = $accountModel->toJson();
-        $this->assertEquals('string', gettype($json));
-        $this->assertEquals(json_decode($data), json_decode($json));
+    public function testBadImport()
+    {
+        $this->verifyBadImport(Account::class, 'name');
     }
 
     public function testInject()
     {
-        // Test injecting a result
-        $data = json_decode(file_get_contents(__DIR__ . '/../../mocks/Account/GET_Account_Get_xx.json'));
+        $this->verifyInject(Account::class, function ($model, $data) {
+            $this->assertEquals($model->id, 11);
+            $this->assertTrue($model->active);
+            $this->assertEquals($model->name, 'sample string 2');
+            $this->assertEquals($model->balance, 4.0);
+            $this->assertEquals($model->description, 'sample string 5');
+            $this->assertEquals($model->reportingGroupId, 1);
+            $this->assertTrue($model->unallocatedAccount);
+            $this->assertTrue($model->isTaxLocked);
+            $this->assertInstanceOf(\DateTime::class, $model->modified);
+            $this->assertEquals($model->modified->format('Y-m-d'), '2017-06-30');
+            $this->assertEquals($model->modified->getTimezone()->getName(), 'UTC');
+            $this->assertInstanceOf(\DateTime::class, $model->created);
+            $this->assertEquals($model->created->format('Y-m-d'), '2017-06-30');
+            $this->assertEquals($model->created->getTimezone()->getName(), 'UTC');
+            $this->assertEquals($model->accountType, 9);
+            $this->assertTrue($model->hasActivity);
+            $this->assertEquals($model->defaultTaxTypeId, 1);
+            $this->assertInstanceOf(TaxType::class, $model->defaultTaxType);
+            $this->assertInstanceOf(AccountCategory::class, $model->category);
+            $this->assertEquals($model->category->comment, 'sample string 1');
+            $this->assertEquals($model->category->order, 6);
+            $this->assertEquals($model->category->description, 'sample string 7');
+            $this->assertEquals($model->category->id, 8);
+            $this->assertEquals($model->category->modified->format('Y-m-d'), '2017-06-30');
+            $this->assertEquals($model->category->created->format('Y-m-d'), '2017-06-30');
+            $this->assertEquals($model->defaultTaxType->id, 1);
+            $this->assertEquals($model->defaultTaxType->name, 'sample string 2');
+            $this->assertEquals($model->defaultTaxType->percentage, 3.1);
+            $this->assertTrue($model->defaultTaxType->isDefault);
+            $this->assertTrue($model->defaultTaxType->hasActivity);
+            $this->assertTrue($model->defaultTaxType->isManualTax);
+            $this->assertEquals($model->defaultTaxType->created->format('Y-m-d'), '2017-06-30');
+            $this->assertEquals($model->defaultTaxType->modified->format('Y-m-d'), '2017-06-30');
 
-        $accountModel = new Account($this->config);
-        $accountModel->loadResult($data);
+            $objArray = json_decode($model->toJson(), true);
+            $this->assertCount(15, $objArray);
+        });
+    }
 
-        // Check values on all child properties to match the mock it received
-        $this->assertEquals($accountModel->id, 11);
-        $this->assertEquals($accountModel->name, 'sample string 2');
+    public function testAttributes()
+    {
+        $this->verifyAttributes(Account::class, [
+            'id' => [
+                'type' => 'integer',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'name' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'category' => [
+                'type' => 'AccountCategory',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'active' => [
+                'type' => 'boolean',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'balance' => [
+                'type' => 'double',
+                'nullable' => false,
+                'readonly' => true,
+            ],
+            'description' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'reportingGroupId' => [
+                'type' => 'integer',
+                'nullable' => true,
+                'readonly' => false,
+            ],
+            'unallocatedAccount' => [
+                'type' => 'boolean',
+                'nullable' => false,
+                'readonly' => true,
+            ],
+            'isTaxLocked' => [
+                'type' => 'boolean',
+                'nullable' => false,
+                'readonly' => true,
+            ],
+            'modified' => [
+                'type' => 'DateTime',
+                'nullable' => true,
+                'readonly' => true,
+            ],
+            'created' => [
+                'type' => 'DateTime',
+                'nullable' => false,
+                'readonly' => true,
+            ],
+            'accountType' => [
+                'type' => 'integer',
+                'nullable' => false,
+                'readonly' => true,
+            ],
+            'hasActivity' => [
+                'type' => 'boolean',
+                'nullable' => false,
+                'readonly' => true,
+            ],
+            'defaultTaxTypeId' => [
+                'type' => 'integer',
+                'nullable' => true,
+                'readonly' => false,
+            ],
+            'defaultTaxType' => [
+                'type' => 'TaxType',
+                'nullable' => true,
+                'readonly' => false,
+            ]
+        ]);
+    }
 
-        // Valid set
-        $accountModel->name = 'Account Test';
-        $this->assertEquals($accountModel->name, 'Account Test');
+    public function testFeatures()
+    {
+        $this->verifyFeatures(Account::class, [
+            'all' => true, 'get' => true, 'delete' => true, 'save' => true
+        ]);
+    }
 
-        $newJson = $accountModel->toJson();
-        $this->assertFalse($newJson === $data);
+    public function testGetAll()
+    {
+        $this->verifyGetAll(Account::class, function ($results, $data) {
+            $this->assertEquals(2, count($results));
+            $model = new Account($this->config);
+            $data = json_decode(json_encode($results[0], JSON_PRESERVE_ZERO_FRACTION));
+            $model->loadResult($data);
+
+            $this->assertEquals($model->id, 11);
+            $this->assertTrue($model->active);
+            $this->assertEquals($model->name, 'sample string 2');
+            $this->assertEquals($model->balance, 4.0);
+            $this->assertEquals($model->description, 'sample string 5');
+            $this->assertEquals($model->reportingGroupId, 1);
+            $this->assertTrue($model->unallocatedAccount);
+            $this->assertTrue($model->isTaxLocked);
+            $this->assertInstanceOf(\DateTime::class, $model->modified);
+            $this->assertEquals($model->modified->format('Y-m-d'), '2017-06-28');
+            $this->assertEquals($model->modified->getTimezone()->getName(), 'UTC');
+            $this->assertInstanceOf(\DateTime::class, $model->created);
+            $this->assertEquals($model->created->format('Y-m-d'), '2017-06-28');
+            $this->assertEquals($model->created->getTimezone()->getName(), 'UTC');
+            $this->assertEquals($model->accountType, 9);
+            $this->assertTrue($model->hasActivity);
+            $this->assertEquals($model->defaultTaxTypeId, 1);
+            $this->assertInstanceOf(TaxType::class, $model->defaultTaxType);
+            $this->assertInstanceOf(AccountCategory::class, $model->category);
+            $this->assertEquals($model->category->comment, 'sample string 1');
+            $this->assertEquals($model->category->order, 6);
+            $this->assertEquals($model->category->description, 'sample string 7');
+            $this->assertEquals($model->category->id, 8);
+            $this->assertEquals($model->category->modified->format('Y-m-d'), '2017-06-28');
+            $this->assertEquals($model->category->created->format('Y-m-d'), '2017-06-28');
+            $this->assertEquals($model->defaultTaxType->id, 1);
+            $this->assertEquals($model->defaultTaxType->name, 'sample string 2');
+            $this->assertEquals($model->defaultTaxType->percentage, 3.1);
+            $this->assertTrue($model->defaultTaxType->isDefault);
+            $this->assertTrue($model->defaultTaxType->hasActivity);
+            $this->assertTrue($model->defaultTaxType->isManualTax);
+            $this->assertEquals($model->defaultTaxType->created->format('Y-m-d'), '2017-06-28');
+            $this->assertEquals($model->defaultTaxType->modified->format('Y-m-d'), '2017-06-28');
+        });
+    }
+
+    public function testGetId()
+    {
+        $this->verifyGetId(Account::class, 2, function ($model) {
+            $this->assertEquals($model->id, 11);
+            $this->assertTrue($model->active);
+            $this->assertEquals($model->name, 'sample string 2');
+            $this->assertEquals($model->balance, 4.0);
+            $this->assertEquals($model->description, 'sample string 5');
+            $this->assertEquals($model->reportingGroupId, 1);
+            $this->assertTrue($model->unallocatedAccount);
+            $this->assertTrue($model->isTaxLocked);
+            $this->assertInstanceOf(\DateTime::class, $model->modified);
+            $this->assertEquals($model->modified->format('Y-m-d'), '2017-06-30');
+            $this->assertEquals($model->modified->getTimezone()->getName(), 'UTC');
+            $this->assertInstanceOf(\DateTime::class, $model->created);
+            $this->assertEquals($model->created->format('Y-m-d'), '2017-06-30');
+            $this->assertEquals($model->created->getTimezone()->getName(), 'UTC');
+            $this->assertEquals($model->accountType, 9);
+            $this->assertTrue($model->hasActivity);
+            $this->assertEquals($model->defaultTaxTypeId, 1);
+            $this->assertInstanceOf(TaxType::class, $model->defaultTaxType);
+            $this->assertInstanceOf(AccountCategory::class, $model->category);
+            $this->assertEquals($model->category->comment, 'sample string 1');
+            $this->assertEquals($model->category->order, 6);
+            $this->assertEquals($model->category->description, 'sample string 7');
+            $this->assertEquals($model->category->id, 8);
+            $this->assertEquals($model->category->modified->format('Y-m-d'), '2017-06-30');
+            $this->assertEquals($model->category->created->format('Y-m-d'), '2017-06-30');
+            $this->assertEquals($model->defaultTaxType->id, 1);
+            $this->assertEquals($model->defaultTaxType->name, 'sample string 2');
+            $this->assertEquals($model->defaultTaxType->percentage, 3.1);
+            $this->assertTrue($model->defaultTaxType->isDefault);
+            $this->assertTrue($model->defaultTaxType->hasActivity);
+            $this->assertTrue($model->defaultTaxType->isManualTax);
+            $this->assertEquals($model->defaultTaxType->created->format('Y-m-d'), '2017-06-30');
+            $this->assertEquals($model->defaultTaxType->modified->format('Y-m-d'), '2017-06-30');
+        });
     }
 
     public function testSave()
     {
-        $data = file_get_contents(__DIR__ . '/../../mocks/Account/POST_Account_Save_RESP.json');
-        $parameters = json_decode(file_get_contents(__DIR__ . '/../../mocks/Account/POST_Account_Save_REQ.json'), true);
-
-        $this->http->mock
-            ->when()
-            ->methodIs('POST')
-            ->pathIs('/1.1.2/Account/Save?apikey=key')
-            ->then()
-            ->body($data)
-            ->end();
-        $this->http->setUp();
-
-        $request = new RequestHandler($this->config);
-
-        // TODO these are copy-pastes (naughty)
-
-        /**
-         * We make a local client to connect to our mock and get the
-         * expected result
-         */
-        $localClient = new Client();
-
-        $localResult = $localClient->request(
-            'POST',
-            'http://localhost:8082/1.1.2/Account/Save?apikey=key',
-            $parameters
-        );
-
-        /**
-         * We then make a mock client, and tell the mock client that it
-         * should return what the local client got from the mock
-         */
-        $mockClient = \Mockery::mock(
-            'Client'
-        );
-
-        $mockClient->shouldReceive('request')
-            ->once()
-            ->andReturn($localResult);
-
-        /**
-         * Insert the mocked client into the request class via reflection
-         *
-         * This will pass the desired mock object back to the assertion
-         * as it replaces the legit Client() object
-         */
-        $reflection = new ReflectionClass($request);
-        $reflectedClient = $reflection->getProperty('client');
-        $reflectedClient->setAccessible(true);
-        $reflectedClient->setValue($request, $mockClient);
-
-        $accountModel = new Account($this->config);
-
-        /**
-         * We then reflect into the account model
-         */
-        $accountReflection = new ReflectionClass($accountModel);
-        $reflectedRequest = $accountReflection->getProperty('request');
-        $reflectedRequest->setAccessible(true);
-        $reflectedRequest->setValue($accountModel, $request);
-
-        // Load an id
-        $data = json_decode(file_get_contents(__DIR__ . '/../../mocks/Account/GET_Account_Get_xx.json'));
-        $accountModel->loadResult($data);
-
-        $accountModel->name = 'New Name';
-
-        $expectedResponse = json_decode(file_get_contents(__DIR__ . '/../../mocks/Account/POST_Account_Save_RESP.json'));
-
-        $response = $accountModel->save();
-        $this->assertEquals($expectedResponse->ID, $response->ID);
-        // (var_dump($accountModel->toJson()));
-
-        // $this->assertEquals(
-            // $data,
-            // $request->request('POST', 'Account', 'Save', [], $parameters)
-        // );
+        $this->verifySave(Account::class, function ($response) {
+            $this->assertEquals(11, $response->ID);
+            // TODO Do actual checks
+        });
     }
 
-    public function testRequestDelete()
+    public function testDelete()
     {
-        $this->http->mock
-            ->when()
-            ->methodIs('DELETE')
-            ->pathIs('/1.1.2/Account/Delete/11?apikey=key')
-            ->then()
-            ->body(null)
-            ->end();
-        $this->http->setUp();
-
-        $request = new RequestHandler($this->config);
-
-        // TODO these are copy-pastes (naughty)
-
-        /**
-         * We make a local client to connect to our mock and get the
-         * expected result
-         */
-        $localClient = new Client();
-
-        $localResult = $localClient->request(
-            'DELETE',
-            'http://localhost:8082/1.1.2/Account/Delete/11?apikey=key',
-            []
-        );
-
-        /**
-         * We then make a mock client, and tell the mock client that it
-         * should return what the local client got from the mock
-         */
-        $mockClient = \Mockery::mock(
-            'Client'
-        );
-
-        $mockClient->shouldReceive('request')
-            ->once()
-            ->andReturn($localResult);
-
-        /**
-         * Insert the mocked client into the request class via reflection
-         *
-         * This will pass the desired mock object back to the assertion
-         * as it replaces the legit Client() object
-         */
-        $reflection = new ReflectionClass($request);
-        $reflectedClient = $reflection->getProperty('client');
-        $reflectedClient->setAccessible(true);
-        $reflectedClient->setValue($request, $mockClient);
-
-        $accountModel = new Account($this->config);
-
-        /**
-         * We then reflect into the account model
-         */
-        $accountReflection = new ReflectionClass($accountModel);
-        $reflectedRequest = $accountReflection->getProperty('request');
-        $reflectedRequest->setAccessible(true);
-        $reflectedRequest->setValue($accountModel, $request);
-
-        $accountModel->delete(11);
-        // TODO not sure how to validate this worked...
+        $this->verifyDelete(Account::class, 11, function () {
+            // TODO do actual checks
+        });
     }
 
-    public function testRequestWithAuth()
+    public function testAuth()
     {
-        $config = [
-          'username' => 'username',
-          'password' => 'password',
-          'key' => 'key',
-          'endpoint' => '//accounting.sageone.co.za',
-          'version' => '1.1.2',
-          'companyId' => null
-        ];
-
-        // Creates a partially mock of RequestHandler with mocked `handleRequest` method
-        $request = \Mockery::mock(
-            'DarrynTen\SageOne\Request\RequestHandler[handleRequest]',
-            [
-                $config,
-            ]
-        );
-
-        $request->shouldReceive('handleRequest')
-            ->once()
-            ->with(
-                'POST',
-                '//accounting.sageone.co.za/1.1.2/Account/Save/',
-                [
-                    'headers' => [
-                        'Authorization' => 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=',
-                    ],
-                    'query' => [
-                        'apikey' => 'key'
-                    ]
-                ],
-                []
-            )
-            ->andReturn('OK');
-
-        $this->assertEquals(
-            'OK',
-            $request->request('POST', 'Account', 'Save', [])
-        );
-
-        $request->shouldReceive('handleRequest')
-            ->once()
-            ->with(
-                'GET',
-                '//accounting.sageone.co.za/1.1.2/Account/Get/111/',
-                [
-                    'headers' => [
-                        'Authorization' => 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=',
-                    ],
-                    'query' => [
-                        'apikey' => 'key'
-                    ]
-                ],
-                ['keyx' => 'value']
-            )
-            ->andReturn('OK');
-
-        $result = $request->request('GET', 'Account', 'Get/111', ['keyx' => 'value']);
-
-        $this->assertEquals(
-            'OK',
-            $result
-        );
+        $this->verifyRequestWithAuth(Account::class, 'Save');
     }
 }

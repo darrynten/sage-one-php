@@ -170,13 +170,6 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $model = new $class($this->config);
         $className = $this->getClassName($class);
 
-        foreach ($attributes as $name => $options) {
-            $this->assertObjectHasAttribute($name, $model);
-            if (isset($options['nullable'])) {
-                $this->assertNull($model->{$name}, "Model {$className} Key {$name} is not null");
-            }
-        }
-
         // Fields mapping
         $reflect = new ReflectionClass($model);
         $reflectValue = $reflect->getProperty('fields');
@@ -586,5 +579,49 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
 
         $model = new $class($this->config);
         $model->delete(1);
+    }
+
+    public function verifyRequestWithAuth(string $class, string $method)
+    {
+        $className = $this->getClassName($class);
+
+        $config = [
+          'username' => 'username',
+          'password' => 'password',
+          'key' => 'key',
+          'endpoint' => '//accounting.sageone.co.za',
+          'version' => '1.1.2',
+          'companyId' => null
+        ];
+
+        // Creates a partially mock of RequestHandler with mocked `handleRequest` method
+        $request = \Mockery::mock(
+            'DarrynTen\SageOne\Request\RequestHandler[handleRequest]',
+            [
+                $config,
+            ]
+        );
+
+        $request->shouldReceive('handleRequest')
+            ->once()
+            ->with(
+                'POST',
+                sprintf('//accounting.sageone.co.za/1.1.2/%s/%s/', $className, $method),
+                [
+                    'headers' => [
+                        'Authorization' => 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=',
+                    ],
+                    'query' => [
+                        'apikey' => 'key'
+                    ]
+                ],
+                []
+            )
+            ->andReturn('OK');
+
+        $this->assertEquals(
+            'OK',
+            $request->request('POST', $className, $method, [])
+        );
     }
 }
