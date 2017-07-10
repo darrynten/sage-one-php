@@ -119,7 +119,7 @@ class AccountNoteModelTest extends BaseModelTest
 
     public function testGetAll()
     {
-        $this->verifyGetAll(AccountNote::class, function ($results, $data) {
+        $this->verifyGetAll(AccountNote::class, function ($results) {
             $this->assertEquals(2, count($results));
             $this->assertEquals(1, $results[0]['AccountId']);
             $this->assertEquals(1, $results[0]['UserId']);

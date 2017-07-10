@@ -84,7 +84,7 @@ class CurrencyModelTest extends BaseModelTest
 
     public function testGetAll()
     {
-        $this->verifyGetAll(Currency::class, function ($results, $data) {
+        $this->verifyGetAll(Currency::class, function ($results) {
             $this->assertEquals(2, count($results));
 
             $this->assertEquals(1, $results[0]['ID']);
