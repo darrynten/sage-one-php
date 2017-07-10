@@ -175,7 +175,7 @@ class AccountModelTest extends BaseModelTest
 
     public function testGetAll()
     {
-        $this->verifyGetAll(Account::class, function ($results, $data) {
+        $this->verifyGetAll(Account::class, function ($results) {
             $this->assertEquals(2, count($results));
             $model = new Account($this->config);
             $data = json_decode(json_encode($results[0], JSON_PRESERVE_ZERO_FRACTION));
@@ -274,5 +274,18 @@ class AccountModelTest extends BaseModelTest
     public function testAuth()
     {
         $this->verifyRequestWithAuth(Account::class, 'Save');
+    }
+
+    public function testGetAllWithSystemAccounts()
+    {
+        $account = $this->setUpRequestMock(Account::class, 'Account/GetWithSystemAccounts', 'GET', 'Account/GET_Account_GetWithSystemAccounts.json');
+        $allAccounts = json_decode($account->getWithSystemAccounts());
+
+        $account = new Account($this->config);
+        $account->loadResult($allAccounts->Results[0]);
+        $this->assertInstanceOf(Account::class, $account);
+        $this->assertEquals(11, $account->id);
+        $this->assertInstanceOf(TaxType::class, $account->defaultTaxType);
+        $this->assertInstanceOf(AccountCategory::class, $account->category);
     }
 }

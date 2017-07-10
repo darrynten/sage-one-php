@@ -140,4 +140,15 @@ class Account extends BaseModel
         'save' => true,
         'delete' => true,
     ];
+
+    /**
+     * Returns the list of Accounts including system accounts.
+     *
+     * @return json A collection of entities in raw json from Sage
+     */
+    public function getWithSystemAccounts()
+    {
+        $results = $this->request->request('GET', $this->endpoint, 'GetWithSystemAccounts');
+        return json_encode($results, JSON_PRESERVE_ZERO_FRACTION);
+    }
 }

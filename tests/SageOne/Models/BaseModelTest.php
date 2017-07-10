@@ -624,4 +624,57 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
             $request->request('POST', $className, $method, [])
         );
     }
+
+    protected function setUpRequestMock(string $class, string $path, string $method, string $mockFileResponse = null, string $mockFileRequest = null) {
+        $url = sprintf('/1.1.2/%s?apikey=key', $path);
+
+        $responseData = null;
+        if ($mockFileResponse) {
+            $responseData = file_get_contents(__DIR__ . '/../../mocks/' . $mockFileResponse);
+        }
+        $requestData = [];
+        if ($mockFileRequest) {
+            $requestData= json_decode(file_get_contents(__DIR__ . '/../../mocks/' . $mockFileRequest), true);
+        }
+
+        $this->http->mock
+            ->when()
+            ->methodIs($method)
+            ->pathIs($url)
+            ->then()
+            ->body($responseData)
+            ->end();
+        $this->http->setUp();
+
+        $request = new RequestHandler($this->config);
+
+        $localClient = new Client();
+        $localResult = $localClient->request(
+            $method,
+            'http://localhost:8082' . $url,
+            []
+        );
+
+        $mockClient = \Mockery::mock(
+            'Client'
+        );
+
+        $mockClient->shouldReceive('request')
+            ->once()
+            ->andReturn($localResult);
+
+        $reflection = new ReflectionClass($request);
+        $reflectedClient = $reflection->getProperty('client');
+        $reflectedClient->setAccessible(true);
+        $reflectedClient->setValue($request, $mockClient);
+
+        $model = new $class($this->config);
+
+        $modelReflection = new ReflectionClass($model);
+        $reflectedRequest = $modelReflection->getProperty('request');
+        $reflectedRequest->setAccessible(true);
+        $reflectedRequest->setValue($model, $request);
+
+        return $model;
+    }
 }
