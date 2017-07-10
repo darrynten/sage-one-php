@@ -40,7 +40,7 @@ have covered.
 
 ### Basic ORM-style mapping
 
-Related models are auto-loaded and are all queryable, mutable, and persistable.
+Related models are auto-loaded and are all queryable, mutable, and persistable where possible.
 
 I'm sure there will be a recursion issue because of this at some point!
 
@@ -161,10 +161,10 @@ class Account extends BaseModel
      * validation, etc
      *
      * All must include a type, whether or not it's nullable, and whether or
-     * not it's persistable.
+     * not it's readonly.
      *
-     * - Nullable is `true` if the word 'nullable' is in the 'type' column
-     * - Persistable is `true` if the word 'None.' is in the Additional Info column.
+     * - nullable is `true` if the word 'nullable' is in the 'type' column
+     * - readonly is `true` if the word 'Read-Only/System Generated' is in the Additional Info column otherwise it is `false`
      * - Type has the following rules
      *   - `date` becomes "DateTime"
      *   - `nullable` is removed, i.e. "nullable integer" is only "integer"
@@ -180,27 +180,27 @@ class Account extends BaseModel
         'id' => [
             'type' => 'integer',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => true,
         ],
         'name' => [
             'type' => 'string',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'category' => [
             'type' => 'AccountCategory',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'reportingGroupId' => [
             'type' => 'integer',
             'nullable' => true,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'isTaxLocked' => [
             'type' => 'boolean',
             'nullable' => false,
-            'persistable' => false,
+            'readonly' => true,
         ],
         // etc etc etc
     ];
@@ -258,7 +258,7 @@ Models marked with an asterix are pure CRUD models
   - [x] Account
     - [ ] Account Balance
     - [x] Account Category *
-    - [ ] Account Note *
+    - [x] Account Note *
     - [ ] Account Note Attachment
     - [ ] Account Opening Balance *
     - [ ] Account Payment *
@@ -268,7 +268,7 @@ Models marked with an asterix are pure CRUD models
   - [ ] Company
     - [ ] Company Entity Type *
     - [ ] Company Note
-  - [ ] Currency *
+  - [x] Currency *
   - [ ] Exchange Rates
   - [ ] Supplier *
     - [ ] Supplier Additional Contact Detail
@@ -461,3 +461,4 @@ if you have any ideas.
 
 * [Dmitry Semenov](https://github.com/mxnr)
 * [Karolin Gaedeke](https://github.com/KaroZA)
+* [Vitaliy Likhachev](https://github.com/make-it-git)

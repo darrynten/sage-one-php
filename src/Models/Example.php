@@ -16,38 +16,14 @@ namespace DarrynTen\SageOne\Models;
 
 use DarrynTen\SageOne\BaseModel;
 
+/**
+ * Example Model
+ *
+ * Details on writable properties for Example:
+ * https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=Example
+ */
 class Example extends BaseModel
 {
-    //////////////////////////// Public Properties
-    // remove these 2 comments before merging
-
-    /**
-     * The ID of the account
-     *
-     * @var int $id
-     */
-    public $id;
-
-
-    /**
-     * Example title
-     *
-     * Example description
-     *
-     * READ ONLY [this must only be present when dealing with a read-only property)
-     * and the property *must* be protected
-     *
-     * The `= null;` must only remain for properties `nullable` in the docs
-     * This is as an indicator to developers that a field is nullable
-     *
-     * @var string $exampleWithCamel
-     */
-    protected $exampleWithCamel = null;
-
-    // etc etc etc
-
-    //////////////////////////// End Properties
-    // remove these 2 lines before merging
 
     /**
      * The API Endpoint
@@ -65,12 +41,12 @@ class Example extends BaseModel
      * validation, etc
      *
      * All must include a type, whether or not it's nullable, and whether or
-     * not it's persistable.
+     * not it's readonly.
      *
      * Documentation -> Model Conversion Rules:
      *
-     * - Nullable is `true` if the word 'nullable' is in the 'type' column
-     * - Persistable is `true` if the word 'None.' is in the Additional Info column.
+     * - nullable is `true` if the word 'nullable' is in the 'type' column
+     * - readonly is `true` if the word 'Read Only/System Generated' is in the Additional Info column.
      * - Type has the following rules
      *   - `date` becomes "DateTime"
      *   - `nullable` is removed, i.e. "nullable integer" is only "integer"
@@ -94,12 +70,51 @@ class Example extends BaseModel
         'id' => [
             'type' => 'integer',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'exampleWithCamel' => [
             'type' => 'string',
             'nullable' => true,
-            'persistable' => false,
+            'readonly' => true,
+        ],
+        'stringRange' => [
+            'type' => 'string',
+            'nullable' => true,
+            'readonly' => false,
+            'min' => 1,
+            'max' => 10,
+        ],
+        'stringWithDefault' => [
+            'type' => 'string',
+            'nullable' => true,
+            'readonly' => false,
+            'default' => 'some default value',
+        ],
+        'integerRange' => [
+            'type' => 'integer',
+            'nullable' => false,
+            'readonly' => false,
+            'min' => 1,
+            'max' => 2147483647,
+        ],
+        'someBoolean' => [
+            'type' => 'boolean',
+            'nullable' => false,
+            'readonly' => false,
+        ],
+        'requiredString' => [
+            'type' => 'string',
+            'nullable' => false,
+            'readonly' => false,
+            'required' => true,
+        ],
+        'emailAddress' => [
+            'type' => 'string',
+            'nullable' => false,
+            'readonly' => false,
+            'min' => 0,
+            'max' => 100,
+            'regex' => "/^[A-Za-z0-9,!#\$%&'\*\+\/=\?\^_`\{\|}~-]+(\.[A-Za-z0-9,!#\$%&'\*\+\/=\?\^_`\{\|}~-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.([A-Za-z]{2,})$/"
         ],
         // etc ...
     ];

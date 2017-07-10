@@ -7,15 +7,29 @@
  * @author   Darryn Ten <darrynten@github.com>
  * @license  MIT <https://github.com/darrynten/sage-one-php/blob/master/LICENSE>
  * @link     https://github.com/darrynten/sage-one-php
+ * @version  PHP 7+
  */
 
 namespace DarrynTen\SageOne;
 
 use DarrynTen\SageOne\Request\RequestHandler;
 use DarrynTen\SageOne\Exception\ModelException;
+use DarrynTen\SageOne\Validation;
 
+/**
+ * This is the base class for all the Sage Models.
+ *
+ * This class covers all/get/save/delete calls for all models that require it.
+ *
+ * It also handles conversion between our Model objects, and JSON that is
+ * compliant with the Sage API format.
+ *
+ * In order to provide ORM type functionality we support re-hydrating any
+ * model with its defined JSON fragment.
+ */
 abstract class BaseModel
 {
+    use Validation;
     /**
      * A request object
      *
@@ -38,21 +52,26 @@ abstract class BaseModel
     ];
 
     /**
-     * Valid primitive types
+     * A models configuration is stored here
      *
-     * Used to verify field definitions
-     *
-     * @var array $validPrimitiveTypes
+     * @var array $config
      */
-    private $validPrimitiveTypes = [
-        'string',
-        'integer',
-        'boolean',
-        'double',
-    ];
-
     protected $config = null;
 
+    /**
+     * A models fields are stored here
+     *
+     * @var array $fieldsData
+     */
+    private $fieldsData = [];
+
+    /**
+     * Make a new model
+     *
+     * Setup a request handler and bind the config
+     *
+     * @param array $config The config for the model
+     */
     public function __construct(array $config)
     {
         // TODO can't be spawning a million of these and passing in
@@ -64,34 +83,26 @@ abstract class BaseModel
     /**
      * Ensure attempted sets are valid
      *
+     * The key has to be defined in the field map
+     * The key needs to be checked if it is read only
+     * The key cannot set null if it is not nullable
+     * The value for the key must pass validation
+     *
      * @var string $key The property
      * @var mixed $value The desired value
-     *
-     * @thows ModelException
      */
     public function __set($key, $value)
     {
-        // Properties must be in fields map
-        if (!array_key_exists($key, $this->fields)) {
-            $this->throwException(ModelException::SETTING_UNDEFINED_PROPERTY, sprintf('key %s value %s', $key, $value));
-        }
+        $this->checkDefined($key, $value);
+        $this->checkReadOnly($key, $value);
+        $this->checkNullable($key, $value);
+        $this->checkValidation($key, $value);
 
-        // Properties must be writable
-        if (!$this->fields[$key]['persistable']) {
-            $this->throwException(ModelException::SETTING_READ_ONLY_PROPERTY, sprintf('key %s value %s', $key, $value));
-        }
-
-        // Null values must be nullable
-        if (!$this->fields[$key]['nullable'] && is_null($value)) {
-            $this->throwException(ModelException::NULL_WITHOUT_NULLABLE, sprintf('attempting to nullify key %s', $key));
-        }
+        $this->fieldsData[$key] = $value;
     }
 
     /**
      * __get
-     *
-     * We protect read-only properties, so we use this magic method in order
-     * to return read-only properties that are defined in the field mapping
      *
      * @param string $key Desired property
      *
@@ -100,7 +111,19 @@ abstract class BaseModel
     public function __get($key)
     {
         if (array_key_exists($key, $this->fields)) {
-            return $this->$key;
+            // there is some data loaded so we return it
+            if (array_key_exists($key, $this->fieldsData)) {
+                return $this->fieldsData[$key];
+            }
+
+            // there is some default value
+            if (array_key_exists('default', $this->fields[$key])) {
+                return $this->fields[$key]['default'];
+            }
+
+            // Accessing $obj->key when no default data is set returns null
+            // so we return it as default value for any described but not loaded property
+            return null;
         }
 
         $this->throwException(ModelException::GETTING_UNDEFINED_PROPERTY, sprintf('key %s', $key));
@@ -128,7 +151,7 @@ abstract class BaseModel
 
         $results = $this->request->request('GET', $this->endpoint, 'Get');
 
-        return json_encode($results);
+        return json_encode($results, JSON_PRESERVE_ZERO_FRACTION);
     }
 
     /**
@@ -180,15 +203,17 @@ abstract class BaseModel
      * Submits a save call to Sage
      *
      * TODO: Actually perform this action!
+     *
+     * @return stdClass Representaion of response
      */
     public function save()
     {
-        if (!$this->features['all']) {
+        if (!$this->features['save']) {
             $this->throwException(ModelException::NO_SAVE_SUPPORT);
         }
 
         // TODO Submission Body and Validation
-        $this->request->request('POST', $this->endpoint, 'Save');
+        return $this->request->request('POST', $this->endpoint, 'Save');
     }
 
     /**
@@ -200,7 +225,7 @@ abstract class BaseModel
      */
     public function toJson()
     {
-        return json_encode($this->toObject());
+        return json_encode($this->toObject(), JSON_PRESERVE_ZERO_FRACTION);
     }
 
     /**
@@ -234,24 +259,26 @@ abstract class BaseModel
      */
     private function prepareObjectRow($key, $config)
     {
+        $value = $this->__get($key);
+
         // If null and allowed to be null, return null
-        if (is_null($this->$key) && $this->fields[$key]['nullable']) {
+        if (is_null($value) && $this->fields[$key]['nullable']) {
             return null;
         }
 
         // If null and can't be null then throw
-        if (is_null($this->$key) && !$this->fields[$key]['nullable']) {
+        if (is_null($value) && !$this->fields[$key]['nullable']) {
             $this->throwException(ModelException::NULL_WITHOUT_NULLABLE, sprintf('key %s', $key));
         }
 
         // If it's a valid primitive
-        if ($this->isValidPrimitive($this->$key, $config['type'])) {
+        if ($this->isValidPrimitive($value, $config['type'])) {
             return $this->$key;
         }
 
         // If it's a date we return a valid format
         if ($config['type'] === 'DateTime') {
-            return $this->$key->format('Y-m-d');
+            return $value->format('Y-m-d');
         }
 
         // At this stage we would be dealing with a related Model
@@ -266,7 +293,7 @@ abstract class BaseModel
         }
 
         // And finally return an Object representation of the related Model
-        return $this->$key->toObject();
+        return $value->toObject();
     }
 
     /**
@@ -314,7 +341,8 @@ abstract class BaseModel
             $this->throwException(ModelException::PROPERTY_WITHOUT_CLASS, sprintf(
                 'Received namespaced class "%s" when defined type is "%s"',
                 $class,
-                gettype($resultItem)
+                gettype($resultItem),
+                $resultItem
             ));
         }
 
@@ -351,25 +379,75 @@ abstract class BaseModel
 
             $value = $this->processResultItem($result->$remoteKey, $config);
 
-            $this->$key = $value;
+            // This is similar to __set but it can fill read only fields
+            $this->checkDefined($key, $value);
+            $this->checkNullable($key, $value);
+            $this->checkValidation($key, $value);
+
+            $this->fieldsData[$key] = $value;
         }
     }
 
     /**
-     * Check if the type matches a valid primitive
+     * Ensure the field is defined
      *
-     * @var string $type
-     *
-     * @return boolean
+     * @var string $key
+     * @var string|integer $value
+     * @thows ModelException
      */
-    private function isValidPrimitive($resultItem, $definedType)
+    private function checkDefined($key, $value)
     {
-        $itemType = gettype($resultItem);
-        if (in_array($itemType, $this->validPrimitiveTypes) && ($itemType === $definedType)) {
-            return true;
+        if (!array_key_exists($key, $this->fields)) {
+            $this->throwException(ModelException::SETTING_UNDEFINED_PROPERTY, sprintf('key %s value %s', $key, $value));
+        }
+    }
+
+    /**
+     * Check if the field is read only
+     *
+     * @var string $key
+     * @var string|integer $value
+     * @thows ModelException
+     */
+    private function checkReadOnly($key, $value)
+    {
+        if ($this->fields[$key]['readonly']) {
+            $this->throwException(ModelException::SETTING_READ_ONLY_PROPERTY, sprintf('key %s value %s', $key, $value));
+        }
+    }
+
+    /**
+     * Check if the field can be set to null
+     *
+     * @var string $key
+     * @var string|integer $value
+     * @thows ModelException
+     */
+    private function checkNullable($key, $value)
+    {
+        if (!$this->fields[$key]['nullable'] && is_null($value)) {
+            $this->throwException(ModelException::NULL_WITHOUT_NULLABLE, sprintf('attempting to nullify key %s', $key));
+        }
+    }
+
+    /**
+     * Check min-max and regex validation
+     *
+     * @var string $key
+     * @var string|integer $value
+     * @thows ModelException
+     */
+    private function checkValidation($key, $value)
+    {
+        // If values have a defined min/max then validate
+        if ((array_key_exists('min', $this->fields[$key])) && (array_key_exists('max', $this->fields[$key]))) {
+            $this->validateRange($value, $this->fields[$key]['min'], $this->fields[$key]['max']);
         }
 
-        return false;
+        // If values have a defined regex then validate
+        if (array_key_exists('regex', $this->fields[$key])) {
+            $this->validateRegex($value, $this->fields[$key]['regex']);
+        }
     }
 
     /**

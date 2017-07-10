@@ -9,7 +9,7 @@ namespace DarrynTen\SageOne\Exception;
  */
 class ExceptionMessages
 {
-    // Moode codes 10xxx
+    // Model codes 101xx
     public static $modelErrorMessages = [
         // Methods
         10100 => 'Undefined model exception',
@@ -25,6 +25,15 @@ class ExceptionMessages
         10114 => 'Attempting to set a read-only property',
         10115 => 'Unexpected class encountered while preparing row',
         10116 => 'Attempting to get an undefined property',
+    ];
+
+    // Validation codes 1012x
+    public static $validationMessages = [
+        10200 => 'Unknown validation error',
+        10201 => 'Integer value is out of range',
+        10202 => 'String length is out of range',
+        10203 => 'String did not match validation regex',
+        10204 => 'Validation type is invalid',
     ];
 
     // Maps to standard HTTP error codes
