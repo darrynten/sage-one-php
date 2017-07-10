@@ -54,6 +54,7 @@ class AccountCategory extends BaseModel
             'type' => 'integer',
             'nullable' => false,
             'readonly' => false,
+            'required' => true,
         ],
         'comment' => [
             'type' => 'string',

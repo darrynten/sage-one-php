@@ -460,7 +460,8 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $reflectedRequest = $modelReflection->getProperty('request');
         $reflectedRequest->setAccessible(true);
         $reflectedRequest->setValue($model, $request);
-
+        
         return $model;
     }
+
 }
