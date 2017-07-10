@@ -156,7 +156,7 @@ class Account extends BaseModel
 
     /**
      * Field definitions
-     * 
+     *
      * Used by the base class to decide what gets submitted in a save call,
      * validation, etc
      *
@@ -313,7 +313,7 @@ Please feel free to open PRs for any of the following :)
 - [ ] Allocation
 - [ ] Asset
 - [ ] Asset Category
-- [ ] Asset Location
+- [x] Asset Location
 - [ ] Asset Note
 - [ ] Attachment
 - [ ] Bank Account
