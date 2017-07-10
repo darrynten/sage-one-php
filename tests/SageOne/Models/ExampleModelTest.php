@@ -10,6 +10,7 @@ use GuzzleHttp\Client;
 use ReflectionClass;
 
 use DarrynTen\SageOne\Exception\ModelException;
+use DarrynTen\SageOne\Exception\ValidationException;
 
 class ExampleModelTest extends \PHPUnit_Framework_TestCase
 {
@@ -179,9 +180,9 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
 
     public function testBadIntegerRange()
     {
-        $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('Model "Example" value -1 out of min(1) max(2147483647) Integer value is out of range');
-        $this->expectExceptionCode(10120);
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Validation error value -1 out of min(1) max(2147483647) Integer value is out of range');
+        $this->expectExceptionCode(10201);
 
         $exampleModel = new Example($this->config);
 
@@ -191,9 +192,9 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
 
     public function testBadStringLength()
     {
-        $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('Model "Example" value This string is too long! out of min(1) max(10) String length is out of range');
-        $this->expectExceptionCode(10121);
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Validation error value This string is too long! out of min(1) max(10) String length is out of range');
+        $this->expectExceptionCode(10202);
 
         $exampleModel = new Example($this->config);
 
@@ -203,9 +204,9 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
 
     public function testBadRangeType()
     {
-        $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('Model "Example" value  is type NULL Validation type is invalid');
-        $this->expectExceptionCode(10123);
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Validation error value  is type NULL Validation type is invalid');
+        $this->expectExceptionCode(10204);
 
         $exampleModel = new Example($this->config);
 
@@ -215,9 +216,9 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
 
     public function testBadRegexSet()
     {
-        $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('Model "Example" value bademail failed to validate String did not match validation regex');
-        $this->expectExceptionCode(10122);
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Validation error value bademail failed to validate String did not match validation regex');
+        $this->expectExceptionCode(10203);
 
         $exampleModel = new Example($this->config);
 
