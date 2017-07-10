@@ -21,16 +21,16 @@ use DarrynTen\SageOne\Exception\ExceptionMessages;
  */
 class ModelCollectionException extends Exception
 {
-    const GETTING_UNDEFINED_PROPERTY = 10300;
-    const MISSING_REQUIRED_PROPERTY = 10301;
+    const GETTING_UNDEFINED_PROPERTY = 10201;
+    const MISSING_REQUIRED_PROPERTY = 10202;
 
     /**
      * Custom Model collection exception handler
      *
-     * @var integer $code The error code
+     * @var integer $code The error code [10200 is default]
      * @var string $extra Any additional information to be included
      */
-    public function __construct($code, $extra = '')
+    public function __construct($code = 10200, $extra = '')
     {
         $message = sprintf(
             'ModelCollection %s %s',
