@@ -38,7 +38,7 @@ class ValidationException extends Exception
         $message = sprintf(
             'Validation error %s %s',
             $extra,
-            ExceptionMessages::$validationErrorMessages[$code]
+            ExceptionMessages::$validationMessages[$code]
         );
 
         parent::__construct($message, $code);

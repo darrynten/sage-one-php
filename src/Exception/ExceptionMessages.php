@@ -28,7 +28,7 @@ class ExceptionMessages
     ];
 
     // Validation codes 1012x
-    public static $validationErrorMessages = [
+    public static $validationMessages = [
         10200 => 'Unknown validation error',
         10201 => 'Integer value is out of range',
         10202 => 'String length is out of range',
