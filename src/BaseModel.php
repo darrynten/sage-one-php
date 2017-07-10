@@ -14,6 +14,7 @@ namespace DarrynTen\SageOne;
 
 use DarrynTen\SageOne\Request\RequestHandler;
 use DarrynTen\SageOne\Exception\ModelException;
+use DarrynTen\SageOne\Validation;
 
 /**
  * This is the base class for all the Sage Models.
@@ -47,20 +48,6 @@ abstract class BaseModel
         'get' => false,
         'save' => false,
         'delete' => false
-    ];
-
-    /**
-     * Valid primitive types
-     *
-     * Used to verify field definitions
-     *
-     * @var array $validPrimitiveTypes
-     */
-    private $validPrimitiveTypes = [
-        'string',
-        'integer',
-        'boolean',
-        'double',
     ];
 
     /**
@@ -111,77 +98,6 @@ abstract class BaseModel
         $this->checkValidation($key, $value);
 
         $this->fieldsData[$key] = $value;
-    }
-
-    /**
-     * Validates a regex
-     *
-     * @param string $value
-     * @param string $regex
-     */
-    private function validateRegex($value, $regex)
-    {
-        if (!preg_match($regex, $value)) {
-            $this->throwException(
-                ModelException::STRING_REGEX_MISMATCH,
-                sprintf('value %s failed to validate', $value)
-            );
-        }
-    }
-
-    /**
-     * Validates a value is within a given range.
-     *
-     * The value can either be an integer, which checks an inclusive range,
-     * or can be a string, which checks length.
-     *
-     * @param string|integer $value
-     * @param integer $min
-     * @param integer $max
-     */
-    private function validateRange($value, $min, $max)
-    {
-        if (gettype($value) === 'integer') {
-            if (($value < $min) || ($value > $max)) {
-                $this->throwException(
-                    ModelException::INTEGER_OUT_OF_RANGE,
-                    sprintf(
-                        'value %s out of min(%s) max(%s)',
-                        $value,
-                        $min,
-                        $max
-                    )
-                );
-            }
-
-            return;
-        }
-
-        if (gettype($value) === 'string') {
-            if ((mb_strlen($value) < $min) || (mb_strlen($value) > $max)) {
-                $this->throwException(
-                    ModelException::STRING_LENGTH_OUT_OF_RANGE,
-                    sprintf(
-                        'value %s out of min(%s) max(%s)',
-                        $value,
-                        $min,
-                        $max
-                    )
-                );
-            }
-
-            return;
-        }
-
-        // Unknown type for validation
-        $this->throwException(
-            ModelException::VALIDATION_TYPE_ERROR,
-            sprintf(
-                'value %s is type %s',
-                $value,
-                gettype($value)
-            )
-        );
     }
 
     /**
@@ -355,7 +271,7 @@ abstract class BaseModel
         }
 
         // If it's a valid primitive
-        if ($this->isValidPrimitive($value, $config['type'])) {
+        if (Validation::isValidPrimitive($value, $config['type'])) {
             return $this->$key;
         }
 
@@ -407,7 +323,7 @@ abstract class BaseModel
      */
     private function processResultItem($resultItem, $config)
     {
-        if ($this->isValidPrimitive($resultItem, $config['type'])) {
+        if (Validation::isValidPrimitive($resultItem, $config['type'])) {
             return $resultItem;
         }
 
@@ -472,24 +388,6 @@ abstract class BaseModel
     }
 
     /**
-     * Check if the type matches a valid primitive
-     *
-     * @var string $type
-     *
-     * @return boolean
-     */
-    private function isValidPrimitive($resultItem, $definedType)
-    {
-        $itemType = gettype($resultItem);
-
-        if (in_array($itemType, $this->validPrimitiveTypes) && ($itemType === $definedType)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
      * Ensure the field is defined
      *
      * @var string $key
@@ -542,12 +440,12 @@ abstract class BaseModel
     {
         // If values have a defined min/max then validate
         if ((array_key_exists('min', $this->fields[$key])) && (array_key_exists('max', $this->fields[$key]))) {
-            $this->validateRange($value, $this->fields[$key]['min'], $this->fields[$key]['max']);
+            Validation::validateRange($value, $this->fields[$key]['min'], $this->fields[$key]['max']);
         }
 
         // If values have a defined regex then validate
         if (array_key_exists('regex', $this->fields[$key])) {
-            $this->validateRegex($value, $this->fields[$key]['regex']);
+            Validation::validateRegex($value, $this->fields[$key]['regex']);
         }
     }
 
