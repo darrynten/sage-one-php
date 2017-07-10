@@ -13,8 +13,8 @@ class ModelCollectionTest extends BaseModelTest
     public function testException()
     {
         $this->expectException(ModelCollectionException::class);
-        $this->expectExceptionMessage('ModelCollection Access to undefined property undefinedProperty');
-        $this->expectExceptionCode(10300);
+        $this->expectExceptionMessage('ModelCollection Attempting to access undefined property undefinedProperty');
+        $this->expectExceptionCode(10201);
 
         $results = new \stdClass;
         $results->TotalResults = 0;
@@ -28,7 +28,7 @@ class ModelCollectionTest extends BaseModelTest
     {
         $this->expectException(ModelCollectionException::class);
         $this->expectExceptionMessage('Missing required property in object TotalResults');
-        $this->expectExceptionCode(10301);
+        $this->expectExceptionCode(10202);
 
         $results = new \stdClass;
         $collection = new ModelCollection(Example::class, $this->config, $results);
@@ -38,7 +38,7 @@ class ModelCollectionTest extends BaseModelTest
     {
         $this->expectException(ModelCollectionException::class);
         $this->expectExceptionMessage('Missing required property in object ReturnedResults');
-        $this->expectExceptionCode(10301);
+        $this->expectExceptionCode(10202);
 
         $results = new \stdClass;
         $results->TotalResults = 1;
@@ -49,7 +49,7 @@ class ModelCollectionTest extends BaseModelTest
     {
         $this->expectException(ModelCollectionException::class);
         $this->expectExceptionMessage('Missing required property in object Results');
-        $this->expectExceptionCode(10301);
+        $this->expectExceptionCode(10202);
 
         $results = new \stdClass;
         $results->TotalResults = 1;
