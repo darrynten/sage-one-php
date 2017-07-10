@@ -410,7 +410,8 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    protected function setUpRequestMock(string $class, string $path, string $method, string $mockFileResponse = null, string $mockFileRequest = null) {
+    protected function setUpRequestMock(string $class, string $path, string $method, string $mockFileResponse = null, string $mockFileRequest = null)
+    {
         $url = sprintf('/1.1.2/%s?apikey=key', $path);
 
         $responseData = null;
