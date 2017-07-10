@@ -158,7 +158,7 @@ abstract class BaseModel
         }
 
         if (gettype($value) === 'string') {
-            if ((strlen($value) < $min) || (strlen($value) > $max)) {
+            if ((mb_strlen($value) < $min) || (mb_strlen($value) > $max)) {
                 $this->throwException(
                     ModelException::STRING_LENGTH_OUT_OF_RANGE,
                     sprintf(
