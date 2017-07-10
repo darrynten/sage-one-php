@@ -208,6 +208,50 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
                 $value[$name]['readonly'],
                 "Model {$className} Key {$name} Expected readonly to be {$readonlyText} got {$readonlyOptionText}"
             );
+
+            if (isset($options['min']) && isset($options['max'])) {
+                switch($options['type']) {
+                    case 'integer':
+                    case 'string':
+                        $this->assertTrue(isset($value[$name]['min']), sprintf('"min" is not present for %s', $name));
+                        $this->assertTrue(isset($value[$name]['max']), sprintf('"max" is not present for %s', $name));
+                        $this->assertEquals($options['min'], $value[$name]['min'],
+                            sprintf('"min" for %s should be %s but got %s', $name, $options['min'], $value[$name]['min']));
+                        $this->assertEquals($options['max'], $value[$name]['max'],
+                            sprintf('"max" for %s should be %s but got %s', $name, $options['max'], $value[$name]['max']));
+                        break;
+                    default:
+                        throw new \Exception('You can validate min & max only for integer or string');
+                }
+            }
+
+            if (isset($options['required'])) {
+                if ($options['required'] !== true) {
+                    throw new \Exception('You can validate only required=true');
+                }
+                $this->assertTrue(isset($value[$name]['required']), sprintf('"required" for %s is not present', $name));
+                $this->assertTrue($value[$name]['required'], sprintf('"required" for %s must be true', $name));
+            }
+
+            if (isset($options['regex'])) {
+                $this->assertTrue(isset($value[$name]['regex']), sprintf('"regex" for %s is not present', $name));
+                $this->assertEquals($options['regex'], $value[$name]['regex']);
+                $success = preg_match($value[$name]['regex'], '');
+                if ($success === false) {
+                    throw \Exception(sprintf('Failed to execute regex for %s', $name));
+                }
+            }
+
+            if (isset($options['default'])) {
+                $this->assertTrue(isset($value[$name]['default']), sprintf('"default" for %s is not present', $name));
+                $this->assertEquals($options['default'], $value[$name]['default']);
+            }
+
+            foreach ($options as $option => $_) {
+                if (array_search($option, ['type', 'nullable', 'readonly', 'default', 'required', 'min', 'max', 'regex']) === false) {
+                    throw new \Exception(sprintf('Unable to validate %s for %s, undefined validation', $option, $name));
+                }
+            }
         }
     }
 
