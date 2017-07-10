@@ -22,57 +22,11 @@ use DarrynTen\SageOne\BaseModel;
 class AccountCategory extends BaseModel
 {
     /**
-     * The ID of the account
-     *
-     * @var int $id
-     */
-    public $id;
-
-    /**
      * The API Endpoint
      *
      * @var string $endpoint
      */
     protected $endpoint = 'AccountCategory';
-
-    /**
-     * A comment on the AccountCategory
-     *
-     * @var string $comment
-     */
-    public $comment;
-
-    /**
-     * The order
-     *
-     * @var integer $order
-     */
-    public $order;
-
-    /**
-     * The description
-     *
-     * @var string $description
-     */
-    public $description;
-
-    /**
-     * Date the account category was created
-     *
-     * READ ONLY
-     *
-     * @var DateTime $created
-     */
-    protected $created = null;
-
-    /**
-     * Date the account category was modified
-     *
-     * READ ONLY
-     *
-     * @var DateTime $created
-     */
-    protected $modified = null;
 
     /**
      * Defines all possible fields.
@@ -81,7 +35,7 @@ class AccountCategory extends BaseModel
      * validation, etc
      *
      * All must include a type, whether or not it's nullable, and whether or
-     * not it's persistable.
+     * not it's readonly.
      *
      * NB: Naming convention for keys is to lowercase the first character of the
      * field returned by Sage (they use PascalCase and we use camelCase)
@@ -99,32 +53,33 @@ class AccountCategory extends BaseModel
         'id' => [
             'type' => 'integer',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
+            'required' => true,
         ],
         'comment' => [
             'type' => 'string',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'order' => [
             'type' => 'integer',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'description' => [
             'type' => 'string',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'modified' => [
             'type' => 'DateTime',
             'nullable' => true,
-            'persistable' => false,
+            'readonly' => true,
         ],
         'created' => [
             'type' => 'DateTime',
             'nullable' => true,
-            'persistable' => false,
+            'readonly' => true,
         ],
     ];
 
