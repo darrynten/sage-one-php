@@ -66,5 +66,17 @@ class ModelCollectionTest extends BaseModelTest
         $this->assertEquals(2, count($collection->results));
         $this->assertInstanceOf(Example::class, $collection->results[0]);
         $this->assertInstanceOf(Example::class, $collection->results[1]);
+
+        $example1 = $collection->results[0];
+        $this->assertEquals(1, $example1->id);
+        $this->assertTrue($example1->someBoolean);
+        $this->assertEquals('example', $example1->stringRange);
+        $this->assertEquals(134522342, $example1->integerRange);
+
+        $example2 = $collection->results[1];
+        $this->assertEquals(2, $example2->id);
+        $this->assertFalse($example2->someBoolean);
+        $this->assertEquals('example 2', $example2->stringRange);
+        $this->assertEquals(134522343, $example2->integerRange);
     }
 }

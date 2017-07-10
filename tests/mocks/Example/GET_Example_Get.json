@@ -13,14 +13,14 @@
         "SomeBoolean": true
     },
     {
-        "ID": 1,
-        "ExampleWithCamel": "exampleWithCamel",
-        "StringRange": "example",
-        "IntegerRange": 134522342,
-        "RequiredString": "required information",
-        "EmailAddress": "user@example.com",
-        "StringWithDefault": "default string changed",
-        "SomeBoolean": true
+        "ID": 2,
+        "ExampleWithCamel": "exampleWithCamel 2",
+        "StringRange": "example 2",
+        "IntegerRange": 134522343,
+        "RequiredString": "required information 2",
+        "EmailAddress": "user2@example.com",
+        "StringWithDefault": "default string changed 2",
+        "SomeBoolean": false
     }
   ]
 }
