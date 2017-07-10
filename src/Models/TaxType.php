@@ -35,7 +35,7 @@ class TaxType extends BaseModel
      * validation, etc
      *
      * All must include a type, whether or not it's nullable, and whether or
-     * not it's persistable.
+     * not it's readonly.
      *
      * NB: Naming convention for keys is to lowercase the first character of the
      * field returned by Sage (they use PascalCase and we use camelCase)
@@ -53,42 +53,42 @@ class TaxType extends BaseModel
         'id' => [
             'type' => 'integer',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'name' => [
             'type' => 'string',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'percentage' => [
             'type' => 'double',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'isDefault' => [
             'type' => 'boolean',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'hasActivity' => [
             'type' => 'boolean',
             'nullable' => false,
-            'persistable' => false,
+            'readonly' => true,
         ],
         'isManualTax' => [
             'type' => 'boolean',
             'nullable' => false,
-            'persistable' => true,
+            'readonly' => false,
         ],
         'created' => [
             'type' => 'DateTime',
             'nullable' => false,
-            'persistable' => false,
+            'readonly' => true,
         ],
         'modified' => [
             'type' => 'DateTime',
             'nullable' => true,
-            'persistable' => false,
+            'readonly' => true,
         ],
     ];
 

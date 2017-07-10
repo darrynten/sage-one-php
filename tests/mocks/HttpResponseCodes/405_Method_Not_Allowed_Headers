@@ -1,0 +1,12 @@
+HTTP/1.1 405 Method Not Allowed
+Cache-Control: no-cache
+Pragma: no-cache
+Allow: GET
+Content-Length: 72
+Content-Type: application/json; charset=utf-8
+Expires: -1
+Server: Microsoft-IIS/7.5
+LOGUID: c37fbc7d-0a09-4990-9a55-b889f6699617
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+Date: Mon, 10 Jul 2017 08:18:09 GMT

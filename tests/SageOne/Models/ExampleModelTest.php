@@ -116,12 +116,12 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
             'id' => [
                 'type' => 'integer',
                 'nullable' => false,
-                'persistable' => true,
+                'readonly' => false,
             ],
             'exampleWithCamel' => [
                 'type' => 'SomeInvalidClass',
                 'nullable' => true,
-                'persistable' => false,
+                'readonly' => true,
             ],
         ];
 
@@ -146,12 +146,12 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
             'exampleWithCamel' => [
                 'type' => 'SomeInvalidClass',
                 'nullable' => true,
-                'persistable' => true,
+                'readonly' => false,
             ],
             'id' => [
                 'type' => 'integerzzz',
                 'nullable' => false,
-                'persistable' => true,
+                'readonly' => false,
             ],
         ];
 
@@ -175,6 +175,54 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
 
         $exampleModel->id = 12;
         $exampleModel->exampleWithCamel = 'xx';
+    }
+
+    public function testBadIntegerRange()
+    {
+        $this->expectException(ModelException::class);
+        $this->expectExceptionMessage('Model "Example" value -1 out of min(1) max(2147483647) Integer value is out of range');
+        $this->expectExceptionCode(10120);
+
+        $exampleModel = new Example($this->config);
+
+        $exampleModel->id = 13;
+        $exampleModel->integerRange = -1;
+    }
+
+    public function testBadStringLength()
+    {
+        $this->expectException(ModelException::class);
+        $this->expectExceptionMessage('Model "Example" value This string is too long! out of min(1) max(10) String length is out of range');
+        $this->expectExceptionCode(10121);
+
+        $exampleModel = new Example($this->config);
+
+        $exampleModel->id = 139393939393;
+        $exampleModel->stringRange = 'This string is too long!';
+    }
+
+    public function testBadRangeType()
+    {
+        $this->expectException(ModelException::class);
+        $this->expectExceptionMessage('Model "Example" value  is type NULL Validation type is invalid');
+        $this->expectExceptionCode(10123);
+
+        $exampleModel = new Example($this->config);
+
+        $exampleModel->id = 939393;
+        $exampleModel->stringRange = null;
+    }
+
+    public function testBadRegexSet()
+    {
+        $this->expectException(ModelException::class);
+        $this->expectExceptionMessage('Model "Example" value bademail failed to validate String did not match validation regex');
+        $this->expectExceptionCode(10122);
+
+        $exampleModel = new Example($this->config);
+
+        $exampleModel->id = 1386847;
+        $exampleModel->emailAddress = 'bademail';
     }
 
     public function testSetUndefined()
@@ -210,12 +258,12 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
             'exampleWithCamel' => [
                 'type' => 'string',
                 'nullable' => false,
-                'persistable' => true,
+                'readonly' => false,
             ],
             'id' => [
                 'type' => 'integer',
                 'nullable' => false,
-                'persistable' => true,
+                'readonly' => false,
             ],
         ];
 
@@ -226,37 +274,16 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
 
         $exampleModel->id = 2;
         $exampleModel->exampleWithCamel = null;
-
-        // die(var_dump($exampleModel));
     }
 
-    public function testUnloadedProperties()
+    public function testDefaultProperties()
     {
         $exampleModel = new Example($this->config);
 
-        $exampleFields = [
-            'exampleWithCamel' => [
-                'type' => 'string',
-                'nullable' => false,
-                'persistable' => true,
-                'default' => 'some default value'
-            ],
-            'id' => [
-                'type' => 'integer',
-                'nullable' => false,
-                'persistable' => true,
-            ],
-        ];
-
-        $reflection = new ReflectionClass($exampleModel);
-        $reflectedModel = $reflection->getProperty('fields');
-        $reflectedModel->setAccessible(true);
-        $reflectedModel->setValue($exampleModel, $exampleFields);
-
         $this->assertNull($exampleModel->id);
-        $this->assertEquals('some default value', $exampleModel->exampleWithCamel);
-        $exampleModel->exampleWithCamel = 'none default value';
-        $this->assertEquals('none default value', $exampleModel->exampleWithCamel);
+        $this->assertEquals('some default value', $exampleModel->stringWithDefault);
+        $exampleModel->stringWithDefault = 'non default value';
+        $this->assertEquals('non default value', $exampleModel->stringWithDefault);
     }
 
     public function testCustomMethod()
@@ -357,14 +384,54 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
         $reflectValue->setAccessible(true);
         $value = $reflectValue->getValue(new Example($this->config));
 
-        $this->assertCount(2, $value);
+        $this->assertCount(8, $value);
         $this->assertEquals('integer', $value['id']['type']);
         $this->assertEquals('boolean', gettype($value['exampleWithCamel']['nullable']));
         $this->assertEquals(true, is_array($value['exampleWithCamel']));
+        $this->assertCount(3, $value['id']);
+        $this->assertFalse($value['id']['readonly']);
         $this->assertFalse($value['id']['nullable']);
-        $this->assertFalse($value['exampleWithCamel']['persistable']);
-        $this->assertTrue($value['id']['persistable']);
+        $this->assertEquals('boolean', gettype($value['id']['nullable']));
+        $this->assertCount(3, $value['exampleWithCamel']);
+        $this->assertTrue($value['exampleWithCamel']['readonly']);
         $this->assertTrue($value['exampleWithCamel']['nullable']);
+        $this->assertEquals('boolean', gettype($value['exampleWithCamel']['readonly']));
+        $this->assertCount(3, $value['someBoolean']);
+        $this->assertFalse($value['someBoolean']['readonly']);
+        $this->assertFalse($value['someBoolean']['nullable']);
+        $this->assertCount(4, $value['requiredString']);
+        $this->assertFalse($value['requiredString']['readonly']);
+        $this->assertFalse($value['requiredString']['nullable']);
+        $this->assertArrayHasKey('required', $value['requiredString']);
+        $this->assertCount(4, $value['stringWithDefault']);
+        $this->assertFalse($value['stringWithDefault']['readonly']);
+        $this->assertTrue($value['stringWithDefault']['nullable']);
+        $this->assertArrayHasKey('default', $value['stringWithDefault']);
+        $this->assertCount(5, $value['stringRange']);
+        $this->assertFalse($value['stringRange']['readonly']);
+        $this->assertTrue($value['stringRange']['nullable']);
+        $this->assertArrayHasKey('min', $value['stringRange']);
+        $this->assertEquals(1, $value['stringRange']['min']);
+        $this->assertEquals('integer', gettype($value['stringRange']['min']));
+        $this->assertArrayHasKey('max', $value['stringRange']);
+        $this->assertEquals(10, $value['stringRange']['max']);
+        $this->assertEquals('integer', gettype($value['stringRange']['max']));
+        $this->assertCount(5, $value['integerRange']);
+        $this->assertFalse($value['integerRange']['readonly']);
+        $this->assertFalse($value['integerRange']['nullable']);
+        $this->assertCount(6, $value['emailAddress']);
+        $this->assertFalse($value['emailAddress']['readonly']);
+        $this->assertFalse($value['emailAddress']['nullable']);
+        $this->assertArrayHasKey('min', $value['emailAddress']);
+        $this->assertEquals(0, $value['emailAddress']['min']);
+        $this->assertEquals('integer', gettype($value['emailAddress']['min']));
+        $this->assertArrayHasKey('max', $value['emailAddress']);
+        $this->assertEquals(100, $value['emailAddress']['max']);
+        $this->assertEquals('integer', gettype($value['emailAddress']['max']));
+        $this->assertArrayHasKey('regex', $value['emailAddress']);
+        $this->assertEquals('string', gettype($value['emailAddress']['regex']));
+        $this->assertRegExp($value['emailAddress']['regex'], 'me@example.com');
+        $this->assertRegExp($value['emailAddress']['regex'], 'another.valid+email@example.com');
         // etc etc...
 
         // Features mapping
@@ -383,12 +450,22 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
         $exampleModel->loadResult($data);
 
         // Check values on all child properties to match the mock it received
+        $this->assertEquals(gettype($exampleModel->id), 'integer');
         $this->assertEquals($exampleModel->id, 1);
         $this->assertEquals($exampleModel->exampleWithCamel, 'exampleWithCamel');
+        $this->assertEquals(gettype($exampleModel->stringWithDefault), 'string');
+        $this->assertEquals($exampleModel->stringWithDefault, 'default string changed');
+        $this->assertEquals(gettype($exampleModel->someBoolean), 'boolean');
+        $this->assertTrue($exampleModel->someBoolean);
+        $this->assertEquals($exampleModel->stringRange, 'example');
+        $this->assertEquals(gettype($exampleModel->integerRange), 'integer');
+        $this->assertEquals($exampleModel->integerRange, 134522342);
+        $this->assertEquals($exampleModel->requiredString, 'required information');
+        $this->assertEquals($exampleModel->emailAddress, 'user@example.com');
 
         // Test retrieving valid json
         $json = $exampleModel->toJson();
-        $this->assertEquals(json_encode($data), $json);
+        $this->assertJsonStringEqualsJsonString(json_encode($data), $json);
 
         // Test actual working base methods that fetch from the API
 

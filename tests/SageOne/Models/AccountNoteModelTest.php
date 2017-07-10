@@ -63,31 +63,49 @@ class AccountNoteModelTest extends BaseModelTest
     {
         $this->verifyAttributes(AccountNote::class, [
             'id' => [
-                'type' => 'integer', 'persistable' => true
-            ],
-            'userId' => [
-                'type' => 'integer', 'nullable' => true, 'persistable' => true
+                'type' => 'integer',
+                'nullable' => false,
+                'readonly' => false,
             ],
             'accountId' => [
-                'type' => 'integer', 'persistable' => true
+                'type' => 'integer',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'userId' => [
+                'type' => 'integer',
+                'nullable' => true,
+                'readonly' => false,
             ],
             'subject' => [
-                'type' => 'string', 'persistable' => true
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
             ],
             'entryDate' => [
-                'type' => 'DateTime', 'nullable' => true, 'persistable' => true
+                'type' => 'DateTime',
+                'nullable' => true,
+                'readonly' => false,
             ],
             'actionDate' => [
-                'type' => 'DateTime', 'persistable' => true
+                'type' => 'DateTime',
+                'nullable' => false,
+                'readonly' => false,
             ],
             'status' => [
-                'type' => 'boolean', 'nullable' => true, 'persistable' => true
+                'type' => 'boolean',
+                'nullable' => true,
+                'readonly' => false,
             ],
             'note' => [
-                'type' => 'string', 'persistable' => true
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
             ],
             'hasAttachments' => [
-                'type' => 'boolean', 'nullable' => true, 'persistable' => true
+                'type' => 'boolean',
+                'nullable' => true,
+                'readonly' => false,
             ]
         ]);
     }

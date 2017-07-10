@@ -75,7 +75,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $className = $this->getClassName($class);
 
         $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('Model "' . $className . '" key doesNotExist value xyz Attempting to set a property that is not defined in the model');
+        $this->expectExceptionMessage("Model \"{$className}\" key doesNotExist value xyz Attempting to set a property that is not defined in the model");
         $this->expectExceptionCode(10113);
 
         $model = new $class($this->config);
@@ -92,7 +92,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $className = $this->getClassName($class);
 
         $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('Model "' . $className . '" key doesNotExist Attempting to get an undefined property');
+        $this->expectExceptionMessage("Model \"{$className}\" key doesNotExist Attempting to get an undefined property");
         $this->expectExceptionCode(10116);
 
         $model = new $class($this->config);
@@ -110,7 +110,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $className = $this->getClassName($class);
 
         $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('Model "' . $className . '" attempting to nullify key ' . $key . ' Property is null without nullable permission');
+        $this->expectExceptionMessage("Model \"{$className}\" attempting to nullify key {$key} Property is null without nullable permission");
         $this->expectExceptionCode(10111);
 
         $model = new $class($this->config);
@@ -145,7 +145,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $model = new $class($this->config);
 
         $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('Model "' . $className . '" Defined key "' . $key . '" not present in payload A property is missing in the loadResult payload');
+        $this->expectExceptionMessage("Model \"{$className}\" Defined key \"{$key}\" not present in payload A property is missing in the loadResult payload");
         $this->expectExceptionCode(10112);
 
         $obj = new \stdClass;
@@ -154,15 +154,15 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Verifies that all fields has expected types, nullable and persistable properties
+     * Verifies that all fields has expected types, nullable and read only properties
      *
      * @param string $class Full path to the class
      * @param array $attributes
      *      Contains data in the following format
      *      ['name of the key' =>
      *          'type' => 'name of the type, like integer or DateTime',
-     *          'nullable' => true, // if field can be null, optional, if omitted expected to disallow nulls
-     *          'persistable' => true // if field is not read only, optional, if omitted expected to be read only
+     *          'nullable' => true, // if field can be null
+     *          'readonly' => false // if field is not read only
      *      ]
      */
     protected function verifyAttributes(string $class, array $attributes)
@@ -173,7 +173,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         foreach ($attributes as $name => $options) {
             $this->assertObjectHasAttribute($name, $model);
             if (isset($options['nullable'])) {
-                $this->assertNull($model->{$name}, "Model $className Key $name is not null");
+                $this->assertNull($model->{$name}, "Model {$className} Key {$name} is not null");
             }
         }
 
@@ -189,23 +189,32 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
 
         foreach ($attributes as $name => $options) {
             $this->assertEquals(true, is_array($value[$name]));
-            $this->assertEquals($options['type'], $value[$name]['type'],
-                "Model {$className} Key {$name} Expected type {$options['type']} got {$value[$name]['type']}");
+            $this->assertEquals(
+                $options['type'],
+                $value[$name]['type'],
+                "Model {$className} Key {$name} Expected type {$options['type']} got {$value[$name]['type']}"
+            );
             $this->assertEquals('boolean', gettype($value[$name]['nullable']));
-            $this->assertEquals('boolean', gettype($value[$name]['persistable']));
+            $this->assertEquals('boolean', gettype($value[$name]['readonly']));
 
-            $nullable = isset($options['nullable']);
+            $nullable = $options['nullable'];
             $nullableText = $nullable ? 'true': 'false';
             $nullableOptionText = $value[$name]['nullable'] ? 'true' : 'false';
-            $this->assertEquals($nullable, $value[$name]['nullable'],
-                "Model {$className} Key {$name} Expected nullable to be {$nullableText} got {$nullableOptionText}");
+            $this->assertEquals(
+                $nullable,
+                $value[$name]['nullable'],
+                "Model {$className} Key {$name} Expected nullable to be {$nullableText} got {$nullableOptionText}"
+            );
 
-            $persistable = isset($options['persistable']);
-            $persistableText = $persistable ? 'true' : 'false';
-            $persistableOptionText = $value[$name]['persistable'] ? 'true' : 'false';
+            $readonly = $options['readonly'];
+            $readonlyText = $readonly ? 'true' : 'false';
+            $readonlyOptionText = $value[$name]['readonly'] ? 'true' : 'false';
 
-            $this->assertEquals($persistable, $value[$name]['persistable'],
-                "Model {$className} Key {$name} Expected persistable to be {$persistableText} got {$persistableOptionText}");
+            $this->assertEquals(
+                $readonly,
+                $value[$name]['readonly'],
+                "Model {$className} Key {$name} Expected readonly to be {$readonlyText} got {$readonlyOptionText}"
+            );
         }
     }
 
@@ -234,8 +243,11 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         foreach (['all', 'get', 'save', 'delete'] as $feature) {
             $expected = $features[$feature] ? 'true' : 'false';
             $actual = $value[$feature] ? 'true' : 'false';
-            $this->assertEquals($features[$feature], $value[$feature],
-                "Model {$className} Feature {$feature} expected {$expected} got {$actual}");
+            $this->assertEquals(
+                $features[$feature],
+                $value[$feature],
+                "Model {$className} Feature {$feature} expected {$expected} got {$actual}"
+            );
         }
     }
 
@@ -557,7 +569,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $className = $this->getClassName($class);
 
         $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('Model "' . $className . '"  Save is not supported');
+        $this->expectExceptionMessage("Model \"{$className}\"  Save is not supported");
         $this->expectExceptionCode(10103);
 
         $model = new $class($this->config);
@@ -569,7 +581,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $className = $this->getClassName($class);
 
         $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('Model "' . $className . '" id 1 Delete is not supported');
+        $this->expectExceptionMessage("Model \"{$className}\" id 1 Delete is not supported");
         $this->expectExceptionCode(10104);
 
         $model = new $class($this->config);
