@@ -227,7 +227,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
      */
     private function verifyCommonAttributes($className, $name, $options, $value)
     {
-        $this->assertEquals(true, is_array($value[$name]));
+        $this->assertTrue(is_array($value[$name]));
         $this->assertEquals(
             $options['type'],
             $value[$name]['type'],
@@ -273,34 +273,39 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     private function verifyMinMaxAttributes($className, $name, $options, $value)
     {
         if (isset($options['min']) && isset($options['max'])) {
-            if ($options['type'] === 'integer' || $options['type'] === 'string') {
-                $this->assertTrue(isset($value[$name]['min']), sprintf('"min" is not present for %s', $name));
-                $this->assertTrue(isset($value[$name]['max']), sprintf('"max" is not present for %s', $name));
-                $this->assertEquals(
-                    $options['min'],
-                    $value[$name]['min'],
-                    sprintf(
-                        'Model %s "min" for %s should be %s but got %s',
-                        $className,
-                        $name,
-                        $options['min'],
-                        $value[$name]['min']
-                    )
-                );
-                $this->assertEquals(
-                    $options['max'],
-                    $value[$name]['max'],
-                    sprintf(
-                        'Model %s "max" for %s should be %s but got %s',
-                        $className,
-                        $name,
-                        $options['max'],
-                        $value[$name]['max']
-                    )
-                );
-            } else {
+            if (!($options['type'] === 'integer' || $options['type'] === 'string')) {
                 throw new \Exception('You can validate min & max only for integer or string');
             }
+
+            $this->assertTrue(isset($value[$name]['min']), sprintf('"min" is not present for %s', $name));
+            $this->assertTrue(isset($value[$name]['max']), sprintf('"max" is not present for %s', $name));
+
+            $this->assertEquals('integer', gettype($value[$name]['max']));
+            $this->assertEquals('integer', gettype($value[$name]['min']));
+
+            $this->assertEquals(
+                $options['min'],
+                $value[$name]['min'],
+                sprintf(
+                    'Model %s "min" for %s should be %s but got %s',
+                    $className,
+                    $name,
+                    $options['min'],
+                    $value[$name]['min']
+                )
+            );
+
+            $this->assertEquals(
+                $options['max'],
+                $value[$name]['max'],
+                sprintf(
+                    'Model %s "max" for %s should be %s but got %s',
+                    $className,
+                    $name,
+                    $options['max'],
+                    $value[$name]['max']
+                )
+            );
         }
     }
 
@@ -323,10 +328,12 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
             if ($options['required'] !== true) {
                 throw new \Exception('You can validate only required=true');
             }
+
             $this->assertTrue(
                 isset($value[$name]['required']),
                 sprintf('Model %s "required" for %s is not present', $className, $name)
             );
+
             $this->assertTrue(
                 $value[$name]['required'],
                 sprintf('Model %s "required" for %s must be true', $className, $name)
@@ -354,8 +361,10 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
                 isset($value[$name]['regex']),
                 sprintf('Model %s "regex" for %s is not present', $className, $name)
             );
+
             $this->assertEquals($options['regex'], $value[$name]['regex']);
             $success = preg_match($value[$name]['regex'], '');
+
             if ($success === false) {
                 throw \Exception(sprintf('Model %s Failed to execute regex for %s', $className, $name));
             }
@@ -406,6 +415,10 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('get', $value);
         $this->assertArrayHasKey('save', $value);
         $this->assertArrayHasKey('delete', $value);
+        $this->assertEquals('boolean', gettype($value['all']));
+        $this->assertEquals('boolean', gettype($value['get']));
+        $this->assertEquals('boolean', gettype($value['save']));
+        $this->assertEquals('boolean', gettype($value['delete']));
         $this->assertCount(4, $value);
 
         foreach (['all', 'get', 'save', 'delete'] as $feature) {
