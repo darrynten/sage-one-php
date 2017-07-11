@@ -239,12 +239,12 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
                 }
             }
 
-            if (isset($options['default'])) {
-                $this->assertTrue(isset($value[$name]['default']), sprintf('"default" for %s is not present', $name));
+            if (array_key_exists('default', $options)) {
+                $this->assertTrue(array_key_exists('default', $value[$name]), sprintf('"default" for %s is not present', $name));
                 $this->assertEquals($options['default'], $value[$name]['default']);
             }
 
-            foreach ($options as $option => $_) {
+            foreach (array_keys($options) as $option) {
                 if (array_search($option, ['type', 'nullable', 'readonly', 'default', 'required', 'min', 'max', 'regex']) === false) {
                     throw new \Exception(sprintf('Unable to validate %s for %s, undefined validation', $option, $name));
                 }

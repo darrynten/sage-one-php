@@ -32,6 +32,12 @@ class ExampleModelFieldsTest extends BaseModelTest
                 'readonly' => false,
                 'default' => 'some default value',
             ],
+            'stringWithNullDefault' => [
+                'type' => 'string',
+                'nullable' => true,
+                'readonly' => false,
+                'default' => null
+            ],
             'integerRange' => [
                 'type' => 'integer',
                 'nullable' => false,
