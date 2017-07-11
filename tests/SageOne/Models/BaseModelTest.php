@@ -211,12 +211,12 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
 
             if (isset($options['min']) && isset($options['max'])) {
                 if ($options['type'] === 'integer' || $options['type'] === 'string') {
-                        $this->assertTrue(isset($value[$name]['min']), sprintf('"min" is not present for %s', $name));
-                        $this->assertTrue(isset($value[$name]['max']), sprintf('"max" is not present for %s', $name));
-                        $this->assertEquals($options['min'], $value[$name]['min'],
-                            sprintf('"min" for %s should be %s but got %s', $name, $options['min'], $value[$name]['min']));
-                        $this->assertEquals($options['max'], $value[$name]['max'],
-                            sprintf('"max" for %s should be %s but got %s', $name, $options['max'], $value[$name]['max']));
+                    $this->assertTrue(isset($value[$name]['min']), sprintf('"min" is not present for %s', $name));
+                    $this->assertTrue(isset($value[$name]['max']), sprintf('"max" is not present for %s', $name));
+                    $this->assertEquals($options['min'], $value[$name]['min'],
+                        sprintf('"min" for %s should be %s but got %s', $name, $options['min'], $value[$name]['min']));
+                    $this->assertEquals($options['max'], $value[$name]['max'],
+                        sprintf('"max" for %s should be %s but got %s', $name, $options['max'], $value[$name]['max']));
                 } else {
                     throw new \Exception('You can validate min & max only for integer or string');
                 }
