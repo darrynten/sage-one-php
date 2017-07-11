@@ -36,12 +36,6 @@ class ModelException extends Exception
     const UNEXPECTED_PREPARE_CLASS = 10115;
     const GETTING_UNDEFINED_PROPERTY = 10116;
 
-    // Validation
-    const INTEGER_OUT_OF_RANGE = 10120;
-    const STRING_LENGTH_OUT_OF_RANGE = 10121;
-    const STRING_REGEX_MISMATCH = 10122;
-    const VALIDATION_TYPE_ERROR = 10123;
-
     /**
      * Custom Model exception handler
      *
