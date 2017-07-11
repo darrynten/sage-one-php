@@ -195,7 +195,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $className name of the class under checking
      * @param string $name name of the attribute
-     * @param array $options what we check 
+     * @param array $options what we check
      */
     private function verifyIfOptionsAreValid($className, $name, $options)
     {
@@ -215,7 +215,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $className name of the class under checking
      * @param string $name name of the attribute
-     * @param array $options what we check 
+     * @param array $options what we check
      *      Contains data in the following format
      *      [
      *          'type' => 'name of the type, like integer or DateTime',
@@ -261,7 +261,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $className name of the class under checking
      * @param string $name name of the attribute
-     * @param array $options what we check 
+     * @param array $options what we check
      *      Contains data in the following format
      *      [
      *          'min' => 0,
@@ -276,12 +276,28 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
             if ($options['type'] === 'integer' || $options['type'] === 'string') {
                 $this->assertTrue(isset($value[$name]['min']), sprintf('"min" is not present for %s', $name));
                 $this->assertTrue(isset($value[$name]['max']), sprintf('"max" is not present for %s', $name));
-                $this->assertEquals($options['min'], $value[$name]['min'],
-                    sprintf('Model %s "min" for %s should be %s but got %s',
-                        $className, $name, $options['min'], $value[$name]['min']));
-                $this->assertEquals($options['max'], $value[$name]['max'],
-                    sprintf('Model %s "max" for %s should be %s but got %s',
-                        $className, $name, $options['max'], $value[$name]['max']));
+                $this->assertEquals(
+                    $options['min'],
+                    $value[$name]['min'],
+                    sprintf(
+                        'Model %s "min" for %s should be %s but got %s',
+                        $className,
+                        $name,
+                        $options['min'],
+                        $value[$name]['min']
+                    )
+                );
+                $this->assertEquals(
+                    $options['max'],
+                    $value[$name]['max'],
+                    sprintf(
+                        'Model %s "max" for %s should be %s but got %s',
+                        $className,
+                        $name,
+                        $options['max'],
+                        $value[$name]['max']
+                    )
+                );
             } else {
                 throw new \Exception('You can validate min & max only for integer or string');
             }
@@ -293,7 +309,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $className name of the class under checking
      * @param string $name name of the attribute
-     * @param array $options what we check 
+     * @param array $options what we check
      *      Contains data in the following format
      *      [
      *          'required' => true
@@ -307,10 +323,14 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
             if ($options['required'] !== true) {
                 throw new \Exception('You can validate only required=true');
             }
-            $this->assertTrue(isset($value[$name]['required']),
-                sprintf('Model %s "required" for %s is not present', $className, $name));
-            $this->assertTrue($value[$name]['required'],
-                sprintf('Model %s "required" for %s must be true', $className, $name));
+            $this->assertTrue(
+                isset($value[$name]['required']),
+                sprintf('Model %s "required" for %s is not present', $className, $name)
+            );
+            $this->assertTrue(
+                $value[$name]['required'],
+                sprintf('Model %s "required" for %s must be true', $className, $name)
+            );
         }
     }
 
@@ -319,7 +339,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $className name of the class under checking
      * @param string $name name of the attribute
-     * @param array $options what we check 
+     * @param array $options what we check
      *      Contains data in the following format
      *      [
      *          'regex' => '/some regex/'
@@ -330,8 +350,10 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     private function verifyRegexAttribute($className, $name, $options, $value)
     {
         if (isset($options['regex'])) {
-            $this->assertTrue(isset($value[$name]['regex']),
-                sprintf('Model %s "regex" for %s is not present', $className, $name));
+            $this->assertTrue(
+                isset($value[$name]['regex']),
+                sprintf('Model %s "regex" for %s is not present', $className, $name)
+            );
             $this->assertEquals($options['regex'], $value[$name]['regex']);
             $success = preg_match($value[$name]['regex'], '');
             if ($success === false) {
@@ -345,7 +367,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $className name of the class under checking
      * @param string $name name of the attribute
-     * @param array $options what we check 
+     * @param array $options what we check
      *      Contains data in the following format
      *      [
      *          'default' => 'some default value (string, integer, null, etc.)'
@@ -356,8 +378,10 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     private function verifyDefaultAttribute($className, $name, $options, $value)
     {
         if (array_key_exists('default', $options)) {
-            $this->assertTrue(array_key_exists('default', $value[$name]),
-                sprintf('Model %s "default" for %s is not present', $className, $name));
+            $this->assertTrue(
+                array_key_exists('default', $value[$name]),
+                sprintf('Model %s "default" for %s is not present', $className, $name)
+            );
             $this->assertEquals($options['default'], $value[$name]['default']);
         }
     }
