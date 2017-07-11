@@ -181,74 +181,184 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $this->assertCount($fieldsCount, $value);
 
         foreach ($attributes as $name => $options) {
-            $this->assertEquals(true, is_array($value[$name]));
-            $this->assertEquals(
-                $options['type'],
-                $value[$name]['type'],
-                "Model {$className} Key {$name} Expected type {$options['type']} got {$value[$name]['type']}"
-            );
-            $this->assertEquals('boolean', gettype($value[$name]['nullable']));
-            $this->assertEquals('boolean', gettype($value[$name]['readonly']));
+            $this->verifyIfOptionsAreValid($className, $name, $options);
+            $this->verifyCommonAttributes($className, $name, $options, $value);
+            $this->verifyMinMaxAttributes($className, $name, $options, $value);
+            $this->verifyRequiredAttribute($className, $name, $options, $value);
+            $this->verifyRegexAttribute($className, $name, $options, $value);
+            $this->verifyDefaultAttribute($className, $name, $options, $value);
+        }
+    }
 
-            $nullable = $options['nullable'];
-            $nullableText = $nullable ? 'true': 'false';
-            $nullableOptionText = $value[$name]['nullable'] ? 'true' : 'false';
-            $this->assertEquals(
-                $nullable,
-                $value[$name]['nullable'],
-                "Model {$className} Key {$name} Expected nullable to be {$nullableText} got {$nullableOptionText}"
-            );
-
-            $readonly = $options['readonly'];
-            $readonlyText = $readonly ? 'true' : 'false';
-            $readonlyOptionText = $value[$name]['readonly'] ? 'true' : 'false';
-
-            $this->assertEquals(
-                $readonly,
-                $value[$name]['readonly'],
-                "Model {$className} Key {$name} Expected readonly to be {$readonlyText} got {$readonlyOptionText}"
-            );
-
-            if (isset($options['min']) && isset($options['max'])) {
-                if ($options['type'] === 'integer' || $options['type'] === 'string') {
-                    $this->assertTrue(isset($value[$name]['min']), sprintf('"min" is not present for %s', $name));
-                    $this->assertTrue(isset($value[$name]['max']), sprintf('"max" is not present for %s', $name));
-                    $this->assertEquals($options['min'], $value[$name]['min'],
-                        sprintf('"min" for %s should be %s but got %s', $name, $options['min'], $value[$name]['min']));
-                    $this->assertEquals($options['max'], $value[$name]['max'],
-                        sprintf('"max" for %s should be %s but got %s', $name, $options['max'], $value[$name]['max']));
-                } else {
-                    throw new \Exception('You can validate min & max only for integer or string');
-                }
+    /**
+     * Verifies that field $name in $className has only valid options
+     *
+     * @param string $className name of the class under checking
+     * @param string $name name of the attribute
+     * @param array $options what we check 
+     */
+    private function verifyIfOptionsAreValid($className, $name, $options)
+    {
+        $validKeys = array_fill_keys([
+            'type', 'nullable', 'readonly', 'default',
+            'required', 'min', 'max', 'regex'
+        ], true);
+        foreach (array_keys($options) as $option) {
+            if (!isset($validKeys[$option])) {
+                throw new \Exception(sprintf('Unable to validate %s for %s, undefined validation', $option, $name));
             }
+        }
+    }
 
-            if (isset($options['required'])) {
-                if ($options['required'] !== true) {
-                    throw new \Exception('You can validate only required=true');
-                }
-                $this->assertTrue(isset($value[$name]['required']), sprintf('"required" for %s is not present', $name));
-                $this->assertTrue($value[$name]['required'], sprintf('"required" for %s must be true', $name));
-            }
+    /**
+     * Verifies that field $name has expected 'type', 'nullable' and 'readonly' fields
+     *
+     * @param string $className name of the class under checking
+     * @param string $name name of the attribute
+     * @param array $options what we check 
+     *      Contains data in the following format
+     *      [
+     *          'type' => 'name of the type, like integer or DateTime',
+     *          'nullable' => true, // if field can be null
+     *          'readonly' => false // if field is not read only
+     *      ]
+     * @param array $value actual field attributes under check
+     *      has the same format as $options
+     */
+    private function verifyCommonAttributes($className, $name, $options, $value)
+    {
+        $this->assertEquals(true, is_array($value[$name]));
+        $this->assertEquals(
+            $options['type'],
+            $value[$name]['type'],
+            "Model {$className} Key {$name} Expected type {$options['type']} got {$value[$name]['type']}"
+        );
+        $this->assertEquals('boolean', gettype($value[$name]['nullable']));
+        $this->assertEquals('boolean', gettype($value[$name]['readonly']));
 
-            if (isset($options['regex'])) {
-                $this->assertTrue(isset($value[$name]['regex']), sprintf('"regex" for %s is not present', $name));
-                $this->assertEquals($options['regex'], $value[$name]['regex']);
-                $success = preg_match($value[$name]['regex'], '');
-                if ($success === false) {
-                    throw \Exception(sprintf('Failed to execute regex for %s', $name));
-                }
-            }
+        $nullable = $options['nullable'];
+        $nullableText = $nullable ? 'true': 'false';
+        $nullableOptionText = $value[$name]['nullable'] ? 'true' : 'false';
+        $this->assertEquals(
+            $nullable,
+            $value[$name]['nullable'],
+            "Model {$className} Key {$name} Expected nullable to be {$nullableText} got {$nullableOptionText}"
+        );
 
-            if (array_key_exists('default', $options)) {
-                $this->assertTrue(array_key_exists('default', $value[$name]), sprintf('"default" for %s is not present', $name));
-                $this->assertEquals($options['default'], $value[$name]['default']);
-            }
+        $readonly = $options['readonly'];
+        $readonlyText = $readonly ? 'true' : 'false';
+        $readonlyOptionText = $value[$name]['readonly'] ? 'true' : 'false';
 
-            foreach (array_keys($options) as $option) {
-                if (array_search($option, ['type', 'nullable', 'readonly', 'default', 'required', 'min', 'max', 'regex']) === false) {
-                    throw new \Exception(sprintf('Unable to validate %s for %s, undefined validation', $option, $name));
-                }
+        $this->assertEquals(
+            $readonly,
+            $value[$name]['readonly'],
+            "Model {$className} Key {$name} Expected readonly to be {$readonlyText} got {$readonlyOptionText}"
+        );
+    }
+
+    /**
+     * Verifies that field $name has expected min/max attributes (if any)
+     *
+     * @param string $className name of the class under checking
+     * @param string $name name of the attribute
+     * @param array $options what we check 
+     *      Contains data in the following format
+     *      [
+     *          'min' => 0,
+     *          'max' => 10
+     *      ]
+     * @param array $value actual field attributes under check
+     *      has the same format as $options
+     */
+    private function verifyMinMaxAttributes($className, $name, $options, $value)
+    {
+        if (isset($options['min']) && isset($options['max'])) {
+            if ($options['type'] === 'integer' || $options['type'] === 'string') {
+                $this->assertTrue(isset($value[$name]['min']), sprintf('"min" is not present for %s', $name));
+                $this->assertTrue(isset($value[$name]['max']), sprintf('"max" is not present for %s', $name));
+                $this->assertEquals($options['min'], $value[$name]['min'],
+                    sprintf('Model %s "min" for %s should be %s but got %s',
+                        $className, $name, $options['min'], $value[$name]['min']));
+                $this->assertEquals($options['max'], $value[$name]['max'],
+                    sprintf('Model %s "max" for %s should be %s but got %s',
+                        $className, $name, $options['max'], $value[$name]['max']));
+            } else {
+                throw new \Exception('You can validate min & max only for integer or string');
             }
+        }
+    }
+
+    /**
+     * Verifies that field $name has required attribute (if any)
+     *
+     * @param string $className name of the class under checking
+     * @param string $name name of the attribute
+     * @param array $options what we check 
+     *      Contains data in the following format
+     *      [
+     *          'required' => true
+     *      ]
+     * @param array $value actual field attributes under check
+     *      has the same format as $options
+     */
+    private function verifyRequiredAttribute($className, $name, $options, $value)
+    {
+        if (isset($options['required'])) {
+            if ($options['required'] !== true) {
+                throw new \Exception('You can validate only required=true');
+            }
+            $this->assertTrue(isset($value[$name]['required']),
+                sprintf('Model %s "required" for %s is not present', $className, $name));
+            $this->assertTrue($value[$name]['required'],
+                sprintf('Model %s "required" for %s must be true', $className, $name));
+        }
+    }
+
+    /**
+     * Verifies that field $name has valid regex attribute (if any)
+     *
+     * @param string $className name of the class under checking
+     * @param string $name name of the attribute
+     * @param array $options what we check 
+     *      Contains data in the following format
+     *      [
+     *          'regex' => '/some regex/'
+     *      ]
+     * @param array $value actual field attributes under check
+     *      has the same format as $options
+     */
+    private function verifyRegexAttribute($className, $name, $options, $value)
+    {
+        if (isset($options['regex'])) {
+            $this->assertTrue(isset($value[$name]['regex']),
+                sprintf('Model %s "regex" for %s is not present', $className, $name));
+            $this->assertEquals($options['regex'], $value[$name]['regex']);
+            $success = preg_match($value[$name]['regex'], '');
+            if ($success === false) {
+                throw \Exception(sprintf('Model %s Failed to execute regex for %s', $className, $name));
+            }
+        }
+    }
+
+    /**
+     * Verifies that field $name has valid default attribute (if any)
+     *
+     * @param string $className name of the class under checking
+     * @param string $name name of the attribute
+     * @param array $options what we check 
+     *      Contains data in the following format
+     *      [
+     *          'default' => 'some default value (string, integer, null, etc.)'
+     *      ]
+     * @param array $value actual field attributes under check
+     *      has the same format as $options
+     */
+    private function verifyDefaultAttribute($className, $name, $options, $value)
+    {
+        if (array_key_exists('default', $options)) {
+            $this->assertTrue(array_key_exists('default', $value[$name]),
+                sprintf('Model %s "default" for %s is not present', $className, $name));
+            $this->assertEquals($options['default'], $value[$name]['default']);
         }
     }
 
