@@ -30,10 +30,10 @@ class ValidationException extends Exception
      * Custom Model exception handler
      *
      * @var string $endpoint The name of the model
-     * @var integer $code The error code (as per above) [10200 is Generic code]
+     * @var integer $code The error code (as per above)
      * @var string $extra Any additional information to be included
      */
-    public function __construct($code = 10000, $extra = '')
+    public function __construct($code, $extra = '')
     {
         $message = sprintf(
             'Validation error %s %s',
