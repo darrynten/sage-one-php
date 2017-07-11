@@ -425,6 +425,15 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * Generates model with injected request which returns what we want
+     *
+     * @var string $method GET/POST/DELETE/etc.
+     * @var string $path part of url
+     * @var string $mockFileResponse part to the mock file with response (if it is required)
+     * @var string $mockFileRequest part to the mock file with request (if it is required)
+     * @return BaseModel
+     */
     protected function setUpRequestMock(string $method, string $class, string $path, string $mockFileResponse = null, string $mockFileRequest = null)
     {
         $url = sprintf('/1.1.2/%s?apikey=key', $path);
