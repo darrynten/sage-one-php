@@ -276,7 +276,7 @@ class AccountModelTest extends BaseModelTest
 
     public function testGetAllWithSystemAccounts()
     {
-        $account = $this->setUpRequestMock(Account::class, 'Account/GetWithSystemAccounts', 'GET', 'Account/GET_Account_GetWithSystemAccounts.json');
+        $account = $this->setUpRequestMock('GET', Account::class, 'Account/GetWithSystemAccounts', 'Account/GET_Account_GetWithSystemAccounts.json');
         $allAccounts = $account->getWithSystemAccounts();
         $account = $allAccounts->results[0];
 
@@ -288,7 +288,7 @@ class AccountModelTest extends BaseModelTest
 
     public function testGetAccountsByCategoryId()
     {
-        $account = $this->setUpRequestMock(Account::class, 'Account/GetAccountsByCategoryId/8', 'GET', 'Account/GET_Account_GetAccountsByCategoryId_xx.json');
+        $account = $this->setUpRequestMock('GET', Account::class, 'Account/GetAccountsByCategoryId/8', 'Account/GET_Account_GetAccountsByCategoryId_xx.json');
         $allAccounts = $account->getAccountsByCategoryId(8);
         $account = $allAccounts->results[0];
 
@@ -301,7 +301,7 @@ class AccountModelTest extends BaseModelTest
 
     public function testGetChartofAccounts()
     {
-        $account = $this->setUpRequestMock(Account::class, 'Account/GetChartofAccounts', 'GET', 'Account/GET_Account_GetChartofAccounts.json');
+        $account = $this->setUpRequestMock('GET', Account::class, 'Account/GetChartofAccounts', 'Account/GET_Account_GetChartofAccounts.json');
         $allAccounts = $account->getChartofAccounts();
         $account = $allAccounts->results[0];
 

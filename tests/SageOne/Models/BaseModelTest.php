@@ -272,8 +272,13 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     {
         $className = $this->getClassName($class);
         $path = sprintf('%s/Get', $className);
-        $model = $this->setUpRequestMock($class, $path, 'GET',
-            sprintf('%s/GET_%s_Get.json', $className, $className));
+        $mockFile = sprintf('%s/GET_%s_Get.json', $className, $className);
+        $model = $this->setUpRequestMock(
+            'GET',
+            $class,
+            $path,
+            $mockFile
+        );
 
         $allInstances = $model->all();
         $this->assertInstanceOf(ModelCollection::class, $allInstances);
@@ -295,8 +300,13 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     {
         $className = $this->getClassName($class);
         $path = sprintf('%s/Get/%s', $className, $id);
-        $model = $this->setUpRequestMock($class, $path, 'GET',
-            sprintf('%s/GET_%s_Get_xx.json', $className, $className));
+        $mockFile = sprintf('%s/GET_%s_Get_xx.json', $className, $className);
+        $model = $this->setUpRequestMock(
+            'GET',
+            $class,
+            $path,
+            $mockFile
+        );
 
         $model->get($id);
 
@@ -313,12 +323,17 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     {
         $className = $this->getClassName($class);
         $path = sprintf('%s/Save', $className);
-        $pathRequest = sprintf('%s/POST_%s_Save_REQ.json', $className, $className);
-        $model = $this->setUpRequestMock($class, $path, 'POST',
-            sprintf('%s/POST_%s_Save_RESP.json', $className, $className),
-            $pathRequest);
+        $mockFileResponse = sprintf('%s/POST_%s_Save_RESP.json', $className, $className);
+        $mockFileRequest = sprintf('%s/POST_%s_Save_REQ.json', $className, $className);
+        $model = $this->setUpRequestMock(
+            'POST',
+            $class,
+            $path,
+            $mockFileResponse,
+            $mockFileRequest
+        );
 
-        $data = json_decode(file_get_contents(__DIR__ . "/../../mocks/" . $pathRequest));
+        $data = json_decode(file_get_contents(__DIR__ . "/../../mocks/" . $mockFileRequest));
         $model->loadResult($data);
 
         $response = $model->save();
@@ -337,7 +352,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     {
         $className = $this->getClassName($class);
         $path = sprintf('%s/Delete/%s', $className, $id);
-        $model = $this->setUpRequestMock($class, $path, 'DELETE');
+        $model = $this->setUpRequestMock('DELETE', $class, $path);
 
         $model->delete($id);
         // TODO do actual checks
@@ -411,7 +426,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    protected function setUpRequestMock(string $class, string $path, string $method, string $mockFileResponse = null, string $mockFileRequest = null)
+    protected function setUpRequestMock(string $method, string $class, string $path, string $mockFileResponse = null, string $mockFileRequest = null)
     {
         $url = sprintf('/1.1.2/%s?apikey=key', $path);
 
@@ -438,7 +453,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $localClient = new Client();
         $localResult = $localClient->request(
             $method,
-            'http://localhost:8082' . $url,
+            '//localhost:8082' . $url,
             []
         );
 
