@@ -152,7 +152,7 @@ abstract class BaseModel
 
         $results = $this->request->request('GET', $this->endpoint, 'Get');
 
-        return new ModelCollection(get_class($this), $this->config, $results);
+        return new ModelCollection(static::class, $this->config, $results);
     }
 
     /**
