@@ -215,6 +215,10 @@ abstract class BaseModel
 
         // TODO Submission Body and Validation
         $data = $this->request->request('POST', $this->endpoint, 'Save');
+        // we do not need to verify results here because loadResult will throuw exception
+        // in case of invalid body
+        // If we reach this string then we expect that API returned valid body with response code 200
+        // otherwise ApiException was thrown and this line can not be reached
         $this->loadResult($data);
         return $this;
     }

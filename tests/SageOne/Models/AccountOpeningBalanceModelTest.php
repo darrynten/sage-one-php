@@ -3,6 +3,7 @@
 namespace DarrynTen\SageOne\Tests\SageOne\Models;
 
 use DarrynTen\SageOne\Models\AccountOpeningBalance;
+use DarrynTen\SageOne\Exception\ModelException;
 
 class AccountOpeningBalanceModelTest extends BaseModelTest
 {
@@ -89,6 +90,40 @@ class AccountOpeningBalanceModelTest extends BaseModelTest
             $this->assertEquals(2, $model->id);
             // TODO Do actual checks
         });
+    }
+
+    public function testSaveBadResponsePropertyMissing()
+    {
+        $model = $this->setUpRequestMock(
+            'POST',
+            AccountOpeningBalance::class,
+            'AccountOpeningBalance/Save',
+            'AccountOpeningBalance/POST_AccountOpeningBalance_Save_InvalidResponse.json',
+            'AccountOpeningBalance/POST_AccountOpeningBalance_Save_REQ.json'
+        );
+
+        $this->expectException(ModelException::class);
+        $this->expectExceptionMessage('Model "AccountOpeningBalance" Defined key "reason" not present in payload A property is missing in the loadResult payload');
+        $this->expectExceptionCode(10112);
+
+        $model->save();
+    }
+
+    public function testSaveBadResponsePropertyHasInvalidType()
+    {
+        $model = $this->setUpRequestMock(
+            'POST',
+            AccountOpeningBalance::class,
+            'AccountOpeningBalance/Save',
+            'AccountOpeningBalance/POST_AccountOpeningBalance_Save_InvalidResponse2.json',
+            'AccountOpeningBalance/POST_AccountOpeningBalance_Save_REQ.json'
+        );
+
+        $this->expectException(ModelException::class);
+        $this->expectExceptionMessage('Model "AccountOpeningBalance" Received namespaced class "DarrynTen\SageOne\Models\double" when defined type is "boolean" Property is referencing an undefined, non-primitive class');
+        $this->expectExceptionCode(10110);
+
+        $model->save();
     }
 
     public function testDeleteException()
