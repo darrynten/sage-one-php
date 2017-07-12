@@ -227,7 +227,7 @@ class Supplier extends BaseModel
             'nullable' => false,
             'readonly' => false,
         ],
-        'rmcdApprovalNumber' => [
+        'RMCDApprovalNumber' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
