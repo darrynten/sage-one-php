@@ -84,21 +84,21 @@ class CurrencyModelTest extends BaseModelTest
 
     public function testGetAll()
     {
-        $this->verifyGetAll(Currency::class, function ($results, $data) {
+        $this->verifyGetAll(Currency::class, function ($results) {
             $this->assertEquals(2, count($results));
 
-            $this->assertEquals(1, $results[0]['ID']);
-            $this->assertEquals('code 1', $results[0]['Code']);
-            $this->assertEquals('description 1', $results[0]['Description']);
-            $this->assertEquals('symbol 1', $results[0]['Symbol']);
+            $this->assertEquals(1, $results[0]->id);
+            $this->assertEquals('code 1', $results[0]->code);
+            $this->assertEquals('description 1', $results[0]->description);
+            $this->assertEquals('symbol 1', $results[0]->symbol);
 
-            $this->assertEquals(2, $results[1]['ID']);
-            $this->assertEquals('code 2', $results[1]['Code']);
-            $this->assertEquals('description 2', $results[1]['Description']);
-            $this->assertEquals('symbol 2', $results[1]['Symbol']);
+            $this->assertEquals(2, $results[1]->id);
+            $this->assertEquals('code 2', $results[1]->code);
+            $this->assertEquals('description 2', $results[1]->description);
+            $this->assertEquals('symbol 2', $results[1]->symbol);
 
-            $this->assertCount(4, $results[0]);
-            $this->assertCount(4, $results[1]);
+            $this->assertCount(4, json_decode($results[0]->toJson(), true));
+            $this->assertCount(4, json_decode($results[1]->toJson(), true));
         });
     }
 

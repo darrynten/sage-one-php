@@ -12,6 +12,7 @@
 namespace DarrynTen\SageOne\Models;
 
 use DarrynTen\SageOne\BaseModel;
+use DarrynTen\SageOne\Models\ModelCollection;
 
 /**
  * Account Model
@@ -140,4 +141,38 @@ class Account extends BaseModel
         'save' => true,
         'delete' => true,
     ];
+
+    /**
+     * Returns the list of Accounts including system accounts.
+     *
+     * @return ModelCollection A collection of entities
+     */
+    public function getWithSystemAccounts()
+    {
+        $results = $this->request->request('GET', $this->endpoint, 'GetWithSystemAccounts');
+        return new ModelCollection(Account::class, $this->config, $results);
+    }
+
+    /**
+     * Returns a list of Accounts based on the Category identifier.
+     *
+     * @var string $id id of category
+     * @return ModelCollection A collection of entities
+     */
+    public function getAccountsByCategoryId(string $id)
+    {
+        $results = $this->request->request('GET', $this->endpoint, sprintf('GetAccountsByCategoryId/%s', $id));
+        return new ModelCollection(Account::class, $this->config, $results);
+    }
+
+    /**
+     * Returns a list of all accounts
+     *
+     * @return ModelCollection A collection of entities
+     */
+    public function getChartofAccounts()
+    {
+        $results = $this->request->request('GET', $this->endpoint, 'GetChartofAccounts');
+        return new ModelCollection(Account::class, $this->config, $results);
+    }
 }

@@ -182,7 +182,7 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
     {
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage('Validation error value -1 out of min(1) max(2147483647) Integer value is out of range');
-        $this->expectExceptionCode(10201);
+        $this->expectExceptionCode(10001);
 
         $exampleModel = new Example($this->config);
 
@@ -194,7 +194,7 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
     {
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage('Validation error value This string is too long! out of min(1) max(10) String length is out of range');
-        $this->expectExceptionCode(10202);
+        $this->expectExceptionCode(10002);
 
         $exampleModel = new Example($this->config);
 
@@ -206,7 +206,7 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
     {
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage('Validation error value  is type NULL Validation type is invalid');
-        $this->expectExceptionCode(10204);
+        $this->expectExceptionCode(10004);
 
         $exampleModel = new Example($this->config);
 
@@ -218,7 +218,7 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
     {
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage('Validation error value bademail failed to validate String did not match validation regex');
-        $this->expectExceptionCode(10203);
+        $this->expectExceptionCode(10003);
 
         $exampleModel = new Example($this->config);
 

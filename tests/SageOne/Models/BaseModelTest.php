@@ -8,6 +8,7 @@ use GuzzleHttp\Client;
 use ReflectionClass;
 
 use DarrynTen\SageOne\Exception\ModelException;
+use DarrynTen\SageOne\Models\ModelCollection;
 
 abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
 {
@@ -458,72 +459,22 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     protected function verifyGetAll(string $class, callable $whatToCheck)
     {
         $className = $this->getClassName($class);
-        $data = file_get_contents(__DIR__ . "/../../mocks/{$className}/GET_{$className}_Get.json");
-
-        $this->http->mock
-            ->when()
-                ->methodIs('GET')
-                ->pathIs("/1.1.2/{$className}/Get?apikey=key")
-            ->then()
-                ->body($data)
-            ->end();
-        $this->http->setUp();
-
-        $request = new RequestHandler($this->config);
-
-        /**
-         * We make a local client to connect to our mock and get the
-         * expected result
-         */
-        $localClient = new Client();
-
-        $localResult = $localClient->request(
+        $path = sprintf('%s/Get', $className);
+        $mockFile = sprintf('%s/GET_%s_Get.json', $className, $className);
+        $model = $this->setUpRequestMock(
             'GET',
-            "http://localhost:8082/1.1.2/{$className}/Get?apikey=key",
-            []
+            $class,
+            $path,
+            $mockFile
         );
 
-        /**
-         * We then make a mock client, and tell the mock client that it
-         * should return what the local client got from the mock
-         */
-        $mockClient = \Mockery::mock(
-            'Client'
-        );
+        $allInstances = $model->all();
+        $this->assertInstanceOf(ModelCollection::class, $allInstances);
+        $this->assertObjectHasAttribute('totalResults', $allInstances);
+        $this->assertObjectHasAttribute('returnedResults', $allInstances);
+        $this->assertObjectHasAttribute('results', $allInstances);
 
-        $mockClient->shouldReceive('request')
-            ->once()
-            ->andReturn($localResult);
-
-        /**
-         * Insert the mocked client into the request class via reflection
-         *
-         * This will pass the desired mock object back to the assertion
-         * as it replaces the legit Client() object
-         */
-        $reflection = new ReflectionClass($request);
-        $reflectedClient = $reflection->getProperty('client');
-        $reflectedClient->setAccessible(true);
-        $reflectedClient->setValue($request, $mockClient);
-
-        $model = new $class($this->config);
-
-        /**
-         * We then reflect into the model
-         */
-        $modelReflection = new ReflectionClass($model);
-        $reflectedRequest = $modelReflection->getProperty('request');
-        $reflectedRequest->setAccessible(true);
-        $reflectedRequest->setValue($model, $request);
-
-        $allInstances = json_decode($model->all(), true);
-
-        $this->assertEquals(3, count($allInstances));
-        $this->assertArrayHasKey('Results', $allInstances);
-        $this->assertArrayHasKey('ReturnedResults', $allInstances);
-        $this->assertArrayHasKey('TotalResults', $allInstances);
-
-        $whatToCheck($allInstances['Results'], $data);
+        $whatToCheck($allInstances->results);
     }
 
     /**
@@ -536,65 +487,15 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     protected function verifyGetId(string $class, int $id, callable $whatToCheck)
     {
         $className = $this->getClassName($class);
-        $data = file_get_contents(__DIR__ . "/../../mocks/{$className}/GET_{$className}_Get_xx.json");
-
-        $this->http->mock
-            ->when()
-            ->methodIs('GET')
-            ->pathIs("/1.1.2/{$className}/Get/{$id}?apikey=key")
-            ->then()
-            ->body($data)
-            ->end();
-        $this->http->setUp();
-
-        $request = new RequestHandler($this->config);
-
-        /**
-         * We make a local client to connect to our mock and get the
-         * expected result
-         */
-        $localClient = new Client();
-
-        $localResult = $localClient->request(
+        $path = sprintf('%s/Get/%s', $className, $id);
+        $mockFile = sprintf('%s/GET_%s_Get_xx.json', $className, $className);
+        $model = $this->setUpRequestMock(
             'GET',
-            "http://localhost:8082/1.1.2/{$className}/Get/{$id}?apikey=key",
-            []
+            $class,
+            $path,
+            $mockFile
         );
 
-        /**
-         * We then make a mock client, and tell the mock client that it
-         * should return what the local client got from the mock
-         */
-        $mockClient = \Mockery::mock(
-            'Client'
-        );
-
-        $mockClient->shouldReceive('request')
-            ->once()
-            ->andReturn($localResult);
-
-        /**
-         * Insert the mocked client into the request class via reflection
-         *
-         * This will pass the desired mock object back to the assertion
-         * as it replaces the legit Client() object
-         */
-        $reflection = new ReflectionClass($request);
-        $reflectedClient = $reflection->getProperty('client');
-        $reflectedClient->setAccessible(true);
-        $reflectedClient->setValue($request, $mockClient);
-
-        $model = new $class($this->config);
-
-        /**
-         * We then reflect into the account model
-         */
-        $modelReflection = new ReflectionClass($model);
-        $reflectedRequest = $modelReflection->getProperty('request');
-        $reflectedRequest->setAccessible(true);
-        $reflectedRequest->setValue($model, $request);
-
-        // Fetch an id
         $model->get($id);
 
         $whatToCheck($model);
@@ -609,66 +510,18 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     protected function verifySave(string $class, callable $whatToCheck)
     {
         $className = $this->getClassName($class);
-        $data = file_get_contents(__DIR__ . "/../../mocks/{$className}/POST_{$className}_Save_RESP.json");
-        $dataArray = json_decode($data, true);
-
-        $this->http->mock
-            ->when()
-            ->methodIs('POST')
-            ->pathIs("/1.1.2/{$className}/Save?apikey=key")
-            ->then()
-            ->body($data)
-            ->end();
-        $this->http->setUp();
-
-        $request = new RequestHandler($this->config);
-
-        /**
-         * We make a local client to connect to our mock and get the
-         * expected result
-         */
-        $localClient = new Client();
-
-        $localResult = $localClient->request(
+        $path = sprintf('%s/Save', $className);
+        $mockFileResponse = sprintf('%s/POST_%s_Save_RESP.json', $className, $className);
+        $mockFileRequest = sprintf('%s/POST_%s_Save_REQ.json', $className, $className);
+        $model = $this->setUpRequestMock(
             'POST',
-            "http://localhost:8082/1.1.2/{$className}/Save?apikey=key",
-            $dataArray
+            $class,
+            $path,
+            $mockFileResponse,
+            $mockFileRequest
         );
 
-        /**
-         * We then make a mock client, and tell the mock client that it
-         * should return what the local client got from the mock
-         */
-        $mockClient = \Mockery::mock(
-            'Client'
-        );
-
-        $mockClient->shouldReceive('request')
-            ->once()
-            ->andReturn($localResult);
-
-        /**
-         * Insert the mocked client into the request class via reflection
-         *
-         * This will pass the desired mock object back to the assertion
-         * as it replaces the legit Client() object
-         */
-        $reflection = new ReflectionClass($request);
-        $reflectedClient = $reflection->getProperty('client');
-        $reflectedClient->setAccessible(true);
-        $reflectedClient->setValue($request, $mockClient);
-
-        $model = new $class($this->config);
-
-        /**
-         * We then reflect into the model
-         */
-        $modelReflection = new ReflectionClass($model);
-        $reflectedRequest = $modelReflection->getProperty('request');
-        $reflectedRequest->setAccessible(true);
-        $reflectedRequest->setValue($model, $request);
-
-        $data = json_decode(file_get_contents(__DIR__ . "/../../mocks/{$className}/POST_{$className}_Save_REQ.json"));
+        $data = json_decode(file_get_contents(__DIR__ . "/../../mocks/" . $mockFileRequest));
         $model->loadResult($data);
 
         $response = $model->save();
@@ -685,64 +538,11 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     public function verifyDelete(string $class, int $id, callable $whatToCheck)
     {
         $className = $this->getClassName($class);
-        $url = sprintf('/1.1.2/%s/Delete/%s?apikey=key', $className, $id);
-        $this->http->mock
-            ->when()
-            ->methodIs('DELETE')
-            ->pathIs($url)
-            ->then()
-            ->body(null)
-            ->end();
-        $this->http->setUp();
-
-        $request = new RequestHandler($this->config);
-
-        /**
-         * We make a local client to connect to our mock and get the
-         * expected result
-         */
-        $localClient = new Client();
-
-        $localResult = $localClient->request(
-            'DELETE',
-            'http://localhost:8082' . $url,
-            []
-        );
-
-        /**
-         * We then make a mock client, and tell the mock client that it
-         * should return what the local client got from the mock
-         */
-        $mockClient = \Mockery::mock(
-            'Client'
-        );
-
-        $mockClient->shouldReceive('request')
-            ->once()
-            ->andReturn($localResult);
-
-        /**
-         * Insert the mocked client into the request class via reflection
-         *
-         * This will pass the desired mock object back to the assertion
-         * as it replaces the legit Client() object
-         */
-        $reflection = new ReflectionClass($request);
-        $reflectedClient = $reflection->getProperty('client');
-        $reflectedClient->setAccessible(true);
-        $reflectedClient->setValue($request, $mockClient);
-
-        $model = new $class($this->config);
-
-        /**
-         * We then reflect into the model
-         */
-        $modelReflection = new ReflectionClass($model);
-        $reflectedRequest = $modelReflection->getProperty('request');
-        $reflectedRequest->setAccessible(true);
-        $reflectedRequest->setValue($model, $request);
+        $path = sprintf('%s/Delete/%s', $className, $id);
+        $model = $this->setUpRequestMock('DELETE', $class, $path);
 
         $model->delete($id);
+        // TODO do actual checks
     }
 
     public function verifySaveException(string $class)
@@ -811,5 +611,68 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
             'OK',
             $request->request('POST', $className, $method, [])
         );
+    }
+
+    /**
+     * Generates model with injected request which returns what we want
+     *
+     * @var string $method GET/POST/DELETE/etc.
+     * @var string $path part of url
+     * @var string $mockFileResponse part to the mock file with response (if it is required)
+     * @var string $mockFileRequest part to the mock file with request (if it is required)
+     * @return BaseModel
+     */
+    protected function setUpRequestMock(string $method, string $class, string $path, string $mockFileResponse = null, string $mockFileRequest = null)
+    {
+        $url = sprintf('/1.1.2/%s?apikey=key', $path);
+
+        $responseData = null;
+        if ($mockFileResponse) {
+            $responseData = file_get_contents(__DIR__ . '/../../mocks/' . $mockFileResponse);
+        }
+        $requestData = [];
+        if ($mockFileRequest) {
+            $requestData= json_decode(file_get_contents(__DIR__ . '/../../mocks/' . $mockFileRequest), true);
+        }
+
+        $this->http->mock
+            ->when()
+            ->methodIs($method)
+            ->pathIs($url)
+            ->then()
+            ->body($responseData)
+            ->end();
+        $this->http->setUp();
+
+        $request = new RequestHandler($this->config);
+
+        $localClient = new Client();
+        $localResult = $localClient->request(
+            $method,
+            '//localhost:8082' . $url,
+            []
+        );
+
+        $mockClient = \Mockery::mock(
+            'Client'
+        );
+
+        $mockClient->shouldReceive('request')
+            ->once()
+            ->andReturn($localResult);
+
+        $reflection = new ReflectionClass($request);
+        $reflectedClient = $reflection->getProperty('client');
+        $reflectedClient->setAccessible(true);
+        $reflectedClient->setValue($request, $mockClient);
+
+        $model = new $class($this->config);
+
+        $modelReflection = new ReflectionClass($model);
+        $reflectedRequest = $modelReflection->getProperty('request');
+        $reflectedRequest->setAccessible(true);
+        $reflectedRequest->setValue($model, $request);
+        
+        return $model;
     }
 }

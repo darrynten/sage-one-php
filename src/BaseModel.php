@@ -15,6 +15,7 @@ namespace DarrynTen\SageOne;
 use DarrynTen\SageOne\Request\RequestHandler;
 use DarrynTen\SageOne\Exception\ModelException;
 use DarrynTen\SageOne\Validation;
+use DarrynTen\SageOne\Models\ModelCollection;
 
 /**
  * This is the base class for all the Sage Models.
@@ -141,7 +142,7 @@ abstract class BaseModel
      * $account = new Account;
      * $allAccounts = $account->all();
      *
-     * @return json A collection of entities in raw json from Sage
+     * @return ModelCollection A collection of entities
      */
     public function all()
     {
@@ -151,7 +152,7 @@ abstract class BaseModel
 
         $results = $this->request->request('GET', $this->endpoint, 'Get');
 
-        return json_encode($results, JSON_PRESERVE_ZERO_FRACTION);
+        return new ModelCollection(static::class, $this->config, $results);
     }
 
     /**

@@ -119,19 +119,19 @@ class AccountNoteModelTest extends BaseModelTest
 
     public function testGetAll()
     {
-        $this->verifyGetAll(AccountNote::class, function ($results, $data) {
+        $this->verifyGetAll(AccountNote::class, function ($results) {
             $this->assertEquals(2, count($results));
-            $this->assertEquals(1, $results[0]['AccountId']);
-            $this->assertEquals(1, $results[0]['UserId']);
-            $this->assertEquals(2, $results[0]['ID']);
-            $this->assertEquals('sample string 3', $results[0]['Subject']);
-            $this->assertEquals('2017-07-01', $results[0]['EntryDate']);
-            $this->assertEquals('2017-07-01', $results[0]['ActionDate']);
-            $this->assertTrue($results[0]['Status']);
-            $this->assertEquals('sample string 4', $results[0]['Note']);
-            $this->assertTrue($results[0]['HasAttachments']);
-            $this->assertCount(9, $results[0]);
-            $this->assertCount(9, $results[1]);
+            $this->assertEquals(1, $results[0]->accountId);
+            $this->assertEquals(1, $results[0]->userId);
+            $this->assertEquals(2, $results[0]->id);
+            $this->assertEquals('sample string 3', $results[0]->subject);
+            $this->assertEquals('2017-07-01', $results[0]->entryDate->format('Y-m-d'));
+            $this->assertEquals('2017-07-01', $results[0]->actionDate->format('Y-m-d'));
+            $this->assertTrue($results[0]->status);
+            $this->assertEquals('sample string 4', $results[0]->note);
+            $this->assertTrue($results[0]->hasAttachments);
+            $this->assertCount(9, json_decode($results[0]->toJson(), true));
+            $this->assertCount(9, json_decode($results[1]->toJson(), true));
         });
     }
 
