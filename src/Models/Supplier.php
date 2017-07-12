@@ -1,8 +1,6 @@
 <?php
 /**
  * SageOne Library
- *
- *
  * @category Library
  * @package  SageOne
  * @author   Ihor Sergiichuk <igorsergiichuk@gmail.com>
@@ -20,10 +18,8 @@ use DarrynTen\SageOne\BaseModel;
  */
 class Supplier extends BaseModel
 {
-
     /**
      * The API Endpoint
-     *
      * @var string $endpoint
      */
     protected $endpoint = 'Supplier';
@@ -32,17 +28,6 @@ class Supplier extends BaseModel
      * Defines all possible fields.
      *
      * This maps to all the public properties you added above
-     *
-     * Used by the base class to decide what gets submitted in a save call,
-     * validation, etc
-     *
-     * All must include a type, whether or not it's nullable, and whether or
-     * not it's readonly.
-     *
-     * NB: Naming convention for keys is to lowercase the first character of the
-     * field returned by Sage (they use PascalCase and we use camelCase)
-     *
-     * `ID` is automatically converted to `id`
      *
      * @var array $fields
      */
