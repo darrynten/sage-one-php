@@ -156,6 +156,7 @@ class Account extends BaseModel
     /**
      * Returns a list of Accounts based on the Category identifier.
      *
+     * @var string $id id of category
      * @return ModelCollection A collection of entities
      */
     public function getAccountsByCategoryId(string $id)

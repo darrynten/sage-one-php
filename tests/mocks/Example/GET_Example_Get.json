@@ -10,16 +10,18 @@
         "RequiredString": "required information",
         "EmailAddress": "user@example.com",
         "StringWithDefault": "default string changed",
+        "StringWithNullDefault": "another string",
         "SomeBoolean": true
     },
     {
         "ID": 2,
         "ExampleWithCamel": "exampleWithCamel 2",
-        "StringRange": "example 2",
+        "StringRange": null,
         "IntegerRange": 134522343,
         "RequiredString": "required information 2",
         "EmailAddress": "user2@example.com",
         "StringWithDefault": "default string changed 2",
+        "StringWithNullDefault": null,
         "SomeBoolean": false
     }
   ]
