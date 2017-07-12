@@ -6,5 +6,6 @@
   "RequiredString": "required information",
   "EmailAddress": "user@example.com",
   "StringWithDefault": "default string changed",
+  "StringWithNullDefault": "another string",
   "SomeBoolean": true
 }

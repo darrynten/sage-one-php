@@ -334,6 +334,11 @@ abstract class BaseModel
             return new \DateTime($resultItem);
         }
 
+        // If it's null and it's allowed to be null
+        if (is_null($resultItem) && ($config['nullable'] === true)) {
+            return null;
+        }
+
         // At this stage, any type is going to be a model that needs to be loaded
         $class = $this->getModelWithNamespace($config['type']);
 
@@ -440,6 +445,11 @@ abstract class BaseModel
      */
     private function checkValidation($key, $value)
     {
+        // If it is and can be null
+        if (is_null($value) && ($this->fields[$key]['nullable'] === true)) {
+            return;
+        }
+
         // If values have a defined min/max then validate
         if ((array_key_exists('min', $this->fields[$key])) && (array_key_exists('max', $this->fields[$key]))) {
             $this->validateRange($value, $this->fields[$key]['min'], $this->fields[$key]['max']);
