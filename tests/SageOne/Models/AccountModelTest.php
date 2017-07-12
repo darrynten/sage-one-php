@@ -175,11 +175,9 @@ class AccountModelTest extends BaseModelTest
 
     public function testGetAll()
     {
-        $this->verifyGetAll(Account::class, function ($results, $data) {
+        $this->verifyGetAll(Account::class, function ($results) {
             $this->assertEquals(2, count($results));
-            $model = new Account($this->config);
-            $data = json_decode(json_encode($results[0], JSON_PRESERVE_ZERO_FRACTION));
-            $model->loadResult($data);
+            $model = $results[0];
 
             $this->assertEquals($model->id, 11);
             $this->assertTrue($model->active);
@@ -274,5 +272,42 @@ class AccountModelTest extends BaseModelTest
     public function testAuth()
     {
         $this->verifyRequestWithAuth(Account::class, 'Save');
+    }
+
+    public function testGetAllWithSystemAccounts()
+    {
+        $account = $this->setUpRequestMock('GET', Account::class, 'Account/GetWithSystemAccounts', 'Account/GET_Account_GetWithSystemAccounts.json');
+        $allAccounts = $account->getWithSystemAccounts();
+        $account = $allAccounts->results[0];
+
+        $this->assertInstanceOf(Account::class, $account);
+        $this->assertEquals(11, $account->id);
+        $this->assertInstanceOf(TaxType::class, $account->defaultTaxType);
+        $this->assertInstanceOf(AccountCategory::class, $account->category);
+    }
+
+    public function testGetAccountsByCategoryId()
+    {
+        $account = $this->setUpRequestMock('GET', Account::class, 'Account/GetAccountsByCategoryId/8', 'Account/GET_Account_GetAccountsByCategoryId_xx.json');
+        $allAccounts = $account->getAccountsByCategoryId(8);
+        $account = $allAccounts->results[0];
+
+        $this->assertInstanceOf(Account::class, $account);
+        $this->assertEquals(11, $account->id);
+        $this->assertEquals(8, $account->category->id);
+        $this->assertInstanceOf(TaxType::class, $account->defaultTaxType);
+        $this->assertInstanceOf(AccountCategory::class, $account->category);
+    }
+
+    public function testGetChartofAccounts()
+    {
+        $account = $this->setUpRequestMock('GET', Account::class, 'Account/GetChartofAccounts', 'Account/GET_Account_GetChartofAccounts.json');
+        $allAccounts = $account->getChartofAccounts();
+        $account = $allAccounts->results[0];
+
+        $this->assertInstanceOf(Account::class, $account);
+        $this->assertEquals(11, $account->id);
+        $this->assertInstanceOf(TaxType::class, $account->defaultTaxType);
+        $this->assertInstanceOf(AccountCategory::class, $account->category);
     }
 }
