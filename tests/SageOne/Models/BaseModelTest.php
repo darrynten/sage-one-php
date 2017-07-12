@@ -525,6 +525,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $model->loadResult($data);
 
         $response = $model->save();
+        $this->assertInstanceOf($class, $response);
         $whatToCheck($response);
     }
 
