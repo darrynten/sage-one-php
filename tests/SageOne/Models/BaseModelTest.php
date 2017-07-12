@@ -447,7 +447,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $data = json_decode(file_get_contents(__DIR__ . "/../../mocks/{$className}/GET_{$className}_Get_xx.json"));
         $model->loadResult($data);
 
-        $whatToCheck($model, $data);
+        $whatToCheck($model);
     }
 
     /**
@@ -505,9 +505,10 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
      * Verifies that we can save model
      *
      * @param string $class Full path to the class
-     * @param callable $whatToCheck Verifies response after saving model
+     * @param callable $beforeSave Modifies model before saving
+     * @param callable $afterSave Verifies model after saving
      */
-    protected function verifySave(string $class, callable $whatToCheck)
+    protected function verifySave(string $class, callable $beforeSave, callable $afterSave)
     {
         $className = $this->getClassName($class);
         $path = sprintf('%s/Save', $className);
@@ -524,9 +525,9 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $data = json_decode(file_get_contents(__DIR__ . "/../../mocks/" . $mockFileRequest));
         $model->loadResult($data);
 
-        $response = $model->save();
-        $this->assertInstanceOf($class, $response);
-        $whatToCheck($response);
+        $beforeSave($model);
+        $savedModel = $model->save();
+        $afterSave($savedModel);
     }
 
     /**
