@@ -197,17 +197,17 @@ class Supplier extends BaseModel
             'nullable' => false,
             'readonly' => false,
         ],
-        'dataField1' => [
+        'dateField1' => [
             'type' => 'DateTime',
             'nullable' => true,
             'readonly' => false,
         ],
-        'dataField2' => [
+        'dateField2' => [
             'type' => 'DateTime',
             'nullable' => true,
             'readonly' => false,
         ],
-        'dataField3' => [
+        'dateField3' => [
             'type' => 'DateTime',
             'nullable' => true,
             'readonly' => false,
