@@ -16,7 +16,7 @@ use DarrynTen\SageOne\BaseModel;
  * Supplier Model
  *
  * Details on parameters for Supplier:
- * https://accounting.sageone.co.za/api/1.1.2/Help/Api/POST-Supplier-Save
+ * https://accounting.sageone.co.za/api/1.1.2/#bookmark_Supplier
  */
 class Supplier extends BaseModel
 {
