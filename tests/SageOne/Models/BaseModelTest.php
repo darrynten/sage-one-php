@@ -9,6 +9,7 @@ use ReflectionClass;
 
 use DarrynTen\SageOne\Exception\ModelException;
 use DarrynTen\SageOne\Models\ModelCollection;
+use DarrynTen\SageOne\Exception\ValidationException;
 
 abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
 {
@@ -547,6 +548,11 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         // TODO do actual checks
     }
 
+    /**
+     * Verifies that exception is thrown when model does not support save()
+     *
+     * @param string $class Full path to the class
+     */
     public function verifySaveException(string $class)
     {
         $className = $this->getClassName($class);
@@ -559,6 +565,11 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $model->save();
     }
 
+    /**
+     * Verifies that exception is thrown when model does not support delete()
+     *
+     * @param string $class Full path to the class
+     */
     public function verifyDeleteException(string $class)
     {
         $className = $this->getClassName($class);
@@ -569,6 +580,87 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
 
         $model = new $class($this->config);
         $model->delete(1);
+    }
+
+    /**
+     * Verifies that exception is thrown when model does not support all()
+     *
+     * @param string $class Full path to the class
+     */
+    public function verifyAllException(string $class)
+    {
+        $className = $this->getClassName($class);
+
+        $this->expectException(ModelException::class);
+        $this->expectExceptionMessage("Model \"{$className}\"  Get all is not supported");
+        $this->expectExceptionCode(10101);
+
+        $model = new $class($this->config);
+        $model->all();
+    }
+
+    /**
+     * Verifies that exception is thrown when model does not support get()
+     *
+     * @param string $class Full path to the class
+     */
+    public function verifyGetException(string $class)
+    {
+        $className = $this->getClassName($class);
+
+        $this->expectException(ModelException::class);
+        $this->expectExceptionMessage("Model \"{$className}\" id 1 Get single is not supported");
+
+        $model = new $class($this->config);
+        $model->get(1);
+    }
+
+    /**
+     * Verifies that ValidationException for integer out of range is thrown
+     * @param string $class Full path to the class
+     * @param string $field integer field on class
+     * @param int $min min value for field
+     * @param int $max max value for field
+     * @param int $value value what we are trying to set for field
+     */
+    public function verifyBadIntegerRangeException(string $class, string $field, int $min, int $max, int $value)
+    {
+        $className = $this->getClassName($class);
+
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage(
+            sprintf('Validation error value %s out of min(%s) max(%s) Integer value is out of range',
+                $value, $min, $max)
+            );
+        $this->expectExceptionCode(10001);
+
+        $model = new $class($this->config);
+
+        $model->{$field} = $value;
+    }
+
+    /**
+     * Verifies that ValidationException for string with incorrect length is thrown
+     * @param string $class Full path to the class
+     * @param string $field string field on class
+     * @param int $min min length for field
+     * @param int $max max length for field
+     * @param int $value value what we are trying to set for field
+     */
+    public function verifyBadStringLengthException(string $class, string $field, int $min, int $max, string $value)
+    {
+        $className = $this->getClassName($class);
+
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage(
+            sprintf('Validation error value This string is too long! out of min(%s) max(%s) String length is out of range',
+                $min, $max)
+            );
+        $this->expectExceptionCode(10002);
+
+        $model = new $class($this->config);
+
+        $model->{$field} = $value;
     }
 
     public function verifyRequestWithAuth(string $class, string $method)
