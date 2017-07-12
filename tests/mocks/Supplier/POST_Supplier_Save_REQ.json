@@ -3,8 +3,8 @@
   "Category": {
     "Description": "sample string 1",
     "ID": 2,
-    "Modified": "2017-07-12",
-    "Created": "2017-07-12"
+    "Modified": "2017-07-04",
+    "Created": "2017-07-04"
   },
   "TaxReference": "sample string 2",
   "ContactName": "sample string 3",
@@ -36,14 +36,14 @@
   "YesNoField1": true,
   "YesNoField2": true,
   "YesNoField3": true,
-  "DateField1": "2017-07-12",
-  "DateField2": "2017-07-12",
-  "DateField3": "2017-07-12",
-  "Modified": "2017-07-12",
-  "Created": "2017-07-12",
+  "DateField1": "2017-07-04",
+  "DateField2": "2017-07-04",
+  "DateField3": "2017-07-04",
+  "Modified": "2017-07-04",
+  "Created": "2017-07-04",
   "BusinessRegistrationNumber": "sample string 29",
   "RMCDApprovalNumber": "sample string 30",
-  "TaxStatusVerified": "2017-07-12",
+  "TaxStatusVerified": "2017-07-04",
   "CurrencyId": 1,
   "CurrencySymbol": "sample string 31",
   "HasActivity": true,
@@ -56,8 +56,8 @@
     "IsDefault": true,
     "HasActivity": true,
     "IsManualTax": true,
-    "Created": "2017-07-12",
-    "Modified": "2017-07-12"
+    "Created": "2017-07-04",
+    "Modified": "2017-07-04"
   },
   "DueDateMethodId": 1,
   "DueDateMethodValue": 1,
