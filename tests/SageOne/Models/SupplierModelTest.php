@@ -93,7 +93,7 @@ class SupplierModelTest extends BaseModelTest
             $this->assertEquals($model->created->format('Y-m-d'), '2017-06-30');
             $this->assertEquals($model->created->getTimezone()->getName(), 'UTC');
             $this->assertEquals($model->businessRegistrationNumber, 'sample string 29');
-            $this->assertEquals($model->rmcdApprovalNumber, 'sample string 30');
+            $this->assertEquals($model->RMCDApprovalNumber, 'sample string 30');
             $this->assertEquals($model->taxStatusVerified->format('Y-m-d'), '2017-07-12');
             $this->assertEquals($model->currencyId, 1);
             $this->assertEquals($model->currencySymbol, 'sample string 31');
@@ -315,7 +315,7 @@ class SupplierModelTest extends BaseModelTest
                 'nullable' => false,
                 'readonly' => false,
             ],
-            'rmcdApprovalNumber' => [
+            'RMCDApprovalNumber' => [
                 'type' => 'string',
                 'nullable' => false,
                 'readonly' => false,
@@ -466,7 +466,7 @@ class SupplierModelTest extends BaseModelTest
             $this->assertEquals($model->created->format('Y-m-d'), '2017-06-30');
             $this->assertEquals($model->created->getTimezone()->getName(), 'UTC');
             $this->assertEquals($model->businessRegistrationNumber, 'sample string 29');
-            $this->assertEquals($model->rmcdApprovalNumber, 'sample string 30');
+            $this->assertEquals($model->RMCDApprovalNumber, 'sample string 30');
             $this->assertEquals($model->taxStatusVerified->format('Y-m-d'), '2017-07-12');
             $this->assertEquals($model->currencyId, 1);
             $this->assertEquals($model->currencySymbol, 'sample string 31');
