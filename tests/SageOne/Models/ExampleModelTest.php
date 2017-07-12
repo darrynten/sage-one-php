@@ -1,94 +1,41 @@
 <?php
 
-namespace DarrynTen\SageOne\Tests\SageOne;
+namespace DarrynTen\SageOne\Tests\SageOne\Models;
 
 use DarrynTen\SageOne\Models\Example;
 // use DarrynTen\SageOne\Models\ExampleCategory; // any related models
-use DarrynTen\SageOne\Request\RequestHandler;
-use InterNations\Component\HttpMock\PHPUnit\HttpMockTrait;
-use GuzzleHttp\Client;
-use ReflectionClass;
 
-use DarrynTen\SageOne\Exception\ModelException;
 use DarrynTen\SageOne\Exception\ValidationException;
+use DarrynTen\SageOne\Exception\ModelException;
+use ReflectionClass;
+use DarrynTen\SageOne\Request\RequestHandler;
+use GuzzleHttp\Client;
 
-class ExampleModelTest extends \PHPUnit_Framework_TestCase
+class ExampleModelTest extends BaseModelTest
 {
-    use HttpMockTrait;
-
-    private $config = [
-        'username' => 'username',
-        'password' => 'password',
-        'key' => 'key',
-        'endpoint' => '//localhost:8082',
-        'version' => '1.1.2',
-        'companyId' => null
-    ];
-
-    public static function setUpBeforeClass()
-    {
-        static::setUpHttpMockBeforeClass('8082', 'localhost');
-    }
-
-    public static function tearDownAfterClass()
-    {
-        static::tearDownHttpMockAfterClass();
-    }
-
-    public function setUp()
-    {
-        $this->setUpHttpMock();
-    }
-
-    public function tearDown()
-    {
-        $this->tearDownHttpMock();
-    }
-
     public function testInstanceOf()
     {
-        $request = new Example($this->config);
-        $this->assertInstanceOf(Example::class, $request);
+        $this->verifyInstanceOf(Example::class);
     }
 
     public function testAllException()
     {
-        $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('Model "Example"  Get all is not supported');
-        $this->expectExceptionCode(10101);
-
-        $model = new Example($this->config);
-        $model->all();
+        $this->verifyAllException(Example::class);
     }
 
     public function testGetException()
     {
-        $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('Model "Example" id 11 Get single is not supported');
-        $this->expectExceptionCode(10102);
-
-        $model = new Example($this->config);
-        $model->get(11);
+        $this->verifyGetException(Example::class);
     }
 
     public function testSaveException()
     {
-        $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('Model "Example"  Save is not supported');
-        $this->expectExceptionCode(10103);
-
-        $model = new Example($this->config);
-        $model->save();
+        $this->verifySaveException(Example::class);
     }
 
     public function testDeleteException()
     {
-        $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('Model "Example" id 11 Delete is not supported');
-        $this->expectExceptionCode(10104);
-
-        $model = new Example($this->config);
-        $model->delete(11);
+        $this->verifyDeleteException(Example::class);
     }
 
     public function testCustomExceptions()
@@ -180,26 +127,18 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
 
     public function testBadIntegerRange()
     {
-        $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('Validation error value -1 out of min(1) max(2147483647) Integer value is out of range');
-        $this->expectExceptionCode(10001);
-
-        $exampleModel = new Example($this->config);
-
-        $exampleModel->id = 13;
-        $exampleModel->integerRange = -1;
+        $this->verifyBadIntegerRangeException(Example::class, 'integerRange', 1, 2147483647, -1);
     }
 
     public function testBadStringLength()
     {
-        $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('Validation error value This string is too long! out of min(2) max(10) String length is out of range');
-        $this->expectExceptionCode(10002);
-
-        $exampleModel = new Example($this->config);
-
-        $exampleModel->id = 139393939393;
-        $exampleModel->stringRange = 'This string is too long!';
+        $this->verifyBadStringLengthException(
+            Example::class,
+            'stringRange',
+            2,
+            10,
+            'This string is too long!'
+        );
     }
 
     public function testBadRangeType()
@@ -228,53 +167,17 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
 
     public function testSetUndefined()
     {
-        $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('Model "Example" key xxx value xxx Attempting to set a property that is not defined in the model');
-        $this->expectExceptionCode(10113);
-
-        $exampleModel = new Example($this->config);
-        $exampleModel->xxx = 'xxx';
+        $this->verifySetUndefined(Example::class);
     }
 
     public function testGetUndefined()
     {
-        $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('Model "Example" key xxx Attempting to get an undefined property');
-        $this->expectExceptionCode(10116);
-
-        $exampleModel = new Example($this->config);
-        $throw = $exampleModel->xxx;
+        $this->verifyGetUndefined(Example::class);
     }
 
     public function testCannotNullify()
     {
-        $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('Model "Example" attempting to nullify key exampleWithCamel Property is null without nullable permission');
-        $this->expectExceptionCode(10111);
-
-        $exampleModel = new Example($this->config);
-
-        // Disable nulling and persisting on exampleWithCamel
-        $exampleFields = [
-            'exampleWithCamel' => [
-                'type' => 'string',
-                'nullable' => false,
-                'readonly' => false,
-            ],
-            'id' => [
-                'type' => 'integer',
-                'nullable' => false,
-                'readonly' => false,
-            ],
-        ];
-
-        $reflection = new ReflectionClass($exampleModel);
-        $reflectedModel = $reflection->getProperty('fields');
-        $reflectedModel->setAccessible(true);
-        $reflectedModel->setValue($exampleModel, $exampleFields);
-
-        $exampleModel->id = 2;
-        $exampleModel->exampleWithCamel = null;
+        $this->verifyCanNotNullify(Example::class, 'emailAddress');
     }
 
     public function testDefaultProperties()
@@ -299,16 +202,7 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadImport()
     {
-        $exampleModel = new Example($this->config);
-
-        $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('Model "Example" Defined key "exampleWithCamel" not present in payload A property is missing in the loadResult payload');
-        $this->expectExceptionCode(10112);
-
-        // This response is not for this model
-        $data = json_decode(file_get_contents(__DIR__ . '/../../mocks/Account/GET_Account_Get_xx.json'));
-
-        $exampleModel->loadResult($data);
+        $this->verifyBadImport(Example::class, 'exampleWithCamel');
     }
 
     public function testExamples()

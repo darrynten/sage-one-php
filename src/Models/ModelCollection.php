@@ -64,17 +64,20 @@ class ModelCollection
         if (!property_exists($results, 'TotalResults')) {
             throw new ModelCollectionException(
                 ModelCollectionException::MISSING_REQUIRED_PROPERTY,
-                'TotalResults');
+                'TotalResults'
+            );
         }
         if (!property_exists($results, 'ReturnedResults')) {
             throw new ModelCollectionException(
                 ModelCollectionException::MISSING_REQUIRED_PROPERTY,
-                'ReturnedResults');
+                'ReturnedResults'
+            );
         }
         if (!property_exists($results, 'Results')) {
             throw new ModelCollectionException(
                 ModelCollectionException::MISSING_REQUIRED_PROPERTY,
-                'Results');
+                'Results'
+            );
         }
 
         $models = [];

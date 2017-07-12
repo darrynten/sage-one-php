@@ -19,7 +19,7 @@ class AccountOpeningBalanceModelTest extends BaseModelTest
 
     public function testInject()
     {
-        $this->verifyInject(AccountOpeningBalance::class, function ($model, $data) {
+        $this->verifyInject(AccountOpeningBalance::class, function ($model) {
             $this->assertEquals(2, $model->id);
             $this->assertEquals(3.0, $model->balance);
             $this->assertEquals('sample string 4', $model->reason);
@@ -87,8 +87,15 @@ class AccountOpeningBalanceModelTest extends BaseModelTest
     public function testSave()
     {
         $this->verifySave(AccountOpeningBalance::class, function ($model) {
-            $this->assertEquals(2, $model->id);
-            // TODO Do actual checks
+            $model->balance = 3.0;
+            $model->reason = 'sample string 4';
+            $model->date = '2017-07-10';
+            $model->accountId = 1;
+        }, function ($savedModel) {
+            $this->assertEquals(3.0, $savedModel->balance);
+            $this->assertEquals('sample string 4', $savedModel->reason);
+            $this->assertEquals('2017-07-10', $savedModel->date->format('Y-m-d'));
+            $this->assertEquals(1, $savedModel->accountId);
         });
     }
 

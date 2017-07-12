@@ -38,7 +38,7 @@ class CurrencyModelTest extends BaseModelTest
 
     public function testInject()
     {
-        $this->verifyInject(Currency::class, function ($model, $data) {
+        $this->verifyInject(Currency::class, function ($model) {
             $this->assertEquals($model->id, 11);
             $this->assertEquals($model->code, 'code 11');
             $this->assertEquals($model->description, 'description 11');
