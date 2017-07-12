@@ -152,9 +152,8 @@ class AccountNoteModelTest extends BaseModelTest
 
     public function testSave()
     {
-        $this->verifySave(AccountNote::class, function ($response) {
-            $this->assertEquals(2, $response->ID);
-            // TODO Do actual checks
+        $this->verifySave(AccountNote::class, function ($model) {
+            $this->assertEquals(2, $model->id);
         });
     }
 
