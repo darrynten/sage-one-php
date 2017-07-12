@@ -157,7 +157,7 @@ class AccountNoteModelTest extends BaseModelTest
             $model->userId = 1;
             $model->subject = "sample string 3";
             $model->status = true;
-        }, function($savedModel) {
+        }, function ($savedModel) {
             $this->assertEquals(1, $savedModel->accountId);
             $this->assertEquals(1, $savedModel->userId);
             $this->assertEquals('sample string 3', $savedModel->subject);

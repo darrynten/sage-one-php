@@ -261,7 +261,7 @@ class AccountModelTest extends BaseModelTest
             $model->description = 'sample string 5';
             $model->reportingGroupId = 1;
             $model->defaultTaxTypeId = 1;
-        }, function($savedModel) {
+        }, function ($savedModel) {
             $this->assertEquals(true, $savedModel->active);
             $this->assertEquals('sample string 5', $savedModel->description);
             $this->assertEquals(1, $savedModel->reportingGroupId);
