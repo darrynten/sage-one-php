@@ -193,7 +193,7 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
     public function testBadStringLength()
     {
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('Validation error value This string is too long! out of min(1) max(10) String length is out of range');
+        $this->expectExceptionMessage('Validation error value This string is too long! out of min(2) max(10) String length is out of range');
         $this->expectExceptionCode(10002);
 
         $exampleModel = new Example($this->config);
@@ -205,13 +205,13 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
     public function testBadRangeType()
     {
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('Validation error value  is type NULL Validation type is invalid');
+        $this->expectExceptionMessage('Validation error value 1 is type boolean Validation type is invalid');
         $this->expectExceptionCode(10004);
 
         $exampleModel = new Example($this->config);
 
         $exampleModel->id = 939393;
-        $exampleModel->stringRange = null;
+        $exampleModel->stringRange = true;
     }
 
     public function testBadRegexSet()
@@ -412,7 +412,7 @@ class ExampleModelTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($value['stringRange']['readonly']);
         $this->assertTrue($value['stringRange']['nullable']);
         $this->assertArrayHasKey('min', $value['stringRange']);
-        $this->assertEquals(1, $value['stringRange']['min']);
+        $this->assertEquals(2, $value['stringRange']['min']);
         $this->assertEquals('integer', gettype($value['stringRange']['min']));
         $this->assertArrayHasKey('max', $value['stringRange']);
         $this->assertEquals(10, $value['stringRange']['max']);

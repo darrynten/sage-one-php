@@ -78,7 +78,7 @@ class ModelCollectionTest extends BaseModelTest
         $example2 = $collection->results[1];
         $this->assertEquals(2, $example2->id);
         $this->assertFalse($example2->someBoolean);
-        $this->assertEquals('example 2', $example2->stringRange);
+        $this->assertNull($example2->stringRange);
         $this->assertEquals(134522343, $example2->integerRange);
         $this->assertEquals('integer', gettype($example2->integerRange));
     }
