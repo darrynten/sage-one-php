@@ -176,7 +176,7 @@ class AccountModelTest extends BaseModelTest
     public function testGetAll()
     {
         $this->verifyGetAll(Account::class, function ($results) {
-            $this->assertEquals(2, count($results));
+            $this->assertCount(2, $results);
             $model = $results[0];
 
             $this->assertEquals($model->id, 11);
@@ -217,7 +217,7 @@ class AccountModelTest extends BaseModelTest
 
     public function testGetId()
     {
-        $this->verifyGetId(Account::class, 2, function ($model) {
+        $this->verifyGetId(Account::class, 11, function ($model) {
             $this->assertEquals($model->id, 11);
             $this->assertTrue($model->active);
             $this->assertEquals($model->name, 'sample string 2');
