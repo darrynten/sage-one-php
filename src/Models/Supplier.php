@@ -302,5 +302,4 @@ class Supplier extends BaseModel
         'save' => true,
         'delete' => true,
     ];
-
 }
