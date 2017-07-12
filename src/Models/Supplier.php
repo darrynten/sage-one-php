@@ -11,6 +11,7 @@
 namespace DarrynTen\SageOne\Models;
 
 use DarrynTen\SageOne\BaseModel;
+use DarrynTen\SageOne\Models\ModelCollection;
 
 /**
  * Supplier Model
@@ -253,7 +254,7 @@ class Supplier extends BaseModel
             'readonly' => true,
         ],
         'defaultDiscountPercentage' => [
-            'type' => 'integer',
+            'type' => 'double',
             'nullable' => true,
             'readonly' => false,
         ],
