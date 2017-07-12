@@ -629,9 +629,13 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
 
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage(
-            sprintf('Validation error value %s out of min(%s) max(%s) Integer value is out of range',
-                $value, $min, $max)
-            );
+            sprintf(
+                'Validation error value %s out of min(%s) max(%s) Integer value is out of range',
+                $value,
+                $min,
+                $max
+            )
+        );
         $this->expectExceptionCode(10001);
 
         $model = new $class($this->config);
@@ -653,9 +657,12 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
 
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage(
-            sprintf('Validation error value This string is too long! out of min(%s) max(%s) String length is out of range',
-                $min, $max)
-            );
+            sprintf(
+                'Validation error value This string is too long! out of min(%s) max(%s) String length is out of range',
+                $min,
+                $max
+            )
+        );
         $this->expectExceptionCode(10002);
 
         $model = new $class($this->config);

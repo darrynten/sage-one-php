@@ -132,8 +132,13 @@ class ExampleModelTest extends BaseModelTest
 
     public function testBadStringLength()
     {
-        $this->verifyBadStringLengthException(Example::class,
-            'stringRange', 2, 10, 'This string is too long!'); 
+        $this->verifyBadStringLengthException(
+            Example::class,
+            'stringRange',
+            2,
+            10,
+            'This string is too long!'
+        );
     }
 
     public function testBadRangeType()
