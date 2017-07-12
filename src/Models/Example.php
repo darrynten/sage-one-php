@@ -81,7 +81,7 @@ class Example extends BaseModel
             'type' => 'string',
             'nullable' => true,
             'readonly' => false,
-            'min' => 1,
+            'min' => 2,
             'max' => 10,
         ],
         'stringWithDefault' => [
@@ -89,6 +89,12 @@ class Example extends BaseModel
             'nullable' => true,
             'readonly' => false,
             'default' => 'some default value',
+        ],
+        'stringWithNullDefault' => [
+            'type' => 'string',
+            'nullable' => true,
+            'readonly' => false,
+            'default' => null
         ],
         'integerRange' => [
             'type' => 'integer',

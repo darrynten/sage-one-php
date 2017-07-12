@@ -16,8 +16,6 @@ use DarrynTen\SageOne\Exception\ExceptionMessages;
 
 /**
  * Model collection exception for SageOne
- *
- * @package SageOne
  */
 class ModelCollectionException extends Exception
 {

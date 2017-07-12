@@ -54,16 +54,27 @@ class ModelCollection
         throw new ModelCollectionException(ModelCollectionException::GETTING_UNDEFINED_PROPERTY, $key);
     }
 
+    /**
+     * @var string $class Full path to the class
+     * @var array $config Configuration array
+     * @var stdClass $results object in format of pagination response from SageOne
+     */
     public function __construct($class, $config, \stdClass $results)
     {
         if (!property_exists($results, 'TotalResults')) {
-            throw new ModelCollectionException(ModelCollectionException::MISSING_REQUIRED_PROPERTY, 'TotalResults');
+            throw new ModelCollectionException(
+                ModelCollectionException::MISSING_REQUIRED_PROPERTY,
+                'TotalResults');
         }
         if (!property_exists($results, 'ReturnedResults')) {
-            throw new ModelCollectionException(ModelCollectionException::MISSING_REQUIRED_PROPERTY, 'ReturnedResults');
+            throw new ModelCollectionException(
+                ModelCollectionException::MISSING_REQUIRED_PROPERTY,
+                'ReturnedResults');
         }
         if (!property_exists($results, 'Results')) {
-            throw new ModelCollectionException(ModelCollectionException::MISSING_REQUIRED_PROPERTY, 'Results');
+            throw new ModelCollectionException(
+                ModelCollectionException::MISSING_REQUIRED_PROPERTY,
+                'Results');
         }
 
         $models = [];

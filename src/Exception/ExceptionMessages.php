@@ -9,7 +9,9 @@ namespace DarrynTen\SageOne\Exception;
  */
 class ExceptionMessages
 {
-    // Validation codes 100xx
+    /**
+     * @var array $validationMessages [100xx codes]
+     */
     public static $validationMessages = [
         10000 => 'Unknown validation error',
         10001 => 'Integer value is out of range',
@@ -18,7 +20,9 @@ class ExceptionMessages
         10004 => 'Validation type is invalid',
     ];
 
-    // Model codes 101xx
+    /**
+     * @var array $modelErrorMessages [101xx codes]
+     */
     public static $modelErrorMessages = [
         // Methods
         10100 => 'Undefined model exception',
@@ -36,14 +40,18 @@ class ExceptionMessages
         10116 => 'Attempting to get an undefined property',
     ];
 
-    // Model collection error codes 102xx
+    /**
+     * @var array $modelCollectionErrorMessages [102xx codes]
+     */
     public static $modelCollectionErrorMessages = [
         10200 => 'Undefined model collection exception',
         10201 => 'Attempting to access undefined property',
         10202 => 'Missing required property in object'
     ];
 
-    // Maps to standard HTTP error codes
+    /**
+     * @var array $strings map from http response codes to textual representation of errors
+     */
     public static $strings = [
         400 => 'A malformed request was sent through or when a validation rule '
              . 'failed. Validation messages are returned in the response body.',
