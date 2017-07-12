@@ -54,12 +54,12 @@ class SupplierModelTest extends BaseModelTest
             $this->assertEquals($model->category->modified->format('Y-m-d'), '2017-07-12');
             $this->assertEquals($model->category->created->format('Y-m-d'), '2017-07-12');
             $this->assertEquals($model->taxReference, 'sample string 2');
-            $this->assertEquals($model->contactName, 'sample string 2');
+            $this->assertEquals($model->contactName, 'sample string 3');
             $this->assertEquals($model->telephone, 'sample string 4');
             $this->assertEquals($model->fax, 'sample string 5');
             $this->assertEquals($model->mobile, 'sample string 6');
             $this->assertEquals($model->email, 'sample string 7');
-            $this->assertEquals($model->webAdress, 'sample string 8');
+            $this->assertEquals($model->webAddress, 'sample string 8');
             $this->assertTrue($model->active);
             $this->assertEquals($model->balance, 10.0);
             $this->assertEquals($model->creditLimit, 11.0);
@@ -87,10 +87,10 @@ class SupplierModelTest extends BaseModelTest
             $this->assertEquals($model->dateField2->format('Y-m-d'), '2017-07-12');
             $this->assertEquals($model->dateField3->format('Y-m-d'), '2017-07-12');
             $this->assertInstanceOf(\DateTime::class, $model->modified);
-            $this->assertEquals($model->modified->format('Y-m-d'), '2017-06-30');
+            $this->assertEquals($model->modified->format('Y-m-d'), '2017-07-12');
             $this->assertEquals($model->modified->getTimezone()->getName(), 'UTC');
             $this->assertInstanceOf(\DateTime::class, $model->created);
-            $this->assertEquals($model->created->format('Y-m-d'), '2017-06-30');
+            $this->assertEquals($model->created->format('Y-m-d'), '2017-07-12');
             $this->assertEquals($model->created->getTimezone()->getName(), 'UTC');
             $this->assertEquals($model->businessRegistrationNumber, 'sample string 29');
             $this->assertEquals($model->RMCDApprovalNumber, 'sample string 30');
@@ -341,7 +341,7 @@ class SupplierModelTest extends BaseModelTest
                 'readonly' => true,
             ],
             'defaultDiscountPercentage' => [
-                'type' => 'integer',
+                'type' => 'double',
                 'nullable' => true,
                 'readonly' => false,
             ],
@@ -381,7 +381,7 @@ class SupplierModelTest extends BaseModelTest
             $this->assertCount(2, $results);
             $model = $results[0];
 
-            $this->assertEquals($model->name, 'sample string 2');
+            $this->assertEquals($model->name, 'sample string 1');
             $this->assertInstanceOf(SupplierCategory::class, $model->category);
             $this->assertEquals($model->category->comment, 'sample string 1');
             $this->assertEquals($model->category->order, 6);
@@ -390,7 +390,7 @@ class SupplierModelTest extends BaseModelTest
             $this->assertEquals($model->category->modified->format('Y-m-d'), '2017-07-12');
             $this->assertEquals($model->category->created->format('Y-m-d'), '2017-07-12');
             $this->assertTrue($model->active);
-            $this->assertEquals($model->balance, 4.0);
+            $this->assertEquals($model->balance, 10.0);
             $this->assertEquals($model->description, 'sample string 5');
             $this->assertEquals($model->reportingGroupId, 1);
             $this->assertTrue($model->unAllocatedAccount);
@@ -423,7 +423,6 @@ class SupplierModelTest extends BaseModelTest
             $this->assertEquals($model->name, 'sample string 1');
             $this->assertInstanceOf(SupplierCategory::class, $model->category);
             $this->assertEquals($model->category->description, 'sample string 1');
-            $this->assertEquals($model->category->id, 2);
             $this->assertEquals($model->category->modified->format('Y-m-d'), '2017-07-12');
             $this->assertEquals($model->category->created->format('Y-m-d'), '2017-07-12');
             $this->assertEquals($model->taxReference, 'sample string 2');
@@ -432,7 +431,7 @@ class SupplierModelTest extends BaseModelTest
             $this->assertEquals($model->fax, 'sample string 5');
             $this->assertEquals($model->mobile, 'sample string 6');
             $this->assertEquals($model->email, 'sample string 7');
-            $this->assertEquals($model->webAdress, 'sample string 8');
+            $this->assertEquals($model->webAddress, 'sample string 8');
             $this->assertTrue($model->active);
             $this->assertEquals($model->balance, 10.0);
             $this->assertEquals($model->creditLimit, 11.0);
@@ -460,10 +459,10 @@ class SupplierModelTest extends BaseModelTest
             $this->assertEquals($model->dateField2->format('Y-m-d'), '2017-07-12');
             $this->assertEquals($model->dateField3->format('Y-m-d'), '2017-07-12');
             $this->assertInstanceOf(\DateTime::class, $model->modified);
-            $this->assertEquals($model->modified->format('Y-m-d'), '2017-06-30');
+            $this->assertEquals($model->modified->format('Y-m-d'), '2017-07-12');
             $this->assertEquals($model->modified->getTimezone()->getName(), 'UTC');
             $this->assertInstanceOf(\DateTime::class, $model->created);
-            $this->assertEquals($model->created->format('Y-m-d'), '2017-06-30');
+            $this->assertEquals($model->created->format('Y-m-d'), '2017-07-12');
             $this->assertEquals($model->created->getTimezone()->getName(), 'UTC');
             $this->assertEquals($model->businessRegistrationNumber, 'sample string 29');
             $this->assertEquals($model->RMCDApprovalNumber, 'sample string 30');
@@ -494,5 +493,4 @@ class SupplierModelTest extends BaseModelTest
             // TODO do actual checks
         });
     }
-
 }
