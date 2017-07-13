@@ -280,19 +280,7 @@ class Supplier extends BaseModel
     ];
 
     /**
-     * Features supported by the endpoint
-     *
-     * These features enable and disable certain calls from the base model
-     *
-     * It covers any call documented with these methods
-     *
-     * GET Model/Get
-     * GET Model/Get/{id}
-     * DELETE Model/Delete/{id}
-     * POST Model/Save
-     *
-     * You must enable the supported combination of the above 4 calls if they
-     * are present in the documentation
+     * Features supported by the endpoind
      *
      * @var array $features
      */
