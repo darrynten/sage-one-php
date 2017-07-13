@@ -43,7 +43,7 @@ class SupplierCategory extends BaseModel
      * `ID` is automatically converted to `id`
      *
      * Details on writable properties for Account:
-     * https://accounting.sageone.co.za/api/1.1.2/#bookmark_Supplier
+     * https://accounting.sageone.co.za/api/1.1.2/#bookmark_SupplierCategory
      *
      * @var array $fields
      */
