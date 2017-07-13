@@ -213,7 +213,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     {
         $validKeys = array_fill_keys([
             'type', 'nullable', 'readonly', 'default',
-            'required', 'min', 'max', 'regex', 'class'
+            'required', 'min', 'max', 'regex', 'collection'
         ], true);
         foreach (array_keys($options) as $option) {
             if (!isset($validKeys[$option])) {
@@ -422,14 +422,17 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
      */
     private function verifyCollectionAttribute($className, $name, $options, $value)
     {
-        if (array_key_exists('class', $options)) {
+        if (array_key_exists('collection', $options)) {
+            if ($options['collection'] !== true) {
+                throw new \Exception('You can validate only collection=true');
+            }
             $this->assertTrue(
-                array_key_exists('class', $value[$name]),
-                sprintf('Model %s "class" for %s is not present', $className, $name)
+                array_key_exists('collection', $value[$name]),
+                sprintf('Model %s "collection" for %s is not present', $className, $name)
             );
-            $this->assertEquals($options['type'], 'ModelCollection');
-            $this->assertEquals($options['class'], $value[$name]['class']);
-            $fullPathToClass = sprintf('DarrynTen\SageOne\Models\%s', $options['class']);
+            $this->assertEquals($options['type'], $value[$name]['type']);
+            $this->assertEquals($options['collection'], $value[$name]['collection']);
+            $fullPathToClass = sprintf('DarrynTen\SageOne\Models\%s', $options['type']);
             $this->assertTrue(class_exists($fullPathToClass), sprintf(
                 'Model "%s" property "%s" class "%s" does not exist',
                 $className, $name, $fullPathToClass

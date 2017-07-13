@@ -290,7 +290,7 @@ abstract class BaseModel
             return $value->format('Y-m-d');
         }
 
-        if ($config['type'] === 'ModelCollection') {
+        if (isset($config['collection']) && $config['collection'] === true) {
             return $this->prepareModelCollection($config, $value);
         }
 
@@ -316,7 +316,7 @@ abstract class BaseModel
      */
     private function prepareModelCollection(array $config, ModelCollection $value)
     {
-        $class = $this->getModelWithNamespace($config['class']);
+        $class = $this->getModelWithNamespace($config['type']);
         if (!class_exists($class)) {
             $this->throwException(ModelException::COLLECTION_WITHOUT_CLASS, sprintf(
                 'Class "%s" for collection does not exist', $class
@@ -366,8 +366,8 @@ abstract class BaseModel
             return new \DateTime($resultItem);
         }
 
-        if ($config['type'] === \ModelCollection::class) {
-            $class = $this->getModelWithNamespace($config['class']);
+        if (isset($config['collection']) && $config['collection'] === true) {
+            $class = $this->getModelWithNamespace($config['type']);
             if (!class_exists($class)) {
                 $this->throwException(ModelException::COLLECTION_WITHOUT_CLASS, sprintf(
                     'class "%s"', $class

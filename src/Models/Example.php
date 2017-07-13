@@ -123,8 +123,8 @@ class Example extends BaseModel
             'regex' => "/^[A-Za-z0-9,!#\$%&'\*\+\/=\?\^_`\{\|}~-]+(\.[A-Za-z0-9,!#\$%&'\*\+\/=\?\^_`\{\|}~-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.([A-Za-z]{2,})$/"
         ],
         'someCollection' => [
-            'type' => 'ModelCollection',
-            'class' => 'ExampleCategory',
+            'type' => 'ExampleCategory',
+            'collection' => true,
             'nullable' => false,
             'readonly' => false
         ]

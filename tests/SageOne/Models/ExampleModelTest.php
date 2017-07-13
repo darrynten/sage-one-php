@@ -499,10 +499,10 @@ class ExampleModelTest extends BaseModelTest
         $exampleModel = new Example($this->config);
         $exampleBadFields = [
             'someCollection' => [
-                'type' => 'ModelCollection',
+                'type' => 'InvalidClass',
                 'nullable' => false,
                 'readonly' => false,
-                'class' => 'InvalidClass'
+                'collection' => true
             ],
         ];
 
@@ -574,8 +574,8 @@ class ExampleModelTest extends BaseModelTest
                 'regex' => "/^[A-Za-z0-9,!#\$%&'\*\+\/=\?\^_`\{\|}~-]+(\.[A-Za-z0-9,!#\$%&'\*\+\/=\?\^_`\{\|}~-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.([A-Za-z]{2,})$/"
             ],
             'someCollection' => [
-                'type' => 'ModelCollection',
-                'class' => 'ExampleCategory',
+                'type' => 'ExampleCategory',
+                'collection' => true,
                 'nullable' => false,
                 'readonly' => false
             ]

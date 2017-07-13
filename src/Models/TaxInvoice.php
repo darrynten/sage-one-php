@@ -321,8 +321,8 @@ class TaxInvoice extends BaseModel
             'max' => 100,
         ],
         'lines' => [
-            'type' => 'ModelCollection',
-            'class' => 'CommercialDocumentLine',
+            'type' => 'CommercialDocumentLine',
+            'collection' => true,
             'nullable' => false,
             'readonly' => false,
         ]
