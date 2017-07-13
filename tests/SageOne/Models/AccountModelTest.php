@@ -45,7 +45,7 @@ class AccountModelTest extends BaseModelTest
 
     public function testInject()
     {
-        $this->verifyInject(Account::class, function ($model, $data) {
+        $this->verifyInject(Account::class, function ($model) {
             $this->assertEquals($model->id, 11);
             $this->assertTrue($model->active);
             $this->assertEquals($model->name, 'sample string 2');
@@ -256,9 +256,16 @@ class AccountModelTest extends BaseModelTest
 
     public function testSave()
     {
-        $this->verifySave(Account::class, function ($response) {
-            $this->assertEquals(11, $response->ID);
-            // TODO Do actual checks
+        $this->verifySave(Account::class, function ($model) {
+            $model->active = true;
+            $model->description = 'sample string 5';
+            $model->reportingGroupId = 1;
+            $model->defaultTaxTypeId = 1;
+        }, function ($savedModel) {
+            $this->assertEquals(true, $savedModel->active);
+            $this->assertEquals('sample string 5', $savedModel->description);
+            $this->assertEquals(1, $savedModel->reportingGroupId);
+            $this->assertEquals(1, $savedModel->defaultTaxTypeId);
         });
     }
 

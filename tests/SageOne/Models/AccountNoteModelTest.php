@@ -43,7 +43,7 @@ class AccountNoteModelTest extends BaseModelTest
 
     public function testInject()
     {
-        $this->verifyInject(AccountNote::class, function ($model, $data) {
+        $this->verifyInject(AccountNote::class, function ($model) {
             $this->assertEquals($model->id, 2);
             $this->assertEquals($model->userId, 1);
             $this->assertEquals($model->accountId, 1);
@@ -152,9 +152,16 @@ class AccountNoteModelTest extends BaseModelTest
 
     public function testSave()
     {
-        $this->verifySave(AccountNote::class, function ($response) {
-            $this->assertEquals(2, $response->ID);
-            // TODO Do actual checks
+        $this->verifySave(AccountNote::class, function ($model) {
+            $model->accountId = 1;
+            $model->userId = 1;
+            $model->subject = "sample string 3";
+            $model->status = true;
+        }, function ($savedModel) {
+            $this->assertEquals(1, $savedModel->accountId);
+            $this->assertEquals(1, $savedModel->userId);
+            $this->assertEquals('sample string 3', $savedModel->subject);
+            $this->assertEquals(true, $savedModel->status);
         });
     }
 

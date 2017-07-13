@@ -260,7 +260,7 @@ Models marked with an asterix are pure CRUD models
     - [x] Account Category *
     - [x] Account Note *
     - [ ] Account Note Attachment
-    - [ ] Account Opening Balance *
+    - [x] Account Opening Balance *
     - [ ] Account Payment *
     - [ ] Account Receipt *
   - [ ] Analysis Category
