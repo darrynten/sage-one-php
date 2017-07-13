@@ -270,5 +270,4 @@ class AccountPaymentModelTest extends BaseModelTest
             $this->assertEquals(1.0, $savedModel->bankAccount_ExchangeRate);
         });
     }
-
 }
