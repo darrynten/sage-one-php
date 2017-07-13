@@ -279,7 +279,8 @@ class TaxInvoice extends BaseModel
             'readonly' => true
         ],
         /**
-         * TODO Find out what is 'printed', see https://accounting.sageone.co.za/api/1.1.2/Help/Api/POST-AccountReceipt-Save
+         * TODO Find out what is 'printed',
+         * see https://accounting.sageone.co.za/api/1.1.2/Help/Api/POST-AccountReceipt-Save
          * Response has it, but TaxInvoice does not
          */
         'printed' => [

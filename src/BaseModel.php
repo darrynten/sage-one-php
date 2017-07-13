@@ -241,11 +241,13 @@ abstract class BaseModel
      */
     private function getRemoteKey($localKey)
     {
+        $remoteKey = ucfirst($localKey);
+        /**
+         * Very special case
+         * In CommercialDocumentLine (field '$TrackingCode')
+         */ 
         if ($localKey[0] === '$') {
-            // very special case in CommercialDocumentLine (field '$TrackingCode')
             $remoteKey = '$' . ucfirst(mb_substr($localKey, 1));
-        } else {
-            $remoteKey = ucfirst($localKey);
         }
 
         // Unless id - theirs is uppercase ours is lowercase
