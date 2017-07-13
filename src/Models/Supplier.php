@@ -16,6 +16,8 @@ use DarrynTen\SageOne\Models\ModelCollection;
 /**
  * Supplier Model
  *
+ * Details on writable properties
+ * https://accounting.sageone.co.za/api/1.1.2/Help#bookmark_Supplier
  */
 class Supplier extends BaseModel
 {
