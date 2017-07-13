@@ -45,7 +45,7 @@ class SupplierModelTest extends BaseModelTest
 
     public function testInject()
     {
-        $this->verifyInject(Supplier::class, function ($model, $data) {
+        $this->verifyInject(Supplier::class, function ($model) {
             $this->assertEquals($model->id, 33);
             $this->assertEquals($model->name, 'sample string 1');
             $this->assertInstanceOf(SupplierCategory::class, $model->category);
