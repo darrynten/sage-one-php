@@ -64,7 +64,7 @@ class ModelCollection
     public function __construct($class, $config, $results)
     {
         $collectionObject = $results;
-        if(is_array($results)) {
+        if (is_array($results)) {
             $collectionObject = new \StdClass;
             $collectionObject->TotalResults = count($results);
             $collectionObject->ReturnedResults = $collectionObject->TotalResults;
