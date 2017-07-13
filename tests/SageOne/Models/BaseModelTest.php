@@ -172,6 +172,15 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $model = new $class($this->config);
         $className = $this->getClassName($class);
 
+        // Endpoint
+        $reflect = new ReflectionClass($model);
+        $reflectValue = $reflect->getProperty('endpoint');
+        $reflectValue->setAccessible(true);
+        $endpoint = $reflectValue->getValue($model);
+        $this->assertEquals($className, $endpoint,
+            sprintf('Model "%s" should have endpoint "%s" but got "%s"',
+                $className, $className, $endpoint));
+
         // Fields mapping
         $reflect = new ReflectionClass($model);
         $reflectValue = $reflect->getProperty('fields');
@@ -506,10 +515,12 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
      * Verifies that we can save model
      *
      * @param string $class Full path to the class
+     * @param string $responseClass Full path to the class of the response
+     * if null then response is expected to be the same class as $class
      * @param callable $beforeSave Modifies model before saving
      * @param callable $afterSave Verifies model after saving
      */
-    protected function verifySave(string $class, callable $beforeSave, callable $afterSave)
+    protected function verifySave(string $class, callable $beforeSave, callable $afterSave, string $responseClass = null)
     {
         $className = $this->getClassName($class);
         $path = sprintf('%s/Save', $className);
@@ -526,8 +537,14 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $data = json_decode(file_get_contents(__DIR__ . "/../../mocks/" . $mockFileRequest));
         $model->loadResult($data);
 
+        if (is_null($responseClass)) {
+            $responseClass = $class;
+        }
+
         $beforeSave($model);
-        $savedModel = $model->save();
+        $response = $model->save();
+        $savedModel = new $responseClass($this->config);
+        $savedModel->loadResult($response);
         $afterSave($savedModel);
     }
 

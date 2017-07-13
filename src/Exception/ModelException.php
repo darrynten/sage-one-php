@@ -35,6 +35,7 @@ class ModelException extends Exception
     const SETTING_READ_ONLY_PROPERTY = 10114;
     const UNEXPECTED_PREPARE_CLASS = 10115;
     const GETTING_UNDEFINED_PROPERTY = 10116;
+    const COLLECTION_WITHOUT_CLASS = 10117;
 
     /**
      * Custom Model exception handler

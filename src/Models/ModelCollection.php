@@ -91,4 +91,18 @@ class ModelCollection
         $this->returnedResults = $results->ReturnedResults;
         $this->results = $models;
     }
+
+    /**
+     * @var string $class Full path to the class
+     * @var array $config Configuration array
+     * @var array $items
+     */
+    public static function createFromArray(string $class, array $config, array $items)
+    {
+        $result = new \StdClass;
+        $result->TotalResults = count($items);
+        $result->ReturnedResults = $result->TotalResults;
+        $result->Results = $items;
+        return new ModelCollection($class, $config, $result);
+    }
 }

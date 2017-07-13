@@ -215,14 +215,7 @@ abstract class BaseModel
 
         // TODO Submission Body and Validation
         $data = $this->request->request('POST', $this->endpoint, 'Save');
-        /**
-         * we do not need to verify results here because loadResult will throuw exception
-         * in case of invalid body
-         * If we reach this string then we expect that API returned valid body with response code 200
-         * otherwise ApiException was thrown and this line can not be reached
-         */
-        $this->loadResult($data);
-        return $this;
+        return $data;
     }
 
     /**
@@ -248,7 +241,12 @@ abstract class BaseModel
      */
     private function getRemoteKey($localKey)
     {
-        $remoteKey = ucfirst($localKey);
+        if ($localKey[0] === '$') {
+            // very special case in CommercialDocumentLine (field '$TrackingCode')
+            $remoteKey = '$' . ucfirst(mb_substr($localKey, 1));
+        } else {
+            $remoteKey = ucfirst($localKey);
+        }
 
         // Unless id - theirs is uppercase ours is lowercase
         if ($localKey === 'id') {
@@ -340,6 +338,16 @@ abstract class BaseModel
         // If it's a date we return a new DateTime object
         if ($config['type'] === \DateTime::class) {
             return new \DateTime($resultItem);
+        }
+
+        if ($config['type'] === \ModelCollection::class) {
+            $class = $this->getModelWithNamespace($config['class']);
+            if (!class_exists($class)) {
+                $this->throwException(ModelException::COLLECTION_WITHOUT_CLASS, sprintf(
+                    'class "%s"', $class
+                ));
+            }
+            return ModelCollection::createFromArray($class, $this->config, $resultItem);
         }
 
         // If it's null and it's allowed to be null
