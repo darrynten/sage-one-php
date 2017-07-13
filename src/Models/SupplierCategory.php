@@ -62,13 +62,13 @@ class SupplierCategory extends BaseModel
         ],
         'modified' => [
             'type' => 'DateTime',
-            'nullable' => true,
-            'readonly' => true,
+            'nullable' => false,
+            'readonly' => false,
         ],
         'created' => [
             'type' => 'DateTime',
-            'nullable' => true,
-            'readonly' => true,
+            'nullable' => false,
+            'readonly' => false,
         ],
     ];
 
@@ -82,7 +82,7 @@ class SupplierCategory extends BaseModel
     protected $features = [
         'all' => true,
         'get' => true,
-        'save' => false,
+        'save' => true,
         'delete' => false,
     ];
 }
