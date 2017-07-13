@@ -14,10 +14,10 @@ namespace DarrynTen\SageOne\Models;
 use DarrynTen\SageOne\BaseModel;
 
 /**
- * Account Category
+ * Supplier Category
  *
  * Details on writable properties for Account:
- * hhttps://accounting.sageone.co.za/api/1.1.2/#bookmark_Supplier
+ * hhttps://accounting.sageone.co.za/api/1.1.2/#bookmark_SupplierCategory
  */
 class SupplierCategory extends BaseModel
 {
