@@ -21,14 +21,13 @@ class Supplier extends BaseModel
 {
     /**
      * The API Endpoint
+     *
      * @var string $endpoint
      */
     protected $endpoint = 'Supplier';
 
     /**
      * Defines all possible fields.
-     *
-     * This maps to all the public properties you added above
      *
      * @var array $fields
      */
