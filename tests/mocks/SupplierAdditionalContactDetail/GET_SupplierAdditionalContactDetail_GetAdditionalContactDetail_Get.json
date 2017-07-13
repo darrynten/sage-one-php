@@ -1,0 +1,22 @@
+[
+  {
+    "ID": 1,
+    "SupplierId": 2,
+    "ContactName": "sample string 3",
+    "Designation": "sample string 4",
+    "Telephone": "sample string 5",
+    "Fax": "sample string 6",
+    "Mobile": "sample string 7",
+    "Email": "sample string 8"
+  },
+  {
+    "ID": 1,
+    "SupplierId": 2,
+    "ContactName": "sample string 3",
+    "Designation": "sample string 4",
+    "Telephone": "sample string 5",
+    "Fax": "sample string 6",
+    "Mobile": "sample string 7",
+    "Email": "sample string 8"
+  }
+]
