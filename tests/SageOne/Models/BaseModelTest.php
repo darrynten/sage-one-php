@@ -198,6 +198,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
             $this->verifyRequiredAttribute($className, $name, $options, $value);
             $this->verifyRegexAttribute($className, $name, $options, $value);
             $this->verifyDefaultAttribute($className, $name, $options, $value);
+            $this->verifyCollectionAttribute($className, $name, $options, $value);
         }
     }
 
@@ -212,7 +213,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     {
         $validKeys = array_fill_keys([
             'type', 'nullable', 'readonly', 'default',
-            'required', 'min', 'max', 'regex'
+            'required', 'min', 'max', 'regex', 'class'
         ], true);
         foreach (array_keys($options) as $option) {
             if (!isset($validKeys[$option])) {
@@ -403,6 +404,36 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
                 sprintf('Model %s "default" for %s is not present', $className, $name)
             );
             $this->assertEquals($options['default'], $value[$name]['default']);
+        }
+    }
+
+    /**
+     * Verifies that field $name has valid class attribute (if type=ModelCollection)
+     *
+     * @param string $className name of the class under checking
+     * @param string $name name of the attribute
+     * @param array $options what we check
+     *      Contains data in the following format
+     *      [
+     *          'class' => 'SomeClassForCollection'
+     *      ]
+     * @param array $value actual field attributes under check
+     *      has the same format as $options
+     */
+    private function verifyCollectionAttribute($className, $name, $options, $value)
+    {
+        if (array_key_exists('class', $options)) {
+            $this->assertTrue(
+                array_key_exists('class', $value[$name]),
+                sprintf('Model %s "class" for %s is not present', $className, $name)
+            );
+            $this->assertEquals($options['type'], 'ModelCollection');
+            $this->assertEquals($options['class'], $value[$name]['class']);
+            $fullPathToClass = sprintf('DarrynTen\SageOne\Models\%s', $options['class']);
+            $this->assertTrue(class_exists($fullPathToClass), sprintf(
+                'Model "%s" property "%s" class "%s" does not exist',
+                $className, $name, $fullPathToClass
+            ));
         }
     }
 

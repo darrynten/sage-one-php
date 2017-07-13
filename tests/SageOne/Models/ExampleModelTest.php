@@ -279,7 +279,7 @@ class ExampleModelTest extends BaseModelTest
         $reflectValue->setAccessible(true);
         $value = $reflectValue->getValue(new Example($this->config));
 
-        $this->assertCount(9, $value);
+        $this->assertCount(10, $value);
         $this->assertEquals('integer', $value['id']['type']);
         $this->assertEquals('boolean', gettype($value['exampleWithCamel']['nullable']));
         $this->assertEquals(true, is_array($value['exampleWithCamel']));
@@ -390,6 +390,8 @@ class ExampleModelTest extends BaseModelTest
         $this->assertEquals($exampleModel->modified->getTimezone()->getName(), 'UTC');
         $this->assertEquals($exampleModel->category->format('Y-m-d'), '2017-06-30');
         $this->assertEquals($exampleModel->type->modified->format('Y-m-d'), '2017-06-30');
+
+        $this->assertInstanceOf(ExampleCategory::class, $exampleModel->someCollection->results[0]);
 
         // You must made tests for each of the CRUD calls in use
         // and split each one into its own test method. Do not put

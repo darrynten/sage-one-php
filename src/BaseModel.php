@@ -288,6 +288,20 @@ abstract class BaseModel
             return $value->format('Y-m-d');
         }
 
+        if ($config['type'] === 'ModelCollection') {
+            $class = $this->getModelWithNamespace($config['class']);
+            if (!class_exists($class)) {
+                $this->throwException(ModelException::COLLECTION_WITHOUT_CLASS, sprintf(
+                    'Class "%s" for collection does not exist', $class
+                ));
+            }
+            $rows = [];
+            foreach ($value->results as $result) {
+                $rows[] = $result->toObject();
+            }
+            return $rows;
+        }
+
         // At this stage we would be dealing with a related Model
         $class = $this->getModelWithNamespace($config['type']);
 
