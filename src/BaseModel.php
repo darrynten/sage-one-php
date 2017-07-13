@@ -245,7 +245,7 @@ abstract class BaseModel
         /**
          * Very special case
          * In CommercialDocumentLine (field '$TrackingCode')
-         */ 
+         */
         if ($localKey[0] === '$') {
             $remoteKey = '$' . ucfirst(mb_substr($localKey, 1));
         }
