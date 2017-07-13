@@ -270,12 +270,12 @@ Models marked with an asterix are pure CRUD models
     - [ ] Company Note
   - [x] Currency *
   - [ ] Exchange Rates
-  - [ ] Supplier *
+  - [x] Supplier *
     - [ ] Supplier Additional Contact Detail
     - [ ] Supplier Adjustment
     - [ ] Supplier Ageing
     - [ ] Supplier Bank Detail *
-    - [ ] Supplier Category *
+    - [x] Supplier Category *
     - [ ] Supplier Invoice
     - [ ] Supplier Invoice Attachment
     - [ ] Supplier Note *
@@ -462,3 +462,4 @@ if you have any ideas.
 * [Dmitry Semenov](https://github.com/mxnr)
 * [Karolin Gaedeke](https://github.com/KaroZA)
 * [Vitaliy Likhachev](https://github.com/make-it-git)
+* [Igor Sergiichuk](https://github.com/igorsergiichuk)
