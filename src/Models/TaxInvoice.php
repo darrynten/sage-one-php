@@ -36,58 +36,58 @@ class TaxInvoice extends BaseModel
             'type' => 'DateTime',
             'nullable' => false,
             'readonly' => false,
-            'required' => true
+            'required' => true,
         ],
         'fromDocument' => [
             'type' => 'string',
             'nullable' => false,
-            'readonly' => false
+            'readonly' => false,
         ],
         'fromDocumentId' => [
             'type' => 'integer',
             'nullable' => true,
-            'readonly' => true
+            'readonly' => true,
         ],
         'fromDocumentTypeId' => [
             'type' => 'integer',
             'nullable' => true,
-            'readonly' => true
+            'readonly' => true,
         ],
         'allowOnlinePayment' => [
             'type' => 'boolean',
             'nullable' => true,
-            'readonly' => false
+            'readonly' => false,
         ],
         'paid' => [
             'type' => 'boolean',
             'nullable' => true,
-            'readonly' => true
+            'readonly' => true,
         ],
         'status' => [
             'type' => 'string',
             'nullable' => false,
-            'readonly' => true
+            'readonly' => true,
         ],
         'locked' => [
             'type' => 'boolean',
             'nullable' => false,
-            'readonly' => true
+            'readonly' => true,
         ],
         'customerId' => [
             'type' => 'integer',
             'nullable' => false,
             'readonly' => false,
-            'required' => true
+            'required' => true,
         ],
         'customerName' => [
             'type' => 'string',
             'nullable' => false,
-            'readonly' => false
+            'readonly' => false,
         ],
         'customer' => [
             'type' => 'Customer',
             'nullable' => false,
-            'readonly' => false
+            'readonly' => false,
         ],
         'salesRepresentativeId' => [
             'type' => 'integer',
@@ -117,23 +117,23 @@ class TaxInvoice extends BaseModel
         'customer_CurrencyId' => [
             'type' => 'integer',
             'nullable' => true,
-            'readonly' => false
+            'readonly' => false,
         ],
         'customer_ExchangeRate' => [
             'type' => 'double',
             'nullable' => true,
-            'readonly' => false
+            'readonly' => false,
         ],
         'id' => [
             'type' => 'integer',
             'nullable' => false,
-            'readonly' => false
+            'readonly' => false,
         ],
         'date' => [
             'type' => 'DateTime',
             'nullable' => false,
             'readonly' => false,
-            'required' => true
+            'required' => true,
         ],
         'inclusive' => [
             'type' => 'boolean',
@@ -271,12 +271,12 @@ class TaxInvoice extends BaseModel
             'nullable' => false,
             'readonly' => false,
             'min' => 0,
-            'max' => 100
+            'max' => 100,
         ],
         'taxPeriodId' => [
             'type' => 'integer',
             'nullable' => true,
-            'readonly' => true
+            'readonly' => true,
         ],
         /**
          * TODO Find out what is 'printed',
@@ -286,45 +286,45 @@ class TaxInvoice extends BaseModel
         'printed' => [
             'type' => 'boolean',
             'nullable' => false,
-            'readonly' => false
+            'readonly' => false,
         ],
         'editable' => [
             'type' => 'boolean',
             'nullable' => false,
-            'readonly' => true
+            'readonly' => true,
         ],
         'hasAttachments' => [
             'type' => 'boolean',
             'nullable' => false,
-            'readonly' => true
+            'readonly' => true,
         ],
         'hasNotes' => [
             'type' => 'boolean',
             'nullable' => true,
-            'readonly' => true
+            'readonly' => true,
         ],
         'hasAnticipatedDate' => [
             'type' => 'boolean',
             'nullable' => true,
-            'readonly' => true
+            'readonly' => true,
         ],
         'anticipatedDate' => [
             'type' => 'DateTime',
             'nullable' => true,
-            'readonly' => true
+            'readonly' => true,
         ],
         'externalReference' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
             'min' => 0,
-            'max' => 100
+            'max' => 100,
         ],
         'lines' => [
             'type' => 'ModelCollection',
             'class' => 'CommercialDocumentLine',
             'nullable' => false,
-            'readonly' => false
+            'readonly' => false,
         ]
     ];
 

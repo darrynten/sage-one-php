@@ -59,35 +59,35 @@ class Customer extends BaseModel
             'nullable' => false,
             'readonly' => false,
             'min' => 0,
-            'max' => 30
+            'max' => 30,
         ],
         'contactName' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
             'min' => 0,
-            'max' => 100
+            'max' => 100,
         ],
         'telephone' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
             'min' => 0,
-            'max' => 30
+            'max' => 30,
         ],
         'fax' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
             'min' => 0,
-            'max' => 30
+            'max' => 30,
         ],
         'mobile' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
             'min' => 0,
-            'max' => 30
+            'max' => 30,
         ],
         'email' => [
             'type' => 'string',
@@ -99,7 +99,7 @@ class Customer extends BaseModel
             'nullable' => false,
             'readonly' => false,
             'min' => 0,
-            'max' => 100
+            'max' => 100,
         ],
         'active' => [
             'type' => 'boolean',
@@ -114,84 +114,84 @@ class Customer extends BaseModel
         'creditLimit' => [
             'type' => 'double',
             'nullable' => false,
-            'readonly' => false
+            'readonly' => false,
         ],
         'communicationMethod' => [
             'type' => 'integer',
             'nullable' => true,
             'readonly' => false,
             'min' => 0,
-            'max' => 3
+            'max' => 3,
         ],
         'postalAddress01' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
             'min' => 0,
-            'max' => 100
+            'max' => 100,
         ],
         'postalAddress02' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
             'min' => 0,
-            'max' => 100
+            'max' => 100,
         ],
         'postalAddress03' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
             'min' => 0,
-            'max' => 100
+            'max' => 100,
         ],
         'postalAddress04' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
             'min' => 0,
-            'max' => 100
+            'max' => 100,
         ],
         'postalAddress05' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
             'min' => 0,
-            'max' => 100
+            'max' => 100,
         ],
         'deliveryAddress01' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
             'min' => 0,
-            'max' => 100
+            'max' => 100,
         ],
         'deliveryAddress02' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
             'min' => 0,
-            'max' => 100
+            'max' => 100,
         ],
         'deliveryAddress03' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
             'min' => 0,
-            'max' => 100
+            'max' => 100,
         ],
         'deliveryAddress04' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
             'min' => 0,
-            'max' => 100
+            'max' => 100,
         ],
         'deliveryAddress05' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
             'min' => 0,
-            'max' => 100
+            'max' => 100,
         ],
         'autoAllocateToOldestInvoice' => [
             'type' => 'boolean',
@@ -218,21 +218,21 @@ class Customer extends BaseModel
             'nullable' => false,
             'readonly' => false,
             'min' => 0,
-            'max' => 100
+            'max' => 100,
         ],
         'textField2' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
             'min' => 0,
-            'max' => 100
+            'max' => 100,
         ],
         'textField3' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
             'min' => 0,
-            'max' => 100
+            'max' => 100,
         ],
         'numericField1' => [
             'type' => 'double',
