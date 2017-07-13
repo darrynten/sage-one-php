@@ -246,8 +246,8 @@ abstract class BaseModel
          * Very special case
          * In CommercialDocumentLine (field '$TrackingCode')
          */
-        if ($localKey[0] === '$') {
-            $remoteKey = '$' . ucfirst(mb_substr($localKey, 1));
+        if ($remoteKey[0] === '$') {
+            $remoteKey[1] = strtoupper($remoteKey[1]);
         }
 
         // Unless id - theirs is uppercase ours is lowercase
@@ -291,17 +291,7 @@ abstract class BaseModel
         }
 
         if ($config['type'] === 'ModelCollection') {
-            $class = $this->getModelWithNamespace($config['class']);
-            if (!class_exists($class)) {
-                $this->throwException(ModelException::COLLECTION_WITHOUT_CLASS, sprintf(
-                    'Class "%s" for collection does not exist', $class
-                ));
-            }
-            $rows = [];
-            foreach ($value->results as $result) {
-                $rows[] = $result->toObject();
-            }
-            return $rows;
+            return $this->prepareModelCollection($config, $value);
         }
 
         // At this stage we would be dealing with a related Model
@@ -317,6 +307,26 @@ abstract class BaseModel
 
         // And finally return an Object representation of the related Model
         return $value->toObject();
+    }
+
+    /**
+     * Turns the model collection into an array of models
+     *
+     * @return array
+     */
+    private function prepareModelCollection(array $config, ModelCollection $value)
+    {
+        $class = $this->getModelWithNamespace($config['class']);
+        if (!class_exists($class)) {
+            $this->throwException(ModelException::COLLECTION_WITHOUT_CLASS, sprintf(
+                'Class "%s" for collection does not exist', $class
+            ));
+        }
+        $rows = [];
+        foreach ($value->results as $result) {
+            $rows[] = $result->toObject();
+        }
+        return $rows;
     }
 
     /**
@@ -363,7 +373,7 @@ abstract class BaseModel
                     'class "%s"', $class
                 ));
             }
-            return ModelCollection::createFromArray($class, $this->config, $resultItem);
+            return new ModelCollection($class, $this->config, $resultItem);
         }
 
         // If it's null and it's allowed to be null
