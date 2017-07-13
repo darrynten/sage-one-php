@@ -45,7 +45,6 @@ class SupplierCategory extends BaseModel
      * Details on writable properties for Account:
      * https://accounting.sageone.co.za/api/1.1.2/#bookmark_Supplier
      *
-     *
      * @var array $fields
      */
     protected $fields = [
