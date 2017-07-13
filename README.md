@@ -106,6 +106,14 @@ a basic model.
 
 As such we only need to focus on the tricky bits.
 
+# NB the project is evolving quickly
+
+## This might be outdared
+
+### If it is and you fix it please update this document
+
+#### The best place to look is the example model
+
 ### Basic model template
 
 [Account Example Docs](https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=Account)
@@ -129,27 +137,6 @@ required)
  * The name of the class is the `modelName=` value from the URL
  */
 class Account extends BaseModel
-{
-    /**
-     * Properties from the table, public
-     *
-     * We lowercase the first letter but leave the rest
-     */
-    public $id;
-    public $name;
-    public $reportingGroupId;
-
-    // If something is read only we mark it in the docblock:
-    /**
-     * Balance
-     *
-     * READ ONLY (these become protected)
-     *
-     * @var double $balance
-     */
-    protected $balance;
-
-    // rest of properties...
 
     // The name of the endpoint (same as filename), protected
     protected $endpoint = 'Account';
@@ -161,7 +148,7 @@ class Account extends BaseModel
      * validation, etc
      *
      * All must include a type, whether or not it's nullable, and whether or
-     * not it's readonly.
+     * not it's readonly, or default, required, min, max, or regex
      *
      * - nullable is `true` if the word 'nullable' is in the 'type' column
      * - readonly is `true` if the word 'Read-Only/System Generated' is in the Additional Info column otherwise it is `false`
@@ -171,6 +158,9 @@ class Account extends BaseModel
      *   - Multiword linked terms are concatenated, eg:
      *     - "Account Category" becomes "AccountCategory"
      *     - "Tax Type" becomes "TaxType"
+     *   - `min` / `max` always come together
+     *   - `default` is when it's indicated in the docs
+     *   - `regex` is generally used with email address fields
      *
      * Details on writable properties for Account:
      * https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=Account
@@ -186,16 +176,20 @@ class Account extends BaseModel
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
+            'required' => true,
         ],
         'category' => [
             'type' => 'AccountCategory',
             'nullable' => false,
             'readonly' => false,
+            'min' => 0,
+            'max' => 100,
         ],
         'reportingGroupId' => [
             'type' => 'integer',
             'nullable' => true,
             'readonly' => false,
+            'regex' => '/someregex/',
         ],
         'isTaxLocked' => [
             'type' => 'boolean',
@@ -242,6 +236,10 @@ Following that template will very quickly create models for the project.
 
 There is *also* an example test (ExampleModelTest.php) and an example mock
 folder to help you get going quickly.
+
+A lot of the heavy testing is handled by the BaseModelTest class, and you
+can look into the Example test for insight into the convention. It makes
+testing and getting good defensive coverage quite trivial for most things.
 
 # NB initial delivery consists of only these models:
 
