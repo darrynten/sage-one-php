@@ -70,7 +70,7 @@ class AdditionalPriceListModelTest extends BaseModelTest
 
     public function testGetId()
     {
-        $this->verifyGetId(AdditionalPriceList::class, 1, function($model) {
+        $this->verifyGetId(AdditionalPriceList::class, 1, function ($model) {
             $this->assertInstanceOf(AdditionalPriceList::class, $model);
             $this->assertEquals(1, $model->id);
             $this->assertEquals('sample string 2', $model->description);
