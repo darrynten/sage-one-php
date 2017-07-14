@@ -64,7 +64,7 @@ abstract class BaseModel
      *
      * @var array $fieldsData
      */
-    private $fieldsData = [];
+    protected $fieldsData = [];
 
     /**
      * Make a new model
@@ -312,6 +312,8 @@ abstract class BaseModel
     /**
      * Turns the model collection into an array of models
      *
+     * @param array $config The config for the model
+     * @param ModelCollection $value Collection which is converted into array
      * @return array
      */
     private function prepareModelCollection(array $config, ModelCollection $value)
