@@ -307,7 +307,7 @@ Please feel free to open PRs for any of the following :)
 - [ ] Accountant Task
 - [ ] Accountant Task Recurrence
 - [ ] Additional Item Price
-- [ ] Additional Price List
+- [x] Additional Price List
 - [ ] Allocation
 - [ ] Asset
 - [ ] Asset Category
