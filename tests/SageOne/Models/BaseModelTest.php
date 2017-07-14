@@ -85,6 +85,26 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Verifies that when we try to set readonly property it throws expected exception
+     *
+     * @param string $class Full path to the class
+     * @param string $field Read only property
+     */
+    protected function verifySetReadOnly(string $class, string $field)
+    {
+        $className = $this->getClassName($class);
+
+        $this->expectException(ModelException::class);
+        $this->expectExceptionMessage(
+            sprintf('Model "%s" key %s value %s Attempting to set a read-only property',
+            $className, $field, 'some value'));
+        $this->expectExceptionCode(10114);
+
+        $model = new $class($this->config);
+        $model->{$field} = 'some value';
+    }
+
+    /**
      * Verifies that when we try to get undefined property it throws expected exception
      *
      * @param string $class Full path to the class
