@@ -179,6 +179,62 @@ class AccountReceiptModelTest extends BaseModelTest
     public function testGetAll()
     {
         $this->verifyGetAll(AccountReceipt::class, function ($results) {
+            $this->assertCount(2, $results);
+
+            $this->assertEquals(1, $results[0]->id);
+            $this->assertEquals(2, $results[0]->accountId);
+            $this->assertEquals('2017-07-13', $results[0]->date->format('Y-m-d'));
+            $this->assertEquals('sample string 4', $results[0]->payee);
+            $this->assertEquals('sample string 5', $results[0]->description);
+            $this->assertEquals('sample string 6', $results[0]->reference);
+            $this->assertEquals(7, $results[0]->taxTypeId);
+            $this->assertEquals('sample string 8', $results[0]->comments);
+            $this->assertEquals(9.0, $results[0]->exclusive);
+            $this->assertEquals(10.0, $results[0]->tax);
+            $this->assertEquals(11.0, $results[0]->total);
+            $this->assertEquals(true, $results[0]->reconciled);
+            $this->assertEquals(13, $results[0]->bankAccountId);
+            $this->assertEquals(1, $results[0]->analysisCategoryId1);
+            $this->assertEquals(1, $results[0]->analysisCategoryId2);
+            $this->assertEquals(1, $results[0]->analysisCategoryId3);
+            $this->assertEquals(1, $results[0]->parentId);
+            $this->assertEquals(true, $results[0]->accepted);
+            $this->assertEquals('sample string 15', $results[0]->bankUniqueIdentifier);
+            $this->assertEquals(1, $results[0]->importTypeId);
+            $this->assertEquals(1, $results[0]->bankImportMappingId);
+            $this->assertEquals(1, $results[0]->bankAccount_CurrencyId);
+            $this->assertEquals(1.0, $results[0]->bankAccount_ExchangeRate);
+            $this->assertEquals('2017-07-13', $results[0]->modified->format('Y-m-d'));
+            $this->assertEquals('2017-07-13', $results[0]->created->format('Y-m-d'));
+
+            $this->assertEquals(1, $results[0]->id);
+            $this->assertEquals(2, $results[0]->accountId);
+            $this->assertEquals('2017-07-13', $results[0]->date->format('Y-m-d'));
+            $this->assertEquals('sample string 4', $results[0]->payee);
+            $this->assertEquals('sample string 5', $results[0]->description);
+            $this->assertEquals('sample string 6', $results[0]->reference);
+            $this->assertEquals(7, $results[0]->taxTypeId);
+            $this->assertEquals('sample string 8', $results[0]->comments);
+            $this->assertEquals(9.0, $results[0]->exclusive);
+            $this->assertEquals(10.0, $results[0]->tax);
+            $this->assertEquals(11.0, $results[0]->total);
+            $this->assertEquals(true, $results[0]->reconciled);
+            $this->assertEquals(13, $results[0]->bankAccountId);
+            $this->assertEquals(1, $results[0]->analysisCategoryId1);
+            $this->assertEquals(1, $results[0]->analysisCategoryId2);
+            $this->assertEquals(1, $results[0]->analysisCategoryId3);
+            $this->assertEquals(1, $results[0]->parentId);
+            $this->assertEquals(true, $results[0]->accepted);
+            $this->assertEquals('sample string 15', $results[0]->bankUniqueIdentifier);
+            $this->assertEquals(1, $results[0]->importTypeId);
+            $this->assertEquals(1, $results[0]->bankImportMappingId);
+            $this->assertEquals(1, $results[0]->bankAccount_CurrencyId);
+            $this->assertEquals(1.0, $results[0]->bankAccount_ExchangeRate);
+            $this->assertEquals('2017-07-13', $results[0]->modified->format('Y-m-d'));
+            $this->assertEquals('2017-07-13', $results[0]->created->format('Y-m-d'));
+
+            $this->assertCount(25, json_decode($results[0]->toJson(), true));
+            $this->assertCount(25, json_decode($results[1]->toJson(), true));
         });
     }
 

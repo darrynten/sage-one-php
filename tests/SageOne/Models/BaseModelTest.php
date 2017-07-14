@@ -177,9 +177,13 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $reflectValue = $reflect->getProperty('endpoint');
         $reflectValue->setAccessible(true);
         $endpoint = $reflectValue->getValue($model);
-        $this->assertEquals($className, $endpoint,
+        $this->assertEquals(
+            $className, $endpoint,
             sprintf('Model "%s" should have endpoint "%s" but got "%s"',
-                $className, $className, $endpoint));
+                $className,
+                $className,
+                $endpoint)
+        );
 
         // Fields mapping
         $reflect = new ReflectionClass($model);
