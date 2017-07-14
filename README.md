@@ -336,7 +336,7 @@ Please feel free to open PRs for any of the following :)
 - [ ] Customer Additional Contact Detail
 - [ ] Customer Adjustment
 - [ ] Customer Ageing
-- [ ] Customer Category
+- [x] Customer Category
 - [ ] Customer Note
 - [ ] Customer Note Attachment
 - [ ] Customer Opening Balance
