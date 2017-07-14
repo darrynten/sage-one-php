@@ -35,19 +35,19 @@ class AdditionalPriceList extends BaseModel
         'id' => [
             'type' => 'integer',
             'nullable' => false,
-            'readonly' => false
+            'readonly' => false,
         ],
         'description' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
             'min' => 0,
-            'max' => 100
+            'max' => 100,
         ],
         'isDefault' => [
             'type' => 'boolean',
             'nullable' => false,
-            'readonly' => false
+            'readonly' => false,
         ],
     ];
 
@@ -60,4 +60,26 @@ class AdditionalPriceList extends BaseModel
         'save' => true,
         'delete' => true
     ];
+
+    /**
+     * Confirms if Additional Price List is in use by an Additional Item Price or a Customer.
+     *
+     * @return bool
+     */
+    public function allowDelete()
+    {
+        return $this->request->request('POST', $this->endpoint, 'AllowDelete');
+    }
+
+    /**
+     * Gets a list of Additional Price Lists based on the list of identifiers.
+     *
+     * @param array $ids The list of identifiers
+     * @return ModelCollection
+     */
+    public function getListsById(array $ids)
+    {
+        $response = $this->request->request('POST', $this->endpoint, 'Get', $ids);
+        return new ModelCollection(AdditionalPriceList::class, $this->config, $response);
+    }
 }
