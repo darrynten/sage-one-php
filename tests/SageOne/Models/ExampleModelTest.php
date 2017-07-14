@@ -279,7 +279,7 @@ class ExampleModelTest extends BaseModelTest
         $reflectValue->setAccessible(true);
         $value = $reflectValue->getValue(new Example($this->config));
 
-        $this->assertCount(9, $value);
+        $this->assertCount(10, $value);
         $this->assertEquals('integer', $value['id']['type']);
         $this->assertEquals('boolean', gettype($value['exampleWithCamel']['nullable']));
         $this->assertEquals(true, is_array($value['exampleWithCamel']));
@@ -391,6 +391,8 @@ class ExampleModelTest extends BaseModelTest
         $this->assertEquals($exampleModel->category->format('Y-m-d'), '2017-06-30');
         $this->assertEquals($exampleModel->type->modified->format('Y-m-d'), '2017-06-30');
 
+        $this->assertInstanceOf(ExampleCategory::class, $exampleModel->someCollection->results[0]);
+
         // You must made tests for each of the CRUD calls in use
         // and split each one into its own test method. Do not put
         // all tests in a single method
@@ -486,5 +488,97 @@ class ExampleModelTest extends BaseModelTest
             'OK',
             $result
         );
+    }
+
+    public function testCollectionWithoutClass()
+    {
+        $this->expectException(ModelException::class);
+        $this->expectExceptionMessage('Model "Example" class "DarrynTen\SageOne\Models\InvalidClass" ModelCollection is referencing ad undefined, non-primitive class');
+        $this->expectExceptionCode(10117);
+
+        $exampleModel = new Example($this->config);
+        $exampleBadFields = [
+            'someCollection' => [
+                'type' => 'InvalidClass',
+                'nullable' => false,
+                'readonly' => false,
+                'collection' => true
+            ],
+        ];
+
+        $reflection = new ReflectionClass($exampleModel);
+        $reflectedModel = $reflection->getProperty('fields');
+        $reflectedModel->setAccessible(true);
+        $reflectedModel->setValue($exampleModel, $exampleBadFields);
+
+        $data = json_decode(file_get_contents(__DIR__ . '/../../mocks/Example/GET_Example_Get_xx.json'));
+        $exampleModel->loadResult($data);
+    }
+
+    public function testAttributes()
+    {
+        $this->verifyAttributes(Example::class, [
+            'id' => [
+                'type' => 'integer',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'exampleWithCamel' => [
+                'type' => 'string',
+                'nullable' => true,
+                'readonly' => true,
+            ],
+            'stringRange' => [
+                'type' => 'string',
+                'nullable' => true,
+                'readonly' => false,
+                'min' => 2,
+                'max' => 10,
+            ],
+            'stringWithDefault' => [
+                'type' => 'string',
+                'nullable' => true,
+                'readonly' => false,
+                'default' => 'some default value',
+            ],
+            'stringWithNullDefault' => [
+                'type' => 'string',
+                'nullable' => true,
+                'readonly' => false,
+                'default' => null
+            ],
+            'integerRange' => [
+                'type' => 'integer',
+                'nullable' => false,
+                'readonly' => false,
+                'min' => 1,
+                'max' => 2147483647,
+            ],
+            'someBoolean' => [
+                'type' => 'boolean',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'requiredString' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+                'required' => true,
+            ],
+            'emailAddress' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+                'min' => 0,
+                'max' => 100,
+                'regex' => "/^[A-Za-z0-9,!#\$%&'\*\+\/=\?\^_`\{\|}~-]+(\.[A-Za-z0-9,!#\$%&'\*\+\/=\?\^_`\{\|}~-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.([A-Za-z]{2,})$/"
+            ],
+            'someCollection' => [
+                'type' => 'ExampleCategory',
+                'collection' => true,
+                'nullable' => false,
+                'readonly' => false
+            ]
+        ]);
     }
 }

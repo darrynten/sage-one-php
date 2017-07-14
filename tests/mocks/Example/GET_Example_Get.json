@@ -11,7 +11,17 @@
         "EmailAddress": "user@example.com",
         "StringWithDefault": "default string changed",
         "StringWithNullDefault": "another string",
-        "SomeBoolean": true
+        "SomeBoolean": true,
+        "SomeCollection": [
+            {
+                "ID": 1,
+                "Name": "category 1"
+            },
+            {
+                "ID": 2,
+                "Name": "category 2"
+            }
+        ]
     },
     {
         "ID": 2,
@@ -22,7 +32,9 @@
         "EmailAddress": "user2@example.com",
         "StringWithDefault": "default string changed 2",
         "StringWithNullDefault": null,
-        "SomeBoolean": false
+        "SomeBoolean": false,
+        "SomeCollection": [
+        ]
     }
   ]
 }
