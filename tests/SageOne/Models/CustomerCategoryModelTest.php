@@ -100,5 +100,4 @@ class CustomerCategoryModelTest extends BaseModelTest
             // TODO actual checks
         });
     }
-
 }
