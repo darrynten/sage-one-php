@@ -57,23 +57,33 @@ class ModelCollection
     /**
      * @var string $class Full path to the class
      * @var array $config Configuration array
-     * @var stdClass $results object in format of pagination response from SageOne
+     * @var stdClass|array $results
+     * object in format of pagination response from SageOne (stdClass)
+     * or array of models (it's converted into required format)
      */
-    public function __construct($class, $config, \stdClass $results)
+    public function __construct($class, $config, $results)
     {
-        if (!property_exists($results, 'TotalResults')) {
+        $collectionObject = $results;
+        if (is_array($results)) {
+            $collectionObject = new \StdClass;
+            $collectionObject->TotalResults = count($results);
+            $collectionObject->ReturnedResults = $collectionObject->TotalResults;
+            $collectionObject->Results = $results;
+        }
+
+        if (!property_exists($collectionObject, 'TotalResults')) {
             throw new ModelCollectionException(
                 ModelCollectionException::MISSING_REQUIRED_PROPERTY,
                 'TotalResults'
             );
         }
-        if (!property_exists($results, 'ReturnedResults')) {
+        if (!property_exists($collectionObject, 'ReturnedResults')) {
             throw new ModelCollectionException(
                 ModelCollectionException::MISSING_REQUIRED_PROPERTY,
                 'ReturnedResults'
             );
         }
-        if (!property_exists($results, 'Results')) {
+        if (!property_exists($collectionObject, 'Results')) {
             throw new ModelCollectionException(
                 ModelCollectionException::MISSING_REQUIRED_PROPERTY,
                 'Results'
@@ -81,14 +91,14 @@ class ModelCollection
         }
 
         $models = [];
-        foreach ($results->Results as $result) {
+        foreach ($collectionObject->Results as $result) {
             $model = new $class($config);
             $model->loadResult($result);
             $models[] = $model;
         }
 
-        $this->totalResults = $results->TotalResults;
-        $this->returnedResults = $results->ReturnedResults;
+        $this->totalResults = $collectionObject->TotalResults;
+        $this->returnedResults = $collectionObject->ReturnedResults;
         $this->results = $models;
     }
 }
