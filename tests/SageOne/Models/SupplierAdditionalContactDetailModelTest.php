@@ -183,8 +183,8 @@ class SupplierAdditionalContactDetailModelTest extends BaseModelTest
             $model->fax = 'sample string 6';
             $model->mobile = 'sample string 7';
             $model->email = 'sample string 8';
-
-        }, function ($savedModel) {
+        },
+        function ($savedModel) {
             $this->assertEquals($savedModel->id, 1);
             $this->assertEquals($savedModel->supplierId, 2);
             $this->assertEquals($savedModel->designation, 'sample string 4');
