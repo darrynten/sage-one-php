@@ -321,7 +321,8 @@ abstract class BaseModel
         $class = $this->getModelWithNamespace($config['type']);
         if (!class_exists($class)) {
             $this->throwException(ModelException::COLLECTION_WITHOUT_CLASS, sprintf(
-                'Class "%s" for collection does not exist', $class
+                'Class "%s" for collection does not exist',
+                $class
             ));
         }
         $rows = [];
@@ -372,7 +373,8 @@ abstract class BaseModel
             $class = $this->getModelWithNamespace($config['type']);
             if (!class_exists($class)) {
                 $this->throwException(ModelException::COLLECTION_WITHOUT_CLASS, sprintf(
-                    'class "%s"', $class
+                    'class "%s"',
+                    $class
                 ));
             }
             return new ModelCollection($class, $this->config, $resultItem);
