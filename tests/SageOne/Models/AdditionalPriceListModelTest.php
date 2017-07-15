@@ -106,7 +106,7 @@ class AdditionalPriceListModelTest extends BaseModelTest
         $model = $this->setUpRequestMock(
             'POST',
             AdditionalPriceList::class,
-            'AllowDelete',
+            'AdditionalPriceList/AllowDelete',
             'AdditionalPriceList/POST_AdditionalPriceList_AllowDelete_RESP.json',
             'AdditionalPriceList/POST_AdditionalPriceList_AllowDelete_REQ.json'
         );
@@ -119,7 +119,7 @@ class AdditionalPriceListModelTest extends BaseModelTest
         $model = $this->setUpRequestMock(
             'POST',
             AdditionalPriceList::class,
-            'Get',
+            'AdditionalPriceList/Get',
             'AdditionalPriceList/POST_AdditionalPriceList_Get_RESP.json',
             'AdditionalPriceList/POST_AdditionalPriceList_Get_REQ.json'
         );
