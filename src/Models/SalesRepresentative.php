@@ -35,7 +35,7 @@ class SalesRepresentative extends BaseModel
         'id' => [
             'type' => 'integer',
             'nullable' => false,
-            'readonly' => false
+            'readonly' => false,
         ],
         'firstName' => [
             'type' => 'string',
@@ -43,7 +43,7 @@ class SalesRepresentative extends BaseModel
             'readonly' => false,
             'required' => true,
             'min' => 0,
-            'max' => 50
+            'max' => 50,
         ],
         'lastName' => [
             'type' => 'string',
@@ -51,47 +51,47 @@ class SalesRepresentative extends BaseModel
             'readonly' => false,
             'required' => true,
             'min' => 0,
-            'max' => 50
+            'max' => 50,
         ],
         'name' => [
             'type' => 'string',
             'nullable' => false,
-            'readonly' => true
+            'readonly' => true,
         ],
         'active' => [
             'type' => 'boolean',
             'nullable' => false,
             'readonly' => false,
-            'required' => true
+            'required' => true,
         ],
         'email' => [
             'type' => 'string',
             'nullable' => false,
-            'readonly' => false
+            'readonly' => false,
         ],
         'mobile' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
             'min' => 0,
-            'max' => 30
+            'max' => 30,
         ],
         'telephone' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
             'min' => 0,
-            'max' => 30
+            'max' => 30,
         ],
         'created' => [
             'type' => 'DateTime',
             'nullable' => false,
-            'readonly' => true
+            'readonly' => true,
         ],
         'modified' => [
             'type' => 'DateTime',
             'nullable' => true,
-            'readonly' => true
+            'readonly' => true,
         ],
     ];
 
@@ -104,4 +104,19 @@ class SalesRepresentative extends BaseModel
         'save' => true,
         'delete' => true
     ];
+
+    /**
+     * Determines whether the specified Sales Representative has activity.
+     *
+     * @param string $id
+     * @return boolean
+     */
+    public function hasActivity($id)
+    {
+        return $this->request->request(
+            'GET',
+            $this->endpoint,
+            sprintf('HasActivity/%s', $id)
+        );
+    }
 }

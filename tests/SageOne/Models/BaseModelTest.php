@@ -837,7 +837,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $localResult = $localClient->request(
             $method,
             '//localhost:8082' . $url,
-            []
+            $requestData
         );
 
         $mockClient = \Mockery::mock(
