@@ -30,12 +30,12 @@ class SupplierAdditionalContactDetailsModelTest extends BaseModelTest
 
     public function testCanNotNullify()
     {
-        $this->verifyCanNotNullify(SupplierAdditionalContactDetail::class, 'contactName');
+        $this->verifyCanNotNullify(SupplierAdditionalContactDetail::class, 'id');
     }
 
     public function testBadImport()
     {
-        $this->verifyBadImport(SupplierAdditionalContactDetail::class, 'contactName');
+        $this->verifyBadImport(SupplierAdditionalContactDetail::class, 'id');
     }
 
     public function testAttributes()
@@ -102,47 +102,42 @@ class SupplierAdditionalContactDetailsModelTest extends BaseModelTest
             $this->assertEquals($model->id, 1);
             $this->assertEquals($model->supplierId, 2);
             $this->assertEquals($model->contactName, 'sample string 3');
-            $this->assertArrayHasKey('min', $model->contactName['stringRange']);
-            $this->assertEquals(0, $model->contactName['stringRange']['min']);
-            $this->assertEquals('integer', gettype($model->contactName['stringRange']['min']));
-            $this->assertArrayHasKey('max', $model->contactName['stringRange']);
-            $this->assertEquals(100, $model->contactName['stringRange']['max']);
-            $this->assertEquals('integer', gettype($model->contactName['stringRange']['max']));
+            $this->assertArrayHasKey('min', $model->contactName['min']);
+            $this->assertEquals(0, $model->contactName['min']);
+            $this->assertEquals('integer', gettype($model->contactName['min']));
+            $this->assertArrayHasKey('max', $model->contactName['max']);
+            $this->assertEquals(100, $model->contactName['max']);
+            $this->assertEquals('integer', gettype($model->contactName['max']));
             $this->assertEquals($model->designation, 'sample string 4');
-            $this->assertArrayHasKey('min', $model->designation['stringRange']);
-            $this->assertEquals(0, $model->designation['stringRange']['min']);
-            $this->assertEquals('integer', gettype($model->designation['stringRange']['min']));
-            $this->assertArrayHasKey('max', $model->designation['stringRange']);
-            $this->assertEquals(50, $model->designation['stringRange']['max']);
-            $this->assertEquals('integer', gettype($model->designation['stringRange']['max']));
+            $this->assertArrayHasKey('min', $model->designation['min']);
+            $this->assertEquals(0, $model->designation['min']);
+            $this->assertEquals('integer', gettype($model->designation['min']));
+            $this->assertArrayHasKey('max', $model->designation['max']);
+            $this->assertEquals(50, $model->designation['max']);
+            $this->assertEquals('integer', gettype($model->designation['max']));
             $this->assertEquals($model->telephone, 'sample string 5');
-            $this->assertArrayHasKey('min', $model->telephone['stringRange']);
-            $this->assertEquals(0, $model->telephone['stringRange']['min']);
-            $this->assertEquals('integer', gettype($model->telephone['stringRange']['min']));
-            $this->assertArrayHasKey('max', $model->telephone['stringRange']);
-            $this->assertEquals(30, $model->telephone['stringRange']['max']);
-            $this->assertEquals('integer', gettype($model->telephone['stringRange']['max']));
+            $this->assertArrayHasKey('min', $model->telephone['min']);
+            $this->assertEquals(0, $model->telephone['min']);
+            $this->assertEquals('integer', gettype($model->telephone['min']));
+            $this->assertArrayHasKey('max', $model->telephone['max']);
+            $this->assertEquals(30, $model->telephone['max']);
+            $this->assertEquals('integer', gettype($model->telephone['max']));
             $this->assertEquals($model->fax, 'sample string 6');
-            $this->assertArrayHasKey('min', $model->fax['stringRange']);
-            $this->assertEquals(0, $model->fax['stringRange']['min']);
-            $this->assertEquals('integer', gettype($model->fax['stringRange']['min']));
-            $this->assertArrayHasKey('max', $model->fax['stringRange']);
-            $this->assertEquals(30, $model->fax['stringRange']['max']);
-            $this->assertEquals('integer', gettype($model->fax['stringRange']['max']));
+            $this->assertArrayHasKey('min', $model->fax['min']);
+            $this->assertEquals(0, $model->fax['min']);
+            $this->assertEquals('integer', gettype($model->fax['min']));
+            $this->assertArrayHasKey('max', $model->fax['max']);
+            $this->assertEquals(30, $model->fax['max']);
+            $this->assertEquals('integer', gettype($model->fax['max']));
             $this->assertEquals($model->mobile, 'sample string 7');
-            $this->assertArrayHasKey('min', $model->mobile['stringRange']);
-            $this->assertEquals(0, $model->mobile['stringRange']['min']);
-            $this->assertEquals('integer', gettype($model->mobile['stringRange']['min']));
-            $this->assertArrayHasKey('max', $model->mobile['stringRange']);
-            $this->assertEquals(30, $model->mobile['stringRange']['max']);
-            $this->assertEquals('integer', gettype($model->mobile['stringRange']['max']));
+            $this->assertArrayHasKey('min', $model->mobile['min']);
+            $this->assertEquals(0, $model->mobile['min']);
+            $this->assertEquals('integer', gettype($model->mobile['min']));
+            $this->assertArrayHasKey('max', $model->mobile['max']);
+            $this->assertEquals(30, $model->mobile['max']);
+            $this->assertEquals('integer', gettype($model->mobile['max']));
             $this->assertEquals($model->email, 'sample string 8');
-            $this->assertArrayHasKey('min', $model->email['stringRange']);
-            $this->assertEquals(0, $model->email['stringRange']['min']);
-            $this->assertEquals('integer', gettype($model->email['stringRange']['min']));
-            $this->assertArrayHasKey('max', $model->email['stringRange']);
-            $this->assertEquals(100, $model->email['stringRange']['max']);
-            $this->assertEquals('integer', gettype($model->email['stringRange']['max']));
+
 
             $objArray = json_decode($model->toJson(), true);
             $this->assertCount(8, $objArray);
