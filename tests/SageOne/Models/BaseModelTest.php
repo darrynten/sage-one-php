@@ -96,8 +96,13 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
 
         $this->expectException(ModelException::class);
         $this->expectExceptionMessage(
-            sprintf('Model "%s" key %s value %s Attempting to set a read-only property',
-            $className, $field, 'some value'));
+            sprintf(
+                'Model "%s" key %s value %s Attempting to set a read-only property',
+                $className,
+                $field,
+                'some value'
+            )
+        );
         $this->expectExceptionCode(10114);
 
         $model = new $class($this->config);
@@ -198,11 +203,14 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $reflectValue->setAccessible(true);
         $endpoint = $reflectValue->getValue($model);
         $this->assertEquals(
-            $className, $endpoint,
-            sprintf('Model "%s" should have endpoint "%s" but got "%s"',
+            $className,
+            $endpoint,
+            sprintf(
+                'Model "%s" should have endpoint "%s" but got "%s"',
                 $className,
                 $className,
-                $endpoint)
+                $endpoint
+            )
         );
 
         // Fields mapping
@@ -459,7 +467,9 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
             $fullPathToClass = sprintf('DarrynTen\SageOne\Models\%s', $options['type']);
             $this->assertTrue(class_exists($fullPathToClass), sprintf(
                 'Model "%s" property "%s" class "%s" does not exist',
-                $className, $name, $fullPathToClass
+                $className,
+                $name,
+                $fullPathToClass
             ));
         }
     }

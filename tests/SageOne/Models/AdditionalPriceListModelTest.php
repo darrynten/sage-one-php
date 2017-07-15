@@ -37,10 +37,13 @@ class AdditionalPriceListModelTest extends BaseModelTest
 
     public function testDescriptionLength()
     {
-        $this->verifyBadStringLengthException(AdditionalPriceList::class,
+        $this->verifyBadStringLengthException(
+            AdditionalPriceList::class,
             'description',
-            0, 100,
-            str_repeat('x', 101));
+            0,
+            100,
+            str_repeat('x', 101)
+        );
     }
 
     public function testFeatures()
@@ -100,22 +103,26 @@ class AdditionalPriceListModelTest extends BaseModelTest
 
     public function testAllowDelete()
     {
-        $model = $this->setUpRequestMock('POST',
+        $model = $this->setUpRequestMock(
+            'POST',
             AdditionalPriceList::class,
             'AllowDelete',
             'AdditionalPriceList/POST_AdditionalPriceList_AllowDelete_RESP.json',
-            'AdditionalPriceList/POST_AdditionalPriceList_AllowDelete_REQ.json');
+            'AdditionalPriceList/POST_AdditionalPriceList_AllowDelete_REQ.json'
+        );
 
         $this->assertEquals(true, $model->allowDelete());
     }
 
     public function testGetListsById()
     {
-        $model = $this->setUpRequestMock('POST',
+        $model = $this->setUpRequestMock(
+            'POST',
             AdditionalPriceList::class,
             'Get',
             'AdditionalPriceList/POST_AdditionalPriceList_Get_RESP.json',
-            'AdditionalPriceList/POST_AdditionalPriceList_Get_REQ.json');
+            'AdditionalPriceList/POST_AdditionalPriceList_Get_REQ.json'
+        );
 
         /**
          * TODO https://accounting.sageone.co.za/api/1.1.2/Help/Api/POST-AdditionalPriceList-Get
