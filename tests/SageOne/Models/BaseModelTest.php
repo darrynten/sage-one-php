@@ -85,6 +85,31 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Verifies that when we try to set readonly property it throws expected exception
+     *
+     * @param string $class Full path to the class
+     * @param string $field Read only property
+     */
+    protected function verifySetReadOnly(string $class, string $field)
+    {
+        $className = $this->getClassName($class);
+
+        $this->expectException(ModelException::class);
+        $this->expectExceptionMessage(
+            sprintf(
+                'Model "%s" key %s value %s Attempting to set a read-only property',
+                $className,
+                $field,
+                'some value'
+            )
+        );
+        $this->expectExceptionCode(10114);
+
+        $model = new $class($this->config);
+        $model->{$field} = 'some value';
+    }
+
+    /**
      * Verifies that when we try to get undefined property it throws expected exception
      *
      * @param string $class Full path to the class
@@ -172,6 +197,22 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $model = new $class($this->config);
         $className = $this->getClassName($class);
 
+        // Endpoint
+        $reflect = new ReflectionClass($model);
+        $reflectValue = $reflect->getProperty('endpoint');
+        $reflectValue->setAccessible(true);
+        $endpoint = $reflectValue->getValue($model);
+        $this->assertEquals(
+            $className,
+            $endpoint,
+            sprintf(
+                'Model "%s" should have endpoint "%s" but got "%s"',
+                $className,
+                $className,
+                $endpoint
+            )
+        );
+
         // Fields mapping
         $reflect = new ReflectionClass($model);
         $reflectValue = $reflect->getProperty('fields');
@@ -189,6 +230,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
             $this->verifyRequiredAttribute($className, $name, $options, $value);
             $this->verifyRegexAttribute($className, $name, $options, $value);
             $this->verifyDefaultAttribute($className, $name, $options, $value);
+            $this->verifyCollectionAttribute($className, $name, $options, $value);
         }
     }
 
@@ -203,7 +245,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     {
         $validKeys = array_fill_keys([
             'type', 'nullable', 'readonly', 'default',
-            'required', 'min', 'max', 'regex'
+            'required', 'min', 'max', 'regex', 'collection'
         ], true);
         foreach (array_keys($options) as $option) {
             if (!isset($validKeys[$option])) {
@@ -398,6 +440,41 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Verifies that field $name has valid class attribute (if type=ModelCollection)
+     *
+     * @param string $className name of the class under checking
+     * @param string $name name of the attribute
+     * @param array $options what we check
+     *      Contains data in the following format
+     *      [
+     *          'class' => 'SomeClassForCollection'
+     *      ]
+     * @param array $value actual field attributes under check
+     *      has the same format as $options
+     */
+    private function verifyCollectionAttribute($className, $name, $options, $value)
+    {
+        if (array_key_exists('collection', $options)) {
+            if ($options['collection'] !== true) {
+                throw new \Exception('You can validate only collection=true');
+            }
+            $this->assertTrue(
+                array_key_exists('collection', $value[$name]),
+                sprintf('Model %s "collection" for %s is not present', $className, $name)
+            );
+            $this->assertEquals($options['type'], $value[$name]['type']);
+            $this->assertEquals($options['collection'], $value[$name]['collection']);
+            $fullPathToClass = sprintf('DarrynTen\SageOne\Models\%s', $options['type']);
+            $this->assertTrue(class_exists($fullPathToClass), sprintf(
+                'Model "%s" property "%s" class "%s" does not exist',
+                $className,
+                $name,
+                $fullPathToClass
+            ));
+        }
+    }
+
+    /**
      * Verifies that features are set as expected
      * Available features are: all, get, save, delete
      *
@@ -506,10 +583,12 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
      * Verifies that we can save model
      *
      * @param string $class Full path to the class
+     * @param string $responseClass Full path to the class of the response
+     * if null then response is expected to be the same class as $class
      * @param callable $beforeSave Modifies model before saving
      * @param callable $afterSave Verifies model after saving
      */
-    protected function verifySave(string $class, callable $beforeSave, callable $afterSave)
+    protected function verifySave(string $class, callable $beforeSave, callable $afterSave, string $responseClass = null)
     {
         $className = $this->getClassName($class);
         $path = sprintf('%s/Save', $className);
@@ -526,8 +605,14 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $data = json_decode(file_get_contents(__DIR__ . "/../../mocks/" . $mockFileRequest));
         $model->loadResult($data);
 
+        if (is_null($responseClass)) {
+            $responseClass = $class;
+        }
+
         $beforeSave($model);
-        $savedModel = $model->save();
+        $response = $model->save();
+        $savedModel = new $responseClass($this->config);
+        $savedModel->loadResult($response);
         $afterSave($savedModel);
     }
 
@@ -658,7 +743,8 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage(
             sprintf(
-                'Validation error value This string is too long! out of min(%s) max(%s) String length is out of range',
+                'Validation error value %s out of min(%s) max(%s) String length is out of range',
+                $value,
                 $min,
                 $max
             )

@@ -113,7 +113,9 @@ class AccountOpeningBalanceModelTest extends BaseModelTest
         $this->expectExceptionMessage('Model "AccountOpeningBalance" Defined key "reason" not present in payload A property is missing in the loadResult payload');
         $this->expectExceptionCode(10112);
 
-        $model->save();
+        $response = $model->save();
+        $savedModel = new AccountOpeningBalance($this->config);
+        $savedModel->loadResult($response);
     }
 
     public function testSaveBadResponsePropertyHasInvalidType()
@@ -130,7 +132,9 @@ class AccountOpeningBalanceModelTest extends BaseModelTest
         $this->expectExceptionMessage('Model "AccountOpeningBalance" Received namespaced class "DarrynTen\SageOne\Models\double" when defined type is "boolean" Property is referencing an undefined, non-primitive class');
         $this->expectExceptionCode(10110);
 
-        $model->save();
+        $response = $model->save();
+        $savedModel = new AccountOpeningBalance($this->config);
+        $savedModel->loadResult($response);
     }
 
     public function testDeleteException()

@@ -64,7 +64,7 @@ abstract class BaseModel
      *
      * @var array $fieldsData
      */
-    private $fieldsData = [];
+    protected $fieldsData = [];
 
     /**
      * Make a new model
@@ -215,14 +215,7 @@ abstract class BaseModel
 
         // TODO Submission Body and Validation
         $data = $this->request->request('POST', $this->endpoint, 'Save');
-        /**
-         * we do not need to verify results here because loadResult will throuw exception
-         * in case of invalid body
-         * If we reach this string then we expect that API returned valid body with response code 200
-         * otherwise ApiException was thrown and this line can not be reached
-         */
-        $this->loadResult($data);
-        return $this;
+        return $data;
     }
 
     /**
@@ -249,6 +242,13 @@ abstract class BaseModel
     private function getRemoteKey($localKey)
     {
         $remoteKey = ucfirst($localKey);
+        /**
+         * Very special case
+         * In CommercialDocumentLine (field '$TrackingCode')
+         */
+        if ($remoteKey[0] === '$') {
+            $remoteKey[1] = strtoupper($remoteKey[1]);
+        }
 
         // Unless id - theirs is uppercase ours is lowercase
         if ($localKey === 'id') {
@@ -290,6 +290,10 @@ abstract class BaseModel
             return $value->format('Y-m-d');
         }
 
+        if (isset($config['collection']) && $config['collection'] === true) {
+            return $this->prepareModelCollection($config, $value);
+        }
+
         // At this stage we would be dealing with a related Model
         $class = $this->getModelWithNamespace($config['type']);
 
@@ -303,6 +307,29 @@ abstract class BaseModel
 
         // And finally return an Object representation of the related Model
         return $value->toObject();
+    }
+
+    /**
+     * Turns the model collection into an array of models
+     *
+     * @param array $config The config for the model
+     * @param ModelCollection $value Collection which is converted into array
+     * @return array
+     */
+    private function prepareModelCollection(array $config, ModelCollection $value)
+    {
+        $class = $this->getModelWithNamespace($config['type']);
+        if (!class_exists($class)) {
+            $this->throwException(ModelException::COLLECTION_WITHOUT_CLASS, sprintf(
+                'Class "%s" for collection does not exist',
+                $class
+            ));
+        }
+        $rows = [];
+        foreach ($value->results as $result) {
+            $rows[] = $result->toObject();
+        }
+        return $rows;
     }
 
     /**
@@ -340,6 +367,17 @@ abstract class BaseModel
         // If it's a date we return a new DateTime object
         if ($config['type'] === \DateTime::class) {
             return new \DateTime($resultItem);
+        }
+
+        if (isset($config['collection']) && $config['collection'] === true) {
+            $class = $this->getModelWithNamespace($config['type']);
+            if (!class_exists($class)) {
+                $this->throwException(ModelException::COLLECTION_WITHOUT_CLASS, sprintf(
+                    'class "%s"',
+                    $class
+                ));
+            }
+            return new ModelCollection($class, $this->config, $resultItem);
         }
 
         // If it's null and it's allowed to be null

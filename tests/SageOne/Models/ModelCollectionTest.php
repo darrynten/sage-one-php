@@ -5,8 +5,10 @@ namespace DarrynTen\SageOne\Tests\SageOne\Models;
 use ReflectionClass;
 
 use DarrynTen\SageOne\Exception\ModelCollectionException;
+use DarrynTen\SageOne\Exception\ModelException;
 use DarrynTen\SageOne\Models\ModelCollection;
 use DarrynTen\SageOne\Models\Example;
+use DarrynTen\SageOne\Models\ExampleCategory;
 
 class ModelCollectionTest extends BaseModelTest
 {
@@ -81,5 +83,81 @@ class ModelCollectionTest extends BaseModelTest
         $this->assertNull($example2->stringRange);
         $this->assertEquals(134522343, $example2->integerRange);
         $this->assertEquals('integer', gettype($example2->integerRange));
+    }
+
+    public function testToJson()
+    {
+        $exampleModelData = json_decode(file_get_contents(__DIR__ . "/../../mocks/Example/GET_Example_Get_xx.json"));
+        $model = new Example($this->config);
+        $model->loadResult($exampleModelData);
+        $json = $model->toJson();
+        $decoded = json_decode($json);
+            
+        $newModel = new Example($this->config);
+        $newModel->loadResult($decoded);
+        $this->assertEquals(1, $newModel->id);
+        $this->assertInstanceOf(ModelCollection::class, $newModel->someCollection);
+        $this->assertInstanceOf(ExampleCategory::class, $newModel->someCollection->results[0]);
+        $this->assertInstanceOf(ExampleCategory::class, $newModel->someCollection->results[1]);
+        $this->assertEquals(1, $newModel->someCollection->results[0]->id);
+        $this->assertEquals(2, $newModel->someCollection->results[1]->id);
+        $this->assertCount(2, $newModel->someCollection->results);
+    }
+
+    public function testExceptionWhileLoadingModelWithCollection()
+    {
+        $exampleModel = new Example($this->config);
+        $exampleFields = [
+            'someCollection' => [
+                'type' => 'SomeInvalidClass',
+                'nullable' => false,
+                'readonly' => false,
+                'collection' => true,
+            ],
+        ];
+
+        $reflection = new ReflectionClass($exampleModel);
+        $reflectedModel = $reflection->getProperty('fields');
+        $reflectedModel->setAccessible(true);
+        $reflectedModel->setValue($exampleModel, $exampleFields);
+
+        $this->expectException(ModelException::class);
+        $this->expectExceptionMessage('Model "Example" class "DarrynTen\SageOne\Models\SomeInvalidClass" ModelCollection is referencing ad undefined, non-primitive class');
+        $this->expectExceptionCode(10117);
+
+        $obj = new \stdClass;
+        $obj->SomeCollection = [];
+        $exampleModel->loadResult($obj);
+    }
+
+    public function testExceptionWhileExportingModelWithCollection()
+    {
+        $exampleModel = new Example($this->config);
+        $exampleFields = [
+            'someCollection' => [
+                'type' => 'SomeInvalidClass',
+                'nullable' => false,
+                'readonly' => false,
+                'collection' => true,
+            ],
+        ];
+        $modelCollection = new ModelCollection(Example::class, $this->config, []);
+        $exampleFieldsData = [
+            'someCollection' => $modelCollection
+        ];
+
+        $reflection = new ReflectionClass($exampleModel);
+        $reflectedModel = $reflection->getProperty('fields');
+        $reflectedModel->setAccessible(true);
+        $reflectedModel->setValue($exampleModel, $exampleFields);
+        $reflectedModel = $reflection->getProperty('fieldsData');
+        $reflectedModel->setAccessible(true);
+        $reflectedModel->setValue($exampleModel, $exampleFieldsData);
+
+        $this->expectException(ModelException::class);
+        $this->expectExceptionMessage('Model "Example" Class "DarrynTen\SageOne\Models\SomeInvalidClass" for collection does not exist ModelCollection is referencing ad undefined, non-primitive class');
+        $this->expectExceptionCode(10117);
+
+        $exampleModel->toJson();
     }
 }
