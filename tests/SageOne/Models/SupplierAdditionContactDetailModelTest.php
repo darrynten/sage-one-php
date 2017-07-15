@@ -11,7 +11,7 @@ use GuzzleHttp\Client;
 use ReflectionClass;
 use DarrynTen\SageOne\Exception\ModelException;
 
-class SupplierAdditionalContactDetailsModelTest extends BaseModelTest
+class SupplierAdditionalContactDetailModelTest extends BaseModelTest
 {
     public function testInstanceOf()
     {
