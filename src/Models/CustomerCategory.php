@@ -35,22 +35,22 @@ class CustomerCategory extends BaseModel
         'id' => [
             'type' => 'integer',
             'nullable' => false,
-            'readonly' => false
+            'readonly' => false,
         ],
         'description' => [
             'type' => 'string',
             'nullable' => false,
-            'readonly' => false
+            'readonly' => false,
         ],
         'modified' => [
             'type' => 'DateTime',
             'nullable' => true,
-            'readonly' => true
+            'readonly' => true,
         ],
         'created' => [
             'type' => 'DateTime',
             'nullable' => true,
-            'readonly' => true
+            'readonly' => true,
         ],
     ];
 
