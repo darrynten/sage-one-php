@@ -309,9 +309,9 @@ Please feel free to open PRs for any of the following :)
 - [ ] Additional Item Price
 - [x] Additional Price List
 - [ ] Allocation
-- [ ] Asset
-- [ ] Asset Category
-- [ ] Asset Location
+- [x] Asset
+- [x] Asset Category
+- [x] Asset Location
 - [ ] Asset Note
 - [ ] Attachment
 - [ ] Bank Account
@@ -461,3 +461,4 @@ if you have any ideas.
 * [Karolin Gaedeke](https://github.com/KaroZA)
 * [Vitaliy Likhachev](https://github.com/make-it-git)
 * [Igor Sergiichuk](https://github.com/igorsergiichuk)
+* [Fergus Strangways-Dixon](https://github.com/fergusdixon)
