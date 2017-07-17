@@ -48,6 +48,7 @@ class AssetLocationModelTest extends BaseModelTest
             ],
         ]);
     }
+
     public function testFeatures()
     {
         $this->verifyFeatures(AssetLocation::class, [
@@ -59,26 +60,28 @@ class AssetLocationModelTest extends BaseModelTest
     {
         $this->verifyGetAll(AssetLocation::class, function ($results) {
             $this->assertEquals(2, count($results));
-            $this->assertEquals("sample string 2", $results[0]->description);
+            $this->assertEquals('sample string 2', $results[0]->description);
             $this->assertEquals(1, $results[0]->id);
         });
     }
+
     public function testGetId()
     {
         $this->verifyGetId(AssetLocation::class, 2, function ($model) {
             $this->assertInstanceOf(AssetLocation::class, $model);
-            $this->assertEquals("sample string 2", $model->description);
+            $this->assertEquals('sample string 2', $model->description);
             $this->assertEquals(1, $model->id);
         });
     }
+    
     public function testSave()
     {
         $this->verifySave(AssetLocation::class, function ($model) {
-            $model->description = "sample string 2";
+            $model->description = 'sample string 2';
             $model->id = 1;
         }, function ($savedModel) {
             $this->assertInstanceOf(AssetLocation::class, $savedModel);
-            $this->assertEquals("sample string 2", $savedModel->description);
+            $this->assertEquals('sample string 2', $savedModel->description);
             $this->assertEquals(1, $savedModel->id);
         });
     }

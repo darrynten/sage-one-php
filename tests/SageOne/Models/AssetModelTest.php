@@ -38,8 +38,6 @@ class AssetModelTest extends BaseModelTest
         $this->verifyCanNullify(Asset::class, 'purchasePrice');
     }
 
-   
-
     public function testAttributes()
     {
         $this->verifyAttributes(Asset::class, [
@@ -155,6 +153,7 @@ class AssetModelTest extends BaseModelTest
             ],
         ]);
     }
+
     public function testFeatures()
     {
         $this->verifyFeatures(Asset::class, [
@@ -166,24 +165,24 @@ class AssetModelTest extends BaseModelTest
     {
         $this->verifyGetAll(Asset::class, function ($results) {
             $this->assertEquals(2, count($results));
-            $this->assertEquals("sample string 1", $results[0]->description);
+            $this->assertEquals('sample string 1', $results[0]->description);
             $this->assertInstanceOf(AssetCategory::class, $results[0]->category);
-            $this->assertEquals("sample string 1", $results[0]->category->description);
+            $this->assertEquals('sample string 1', $results[0]->category->description);
             $this->assertEquals(2, $results[0]->category->id);
             $this->assertEquals('2017-07-17', $results[0]->category->modified->format('Y-m-d'));
             $this->assertEquals('2017-07-17', $results[0]->category->created->format('Y-m-d'));
             $this->assertInstanceOf(AssetLocation::class, $results[0]->location);
             $this->assertEquals(1, $results[0]->location->id);
-            $this->assertEquals("sample string 2", $results[0]->location->description);
+            $this->assertEquals('sample string 2', $results[0]->location->description);
             $this->assertEquals('2017-07-17', $results[0]->datePurchased->format('Y-m-d'));
-            $this->assertEquals("sample string 3", $results[0]->serialNumber);
-            $this->assertEquals("sample string 4", $results[0]->boughtFrom);
+            $this->assertEquals('sample string 3', $results[0]->serialNumber);
+            $this->assertEquals('sample string 4', $results[0]->boughtFrom);
             $this->assertEquals(1.0, $results[0]->purchasePrice);
             $this->assertEquals(1.0, $results[0]->currentValue);
             $this->assertEquals(1.0, $results[0]->replacementValue);
-            $this->assertEquals("sample string 5", $results[0]->textField1);
-            $this->assertEquals("sample string 6", $results[0]->textField2);
-            $this->assertEquals("sample string 7", $results[0]->textField3);
+            $this->assertEquals('sample string 5', $results[0]->textField1);
+            $this->assertEquals('sample string 6', $results[0]->textField2);
+            $this->assertEquals('sample string 7', $results[0]->textField3);
             $this->assertEquals(1.0, $results[0]->numericField1);
             $this->assertEquals(1.0, $results[0]->numericField2);
             $this->assertEquals(1.0, $results[0]->numericField3);
@@ -196,28 +195,29 @@ class AssetModelTest extends BaseModelTest
             $this->assertEquals(11, $results[0]->id);
         });
     }
+
     public function testGetId()
     {
         $this->verifyGetId(Asset::class, 2, function ($model) {
             $this->assertInstanceOf(Asset::class, $model);
-            $this->assertEquals("sample string 1", $model->description);
+            $this->assertEquals('sample string 1', $model->description);
             $this->assertInstanceOf(AssetCategory::class, $model->category);
-            $this->assertEquals("sample string 1", $model->category->description);
+            $this->assertEquals('sample string 1', $model->category->description);
             $this->assertEquals(2, $model->category->id);
             $this->assertEquals('2017-07-17', $model->category->modified->format('Y-m-d'));
             $this->assertEquals('2017-07-17', $model->category->created->format('Y-m-d'));
             $this->assertInstanceOf(AssetLocation::class, $model->location);
             $this->assertEquals(1, $model->location->id);
-            $this->assertEquals("sample string 2", $model->location->description);
+            $this->assertEquals('sample string 2', $model->location->description);
             $this->assertEquals('2017-07-17', $model->datePurchased->format('Y-m-d'));
-            $this->assertEquals("sample string 3", $model->serialNumber);
-            $this->assertEquals("sample string 4", $model->boughtFrom);
+            $this->assertEquals('sample string 3', $model->serialNumber);
+            $this->assertEquals('sample string 4', $model->boughtFrom);
             $this->assertEquals(1.0, $model->purchasePrice);
             $this->assertEquals(1.0, $model->currentValue);
             $this->assertEquals(1.0, $model->replacementValue);
-            $this->assertEquals("sample string 5", $model->textField1);
-            $this->assertEquals("sample string 6", $model->textField2);
-            $this->assertEquals("sample string 7", $model->textField3);
+            $this->assertEquals('sample string 5', $model->textField1);
+            $this->assertEquals('sample string 6', $model->textField2);
+            $this->assertEquals('sample string 7', $model->textField3);
             $this->assertEquals(1.0, $model->numericField1);
             $this->assertEquals(1.0, $model->numericField2);
             $this->assertEquals(1.0, $model->numericField3);
@@ -230,51 +230,52 @@ class AssetModelTest extends BaseModelTest
             $this->assertEquals(11, $model->id);
         });
     }
+
     public function testSave()
     {
         $this->verifySave(Asset::class, function ($model) {
-            $model->description = "sample string 1";
-            $model->category->description = "sample string 1";
+            $model->description = 'sample string 1';
+            $model->category->description = 'sample string 1';
             $model->category->id = 2;
             $model->location->id = 1;
-            $model->location->description = "sample string 2";
-            $model->datePurchased = "2017-07-17";
-            $model->serialNumber = "sample string 3";
-            $model->boughtFrom = "sample string 4";
+            $model->location->description = 'sample string 2';
+            $model->datePurchased = '2017-07-17';
+            $model->serialNumber = 'sample string 3';
+            $model->boughtFrom = 'sample string 4';
             $model->purchasePrice = 1.0;
             $model->currentValue = 1.0;
             $model->replacementValue = 1.0;
-            $model->textField1 = "sample string 5";
-            $model->textField2 = "sample string 6";
-            $model->textField3 = "sample string 7";
+            $model->textField1 = 'sample string 5';
+            $model->textField2 = 'sample string 6';
+            $model->textField3 = 'sample string 7';
             $model->numericField1 = 1.0;
             $model->numericField2 = 1.0;
             $model->numericField3 = 1.0;
             $model->yesNoField1 = true;
             $model->yesNoField2 = true;
             $model->yesNoField3 = true;
-            $model->dateField1 = "2017-07-17";
-            $model->dateField2 = "2017-07-17";
-            $model->dateField3 = "2017-07-17";
+            $model->dateField1 = '2017-07-17';
+            $model->dateField2 = '2017-07-17';
+            $model->dateField3 = '2017-07-17';
             $model->id = 11;
         }, function ($savedModel) {
             $this->assertInstanceOf(Asset::class, $savedModel);
-            $this->assertEquals("sample string 1", $savedModel->description);
+            $this->assertEquals('sample string 1', $savedModel->description);
             $this->assertInstanceOf(AssetCategory::class, $savedModel->category);
-            $this->assertEquals("sample string 1", $savedModel->category->description);
+            $this->assertEquals('sample string 1', $savedModel->category->description);
             $this->assertEquals(2, $savedModel->category->id);
             $this->assertInstanceOf(AssetLocation::class, $savedModel->location);
             $this->assertEquals(1, $savedModel->location->id);
-            $this->assertEquals("sample string 2", $savedModel->location->description);
+            $this->assertEquals('sample string 2', $savedModel->location->description);
             $this->assertEquals('2017-07-17', $savedModel->datePurchased->format('Y-m-d'));
-            $this->assertEquals("sample string 3", $savedModel->serialNumber);
-            $this->assertEquals("sample string 4", $savedModel->boughtFrom);
+            $this->assertEquals('sample string 3', $savedModel->serialNumber);
+            $this->assertEquals('sample string 4', $savedModel->boughtFrom);
             $this->assertEquals(1.0, $savedModel->purchasePrice);
             $this->assertEquals(1.0, $savedModel->currentValue);
             $this->assertEquals(1.0, $savedModel->replacementValue);
-            $this->assertEquals("sample string 5", $savedModel->textField1);
-            $this->assertEquals("sample string 6", $savedModel->textField2);
-            $this->assertEquals("sample string 7", $savedModel->textField3);
+            $this->assertEquals('sample string 5', $savedModel->textField1);
+            $this->assertEquals('sample string 6', $savedModel->textField2);
+            $this->assertEquals('sample string 7', $savedModel->textField3);
             $this->assertEquals(1.0, $savedModel->numericField1);
             $this->assertEquals(1.0, $savedModel->numericField2);
             $this->assertEquals(1.0, $savedModel->numericField3);
