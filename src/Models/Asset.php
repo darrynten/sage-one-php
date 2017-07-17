@@ -4,7 +4,7 @@
  *
  * @category Library
  * @package  SageOne
- * @author   Darryn Ten <darrynten@github.com>
+ * @author   Fergus Strangways-Dixon <fergusdixon@github.com>
  * @license  MIT <https://github.com/darrynten/sage-one-php/blob/master/LICENSE>
  * @link     https://github.com/darrynten/sage-one-php
  */
@@ -14,10 +14,10 @@ namespace DarrynTen\SageOne\Models;
 use DarrynTen\SageOne\BaseModel;
 
 /**
- * Account Model
+ * Asset Model
  *
- * Details on writable properties for Account:
- * https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=Account
+ * Details on writable properties for Asset:
+ * https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=Asset
  */
 class Asset extends BaseModel
 {
@@ -127,17 +127,17 @@ class Asset extends BaseModel
             'nullable' => false,
             'readonly' => false,
         ],
-        'DateField1' => [
+        'dateField1' => [
             'type' => 'DateTime',
             'nullable' => true,
             'readonly' => false,
         ],
-        'DateField2' => [
+        'dateField2' => [
             'type' => 'DateTime',
             'nullable' => true,
             'readonly' => false,
         ],
-        'DateField3' => [
+        'dateField3' => [
             'type' => 'DateTime',
             'nullable' => true,
             'readonly' => false,
