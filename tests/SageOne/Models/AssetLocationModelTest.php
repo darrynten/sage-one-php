@@ -29,9 +29,7 @@ class AssetLocationModelTest extends BaseModelTest
     public function testCanNotNullify()
     {
         $this->verifyCanNotNullify(AssetLocation::class, 'id');
-    }
-
-   
+    }   
 
     public function testAttributes()
     {
@@ -73,7 +71,7 @@ class AssetLocationModelTest extends BaseModelTest
             $this->assertEquals(1, $model->id);
         });
     }
-    
+
     public function testSave()
     {
         $this->verifySave(AssetLocation::class, function ($model) {
