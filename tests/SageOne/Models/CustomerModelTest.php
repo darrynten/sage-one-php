@@ -95,6 +95,7 @@ class CustomerModelTest extends BaseModelTest
                 'type' => 'string',
                 'nullable' => false,
                 'readonly' => false,
+                'validate' => FILTER_VALIDATE_EMAIL,
             ],
             'webAddress' => [
                 'type' => 'string',
@@ -397,7 +398,7 @@ class CustomerModelTest extends BaseModelTest
             $this->assertEquals('sample string 4', $model1->telephone);
             $this->assertEquals('sample string 5', $model1->fax);
             $this->assertEquals('sample string 6', $model1->mobile);
-            $this->assertEquals('sample string 7', $model1->email);
+            $this->assertEquals('email@example.com', $model1->email);
             $this->assertEquals('sample string 8', $model1->webAddress);
             $this->assertEquals(true, $model1->active);
             $this->assertEquals(10.0, $model1->balance);
@@ -485,7 +486,7 @@ class CustomerModelTest extends BaseModelTest
             $this->assertEquals('sample string 4', $model2->telephone);
             $this->assertEquals('sample string 5', $model2->fax);
             $this->assertEquals('sample string 6', $model2->mobile);
-            $this->assertEquals('sample string 7', $model2->email);
+            $this->assertEquals('email@example.com', $model2->email);
             $this->assertEquals('sample string 8', $model2->webAddress);
             $this->assertEquals(true, $model2->active);
             $this->assertEquals(10.0, $model2->balance);
@@ -581,7 +582,7 @@ class CustomerModelTest extends BaseModelTest
             $this->assertEquals('sample string 4', $model->telephone);
             $this->assertEquals('sample string 5', $model->fax);
             $this->assertEquals('sample string 6', $model->mobile);
-            $this->assertEquals('sample string 7', $model->email);
+            $this->assertEquals('email@example.com', $model->email);
             $this->assertEquals('sample string 8', $model->webAddress);
             $this->assertEquals(true, $model->active);
             $this->assertEquals(10.0, $model->balance);
@@ -674,7 +675,7 @@ class CustomerModelTest extends BaseModelTest
             $model->telephone = 'sample string 4';
             $model->fax = 'sample string 5';
             $model->mobile = 'sample string 6';
-            $model->email = 'sample string 7';
+            $model->email = 'email@example.com';
             $model->webAddress = 'sample string 8';
             $model->active = true;
             $model->creditLimit = 11.0;
@@ -727,7 +728,7 @@ class CustomerModelTest extends BaseModelTest
             $this->assertEquals('sample string 4', $savedModel->telephone);
             $this->assertEquals('sample string 5', $savedModel->fax);
             $this->assertEquals('sample string 6', $savedModel->mobile);
-            $this->assertEquals('sample string 7', $savedModel->email);
+            $this->assertEquals('email@example.com', $savedModel->email);
             $this->assertEquals('sample string 8', $savedModel->webAddress);
             $this->assertEquals(true, $savedModel->active);
             $this->assertEquals(10.0, $savedModel->balance);

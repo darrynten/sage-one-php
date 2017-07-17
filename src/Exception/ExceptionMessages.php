@@ -18,6 +18,7 @@ class ExceptionMessages
         10002 => 'String length is out of range',
         10003 => 'String did not match validation regex',
         10004 => 'Validation type is invalid',
+        10005 => 'filter_var failed to validate',
     ];
 
     /**
