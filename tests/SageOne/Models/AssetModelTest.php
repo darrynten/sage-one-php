@@ -3,6 +3,8 @@
 namespace DarrynTen\SageOne\Tests\SageOne\Models;
 
 use DarrynTen\SageOne\Models\Asset;
+use DarrynTen\SageOne\Models\AssetCategory;
+use DarrynTen\SageOne\Models\AssetLocation;
 use DarrynTen\SageOne\Request\RequestHandler;
 use GuzzleHttp\Client;
 use ReflectionClass;
@@ -232,8 +234,6 @@ class AssetModelTest extends BaseModelTest
     		$model->description = "sample string 1";
     		$model->category->description = "sample string 1";
     		$model->category->id = 2;
-    		$model->modified = "2017-07-17";
-    		$model->created = "2017-07-17";
     		$model->location->id = 1;
     		$model->location->description = "sample string 2";
     		$model->datePurchased = "2017-07-17";
@@ -261,8 +261,6 @@ class AssetModelTest extends BaseModelTest
             $this->assertInstanceOf(AssetCategory::class, $savedModel->category);
             $this->assertEquals("sample string 1", $savedModel->category->description);
             $this->assertEquals(2, $savedModel->category->id);
-            $this->assertEquals('2017-07-17', $savedModel->category->modified->format('Y-m-d'));
-            $this->assertEquals('2017-07-17', $savedModel->category->created->format('Y-m-d'));
             $this->assertInstanceOf(AssetLocation::class, $savedModel->location);
             $this->assertEquals(1, $savedModel->location->id);
             $this->assertEquals("sample string 2", $savedModel->location->description);

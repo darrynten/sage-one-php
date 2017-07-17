@@ -2,7 +2,7 @@
 
 namespace DarrynTen\SageOne\Tests\SageOne\Models;
 
-use DarrynTen\SageOne\Models\AssetCategory;
+use DarrynTen\SageOne\Models\AssetLocation;
 use DarrynTen\SageOne\Request\RequestHandler;
 use GuzzleHttp\Client;
 use ReflectionClass;
@@ -66,7 +66,7 @@ class AssetLocationModelTest extends BaseModelTest
     public function testGetId(){
     	$this->verifyGetId(AssetLocation::class, 2, function($model){
     		$this->assertInstanceOf(AssetLocation::class, $model);
-            $this->assertEquals("sample string 1", $model->description);
+            $this->assertEquals("sample string 2", $model->description);
             $this->assertEquals(1, $model->id);
             		
     	});
