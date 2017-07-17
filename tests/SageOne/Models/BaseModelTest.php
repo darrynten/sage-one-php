@@ -812,6 +812,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     protected function setUpRequestMock(string $method, string $class, string $path, string $mockFileResponse = null, string $mockFileRequest = null)
     {
         $url = sprintf('/1.1.2/%s?apikey=key', $path);
+        $urlWithoutApiKey = sprintf('/1.1.2/%s/', $path);
 
         $responseData = null;
         if ($mockFileResponse) {
@@ -837,15 +838,21 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $localResult = $localClient->request(
             $method,
             '//localhost:8082' . $url,
-            []
+            $requestData
         );
 
         $mockClient = \Mockery::mock(
             'Client'
         );
 
+        /**
+        * $client in RequestHandler receives url without query params
+        * they are passed as last parameter for $client->request
+        */
+        $fullUrl = '//localhost:8082' . $urlWithoutApiKey;
         $mockClient->shouldReceive('request')
             ->once()
+            ->with($method, $fullUrl, \Mockery::type('array'))
             ->andReturn($localResult);
 
         $reflection = new ReflectionClass($request);
