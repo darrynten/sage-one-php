@@ -337,4 +337,32 @@ class TaxInvoice extends BaseModel
         'save' => true,
         'delete' => false
     ];
+
+    /**
+     * Calculates the specified Tax Invoice total fields.
+     *
+     * @return stdClass
+     */
+    public function calculate()
+    {
+        return $this->request->request('POST', $this->endpoint, 'Calculate');
+    }
+
+    /**
+     * Emails the specified Tax Invoice.
+     * @param array $parameters
+     */
+    public function email(array $parameters)
+    {
+        $this->request->request('POST', $this->endpoint, 'Email', $parameters);
+    }
+
+    /**
+     * Emails the delivery note for a specific Tax Invoice
+     * @param array $parameters
+     */
+    public function emailDeliveryNote(array $parameters)
+    {
+        $this->request->request('POST', $this->endpoint, 'EmailDeliveryNote', $parameters);
+    }
 }

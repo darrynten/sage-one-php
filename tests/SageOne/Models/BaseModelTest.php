@@ -807,9 +807,10 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
      * @var string $path part of url
      * @var string $mockFileResponse part to the mock file with response (if it is required)
      * @var string $mockFileRequest part to the mock file with request (if it is required)
+     * @var array $parameters checks passed arguments
      * @return BaseModel
      */
-    protected function setUpRequestMock(string $method, string $class, string $path, string $mockFileResponse = null, string $mockFileRequest = null)
+    protected function setUpRequestMock(string $method, string $class, string $path, string $mockFileResponse = null, string $mockFileRequest = null, array $parameters = [])
     {
         $url = sprintf('/1.1.2/%s?apikey=key', $path);
         $urlWithoutApiKey = sprintf('/1.1.2/%s/', $path);
@@ -845,6 +846,15 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
             'Client'
         );
 
+        $token = base64_encode($this->config['username'] . ':' . $this->config['password']);
+        $tokenType = 'Basic';
+        $checkParameters = [
+            'headers' => [
+                'Authorization' => sprintf('%s %s', $tokenType, $token)
+            ],
+        ];
+        $checkParameters['query']['apikey'] = $this->config['key'];
+
         /**
         * $client in RequestHandler receives url without query params
         * they are passed as last parameter for $client->request
@@ -852,7 +862,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $fullUrl = '//localhost:8082' . $urlWithoutApiKey;
         $mockClient->shouldReceive('request')
             ->once()
-            ->with($method, $fullUrl, \Mockery::type('array'))
+            ->with($method, $fullUrl, \Mockery::subset($checkParameters))
             ->andReturn($localResult);
 
         $reflection = new ReflectionClass($request);
