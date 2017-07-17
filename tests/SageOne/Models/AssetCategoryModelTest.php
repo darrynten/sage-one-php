@@ -31,11 +31,6 @@ class AssetCategoryModelTest extends BaseModelTest
         $this->verifyCanNotNullify(AssetCategory::class, 'id');
     }
 
-    public function testCanNullify()
-    {
-        $this->verifyCanNullify(AssetCategory::class, 'purchasePrice');
-    }
-
    
 
     public function testAttributes()
@@ -94,15 +89,11 @@ class AssetCategoryModelTest extends BaseModelTest
     	$this->verifySave(AssetCategory::class, function($model){
             $model->description = "sample string 1";
             $model->id = 2;
-            $model->modified = "2017-07-17";
-            $model->created = "2017-07-17";
     		
     	}, function($savedModel){
     		$this->assertInstanceOf(AssetCategory::class, $savedModel);
             $this->assertEquals("sample string 1", $savedModel->description);
             $this->assertEquals(2, $savedModel->id);
-            $this->assertEquals("2017-07-17", $savedModel->modified);
-            $this->assertEquals("2017-07-17", $savedModel->created);
     	});
     }
 }

@@ -18,13 +18,13 @@ use DarrynTen\SageOne\BaseModel;
  * Details on writable properties for AssetCategory:
  * https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=AssetCategory
  */
-class AssetCategory extends BaseModel{
+class AssetLocation extends BaseModel{
 	/**
      * The API Endpoint
      *
      * @var string $endpoint
      */
-    protected $endpoint = 'AssetCategory';
+    protected $endpoint = 'AssetLocation';
 
     /**
      * @var array $fields
@@ -40,16 +40,6 @@ class AssetCategory extends BaseModel{
             'nullable' => false,
             'readonly' => false,
     	],
-    	'modified' =>[
-    		'type' => 'DateTime',
-            'nullable' => true,
-            'readonly' => true,
-    	],
-    	'created' =>[
-    		'type' => 'DateTime',
-            'nullable' => true,
-            'readonly' => true,
-    	]
     ];
 
     /**
