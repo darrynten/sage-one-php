@@ -204,7 +204,7 @@ class Customer extends BaseModel
             'readonly' => false,
         ],
         'customerZoneGuid' => [
-            'type' => 'string', # TODO check if it is ok, because docs say type='globally unique identifier'
+            'type' => 'string',
             'nullable' => false,
             'readonly' => false,
         ],
@@ -370,6 +370,8 @@ class Customer extends BaseModel
 
     /**
      * @var array $features
+     * TODO https://accounting.sageone.co.za/api/1.1.2/Help/Api/GET-Customer-Get_includeSalesRepDetails
+     * all() supports query parameter includeSalesRepDetails which is false by default
      */
     protected $features = [
         'all' => true,
