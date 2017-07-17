@@ -11,7 +11,7 @@ use DarrynTen\SageOne\Exception\ModelException;
 
 class AssetLocationModelTest extends BaseModelTest
 {
-	public function testInstanceOf()
+    public function testInstanceOf()
     {
         $this->verifyInstanceOf(AssetLocation::class);
     }
@@ -63,23 +63,23 @@ class AssetLocationModelTest extends BaseModelTest
             $this->assertEquals(1, $results[0]->id);
         });
     }
-    public function testGetId(){
-    	$this->verifyGetId(AssetLocation::class, 2, function($model){
-    		$this->assertInstanceOf(AssetLocation::class, $model);
+    public function testGetId()
+    {
+        $this->verifyGetId(AssetLocation::class, 2, function ($model) {
+            $this->assertInstanceOf(AssetLocation::class, $model);
             $this->assertEquals("sample string 2", $model->description);
             $this->assertEquals(1, $model->id);
-            		
-    	});
+        });
     }
-    public function testSave(){
-    	$this->verifySave(AssetLocation::class, function($model){
+    public function testSave()
+    {
+        $this->verifySave(AssetLocation::class, function ($model) {
             $model->description = "sample string 2";
             $model->id = 1;
-    		
-    	}, function($savedModel){
-    		$this->assertInstanceOf(AssetLocation::class, $savedModel);
+        }, function ($savedModel) {
+            $this->assertInstanceOf(AssetLocation::class, $savedModel);
             $this->assertEquals("sample string 2", $savedModel->description);
             $this->assertEquals(1, $savedModel->id);
-    	});
+        });
     }
 }

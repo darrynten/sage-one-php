@@ -13,7 +13,7 @@ use DarrynTen\SageOne\Exception\ModelException;
 
 class AssetModelTest extends BaseModelTest
 {
-	public function testInstanceOf()
+    public function testInstanceOf()
     {
         $this->verifyInstanceOf(Asset::class);
     }
@@ -44,115 +44,115 @@ class AssetModelTest extends BaseModelTest
     {
         $this->verifyAttributes(Asset::class, [
             'id' => [
-	            'type' => 'integer',
-	            'nullable' => false,
-	            'readonly' => false,
-	        ],
-	        'description' => [
-	            'type' => 'string',
-	            'nullable' => false,
-	            'readonly' => false,
-	        ],
-	        'category' => [
-	            'type' => 'AssetCategory',
-	            'nullable' => false,
-	            'readonly' => false,
-	        ],
-	        'location' => [
-	            'type' => 'AssetLocation',
-	            'nullable' => false,
-	            'readonly' => false,
-	        ],
-	        'datePurchased' => [
-	            'type' => 'DateTime',
-	            'nullable' => false,
-	            'readonly' => false,
-	        ],
-	        'serialNumber' => [
-	            'type' => 'string',
-	            'nullable' => false,
-	            'readonly' => false,
-	        ],
-	        'boughtFrom' => [
-	            'type' => 'string',
-	            'nullable' => false,
-	            'readonly' => false,
-	        ],
-	        'purchasePrice' => [
-	            'type' => 'double',
-	            'nullable' => true,
-	            'readonly' => false,
-	        ],
-	        'currentValue' => [
-	            'type' => 'double',
-	            'nullable' => true,
-	            'readonly' => false,
-	        ],
-	        'replacementValue' => [
-	            'type' => 'double',
-	            'nullable' => true,
-	            'readonly' => false,
-	        ],
-	        'textField1' => [
-	            'type' => 'string',
-	            'nullable' => false,
-	            'readonly' => false,
-	        ],
-	        'textField2' => [
-	            'type' => 'string',
-	            'nullable' => false,
-	            'readonly' => false,
-	        ],
-	        'textField3' => [
-	            'type' => 'string',
-	            'nullable' => false,
-	            'readonly' => false,
-	        ],
-	        'numericField1' => [
-	            'type' => 'double',
-	            'nullable' => true,
-	            'readonly' => false,
-	        ],
-	        'numericField2' => [
-	            'type' => 'double',
-	            'nullable' => true,
-	            'readonly' => false,
-	        ],
-	        'numericField3' => [
-	            'type' => 'double',
-	            'nullable' => true,
-	            'readonly' => false,
-	        ],
-	        'yesNoField1' => [
-	            'type' => 'boolean',
-	            'nullable' => false,
-	            'readonly' => false,
-	        ],
-	        'yesNoField2' => [
-	            'type' => 'boolean',
-	            'nullable' => false,
-	            'readonly' => false,
-	        ],
-	        'yesNoField3' => [
-	            'type' => 'boolean',
-	            'nullable' => false,
-	            'readonly' => false,
-	        ],
-	        'dateField1' => [
-	            'type' => 'DateTime',
-	            'nullable' => true,
-	            'readonly' => false,
-	        ],
-	        'dateField2' => [
-	            'type' => 'DateTime',
-	            'nullable' => true,
-	            'readonly' => false,
-	        ],
-	        'dateField3' => [
-	            'type' => 'DateTime',
-	            'nullable' => true,
-	            'readonly' => false,
-	        ],
+                'type' => 'integer',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'description' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'category' => [
+                'type' => 'AssetCategory',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'location' => [
+                'type' => 'AssetLocation',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'datePurchased' => [
+                'type' => 'DateTime',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'serialNumber' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'boughtFrom' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'purchasePrice' => [
+                'type' => 'double',
+                'nullable' => true,
+                'readonly' => false,
+            ],
+            'currentValue' => [
+                'type' => 'double',
+                'nullable' => true,
+                'readonly' => false,
+            ],
+            'replacementValue' => [
+                'type' => 'double',
+                'nullable' => true,
+                'readonly' => false,
+            ],
+            'textField1' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'textField2' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'textField3' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'numericField1' => [
+                'type' => 'double',
+                'nullable' => true,
+                'readonly' => false,
+            ],
+            'numericField2' => [
+                'type' => 'double',
+                'nullable' => true,
+                'readonly' => false,
+            ],
+            'numericField3' => [
+                'type' => 'double',
+                'nullable' => true,
+                'readonly' => false,
+            ],
+            'yesNoField1' => [
+                'type' => 'boolean',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'yesNoField2' => [
+                'type' => 'boolean',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'yesNoField3' => [
+                'type' => 'boolean',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'dateField1' => [
+                'type' => 'DateTime',
+                'nullable' => true,
+                'readonly' => false,
+            ],
+            'dateField2' => [
+                'type' => 'DateTime',
+                'nullable' => true,
+                'readonly' => false,
+            ],
+            'dateField3' => [
+                'type' => 'DateTime',
+                'nullable' => true,
+                'readonly' => false,
+            ],
         ]);
     }
     public function testFeatures()
@@ -196,9 +196,10 @@ class AssetModelTest extends BaseModelTest
             $this->assertEquals(11, $results[0]->id);
         });
     }
-    public function testGetId(){
-    	$this->verifyGetId(Asset::class, 2, function($model){
-    		$this->assertInstanceOf(Asset::class, $model);
+    public function testGetId()
+    {
+        $this->verifyGetId(Asset::class, 2, function ($model) {
+            $this->assertInstanceOf(Asset::class, $model);
             $this->assertEquals("sample string 1", $model->description);
             $this->assertInstanceOf(AssetCategory::class, $model->category);
             $this->assertEquals("sample string 1", $model->category->description);
@@ -226,37 +227,38 @@ class AssetModelTest extends BaseModelTest
             $this->assertEquals('2017-07-17', $model->dateField1->format('Y-m-d'));
             $this->assertEquals('2017-07-17', $model->dateField2->format('Y-m-d'));
             $this->assertEquals('2017-07-17', $model->dateField3->format('Y-m-d'));
-            $this->assertEquals(11, $model->id);    		
-    	});
+            $this->assertEquals(11, $model->id);
+        });
     }
-    public function testSave(){
-    	$this->verifySave(Asset::class, function($model){
-    		$model->description = "sample string 1";
-    		$model->category->description = "sample string 1";
-    		$model->category->id = 2;
-    		$model->location->id = 1;
-    		$model->location->description = "sample string 2";
-    		$model->datePurchased = "2017-07-17";
-    		$model->serialNumber = "sample string 3";
-    		$model->boughtFrom = "sample string 4";
-    		$model->purchasePrice = 1.0;
-    		$model->currentValue = 1.0;
-    		$model->replacementValue = 1.0;
-    		$model->textField1 = "sample string 5";
-    		$model->textField2 = "sample string 6";
-    		$model->textField3 = "sample string 7";
-    		$model->numericField1 = 1.0;
-    		$model->numericField2 = 1.0;
-    		$model->numericField3 = 1.0;
-    		$model->yesNoField1 = true;
-    		$model->yesNoField2 = true;
-    		$model->yesNoField3 = true;
-    		$model->dateField1 = "2017-07-17";
-    		$model->dateField2 = "2017-07-17";
-    		$model->dateField3 = "2017-07-17";
-    		$model->id = 11;
-    	}, function($savedModel){
-    		$this->assertInstanceOf(Asset::class, $savedModel);
+    public function testSave()
+    {
+        $this->verifySave(Asset::class, function ($model) {
+            $model->description = "sample string 1";
+            $model->category->description = "sample string 1";
+            $model->category->id = 2;
+            $model->location->id = 1;
+            $model->location->description = "sample string 2";
+            $model->datePurchased = "2017-07-17";
+            $model->serialNumber = "sample string 3";
+            $model->boughtFrom = "sample string 4";
+            $model->purchasePrice = 1.0;
+            $model->currentValue = 1.0;
+            $model->replacementValue = 1.0;
+            $model->textField1 = "sample string 5";
+            $model->textField2 = "sample string 6";
+            $model->textField3 = "sample string 7";
+            $model->numericField1 = 1.0;
+            $model->numericField2 = 1.0;
+            $model->numericField3 = 1.0;
+            $model->yesNoField1 = true;
+            $model->yesNoField2 = true;
+            $model->yesNoField3 = true;
+            $model->dateField1 = "2017-07-17";
+            $model->dateField2 = "2017-07-17";
+            $model->dateField3 = "2017-07-17";
+            $model->id = 11;
+        }, function ($savedModel) {
+            $this->assertInstanceOf(Asset::class, $savedModel);
             $this->assertEquals("sample string 1", $savedModel->description);
             $this->assertInstanceOf(AssetCategory::class, $savedModel->category);
             $this->assertEquals("sample string 1", $savedModel->category->description);
@@ -282,8 +284,7 @@ class AssetModelTest extends BaseModelTest
             $this->assertEquals('2017-07-17', $savedModel->dateField1->format('Y-m-d'));
             $this->assertEquals('2017-07-17', $savedModel->dateField2->format('Y-m-d'));
             $this->assertEquals('2017-07-17', $savedModel->dateField3->format('Y-m-d'));
-            $this->assertEquals(11, $savedModel->id);  
-    	});
+            $this->assertEquals(11, $savedModel->id);
+        });
     }
-
 }

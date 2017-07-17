@@ -11,7 +11,7 @@ use DarrynTen\SageOne\Exception\ModelException;
 
 class AssetCategoryModelTest extends BaseModelTest
 {
-	public function testInstanceOf()
+    public function testInstanceOf()
     {
         $this->verifyInstanceOf(AssetCategory::class);
     }
@@ -75,25 +75,25 @@ class AssetCategoryModelTest extends BaseModelTest
             $this->assertEquals('2017-07-17', $results[0]->created->format('Y-m-d'));
         });
     }
-    public function testGetId(){
-    	$this->verifyGetId(AssetCategory::class, 2, function($model){
-    		$this->assertInstanceOf(AssetCategory::class, $model);
+    public function testGetId()
+    {
+        $this->verifyGetId(AssetCategory::class, 2, function ($model) {
+            $this->assertInstanceOf(AssetCategory::class, $model);
             $this->assertEquals("sample string 1", $model->description);
             $this->assertEquals(2, $model->id);
             $this->assertEquals('2017-07-17', $model->modified->format('Y-m-d'));
             $this->assertEquals('2017-07-17', $model->created->format('Y-m-d'));
-            		
-    	});
+        });
     }
-    public function testSave(){
-    	$this->verifySave(AssetCategory::class, function($model){
+    public function testSave()
+    {
+        $this->verifySave(AssetCategory::class, function ($model) {
             $model->description = "sample string 1";
             $model->id = 2;
-    		
-    	}, function($savedModel){
-    		$this->assertInstanceOf(AssetCategory::class, $savedModel);
+        }, function ($savedModel) {
+            $this->assertInstanceOf(AssetCategory::class, $savedModel);
             $this->assertEquals("sample string 1", $savedModel->description);
             $this->assertEquals(2, $savedModel->id);
-    	});
+        });
     }
 }
