@@ -41,7 +41,7 @@ class SupplierAdjustmentModelTest extends BaseModelTest
 
     public function testBadImport()
     {
-        $this->verifyBadImport(SupplierAdjustment::class, 'id');
+        $this->verifyBadImport(SupplierAdjustment::class, 'date');
     }
 
     public function testAttributes()
