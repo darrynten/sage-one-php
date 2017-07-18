@@ -338,8 +338,10 @@ class ExampleModelTest extends BaseModelTest
         $this->assertArrayHasKey('validate', $value['emailAddress']);
         $this->assertEquals('integer', gettype($value['emailAddress']['validate']));
         $this->assertArrayHasKey('regex', $value['guidRegex']);
-        $this->assertEquals("/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/",
-            $value['guidRegex']['regex']);
+        $this->assertEquals(
+            "/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/",
+            $value['guidRegex']['regex']
+        );
         $this->assertRegExp($value['guidRegex']['regex'], 'e2605371-fa91-4269-9ecb-b0b57bdef52e');
         $this->assertRegExp($value['guidRegex']['regex'], 'c37fbc7d-0a09-4990-9a55-b889f6699617');
         // etc etc...
