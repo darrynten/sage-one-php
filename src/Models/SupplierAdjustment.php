@@ -95,7 +95,7 @@ class SupplierAdjustment extends BaseModel
             'nullable' => false,
             'readonly' => false,
         ],
-        'hasAttachment' => [
+        'hasAttachments' => [
             'type' => 'bool',
             'nullable' => false,
             'readonly' => false,
