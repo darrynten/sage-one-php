@@ -16,6 +16,12 @@ class SupplierOpeningBalanceModelTest extends BaseModelTest
         $this->verifyCanNotNullify(SupplierOpeningBalance::class, 'date');
     }
 
+    public function testCanNullify()
+    {
+        $this->verifyCanNullify(SupplierOpeningBalance::class, 'supplier_CurrencyId');
+        $this->verifyCanNullify(SupplierOpeningBalance::class, 'supplier_ExchangeRate');
+    }
+
     public function testBadImport()
     {
         $this->verifyBadImport(SupplierOpeningBalance::class, 'supplierId');
