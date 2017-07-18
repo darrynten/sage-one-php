@@ -507,6 +507,10 @@ abstract class BaseModel
         if (array_key_exists('regex', $this->fields[$key])) {
             $this->validateRegex($value, $this->fields[$key]['regex']);
         }
+
+        if (array_key_exists('validate', $this->fields[$key])) {
+            $this->validateFilterVar($value, $this->fields[$key]['validate']);
+        }
     }
 
     /**

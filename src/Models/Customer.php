@@ -93,6 +93,7 @@ class Customer extends BaseModel
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
+            'validate' => FILTER_VALIDATE_EMAIL,
         ],
         'webAddress' => [
             'type' => 'string',
