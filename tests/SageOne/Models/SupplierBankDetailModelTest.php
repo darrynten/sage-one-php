@@ -39,9 +39,9 @@ class SupplierBankDetailModelTest extends BaseModelTest
     {
         $this->verifyAttributes(SupplierBankDetail::class, [
             'id' => [
-            	'type' => 'integer',
-            	'nullable' => false,
-            	'readonly' => false,
+                'type' => 'integer',
+                'nullable' => false,
+                'readonly' => false,
             ],
             'supplierId' => [
                 'type' => 'integer',
@@ -106,7 +106,7 @@ class SupplierBankDetailModelTest extends BaseModelTest
 
     public function testGetId()
     {
-        $this->verifyGetId(SupplierBankDetail::class, 2, function($model){
+        $this->verifyGetId(SupplierBankDetail::class, 2, function ($model) {
             $this->assertInstanceOf(SupplierBankDetail::class, $model);
             $this->assertEquals(1, $model->id);
             $this->assertEquals(2, $model->supplierId);
@@ -120,7 +120,7 @@ class SupplierBankDetailModelTest extends BaseModelTest
 
     public function testSave()
     {
-        $this->verifySave(SupplierBankDetail::class, function($model){
+        $this->verifySave(SupplierBankDetail::class, function ($model) {
             $model->id = 1;
             $model->supplierId = 2;
             $model->bankAccountHolder = 'sample string 3';
