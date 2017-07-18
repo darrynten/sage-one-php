@@ -31,7 +31,7 @@ class SupplierAdjustmentModelTest extends BaseModelTest
 
     public function testCanNotNullify()
     {
-        $this->verifyCanNotNullify(SupplierAdjustment::class, 'supplierId');
+        $this->verifyCanNotNullify(SupplierAdjustment::class, 'id');
     }
 
     public function testCanNullify()
@@ -41,7 +41,7 @@ class SupplierAdjustmentModelTest extends BaseModelTest
 
     public function testBadImport()
     {
-        $this->verifyBadImport(SupplierAdjustment::class, 'supplier_ExchangeRate');
+        $this->verifyBadImport(SupplierAdjustment::class, 'id');
     }
 
     public function testAttributes()
