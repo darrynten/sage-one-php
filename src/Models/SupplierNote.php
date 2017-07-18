@@ -3,7 +3,7 @@
  * SageOne Library
  *
  * Official Method Documentation:
- * https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=CurrencyResponse
+ * https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=SupplierNote
  *
  * @category Library
  * @package  SageOne
