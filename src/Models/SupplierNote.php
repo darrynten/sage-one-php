@@ -11,7 +11,7 @@
  * @license  MIT <https://github.com/darrynten/sage-one-php/blob/master/LICENSE>
  * @link     https://github.com/darrynten/sage-one-php
  */
-amespace DarrynTen\SageOne\Models;
+namespace DarrynTen\SageOne\Models;
 
 use DarrynTen\SageOne\BaseModel;
 
