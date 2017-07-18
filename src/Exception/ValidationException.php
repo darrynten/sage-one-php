@@ -25,6 +25,7 @@ class ValidationException extends Exception
     const STRING_LENGTH_OUT_OF_RANGE = 10002;
     const STRING_REGEX_MISMATCH = 10003;
     const VALIDATION_TYPE_ERROR = 10004;
+    const FILTER_VAR_FAILED = 10005;
 
     /**
      * Custom Model exception handler

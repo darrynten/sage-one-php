@@ -57,6 +57,22 @@ trait Validation
     }
 
     /**
+     * Validates using filter_var
+     *
+     * @param string $value
+     * @param string $filter
+     */
+    public function validateFilterVar($value, $filter)
+    {
+        if (filter_var($value, $filter) === false) {
+            throw new ValidationException(
+                ValidationException::FILTER_VAR_FAILED,
+                sprintf('value %s failed to validate', $value)
+            );
+        }
+    }
+
+    /**
      * Validates a value is within a given range.
      *
      * The value can either be an integer, which checks an inclusive range,

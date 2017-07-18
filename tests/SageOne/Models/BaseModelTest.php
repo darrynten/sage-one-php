@@ -229,6 +229,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
             $this->verifyMinMaxAttributes($className, $name, $options, $value);
             $this->verifyRequiredAttribute($className, $name, $options, $value);
             $this->verifyRegexAttribute($className, $name, $options, $value);
+            $this->verifyFilterVarAttribute($className, $name, $options, $value);
             $this->verifyDefaultAttribute($className, $name, $options, $value);
             $this->verifyCollectionAttribute($className, $name, $options, $value);
         }
@@ -245,7 +246,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     {
         $validKeys = array_fill_keys([
             'type', 'nullable', 'readonly', 'default',
-            'required', 'min', 'max', 'regex', 'collection'
+            'required', 'min', 'max', 'regex', 'collection', 'validate'
         ], true);
         foreach (array_keys($options) as $option) {
             if (!isset($validKeys[$option])) {
@@ -412,6 +413,31 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
             if ($success === false) {
                 throw \Exception(sprintf('Model %s Failed to execute regex for %s', $className, $name));
             }
+        }
+    }
+
+    /**
+     * Verifies that field $name passes filter_var()
+     *
+     * @param string $className name of the class under checking
+     * @param string $name name of the attribute
+     * @param array $options what we check
+     *      Contains data in the following format
+     *      [
+     *          'validate' => FILTER_VALIDATE_EMAIL (for example)
+     *      ]
+     * @param array $value actual field attributes under check
+     *      has the same format as $options
+     */
+    private function verifyFilterVarAttribute($className, $name, $options, $value)
+    {
+        if (isset($options['validate'])) {
+            $this->assertTrue(
+                isset($value[$name]['validate']),
+                sprintf('Model %s "validate" for %s is not present', $className, $name)
+            );
+
+            $this->assertEquals($options['validate'], $value[$name]['validate']);
         }
     }
 
