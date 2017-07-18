@@ -7,12 +7,9 @@
  * @license  MIT <https://github.com/darrynten/sage-one-php/blob/master/LICENSE>
  * @link     https://github.com/darrynten/sage-one-php
  */
-
 namespace DarrynTen\SageOne\Models;
-
 use DarrynTen\SageOne\BaseModel;
 use DarrynTen\SageOne\Models\ModelCollection;
-
 /**
  * Supplier Model
  *
@@ -27,7 +24,6 @@ class SupplierAdjustment extends BaseModel
      * @var string $endpoint
      */
     protected $endpoint = 'SupplierAdjustment';
-
     /**
      * Defines all possible fields.
      *
@@ -96,11 +92,11 @@ class SupplierAdjustment extends BaseModel
             'readonly' => false,
         ],
         'hasAttachments' => [
-            'type' => 'bool',
+            'type' => 'boolean',
             'nullable' => false,
             'readonly' => false,
         ],
-        'supplier' => [
+        'Supplier' => [
             'type' => 'Supplier',
             'nullable' => false,
             'readonly' => false,
@@ -131,7 +127,7 @@ class SupplierAdjustment extends BaseModel
             'readonly' => true,
         ],
         'locked' => [
-            'type' => 'bool',
+            'type' => 'boolean',
             'nullable' => false,
             'readonly' => true,
         ],
@@ -145,6 +141,11 @@ class SupplierAdjustment extends BaseModel
             'nullable' => true,
             'readonly' => true,
         ],
+        'inclusive' => [
+            'type' => 'boolean',
+            'nullable' => false,
+            'readonly' => false,
+        ],
         'supplier_CurrencyId' => [
             'type' => 'integer',
             'nullable' => true,
@@ -154,9 +155,8 @@ class SupplierAdjustment extends BaseModel
             'type' => 'double',
             'nullable' => true,
             'readonly' => false,
-        ],
+        ]
     ];
-
     /**
      * Features supported by the endpoint
      *
