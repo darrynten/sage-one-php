@@ -111,7 +111,7 @@ class SupplierNoteModelTest extends BaseModelTest
     public function testGetAll()
     {
         $this->verifyGetAll(SupplierNote::class, function ($results) {
-            $this->assertEquals(2, count($results));            
+            $this->assertEquals(2, count($results));
             $this->assertEquals(1, $results[0]->supplierId);
             $this->assertEquals(5, $results[1]->supplierId);
             $this->assertEquals(1, $results[0]->userId);
@@ -136,13 +136,13 @@ class SupplierNoteModelTest extends BaseModelTest
             $this->assertEquals('sample string 43', $results[1]->note);
             $this->assertTrue($results[0]->hasAttachments);
             $this->assertEquals(false, $results[1]->hasAttachments);
-        }); 
+        });
     }
 
     public function testGetId()
     {
         $this->verifyGetId(SupplierNote::class, 2, function ($model) {
-            $this->assertInstanceOf(SupplierNote::class, $model);            
+            $this->assertInstanceOf(SupplierNote::class, $model);
             $this->assertEquals(1, $model->supplierId);
             $this->assertEquals(1, $model->userId);
             $this->assertEquals(1, $model->priority);
@@ -175,7 +175,7 @@ class SupplierNoteModelTest extends BaseModelTest
             $model->hasAttachments = true;
         }, function ($savedModel) {
             $this->assertInstanceOf(SupplierNote::class, $savedModel);
-            $this->assertInstanceOf(SupplierNote::class, $savedModel);            
+            $this->assertInstanceOf(SupplierNote::class, $savedModel);
             $this->assertEquals(1, $savedModel->supplierId);
             $this->assertEquals(1, $savedModel->userId);
             $this->assertEquals(1, $savedModel->priority);

@@ -17,83 +17,83 @@ use DarrynTen\SageOne\BaseModel;
 
 class SupplierNote extends BaseModel
 {
-	/*
+    /*
      * The API Endpoint
      *
      * @var string $endpoint
      */
-	protected $endpoint = 'SupplierNote';
+    protected $endpoint = 'SupplierNote';
 
-	/**
-	* @var array $fields
-	*/
-	protected $fields = [
-		'supplierId' => [
-			'type' => 'integer',
+    /**
+    * @var array $fields
+    */
+    protected $fields = [
+        'supplierId' => [
+            'type' => 'integer',
             'nullable' => false,
             'readonly' => false,
-		],
-		'userId' => [
-			'type' => 'integer',
+        ],
+        'userId' => [
+            'type' => 'integer',
             'nullable' => true,
             'readonly' => false,
-		],
-		'priority' => [
-			'type' => 'integer',
+        ],
+        'priority' => [
+            'type' => 'integer',
             'nullable' => true,
             'readonly' => false,
-		],
-		'noteCategoryId' => [
-			'type' => 'integer',
+        ],
+        'noteCategoryId' => [
+            'type' => 'integer',
             'nullable' => true,
             'readonly' => false,
-		],
-		'notifyAssignee' => [
-			'type' => 'boolean',
+        ],
+        'notifyAssignee' => [
+            'type' => 'boolean',
             'nullable' => true,
             'readonly' => false,
-		],
-		'id' => [
-			'type' => 'integer',
+        ],
+        'id' => [
+            'type' => 'integer',
             'nullable' => false,
             'readonly' => false,
-		],
-		'subject' => [
-			'type' => 'string',
+        ],
+        'subject' => [
+            'type' => 'string',
             'nullable' => false,
             'readonly' => false,
-		],
-		'entryDate' => [
-			'type' => 'DateTime',
+        ],
+        'entryDate' => [
+            'type' => 'DateTime',
             'nullable' => true,
             'readonly' => false,
-		],
-		'actionDate' => [
-			'type' => 'DateTime',
+        ],
+        'actionDate' => [
+            'type' => 'DateTime',
             'nullable' => false,
             'readonly' => false,
-		],
-		'status' => [
-			'type' => 'boolean',
+        ],
+        'status' => [
+            'type' => 'boolean',
             'nullable' => true,
             'readonly' => false,
-		],
-		'note' => [
-			'type' => 'string',
+        ],
+        'note' => [
+            'type' => 'string',
             'nullable' => false,
             'readonly' => false,
-		],
-		'hasAttachments' => [
-			'type' => 'boolean',
+        ],
+        'hasAttachments' => [
+            'type' => 'boolean',
             'nullable' => true,
             'readonly' => false,
-		],
-	];
+        ],
+    ];
 
-	/**
+    /**
      * @var array $features
      */
-	protected $features = [
+    protected $features = [
         'all' => true,
         'get' => true,
         'save' => true,
