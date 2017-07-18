@@ -108,7 +108,7 @@ As such we only need to focus on the tricky bits.
 
 # NB the project is evolving quickly
 
-## This might be outdared
+## This might be outdated
 
 ### If it is and you fix it please update this document
 
@@ -278,7 +278,7 @@ Models marked with an asterix are pure CRUD models
     - [ ] Supplier Invoice Attachment
     - [x] Supplier Note *
     - [ ] Supplier Note Attachment
-    - [ ] Supplier Opening Balance *
+    - [x] Supplier Opening Balance *
     - [ ] Supplier Payment
     - [ ] Supplier Purchase History
     - [ ] Supplier Return
