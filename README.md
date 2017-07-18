@@ -462,3 +462,4 @@ if you have any ideas.
 * [Vitaliy Likhachev](https://github.com/make-it-git)
 * [Igor Sergiichuk](https://github.com/igorsergiichuk)
 * [Fergus Strangways-Dixon](https://github.com/fergusdixon)
+* [Brian Maiyo](https://github.com/kiproping)

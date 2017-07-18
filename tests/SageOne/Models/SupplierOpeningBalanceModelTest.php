@@ -41,9 +41,9 @@ class SupplierOpeningBalanceModelTest extends BaseModelTest
     {
         $this->verifyAttributes(SupplierOpeningBalance::class, [
             'id' => [
-            'type' => 'integer',
-            'nullable' => false,
-            'readonly' => false,
+                'type' => 'integer',
+                'nullable' => false,
+                'readonly' => false,
             ],
             'supplierId' => [
                 'type' => 'integer',
