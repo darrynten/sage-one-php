@@ -233,7 +233,7 @@ class AssetModelTest extends BaseModelTest
 
     public function testSave()
     {
-        $this->verifySave(Asset::class, function ($model) {
+        $this->verifySave(Asset::class, function($model){
             $model->description = 'sample string 1';
             $model->category->description = 'sample string 1';
             $model->category->id = 2;
@@ -258,7 +258,7 @@ class AssetModelTest extends BaseModelTest
             $model->dateField2 = '2017-07-17';
             $model->dateField3 = '2017-07-17';
             $model->id = 11;
-        }, function ($savedModel) {
+        }, function($savedModel){
             $this->assertInstanceOf(Asset::class, $savedModel);
             $this->assertEquals('sample string 1', $savedModel->description);
             $this->assertInstanceOf(AssetCategory::class, $savedModel->category);
