@@ -156,8 +156,20 @@ class ExampleModelTest extends BaseModelTest
     public function testBadRegexSet()
     {
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('Validation error value bademail failed to validate String did not match validation regex');
+        $this->expectExceptionMessage('Validation error value badguid failed to validate String did not match validation regex');
         $this->expectExceptionCode(10003);
+
+        $exampleModel = new Example($this->config);
+
+        $exampleModel->id = 1386847;
+        $exampleModel->guidRegex = 'badguid';
+    }
+
+    public function testBadValidation()
+    {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Validation error value bademail failed to validate filter_var failed to validate');
+        $this->expectExceptionCode(10005);
 
         $exampleModel = new Example($this->config);
 
@@ -279,7 +291,7 @@ class ExampleModelTest extends BaseModelTest
         $reflectValue->setAccessible(true);
         $value = $reflectValue->getValue(new Example($this->config));
 
-        $this->assertCount(10, $value);
+        $this->assertCount(11, $value);
         $this->assertEquals('integer', $value['id']['type']);
         $this->assertEquals('boolean', gettype($value['exampleWithCamel']['nullable']));
         $this->assertEquals(true, is_array($value['exampleWithCamel']));
@@ -323,10 +335,15 @@ class ExampleModelTest extends BaseModelTest
         $this->assertArrayHasKey('max', $value['emailAddress']);
         $this->assertEquals(100, $value['emailAddress']['max']);
         $this->assertEquals('integer', gettype($value['emailAddress']['max']));
-        $this->assertArrayHasKey('regex', $value['emailAddress']);
-        $this->assertEquals('string', gettype($value['emailAddress']['regex']));
-        $this->assertRegExp($value['emailAddress']['regex'], 'me@example.com');
-        $this->assertRegExp($value['emailAddress']['regex'], 'another.valid+email@example.com');
+        $this->assertArrayHasKey('validate', $value['emailAddress']);
+        $this->assertEquals('integer', gettype($value['emailAddress']['validate']));
+        $this->assertArrayHasKey('regex', $value['guidRegex']);
+        $this->assertEquals(
+            "/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/",
+            $value['guidRegex']['regex']
+        );
+        $this->assertRegExp($value['guidRegex']['regex'], 'e2605371-fa91-4269-9ecb-b0b57bdef52e');
+        $this->assertRegExp($value['guidRegex']['regex'], 'c37fbc7d-0a09-4990-9a55-b889f6699617');
         // etc etc...
 
         // Features mapping
@@ -571,7 +588,13 @@ class ExampleModelTest extends BaseModelTest
                 'readonly' => false,
                 'min' => 0,
                 'max' => 100,
-                'regex' => "/^[A-Za-z0-9,!#\$%&'\*\+\/=\?\^_`\{\|}~-]+(\.[A-Za-z0-9,!#\$%&'\*\+\/=\?\^_`\{\|}~-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.([A-Za-z]{2,})$/"
+                'validate' => FILTER_VALIDATE_EMAIL,
+            ],
+            'guidRegex' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+                'regex' => "/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/",
             ],
             'someCollection' => [
                 'type' => 'ExampleCategory',

@@ -325,7 +325,7 @@ class AccountReceiptModelTest extends BaseModelTest
             $this->assertEquals('sample string 4', $savedModel->customer->telephone);
             $this->assertEquals('sample string 5', $savedModel->customer->fax);
             $this->assertEquals('sample string 6', $savedModel->customer->mobile);
-            $this->assertEquals('sample string 7', $savedModel->customer->email);
+            $this->assertEquals('user@example.com', $savedModel->customer->email);
             $this->assertEquals('sample string 8', $savedModel->customer->webAddress);
             $this->assertEquals(true, $savedModel->customer->active);
             $this->assertEquals(10.0, $savedModel->customer->balance);

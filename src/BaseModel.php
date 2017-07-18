@@ -111,23 +111,23 @@ abstract class BaseModel
      */
     public function __get($key)
     {
-        if (array_key_exists($key, $this->fields)) {
-            // there is some data loaded so we return it
-            if (array_key_exists($key, $this->fieldsData)) {
-                return $this->fieldsData[$key];
-            }
-
-            // there is some default value
-            if (array_key_exists('default', $this->fields[$key])) {
-                return $this->fields[$key]['default'];
-            }
-
-            // Accessing $obj->key when no default data is set returns null
-            // so we return it as default value for any described but not loaded property
-            return null;
+        if (!array_key_exists($key, $this->fields)) {
+            $this->throwException(ModelException::GETTING_UNDEFINED_PROPERTY, sprintf('key %s', $key));
         }
 
-        $this->throwException(ModelException::GETTING_UNDEFINED_PROPERTY, sprintf('key %s', $key));
+        // there is some data loaded so we return it
+        if (array_key_exists($key, $this->fieldsData)) {
+            return $this->fieldsData[$key];
+        }
+
+        // there is some default value
+        if (array_key_exists('default', $this->fields[$key])) {
+            return $this->fields[$key]['default'];
+        }
+
+        // Accessing $obj->key when no default data is set returns null
+        // so we return it as default value for any described but not loaded property
+        return null;
     }
 
     /**
@@ -504,6 +504,10 @@ abstract class BaseModel
         // If values have a defined regex then validate
         if (array_key_exists('regex', $this->fields[$key])) {
             $this->validateRegex($value, $this->fields[$key]['regex']);
+        }
+
+        if (array_key_exists('validate', $this->fields[$key])) {
+            $this->validateFilterVar($value, $this->fields[$key]['validate']);
         }
     }
 

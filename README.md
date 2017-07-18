@@ -108,7 +108,7 @@ As such we only need to focus on the tricky bits.
 
 # NB the project is evolving quickly
 
-## This might be outdared
+## This might be outdated
 
 ### If it is and you fix it please update this document
 
@@ -260,7 +260,7 @@ Models marked with an asterix are pure CRUD models
     - [ ] Account Note Attachment
     - [x] Account Opening Balance *
     - [x] Account Payment *
-    - [ ] Account Receipt *
+    - [x] Account Receipt *
   - [ ] Analysis Category
   - [ ] Analysis Type
   - [ ] Company
@@ -272,13 +272,13 @@ Models marked with an asterix are pure CRUD models
     - [ ] Supplier Additional Contact Detail
     - [ ] Supplier Adjustment
     - [ ] Supplier Ageing
-    - [ ] Supplier Bank Detail *
+    - [x] Supplier Bank Detail *
     - [x] Supplier Category *
     - [ ] Supplier Invoice
     - [ ] Supplier Invoice Attachment
-    - [ ] Supplier Note *
+    - [x] Supplier Note *
     - [ ] Supplier Note Attachment
-    - [ ] Supplier Opening Balance *
+    - [x] Supplier Opening Balance *
     - [ ] Supplier Payment
     - [ ] Supplier Purchase History
     - [ ] Supplier Return
@@ -309,9 +309,9 @@ Please feel free to open PRs for any of the following :)
 - [ ] Additional Item Price
 - [x] Additional Price List
 - [ ] Allocation
-- [ ] Asset
-- [ ] Asset Category
-- [ ] Asset Location
+- [x] Asset
+- [x] Asset Category
+- [x] Asset Location
 - [ ] Asset Note
 - [ ] Attachment
 - [ ] Bank Account
@@ -331,8 +331,8 @@ Please feel free to open PRs for any of the following :)
 - [ ] Core Tokens
 - [ ] CRM Activity
 - [ ] CRM Activity Category
-- [ ] Currency
-- [ ] Customer
+- [x] Currency
+- [x] Customer
 - [ ] Customer Additional Contact Detail
 - [ ] Customer Adjustment
 - [ ] Customer Ageing
@@ -386,7 +386,7 @@ Please feel free to open PRs for any of the following :)
 - [ ] Reporting Group
 - [ ] Sales By Item
 - [ ] Sales By Sales Representative
-- [ ] Sales Representative
+- [x] Sales Representative
 - [ ] Sales Representative Note
 - [ ] Schedule Frequency
 - [ ] Secretarial Company Role
@@ -395,7 +395,7 @@ Please feel free to open PRs for any of the following :)
 - [ ] Secretarial Stake Holder
 - [ ] Support Login Audit
 - [ ] Take On Balance
-- [ ] Tax Invoice
+- [x] Tax Invoice
 - [ ] Tax Invoice Attachment
 - [ ] Tax Period
 - [ ] Time Tracking Customer
@@ -461,3 +461,5 @@ if you have any ideas.
 * [Karolin Gaedeke](https://github.com/KaroZA)
 * [Vitaliy Likhachev](https://github.com/make-it-git)
 * [Igor Sergiichuk](https://github.com/igorsergiichuk)
+* [Fergus Strangways-Dixon](https://github.com/fergusdixon)
+* [Brian Maiyo](https://github.com/kiproping)

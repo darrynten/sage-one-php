@@ -1,0 +1,32 @@
+{
+  "Description": "sample string 1",
+  "Category": {
+    "Description": "sample string 1",
+    "ID": 2,
+    "Modified": "2017-07-17",
+    "Created": "2017-07-17"
+  },
+  "Location": {
+    "ID": 1,
+    "Description": "sample string 2"
+  },
+  "DatePurchased": "2017-07-17",
+  "SerialNumber": "sample string 3",
+  "BoughtFrom": "sample string 4",
+  "PurchasePrice": 1.0,
+  "CurrentValue": 1.0,
+  "ReplacementValue": 1.0,
+  "TextField1": "sample string 5",
+  "TextField2": "sample string 6",
+  "TextField3": "sample string 7",
+  "NumericField1": 1.0,
+  "NumericField2": 1.0,
+  "NumericField3": 1.0,
+  "YesNoField1": true,
+  "YesNoField2": true,
+  "YesNoField3": true,
+  "DateField1": "2017-07-17",
+  "DateField2": "2017-07-17",
+  "DateField3": "2017-07-17",
+  "ID": 11
+}

@@ -1,0 +1,24 @@
+{
+  "TotalResults": 3,
+  "ReturnedResults": 2,
+  "Results": [
+    {
+      "ID": 1,
+      "SupplierId": 2,
+      "BankAccountHolder": "sample string 3",
+      "BankAccountNumber": "sample string 4",
+      "BankName": "sample string 5",
+      "BankBranchCode": "sample string 6",
+      "BankAccountType": 1
+    },
+    {
+      "ID": 7,
+      "SupplierId": 12,
+      "BankAccountHolder": "sample string 26",
+      "BankAccountNumber": "sample string 41",
+      "BankName": "sample string 20",
+      "BankBranchCode": "sample string 18",
+      "BankAccountType": 3
+    }
+  ]
+}
