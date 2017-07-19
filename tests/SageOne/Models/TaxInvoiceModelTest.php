@@ -432,7 +432,7 @@ class TaxInvoiceModelTest extends BaseModelTest
             $this->assertEquals('2017-07-17', $model1->customer->dateField2->format('Y-m-d'));
             $this->assertEquals('2017-07-17', $model1->customer->dateField3->format('Y-m-d'));
             $this->assertEquals(1, $model1->customer->defaultPriceListId);
-            $this->assertEquals("sample string 2", $model1->customer->defaultPriceListName);
+            $this->assertEquals('sample string 2', $model1->customer->defaultPriceListName);
             $this->assertEquals(true, $model1->customer->acceptsElectronicInvoices);
             $this->assertEquals('2017-07-17', $model1->customer->modified->format('Y-m-d'));
             $this->assertEquals('2017-07-17', $model1->customer->created->format('Y-m-d'));
@@ -625,7 +625,7 @@ class TaxInvoiceModelTest extends BaseModelTest
             $this->assertEquals('2017-07-17', $model2->customer->dateField2->format('Y-m-d'));
             $this->assertEquals('2017-07-17', $model2->customer->dateField3->format('Y-m-d'));
             $this->assertEquals(1, $model2->customer->defaultPriceListId);
-            $this->assertEquals("sample string 2", $model2->customer->defaultPriceListName);
+            $this->assertEquals('sample string 2', $model2->customer->defaultPriceListName);
             $this->assertEquals(true, $model2->customer->acceptsElectronicInvoices);
             $this->assertEquals('2017-07-17', $model2->customer->modified->format('Y-m-d'));
             $this->assertEquals('2017-07-17', $model2->customer->created->format('Y-m-d'));
@@ -824,7 +824,7 @@ class TaxInvoiceModelTest extends BaseModelTest
             $this->assertEquals('2017-07-17', $model->customer->dateField2->format('Y-m-d'));
             $this->assertEquals('2017-07-17', $model->customer->dateField3->format('Y-m-d'));
             $this->assertEquals(1, $model->customer->defaultPriceListId);
-            $this->assertEquals("sample string 2", $model->customer->defaultPriceListName);
+            $this->assertEquals('sample string 2', $model->customer->defaultPriceListName);
             $this->assertEquals(true, $model->customer->acceptsElectronicInvoices);
             $this->assertEquals('2017-07-17', $model->customer->modified->format('Y-m-d'));
             $this->assertEquals('2017-07-17', $model->customer->created->format('Y-m-d'));
@@ -1034,7 +1034,7 @@ class TaxInvoiceModelTest extends BaseModelTest
             $this->assertEquals('2017-07-17', $savedModel->customer->dateField2->format('Y-m-d'));
             $this->assertEquals('2017-07-17', $savedModel->customer->dateField3->format('Y-m-d'));
             $this->assertEquals(1, $savedModel->customer->defaultPriceListId);
-            $this->assertEquals("sample string 2", $savedModel->customer->defaultPriceListName);
+            $this->assertEquals('sample string 2', $savedModel->customer->defaultPriceListName);
             $this->assertEquals(true, $savedModel->customer->acceptsElectronicInvoices);
             $this->assertEquals('2017-07-17', $savedModel->customer->modified->format('Y-m-d'));
             $this->assertEquals('2017-07-17', $savedModel->customer->created->format('Y-m-d'));
@@ -1138,7 +1138,7 @@ class TaxInvoiceModelTest extends BaseModelTest
     public function testEmail()
     {
         $data = json_decode(
-            file_get_contents(__DIR__ . "/../../mocks/TaxInvoice/POST_TaxInvoice_Email_REQ.json"),
+            file_get_contents(__DIR__ . '/../../mocks/TaxInvoice/POST_TaxInvoice_Email_REQ.json'),
             true
         );
 
@@ -1158,7 +1158,7 @@ class TaxInvoiceModelTest extends BaseModelTest
     public function testEmailDeliveryNote()
     {
         $data = json_decode(
-            file_get_contents(__DIR__ . "/../../mocks/TaxInvoice/POST_TaxInvoice_EmailDeliveryNote_REQ.json"),
+            file_get_contents(__DIR__ . '/../../mocks/TaxInvoice/POST_TaxInvoice_EmailDeliveryNote_REQ.json'),
             true
         );
 
@@ -1283,7 +1283,7 @@ class TaxInvoiceModelTest extends BaseModelTest
         $this->assertEquals('2017-07-17', $newModel->customer->dateField2->format('Y-m-d'));
         $this->assertEquals('2017-07-17', $newModel->customer->dateField3->format('Y-m-d'));
         $this->assertEquals(1, $newModel->customer->defaultPriceListId);
-        $this->assertEquals("sample string 2", $newModel->customer->defaultPriceListName);
+        $this->assertEquals('sample string 2', $newModel->customer->defaultPriceListName);
         $this->assertEquals(true, $newModel->customer->acceptsElectronicInvoices);
         $this->assertEquals('2017-07-17', $newModel->customer->modified->format('Y-m-d'));
         $this->assertEquals('2017-07-17', $newModel->customer->created->format('Y-m-d'));
