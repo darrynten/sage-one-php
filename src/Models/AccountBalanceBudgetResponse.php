@@ -15,7 +15,8 @@ use DarrynTen\SageOne\BaseModel;
 
 /**
  * Account Balance Budget model
- * It is dummy model for response from https://accounting.sageone.co.za/api/1.1.2/Help/Api/GET-AccountBalance-GetAccountBudgets
+ * It is dummy model for response from
+ * https://accounting.sageone.co.za/api/1.1.2/Help/Api/GET-AccountBalance-GetAccountBudgets
  */
 class AccountBalanceBudgetResponse extends BaseModel
 {
