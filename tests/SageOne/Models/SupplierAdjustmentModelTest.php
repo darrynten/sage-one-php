@@ -321,7 +321,7 @@ class SupplierAdjustmentModelTest extends BaseModelTest
             $this->assertEquals($model1->supplier_ExchangeRate, 1.0);
 
             $model2 = $results[1];
-            $this->assertEquals($model2->id, 1);
+            $this->assertEquals($model2->id, 2);
             $this->assertEquals($model2->date->format('Y-m-d'), '2017-07-18');
             $this->assertEquals($model2->supplierId, 3);
             $this->assertEquals($model2->documentNumber, 'sample string 4');
