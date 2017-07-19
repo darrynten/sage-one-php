@@ -399,7 +399,7 @@ class TaxInvoiceModelTest extends BaseModelTest
             $this->assertEquals('sample string 4', $model1->customer->telephone);
             $this->assertEquals('sample string 5', $model1->customer->fax);
             $this->assertEquals('sample string 6', $model1->customer->mobile);
-            $this->assertEquals('sample string 7', $model1->customer->email);
+            $this->assertEquals('user@example.com', $model1->customer->email);
             $this->assertEquals('sample string 8', $model1->customer->webAddress);
             $this->assertEquals(true, $model1->customer->active);
             $this->assertEquals(10.0, $model1->customer->balance);
@@ -592,7 +592,7 @@ class TaxInvoiceModelTest extends BaseModelTest
             $this->assertEquals('sample string 4', $model2->customer->telephone);
             $this->assertEquals('sample string 5', $model2->customer->fax);
             $this->assertEquals('sample string 6', $model2->customer->mobile);
-            $this->assertEquals('sample string 7', $model2->customer->email);
+            $this->assertEquals('user@example.com', $model2->customer->email);
             $this->assertEquals('sample string 8', $model2->customer->webAddress);
             $this->assertEquals(true, $model2->customer->active);
             $this->assertEquals(10.0, $model2->customer->balance);
@@ -791,7 +791,7 @@ class TaxInvoiceModelTest extends BaseModelTest
             $this->assertEquals('sample string 4', $model->customer->telephone);
             $this->assertEquals('sample string 5', $model->customer->fax);
             $this->assertEquals('sample string 6', $model->customer->mobile);
-            $this->assertEquals('sample string 7', $model->customer->email);
+            $this->assertEquals('user@example.com', $model->customer->email);
             $this->assertEquals('sample string 8', $model->customer->webAddress);
             $this->assertEquals(true, $model->customer->active);
             $this->assertEquals(10.0, $model->customer->balance);
@@ -1001,7 +1001,7 @@ class TaxInvoiceModelTest extends BaseModelTest
             $this->assertEquals('sample string 4', $savedModel->customer->telephone);
             $this->assertEquals('sample string 5', $savedModel->customer->fax);
             $this->assertEquals('sample string 6', $savedModel->customer->mobile);
-            $this->assertEquals('sample string 7', $savedModel->customer->email);
+            $this->assertEquals('user@example.com', $savedModel->customer->email);
             $this->assertEquals('sample string 8', $savedModel->customer->webAddress);
             $this->assertEquals(true, $savedModel->customer->active);
             $this->assertEquals(10.0, $savedModel->customer->balance);
@@ -1250,7 +1250,7 @@ class TaxInvoiceModelTest extends BaseModelTest
         $this->assertEquals('sample string 4', $newModel->customer->telephone);
         $this->assertEquals('sample string 5', $newModel->customer->fax);
         $this->assertEquals('sample string 6', $newModel->customer->mobile);
-        $this->assertEquals('sample string 7', $newModel->customer->email);
+        $this->assertEquals('user@example.com', $newModel->customer->email);
         $this->assertEquals('sample string 8', $newModel->customer->webAddress);
         $this->assertEquals(true, $newModel->customer->active);
         $this->assertEquals(10.0, $newModel->customer->balance);
