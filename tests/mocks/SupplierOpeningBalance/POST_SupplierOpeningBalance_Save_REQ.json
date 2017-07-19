@@ -1,0 +1,9 @@
+{
+  "SupplierId": 1,
+  "Supplier_CurrencyId": 1,
+  "Supplier_ExchangeRate": 1.0,
+  "ID": 2,
+  "Balance": 3.0,
+  "Reason": "sample string 4",
+  "Date": "2017-07-18"
+}

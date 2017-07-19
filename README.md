@@ -108,7 +108,7 @@ As such we only need to focus on the tricky bits.
 
 # NB the project is evolving quickly
 
-## This might be outdared
+## This might be outdated
 
 ### If it is and you fix it please update this document
 
@@ -272,13 +272,13 @@ Models marked with an asterix are pure CRUD models
     - [ ] Supplier Additional Contact Detail
     - [ ] Supplier Adjustment
     - [ ] Supplier Ageing
-    - [ ] Supplier Bank Detail *
+    - [x] Supplier Bank Detail *
     - [x] Supplier Category *
     - [ ] Supplier Invoice
     - [ ] Supplier Invoice Attachment
     - [x] Supplier Note *
     - [ ] Supplier Note Attachment
-    - [ ] Supplier Opening Balance *
+    - [x] Supplier Opening Balance *
     - [ ] Supplier Payment
     - [ ] Supplier Purchase History
     - [ ] Supplier Return
@@ -462,3 +462,4 @@ if you have any ideas.
 * [Vitaliy Likhachev](https://github.com/make-it-git)
 * [Igor Sergiichuk](https://github.com/igorsergiichuk)
 * [Fergus Strangways-Dixon](https://github.com/fergusdixon)
+* [Brian Maiyo](https://github.com/kiproping)

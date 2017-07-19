@@ -1,0 +1,9 @@
+{
+  "ID": 1,
+  "SupplierId": 2,
+  "BankAccountHolder": "sample string 3",
+  "BankAccountNumber": "sample string 4",
+  "BankName": "sample string 5",
+  "BankBranchCode": "sample string 6",
+  "BankAccountType": 1
+}
