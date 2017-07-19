@@ -233,6 +233,16 @@ abstract class BaseModel
     }
 
     /**
+     * Returns array representation of the Model
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return json_decode($this->toJson(), true);
+    }
+
+    /**
      * Switches between our id format and sages id format
      *
      * Sage is PascalCase ours is camelCase

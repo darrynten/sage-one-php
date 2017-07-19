@@ -1185,6 +1185,8 @@ class TaxInvoiceModelTest extends BaseModelTest
             'TaxInvoice/POST_TaxInvoice_Calculate_RESP.json'
         );
 
+        $modelData= json_decode(file_get_contents(__DIR__ . '/../../mocks/TaxInvoice/POST_TaxInvoice_Calculate_REQ.json'));
+        $model->loadResult($modelData);
         $calculated = $model->calculate();
         $newModel = new TaxInvoice($this->config);
         $newModel->loadResult($calculated);
