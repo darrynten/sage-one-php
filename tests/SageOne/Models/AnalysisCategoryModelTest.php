@@ -44,6 +44,7 @@ class AnalysisCategoryModelTest extends BaseModelTest
             str_repeat('x', 101)
         );
     }
+
     public function testFeatures()
     {
         $this->verifyFeatures(AnalysisCategory::class, [
@@ -102,5 +103,4 @@ class AnalysisCategoryModelTest extends BaseModelTest
 
         $this->assertEquals(true, $model->allowDelete());
     }
-
 }
