@@ -8,7 +8,6 @@ use DarrynTen\SageOne\Models\Account;
 use DarrynTen\SageOne\Models\AccountCategory;
 use DarrynTen\SageOne\Models\TaxType;
 use DarrynTen\SageOne\Models\SupplierCategory;
-use DarrynTen\SageOne\Request\RequestHandler;
 use GuzzleHttp\Client;
 use ReflectionClass;
 use DarrynTen\SageOne\Exception\ModelException;
