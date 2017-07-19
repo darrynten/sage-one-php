@@ -8,7 +8,9 @@
  * @link     https://github.com/darrynten/sage-one-php
  */
 namespace DarrynTen\SageOne\Models;
+
 use DarrynTen\SageOne\BaseModel;
+
 /**
  * Supplier Model
  *
