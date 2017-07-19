@@ -53,6 +53,19 @@ abstract class BaseModel
     ];
 
     /**
+     * Features HTTP methods
+     * Not all models follow same conventions like GET for all()
+     * Example AccountBalance all() requires POST method
+     * @var array $featureMethods
+     */
+    protected $featureMethods = [
+        'all' => 'GET',
+        'get' => 'GET',
+        'save' => 'POST',
+        'delete' => 'DELETE'
+    ];
+
+    /**
      * A models configuration is stored here
      *
      * @var array $config
@@ -150,7 +163,7 @@ abstract class BaseModel
             $this->throwException(ModelException::NO_GET_ALL_SUPPORT);
         }
 
-        $results = $this->request->request('GET', $this->endpoint, 'Get');
+        $results = $this->request->request($this->featureMethods['all'], $this->endpoint, 'Get');
 
         return new ModelCollection(static::class, $this->config, $results);
     }
@@ -172,7 +185,7 @@ abstract class BaseModel
             $this->throwException(ModelException::NO_GET_ONE_SUPPORT, sprintf('id %s', $id));
         }
 
-        $result = $this->request->request('GET', $this->endpoint, sprintf('Get/%s', $id));
+        $result = $this->request->request($this->featureMethods['get'], $this->endpoint, sprintf('Get/%s', $id));
 
         $this->loadResult($result);
     }
@@ -197,7 +210,7 @@ abstract class BaseModel
         }
 
         // TODO Response handle?
-        $this->request->request('DELETE', $this->endpoint, sprintf('Delete/%s', $id));
+        $this->request->request($this->featureMethods['delete'], $this->endpoint, sprintf('Delete/%s', $id));
     }
 
     /**
@@ -214,7 +227,7 @@ abstract class BaseModel
         }
 
         // TODO Submission Body and Validation
-        $data = $this->request->request('POST', $this->endpoint, 'Save');
+        $data = $this->request->request($this->featureMethods['save'], $this->endpoint, 'Save');
         return $data;
     }
 
