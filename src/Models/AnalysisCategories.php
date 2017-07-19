@@ -11,7 +11,8 @@
 
 namespace DarrynTen\SageOne\Models;
 
-use DarrynTen\SageOne\ModelCollection;
+use DarrynTen\SageOne\Models\ModelCollection;
+use DarrynTen\SageOne\Models\AnalysisCategory;
 
 /**
  * Account Opening Balance model
@@ -21,5 +22,25 @@ use DarrynTen\SageOne\ModelCollection;
  */
 class AnalysisCategories extends ModelCollection
 {
-
+	protected $fields = [
+		'categories' => [
+            'type' => 'collection',
+            'nullable' => false,
+            'readonly' => false,
+        ],
+	];
+    
+	// public function __construct($class, $config, $results)
+ //    {
+	// 	protected $arr = array(1);
+	// 	protected $config = [
+	// 	    'username' => 'username',
+	// 	    'password' => 'password',
+	// 	    'key' => 'key',
+	// 	    'endpoint' => '//localhost:8082',
+	// 	    'version' => '1.1.2',
+	// 	    'companyId' => null,
+	// 	];
+ //    	parent::__construct($class, $config, $results);
+ //    }
 }

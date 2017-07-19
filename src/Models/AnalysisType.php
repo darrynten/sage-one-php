@@ -12,7 +12,7 @@
 namespace DarrynTen\SageOne\Models;
 
 use DarrynTen\SageOne\BaseModel;
-
+use DarrynTen\SageOne\Models\ModelCollection;
 /**
  * AnalysisType model
  *
@@ -43,7 +43,7 @@ class AnalysisType extends BaseModel
             'readonly' => false,
         ],
         'analysisCategories' => [
-            'type' => 'analysisCategories',
+            'type' => 'AnalysisCategories',
             'nullable' => false,
             'readonly' => false,
         ],

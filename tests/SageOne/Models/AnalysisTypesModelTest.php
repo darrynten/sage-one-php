@@ -43,7 +43,7 @@ class AnalysisTypeModelTest extends BaseModelTest
 	            'readonly' => false,
 	        ],
 	        'analysisCategories' => [
-	            'type' => 'analysisCategories',
+	            'type' => 'AnalysisCategories',
 	            'nullable' => false,
 	            'readonly' => false,
 	        ],
@@ -70,22 +70,21 @@ class AnalysisTypeModelTest extends BaseModelTest
             $this->assertEquals(5, $results[1]->id);
             $this->assertEquals('sample string 2', $results[0]->description);
             $this->assertEquals('sample string 8', $results[1]->description);
-
-            $this->assertEquals(2, count($results[0]->analysisCategories));
-            $this->assertEquals(1, $results[0]->analysisCategories[0]->id);
-            $this->assertEquals(2, $results[0]->analysisCategories[0]->analysisTypeId);
-            $this->assertEquals('sample string 3', $results[0]->analysisCategories[0]->description);
-            $this->assertEquals(6, $results[0]->analysisCategories[1]->id);
-            $this->assertEquals(1, $results[0]->analysisCategories[1]->analysisTypeId);
-            $this->assertEquals('sample string 4', $results[0]->analysisCategories[1]->description);
-            $this->assertEquals(false, $results[0]->active);
-            $this->assertEquals(2, count($results[1]->analysisCategories));
-            $this->assertEquals(3, $results[1]->analysisCategories[0]->id);
-            $this->assertEquals(7, $results[1]->analysisCategories[0]->analysisTypeId);
-            $this->assertEquals('sample string 20', $results[1]->analysisCategories[0]->description);
-            $this->assertEquals(11, $results[1]->analysisCategories[1]->id);
-            $this->assertEquals(21, $results[1]->analysisCategories[1]->analysisTypeId);
-            $this->assertEquals('sample string 30', $results[1]->analysisCategories[1]->description);
+            $this->assertEquals(2, count($results[0]->analysisCategories->categories));
+            $this->assertEquals(1, $results[0]->analysisCategories->categories[0]->id);
+            $this->assertEquals(2, $results[0]->analysisCategories->categories[0]->analysisTypeId);
+            $this->assertEquals('sample string 3', $results[0]->analysisCategories->categories[0]->description);
+            $this->assertEquals(6, $results[0]->analysisCategories->categories[1]->id);
+            $this->assertEquals(1, $results[0]->analysisCategories->categories[1]->analysisTypeId);
+            $this->assertEquals('sample string 4', $results[0]->analysisCategories->categories[1]->description);
+            $this->assertEquals(true, $results[0]->active);
+            $this->assertEquals(2, count($results[1]->analysisCategories->categories));
+            $this->assertEquals(3, $results[1]->analysisCategories->categories[0]->id);
+            $this->assertEquals(7, $results[1]->analysisCategories->categories[0]->analysisTypeId);
+            $this->assertEquals('sample string 20', $results[1]->analysisCategories->categories[0]->description);
+            $this->assertEquals(11, $results[1]->analysisCategories->categories[1]->id);
+            $this->assertEquals(21, $results[1]->analysisCategories->categories[1]->analysisTypeId);
+            $this->assertEquals('sample string 30', $results[1]->analysisCategories->categories[1]->description);
             $this->assertEquals(false, $results[1]->active);
 
         });
