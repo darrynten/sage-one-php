@@ -107,13 +107,13 @@ class CompanyEntityTypeModelTest extends BaseModelTest
             $this->assertEquals("2017-07-19", $results[0]->created->format('Y-m-d'));
             $this->assertEquals(true, $results[0]->canIssueShares);
 
-            $this->assertEquals(1, $results[1]->id);
-            $this->assertEquals(2, $results[1]->countryId);
-            $this->assertEquals("sample string 3", $results[1]->name);
-            $this->assertEquals("sample string 4", $results[1]->ownershipDescription);
-            $this->assertEquals("sample string 5", $results[1]->holdingDescription);
-            $this->assertEquals("sample string 6", $results[1]->holdingUnit);
-            $this->assertEquals("2017-07-19", $results[1]->created->format('Y-m-d'));
+            $this->assertEquals(4, $results[1]->id);
+            $this->assertEquals(7, $results[1]->countryId);
+            $this->assertEquals("sample string 9", $results[1]->name);
+            $this->assertEquals("sample string 10", $results[1]->ownershipDescription);
+            $this->assertEquals("sample string 11", $results[1]->holdingDescription);
+            $this->assertEquals("sample string 12", $results[1]->holdingUnit);
+            $this->assertEquals("2015-01-16", $results[1]->created->format('Y-m-d'));
             $this->assertEquals(false, $results[1]->canIssueShares);
         });
     }
