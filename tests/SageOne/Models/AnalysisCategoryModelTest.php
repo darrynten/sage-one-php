@@ -61,8 +61,7 @@ class AnalysisCategoryModelTest extends BaseModelTest
             $this->assertEquals(2, $results[0]->analysisTypeId);
             $this->assertEquals(1, $results[1]->analysisTypeId);
             $this->assertEquals('sample string 3', $results[0]->description);
-            $this->assertEquals('sample string 7', $results[1]->description);
-            
+            $this->assertEquals('sample string 7', $results[1]->description);            
         });
     }
 
