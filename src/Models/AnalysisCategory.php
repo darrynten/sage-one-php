@@ -17,7 +17,7 @@ use DarrynTen\SageOne\BaseModel;
 /**
  * Analysis Category Model
  *
- * Details on writable properties for Account Note:
+ * The Analysis Category Service provides methods that allow for the retrieval, creation and deletion of Analysis Categories.
  * https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=AnalysisCategory
  */
 class AnalysisCategory extends BaseModel
