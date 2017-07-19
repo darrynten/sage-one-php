@@ -22,7 +22,7 @@ use DarrynTen\SageOne\BaseModel;
  */
 class AnalysisCategory extends BaseModel
 {
-	/**
+    /**
      * The API Endpoint
      *
      * @var string $endpoint
@@ -49,7 +49,7 @@ class AnalysisCategory extends BaseModel
             'readonly' => false,
             'min' => 0,
             'max' => 100,
-        ],        
+        ],
     ];
 
     /**
