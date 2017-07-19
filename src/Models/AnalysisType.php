@@ -11,7 +11,6 @@
 
 namespace DarrynTen\SageOne\Models;
 
-
 use DarrynTen\SageOne\BaseModel;
 
 /**
@@ -69,7 +68,8 @@ class AnalysisType extends BaseModel
         'save' => true,
         'delete' => true,
     ];
-    public function batchSave($array)
+
+    public function batchSave(array $array)
     {
         return $this->request->request('POST', $this->endpoint, 'SaveBatch');
     }
