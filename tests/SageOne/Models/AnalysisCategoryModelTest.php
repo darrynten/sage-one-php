@@ -99,5 +99,13 @@ class AnalysisCategoryModelTest extends BaseModelTest
             'AnalysisCategory/POST_AnalysisCategory_AllowDelete_REQ.json'
         );
         $this->assertEquals(true, $model->allowDelete());
+        $model = $this->setUpRequestMock(
+            'POST',
+            AnalysisCategory::class,
+            'AnalysisCategory/AllowDelete',
+            'AnalysisCategory/POST_AnalysisCategory_AllowDelete2_RESP.json',
+            'AnalysisCategory/POST_AnalysisCategory_AllowDelete_REQ.json'
+        );
+        $this->assertEquals(false, $model->allowDelete());
     }
 }
