@@ -1,0 +1,26 @@
+{
+  "TotalResults": 3,
+  "ReturnedResults": 2,
+  "Results": [
+    {
+      "ID": 1,
+      "CountryId": 2,
+      "Name": "sample string 3",
+      "OwnershipDescription": "sample string 4",
+      "HoldingDescription": "sample string 5",
+      "HoldingUnit": "sample string 6",
+      "Created": "2017-07-19",
+      "CanIssueShares": true
+    },
+    {
+      "ID": 1,
+      "CountryId": 2,
+      "Name": "sample string 3",
+      "OwnershipDescription": "sample string 4",
+      "HoldingDescription": "sample string 5",
+      "HoldingUnit": "sample string 6",
+      "Created": "2017-07-19",
+      "CanIssueShares": false
+    }
+  ]
+}
