@@ -31,7 +31,7 @@ class AnalysisCategoryModelTest extends BaseModelTest
                 'min' => 0,
                 'max' => 100,
             ],
-        ]);        
+        ]);
     }
 
     public function testDescriptionLength()
@@ -56,7 +56,6 @@ class AnalysisCategoryModelTest extends BaseModelTest
     {
         $this->verifyGetAll(AnalysisCategory::class, function ($results) {
             $this->assertCount(2, $results);
-
             $this->assertEquals(1, $results[0]->id);
             $this->assertEquals(5, $results[1]->id);
             $this->assertEquals(2, $results[0]->analysisTypeId);
@@ -100,7 +99,6 @@ class AnalysisCategoryModelTest extends BaseModelTest
             'AnalysisCategory/POST_AnalysisCategory_AllowDelete_RESP.json',
             'AnalysisCategory/POST_AnalysisCategory_AllowDelete_REQ.json'
         );
-
         $this->assertEquals(true, $model->allowDelete());
     }
 }
