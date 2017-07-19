@@ -1,0 +1,18 @@
+{
+  "ID": 1,
+  "EmailAddress": "sample string 2",
+  "CCAddress": "sample string 3",
+  "BCCAddress": "sample string 4",
+  "Subject": "sample string 5",
+  "Message": "sample string 6",
+  "Attachments": [
+    {
+      "Key": "sample string 1",
+      "Value": "sample string 2"
+    },
+    {
+      "Key": "sample string 1",
+      "Value": "sample string 2"
+    }
+  ]
+}
