@@ -4,7 +4,7 @@ namespace DarrynTen\SageOne\Tests\SageOne\Models;
 
 use DarrynTen\SageOne\Models\CompanyEntityType;
 
-class CompanyEntityTypeModelTest extends BaseModelTest 
+class CompanyEntityTypeModelTest extends BaseModelTest
 {
     public function testInstanceOf()
     {

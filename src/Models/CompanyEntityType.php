@@ -21,7 +21,7 @@ use DarrynTen\SageOne\BaseModel;
  */
 class CompanyEntityType extends BaseModel
 {
-        /**
+    /**
      * The API Endpoint
      *
      * @var string $endpoint
