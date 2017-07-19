@@ -44,9 +44,11 @@ class AnalysisCategory extends BaseModel
             'readonly' => false,
         ],
         'description' => [
-            'type' => 'integer',
+            'type' => 'string',
             'nullable' => false,
             'readonly' => false,
+            'min' => 0,
+            'max' => 100,
         ],        
     ];
 
