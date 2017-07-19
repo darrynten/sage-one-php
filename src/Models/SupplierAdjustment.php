@@ -7,11 +7,8 @@
  * @license  MIT <https://github.com/darrynten/sage-one-php/blob/master/LICENSE>
  * @link     https://github.com/darrynten/sage-one-php
  */
-
 namespace DarrynTen\SageOne\Models;
-
 use DarrynTen\SageOne\BaseModel;
-
 /**
  * Supplier Model
  *
@@ -98,7 +95,7 @@ class SupplierAdjustment extends BaseModel
             'nullable' => false,
             'readonly' => false,
         ],
-        'Supplier' => [
+        'supplier' => [
             'type' => 'Supplier',
             'nullable' => false,
             'readonly' => false,
@@ -159,6 +156,22 @@ class SupplierAdjustment extends BaseModel
             'readonly' => false,
         ]
     ];
+
+    /**
+     * Calculates the specified Tax Invoice total fields.
+     *
+     * @return stdClass
+     */
+    public function calculate()
+    {
+        return $this->request->request(
+            'POST',
+            $this->endpoint,
+            'Calculate',
+            $this->toArray()
+        );
+    }
+
     /**
      * Features supported by the endpoint
      *
