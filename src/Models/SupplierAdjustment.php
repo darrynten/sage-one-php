@@ -11,7 +11,6 @@
 namespace DarrynTen\SageOne\Models;
 
 use DarrynTen\SageOne\BaseModel;
-use DarrynTen\SageOne\Models\ModelCollection;
 
 /**
  * Supplier Model
