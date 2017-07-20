@@ -370,7 +370,7 @@ abstract class BaseModel
      *
      * @return mixed
      */
-    private function processResultItem($resultItem, $config)
+    protected function processResultItem($resultItem, $config)
     {
         if ($this->isValidPrimitive($resultItem, $config['type'])) {
             return $resultItem;

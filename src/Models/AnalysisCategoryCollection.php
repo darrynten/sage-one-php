@@ -11,6 +11,7 @@
 
 namespace DarrynTen\SageOne\Models;
 
+use DarrynTen\SageOne\BaseModel;
 use DarrynTen\SageOne\Models\ModelCollection;
 use DarrynTen\SageOne\Models\AnalysisCategory;
 use DarrynTen\SageOne\Exception\ModelCollectionException;
@@ -21,9 +22,23 @@ use DarrynTen\SageOne\Exception\ModelCollectionException;
  * A wrapper class for the array of Analysis Categories returned by Analysis Type
  * https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=AnalysisType
  */
-class AnalysisCategoryCollection extends ModelCollection
+class AnalysisCategoryCollection extends BaseModel
 {
-    /*
+    protected $categories;
+
+    /**
+     * AnalysisCategoryCollection constructor.
+     * @param array $config
+     * @param $results
+     */
+    public function __construct(array $config, $results)
+    {
+        parent::__construct($config);
+        $this->categories = $results;
+    }
+
+
+    /**
      * This class can only return the results array
      */
     public function __get($key)

@@ -86,22 +86,21 @@ class AnalysisTypeModelTest extends BaseModelTest
             $this->assertEquals(21, $results[1]->analysisCategories->categories[1]->analysisTypeId);
             $this->assertEquals('sample string 30', $results[1]->analysisCategories->categories[1]->description);
             $this->assertEquals(false, $results[1]->active);
-
         });
     }
 
     public function testGetId()
     {
-        $this->verifyGetId(AnalysisType::class, 2, function ($model) {
-            $model->assertEquals(1, $model->id);
-            $model->assertEquals('sample string 2', $model->description);
-            $model->assertEquals(1, $model->analysisCategories[0]->id);
-            $model->assertEquals(2, $model->analysisCategories[0]->analysisTypeId);
-            $model->assertEquals('sample string 3', $model->analysisCategories[0]->description);
-            $model->assertEquals(3, $model->analysisCategories[1]->id);
-            $model->assertEquals(1, $model->analysisCategories[1]->analysisTypeId);
-            $model->assertEquals('sample string 8', $model->analysisCategories[1]->description);
-            $model->assertTrue($model->active);
+        $this->verifyGetId(AnalysisType::class, 1, function ($model) {
+            $this->assertEquals(1, $model->id);
+            $this->assertEquals('sample string 2', $model->description);
+            $this->assertEquals(1, $model->analysisCategories[0]->id);
+            $this->assertEquals(2, $model->analysisCategories[0]->analysisTypeId);
+            $this->assertEquals('sample string 3', $model->analysisCategories[0]->description);
+            $this->assertEquals(3, $model->analysisCategories[1]->id);
+            $this->assertEquals(1, $model->analysisCategories[1]->analysisTypeId);
+            $this->assertEquals('sample string 8', $model->analysisCategories[1]->description);
+            $this->assertTrue($model->active);
         });
     }
 

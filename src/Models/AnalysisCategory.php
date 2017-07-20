@@ -77,14 +77,14 @@ class AnalysisCategory extends BaseModel
      * Overriding all to return AnalysisCategoryCollection
      * @return AnalysisCategoryCollection
      */
-    public function all(array $parameters = [])
-    {
-        if (!$this->features['all']) {
-            $this->throwException(ModelException::NO_GET_ALL_SUPPORT);
-        }
-
-        $results = $this->request->request('GET', $this->endpoint, 'Get', $parameters);
-
-        return new AnalysisCategoryCollection(static::class, $this->config, $results);
-    }
+//    public function all(array $parameters = [])
+//    {
+//        if (!$this->features['all']) {
+//            $this->throwException(ModelException::NO_GET_ALL_SUPPORT);
+//        }
+//
+//        $results = $this->request->request('GET', $this->endpoint, 'Get', $parameters);
+//
+//        return new AnalysisCategoryCollection(static::class, $this->config, $results);
+//    }
 }
