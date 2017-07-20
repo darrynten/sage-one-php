@@ -162,6 +162,20 @@ class Example extends BaseModel
     ];
 
     /**
+     * Features HTTP methods
+     * Not all models follow same conventions like GET for all()
+     * Example AccountBalance all() requires POST method
+     * These are default HTTP methods and it works for almost all models
+     * @var array $featureMethods
+     */
+    protected $featureMethods = [
+        'all' => 'GET',
+        'get' => 'GET',
+        'save' => 'POST',
+        'delete' => 'DELETE'
+    ];
+
+    /**
      * Any additional construction you may need to do
      *
      * @var array $config
