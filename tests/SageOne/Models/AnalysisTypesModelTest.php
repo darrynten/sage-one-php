@@ -43,7 +43,7 @@ class AnalysisTypeModelTest extends BaseModelTest
 	            'readonly' => false,
 	        ],
 	        'analysisCategories' => [
-	            'type' => 'AnalysisCategories',
+	            'type' => 'AnalysisCategoryCollection',
 	            'nullable' => false,
 	            'readonly' => false,
 	        ],

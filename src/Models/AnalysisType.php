@@ -43,7 +43,7 @@ class AnalysisType extends BaseModel
             'readonly' => false,
         ],
         'analysisCategories' => [
-            'type' => 'AnalysisCategories',
+            'type' => 'AnalysisCategoryCollection',
             'nullable' => false,
             'readonly' => false,
         ],
