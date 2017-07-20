@@ -1,0 +1,16 @@
+{
+  "TotalResults": 3,
+  "ReturnedResults": 2,
+  "Results": [
+    {
+      "ID": 1,
+      "AnalysisTypeId": 2,
+      "Description": "sample string 3"
+    },
+    {
+      "ID": 5,
+      "AnalysisTypeId": 1,
+      "Description": "sample string 7"
+    }
+  ]
+}
