@@ -600,9 +600,9 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
             $mockFile
         );
 
-        $model->get($id);
+        $response = $model->get($id);
 
-        $whatToCheck($model);
+        $whatToCheck($response);
     }
 
     /**

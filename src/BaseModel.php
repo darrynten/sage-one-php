@@ -53,6 +53,15 @@ abstract class BaseModel
     ];
 
     /**
+     * Specifies what get() returns
+     * @var string $featureGetReturns
+     */
+    protected $featureGetReturns = [
+        'type' => 'this',
+        'collection' => false
+    ];
+
+    /**
      * A models configuration is stored here
      *
      * @var array $config
@@ -175,7 +184,22 @@ abstract class BaseModel
 
         $result = $this->request->request('GET', $this->endpoint, sprintf('Get/%s', $id));
 
-        $this->loadResult($result);
+        if ($this->featureGetReturns['type'] === 'this') {
+            $this->loadResult($result);
+            return $this;
+        }
+
+        if ($this->featureGetReturns['collection'] === true) {
+            return new ModelCollection($this->featureGetReturns['type'], $this->config, $result);
+        } else {
+            /**
+             * May be other models have something related
+             */
+            throw new \Exception(
+                sprtinf('class "%s", method get() type %s not implemented'),
+                static::class, $this->featureGetReturns['type']
+            );
+        }
     }
 
     /**
