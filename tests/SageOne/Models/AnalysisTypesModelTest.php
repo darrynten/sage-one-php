@@ -112,6 +112,8 @@ class AnalysisTypeModelTest extends BaseModelTest
     public function testSave()
     {
         $this->verifySave(AnalysisType::class, function ($model) {
+//          Potential easy way
+//          $model = AnalysisType::loadResult(json_decode(file_get_contents(__DIR__ . '/../../mocks/AnalysisType/GET_AnalysisType_Get_xx.json')));
         	$model->id = 1;
         	$model->description = 'sample string 2';
         	$model->analysisCategories->results[0]->id = 1;

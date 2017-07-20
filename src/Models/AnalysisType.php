@@ -75,4 +75,12 @@ class AnalysisType extends BaseModel
     {
         return $this->request->request('POST', $this->endpoint, 'SaveBatch');
     }
+
+//    public function __get($key)
+//    {
+//        if($key === 'analysisCategories'){
+//            return $this->analysisCategory->results;
+//        }
+//        return parent::__get($key);
+//    }
 }
