@@ -73,12 +73,4 @@ class AnalysisType extends BaseModel
     {
         return $this->request->request('POST', $this->endpoint, 'SaveBatch');
     }
-
-    protected function processResultItem($resultItem, $config) {
-        if ($config['type'] === 'AnalysisCategoryCollection') {
-            return $resultItem;
-            //return new AnalysisCategoryCollection($config, $resultItem);
-        }
-        parent::processResultItem($resultItem, $config);
-    }
 }

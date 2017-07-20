@@ -24,30 +24,6 @@ use DarrynTen\SageOne\Exception\ModelCollectionException;
  */
 class AnalysisCategoryCollection extends BaseModel
 {
-    protected $categories;
 
-    /**
-     * AnalysisCategoryCollection constructor.
-     * @param array $config
-     * @param $results
-     */
-    public function __construct(array $config, $results)
-    {
-        parent::__construct($config);
-        $this->categories = $results;
-    }
-
-
-    /**
-     * This class can only return the results array
-     */
-    public function __get($key)
-    {
-        if ($key === 'results') {
-            return $this->{$key};
-        }
-
-        throw new ModelCollectionException(ModelCollectionException::GETTING_UNDEFINED_PROPERTY, $key);
-    }
 
 }
