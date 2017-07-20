@@ -261,16 +261,16 @@ Models marked with an asterix are pure CRUD models
     - [x] Account Opening Balance *
     - [x] Account Payment *
     - [x] Account Receipt *
-  - [ ] Analysis Category
+  - [x] Analysis Category
   - [ ] Analysis Type
   - [ ] Company
-    - [ ] Company Entity Type *
+    - [x] Company Entity Type *
     - [ ] Company Note
   - [x] Currency *
   - [ ] Exchange Rates
   - [x] Supplier *
     - [ ] Supplier Additional Contact Detail
-    - [ ] Supplier Adjustment
+    - [x] Supplier Adjustment
     - [ ] Supplier Ageing
     - [x] Supplier Bank Detail *
     - [x] Supplier Category *
