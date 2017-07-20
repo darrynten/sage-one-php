@@ -98,4 +98,17 @@ class SupplierAdditionalContactDetail extends BaseModel
         'save' => true,
         'delete' => true,
     ];
+
+    /**
+     * Returns a collection of additional contact details.
+     *
+     * @var string $id id of specific supplier
+     * @return ModelCollection A collection of entities
+     * @link https://accounting.sageone.co.za/api/1.1.2/Help/Api/GET-SupplierAdditionalContactDetail-GetAdditionalContactDetails-id
+     */
+    public function getAdditionalContactDetails(string $id)
+    {
+        $results = $this->request->request('GET', $this->endpoint, sprintf('GetAdditionalContactDetails/%s', $id));
+        return new ModelCollection(SupplierAdditionalContactDetail::class, $this->config, $results);
+    }
 }

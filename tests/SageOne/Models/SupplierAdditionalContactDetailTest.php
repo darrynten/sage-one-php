@@ -3,9 +3,8 @@
 namespace DarrynTen\SageOne\Tests\SageOne\Models;
 
 use DarrynTen\SageOne\Models\SupplierAdditionalContactDetail;
-use DarrynTen\SageOne\Exception\ModelException;
 
-class SupplierModelTest extends BaseModelTest
+class SupplierAdditionalContactDetailTest extends BaseModelTest
 {
     public function testInstanceOf()
     {
@@ -164,6 +163,34 @@ class SupplierModelTest extends BaseModelTest
         });
     }
 
+    public function testGetAdditionalContactDetails()
+    {
+        $additionalContactDetails = $this->setUpRequestMock('GET',
+            SupplierAdditionalContactDetail::class, 'SupplierAdditionalContactDetail/GetAdditionalContactDetails/7', 'SupplierAdditionalContactDetail/GET_SupplierAdditionalContactDetail_GetAdditionalContactDetails.json');
+        $allAdditionalContactDetails = $additionalContactDetails->getAdditionalContactDetails(7);
+
+        $this->assertInstanceOf(SupplierAdditionalContactDetail::class, $allAdditionalContactDetails->results[0]);
+        $this->assertInstanceOf(SupplierAdditionalContactDetail::class, $allAdditionalContactDetails->results[1]);
+        
+        $this->assertEquals(1, $allAdditionalContactDetails->results[0]->id);
+        $this->assertEquals(7, $allAdditionalContactDetails->results[0]->supplierId);
+        $this->assertEquals('sample string 3', $allAdditionalContactDetails->results[0]->contactName);
+        $this->assertEquals('sample string 4', $allAdditionalContactDetails->results[0]->designation);
+        $this->assertEquals('sample string 5', $allAdditionalContactDetails->results[0]->telephone);
+        $this->assertEquals('sample string 6', $allAdditionalContactDetails->results[0]->fax);
+        $this->assertEquals('sample string 7', $allAdditionalContactDetails->results[0]->mobile);
+        $this->assertEquals('sample@string.com', $allAdditionalContactDetails->results[0]->email);
+
+        $this->assertEquals(2, $allAdditionalContactDetails->results[1]->id);
+        $this->assertEquals(7, $allAdditionalContactDetails->results[1]->supplierId);
+        $this->assertEquals('Nathaniel', $allAdditionalContactDetails->results[1]->contactName);
+        $this->assertEquals('Super supplier', $allAdditionalContactDetails->results[1]->designation);
+        $this->assertEquals('999999999', $allAdditionalContactDetails->results[1]->telephone);
+        $this->assertEquals('sample string sixty', $allAdditionalContactDetails->results[1]->fax);
+        $this->assertEquals('101010101010', $allAdditionalContactDetails->results[1]->mobile);
+        $this->assertEquals('nathan@something.com', $allAdditionalContactDetails->results[1]->email);
+    }
+
     public function testSave()
     {
         $this->verifySave(SupplierAdditionalContactDetail::class, function ($model) {
@@ -175,7 +202,7 @@ class SupplierModelTest extends BaseModelTest
             $model->fax = 'sample string 6';
             $model->mobile = 'sample string 7';
             $model->email = 'sample@live.com';
-            }, function ($savedModel) {
+        }, function ($savedModel) {
             $this->assertInstanceOf(SupplierAdditionalContactDetail::class, $savedModel);
             $this->assertEquals(1, $savedModel->id);
             $this->assertEquals(2, $savedModel->supplierId);
