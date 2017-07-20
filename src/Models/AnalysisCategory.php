@@ -72,4 +72,19 @@ class AnalysisCategory extends BaseModel
     {
         return $this->request->request('POST', $this->endpoint, 'AllowDelete');
     }
+
+    /**
+     * Overriding all to return AnalysisCategoryCollection
+     * @return AnalysisCategoryCollection
+     */
+    public function all(array $parameters = [])
+    {
+        if (!$this->features['all']) {
+            $this->throwException(ModelException::NO_GET_ALL_SUPPORT);
+        }
+
+        $results = $this->request->request('GET', $this->endpoint, 'Get', $parameters);
+
+        return new AnalysisCategoryCollection(static::class, $this->config, $results);
+    }
 }

@@ -13,6 +13,7 @@ namespace DarrynTen\SageOne\Models;
 
 use DarrynTen\SageOne\Models\ModelCollection;
 use DarrynTen\SageOne\Models\AnalysisCategory;
+use DarrynTen\SageOne\Exception\ModelCollectionException;
 
 /**
  * Analysis Category Collection
@@ -22,5 +23,16 @@ use DarrynTen\SageOne\Models\AnalysisCategory;
  */
 class AnalysisCategoryCollection extends ModelCollection
 {
-	
+    /*
+     * This class can only return the results array
+     */
+    public function __get($key)
+    {
+        if ($key === 'results') {
+            return $this->{$key};
+        }
+
+        throw new ModelCollectionException(ModelCollectionException::GETTING_UNDEFINED_PROPERTY, $key);
+    }
+
 }
