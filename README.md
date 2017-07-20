@@ -270,7 +270,7 @@ Models marked with an asterix are pure CRUD models
   - [ ] Exchange Rates
   - [x] Supplier *
     - [ ] Supplier Additional Contact Detail
-    - [ ] Supplier Adjustment
+    - [x] Supplier Adjustment
     - [ ] Supplier Ageing
     - [x] Supplier Bank Detail *
     - [x] Supplier Category *
