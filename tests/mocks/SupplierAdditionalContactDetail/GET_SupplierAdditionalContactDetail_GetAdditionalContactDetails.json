@@ -1,0 +1,22 @@
+[
+  {
+    "ID": 1,
+    "SupplierId": 7,
+    "ContactName": "sample string 3",
+    "Designation": "sample string 4",
+    "Telephone": "sample string 5",
+    "Fax": "sample string 6",
+    "Mobile": "sample string 7",
+    "Email": "sample@string.com"
+  },
+  {
+    "ID": 2,
+    "SupplierId": 7,
+    "ContactName": "Nathaniel",
+    "Designation": "Super supplier",
+    "Telephone": "999999999",
+    "Fax": "sample string sixty",
+    "Mobile": "101010101010",
+    "Email": "nathan@something.com"
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "ID": 5,
+  "SupplierId": 6,
+  "ContactName": "str 7",
+  "Designation": "sample string 50",
+  "Telephone": "sample string 8",
+  "Fax": "sample string",
+  "Mobile": "7777777",
+  "Email": "email@hotmail.com"
+}
