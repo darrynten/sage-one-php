@@ -116,12 +116,12 @@ class AnalysisTypeModelTest extends BaseModelTest
 //          $model = AnalysisType::loadResult(json_decode(file_get_contents(__DIR__ . '/../../mocks/AnalysisType/GET_AnalysisType_Get_xx.json')));
         	$model->id = 1;
         	$model->description = 'sample string 2';
-        	$model->analysisCategories->results[0]->id = 1;
-        	$model->analysisCategories->results[0]->analysisTypeId = 2;
-        	$model->analysisCategories->results[0]->description = 'sample string 3';
-        	$model->analysisCategories->results[1]->id = 5;
-        	$model->analysisCategories->results[1]->analysisTypeId = 3;
-        	$model->analysisCategories->results[1]->description = 'sample string 1';
+//        	$model->analysisCategories->results[0]->id = 1;
+//        	$model->analysisCategories->results[0]->analysisTypeId = 2;
+//        	$model->analysisCategories->results[0]->description = 'sample string 3';
+//        	$model->analysisCategories->results[1]->id = 5;
+//        	$model->analysisCategories->results[1]->analysisTypeId = 3;
+//        	$model->analysisCategories->results[1]->description = 'sample string 1';
             $model->active = true;
             
         }, function ($savedModel) {
