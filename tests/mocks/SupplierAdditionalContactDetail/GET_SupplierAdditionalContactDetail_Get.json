@@ -1,0 +1,26 @@
+{
+  "TotalResults": 4,
+  "ReturnedResults": 2,
+  "Results": [
+    {
+      "ID": 1,
+      "SupplierId": 2,
+      "ContactName": "sample string 3",
+      "Designation": "sample string 4",
+      "Telephone": "sample string 5",
+      "Fax": "sample string 6",
+      "Mobile": "sample string 7",
+      "Email": "another@live.com"
+    },
+    {
+      "ID": 3,
+      "SupplierId": 4,
+      "ContactName": "rrrrrrrrrrr",
+      "Designation": "sample 5",
+      "Telephone": "sample string 50",
+      "Fax": "sample string 90",
+      "Mobile": "sample string 70",
+      "Email": "somemail@gmail.com"
+    }
+  ]
+}
