@@ -11,15 +11,13 @@
 
 namespace DarrynTen\SageOne\Models;
 
-use DarrynTen\SageOne\BasicEnum;
-
 /**
  * DocumentType Model
  *
  * Details on Document Type model:
  * https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=DocumentType
  */
-class DocumentType extends BasicEnum
+class DocumentType
 {
     const Ignored = -1;
     const CustomerOpeningBalance = 0;

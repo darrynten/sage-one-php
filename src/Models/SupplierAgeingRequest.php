@@ -91,7 +91,6 @@ class SupplierAgeingRequest extends BaseModel
             'readonly' => true,
         ]
     ];
-}
 
     /**
      * Features supported by the endpoint
@@ -106,3 +105,4 @@ class SupplierAgeingRequest extends BaseModel
         'save' => false,
         'delete' => false,
     ];
+}

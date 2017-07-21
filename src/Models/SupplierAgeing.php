@@ -21,7 +21,7 @@ use DarrynTen\SageOne\BaseModel;
  */
 class SupplierAgeing extends BaseModel
 {
-	/**
+    /**
      * The API Endpoint
      *
      * @var string $endpoint
@@ -79,7 +79,6 @@ class SupplierAgeing extends BaseModel
             'readonly' => true,
         ]
     ];
-}
 
     /**
      * Features supported by the endpoint
@@ -107,3 +106,4 @@ class SupplierAgeing extends BaseModel
         $results = $this->request->request('POST', $this->endpoint, sprintf('GetSummary', $supplierAgeingRequest));
         return new ModelCollection(SupplierAgeing::class, $this->config, $results);
     }
+}

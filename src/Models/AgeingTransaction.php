@@ -21,7 +21,7 @@ use DarrynTen\SageOne\BaseModel;
  */
 class AgeingTransaction extends BaseModel
 {
-	/**
+    /**
      * The API Endpoint
      *
      * @var string $endpoint
@@ -102,8 +102,7 @@ class AgeingTransaction extends BaseModel
             'nullable' => false,
             'readonly' => false,
         ],
-
-    ]
+    ];
 
     /**
      * Features supported by the endpoint
