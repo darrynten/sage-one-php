@@ -14,67 +14,79 @@ namespace DarrynTen\SageOne\Models;
 use DarrynTen\SageOne\BaseModel;
 
 /**
- * SupplierAgeing Model
+ * SupplierAgeingRequest Model
  *
- * Details on Supplier Ageing model:
- * https://accounting.sageone.co.za/api/1.1.2/Help#bookmark_SupplierAgeing
+ * Details on Supplier Ageing Request model:
+ * https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=SupplierAgeingRequestModel
  */
-class SupplierAgeing extends BaseModel
+class SupplierAgeingRequest extends BaseModel
 {
-	/**
-     * The API Endpoint
-     *
-     * @var string $endpoint
-     */
-    protected $endpoint = 'SupplierAgeing';
-
     /**
      * @var array $fields
      */
     protected $fields = [
-        'supplier' =>[
-            'type' => 'Supplier',
+        'supplierId' =>[
+            'type' => 'integer',
             'nullable' => false,
             'readonly' => false,
         ],
-        'date' =>[
+        'toDate' =>[
             'type' => 'dateTime',
             'nullable' => false,
             'readonly' => false,
         ],
-        'ageingTransactions' =>[
-            'type' => 'AgeingTransactions',
-            'nullable' => true,
-            'readonly' => true,
-            'collection' => true,
-        ],
-        'total' =>[
-            'type' => 'double',
+        'summary' =>[
+            'type' => 'boolean',
             'nullable' => true,
             'readonly' => true,
         ],
-        'current' =>[
-            'type' => 'double',
+        'ageingPeriod' =>[
+            'type' => 'integer',
             'nullable' => true,
             'readonly' => true,
         ],
-        'days30' =>[
-            'type' => 'double',
+        'fromSupplier' =>[
+            'type' => 'string',
             'nullable' => true,
             'readonly' => true,
         ],
-        'days60' =>[
-            'type' => 'double',
+        'toSupplier' =>[
+            'type' => 'string',
             'nullable' => true,
             'readonly' => true,
         ],
-        'days90' =>[
-            'type' => 'double',
+        'fromCategory' =>[
+            'type' => 'string',
             'nullable' => true,
             'readonly' => true,
         ],
-        'days120Plus' =>[
-            'type' => 'double',
+        'toCategory' =>[
+            'type' => 'string',
+            'nullable' => true,
+            'readonly' => true,
+        ],
+        'includeActive' =>[
+            'type' => 'boolean',
+            'nullable' => true,
+            'readonly' => true,
+        ],
+        'includeInactive' =>[
+            'type' => 'boolean',
+            'nullable' => true,
+            'readonly' => true,
+        ],
+        'basedOnDueDate' =>[
+            'type' => 'boolean',
+            'nullable' => true,
+            'readonly' => true,
+        ],
+        'excludeZeroBalance' =>[
+            'type' => 'boolean',
+            'nullable' => true,
+            'readonly' => true,
+        ],
+        'useForeignCurrency' =>[
+            'type' => 'boolean',
             'nullable' => true,
             'readonly' => true,
         ]
@@ -94,16 +106,3 @@ class SupplierAgeing extends BaseModel
         'save' => false,
         'delete' => false,
     ];
-
-    /**
-     * Gets the specified Supplier Ageing Summary statement based on the request.
-     *
-     * @param SupplierAgeingRequest model
-     * @return Supplier Ageing model
-     * @link https://accounting.sageone.co.za/api/1.1.2/Help/Api/POST-SupplierAgeing-GetSummary
-     */
-    public function getSummary(SupplierAgeingRequest $supplierAgeingRequest)
-    {
-        $results = $this->request->request('POST', $this->endpoint, sprintf('GetSummary', $supplierAgeingRequest));
-        return new ModelCollection(SupplierAgeing::class, $this->config, $results);
-    }
