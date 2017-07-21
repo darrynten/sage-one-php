@@ -70,6 +70,11 @@ class AnalysisType extends BaseModel
         'delete' => true,
     ];
 
+    /**
+     * Saves a collection of Analysis Types.
+     *
+     * @return array
+     */
     public function saveBatch()
     {
         return $this->request->request('POST', $this->endpoint, 'SaveBatch');

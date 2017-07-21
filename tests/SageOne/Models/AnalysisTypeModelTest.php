@@ -33,9 +33,9 @@ class AnalysisTypeModelTest extends BaseModelTest
     {
         $this->verifyAttributes(AnalysisType::class, [
             'id' => [
-            'type' => 'integer',
-            'nullable' => false,
-            'readonly' => false,
+                'type' => 'integer',
+                'nullable' => false,
+                'readonly' => false,
             ],
             'description' => [
                 'type' => 'string',
