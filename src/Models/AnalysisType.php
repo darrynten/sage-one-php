@@ -12,7 +12,6 @@
 namespace DarrynTen\SageOne\Models;
 
 use DarrynTen\SageOne\BaseModel;
-use DarrynTen\SageOne\Models\ModelCollection;
 
 /**
  * AnalysisType model
@@ -71,16 +70,8 @@ class AnalysisType extends BaseModel
         'delete' => true,
     ];
 
-    public function batchSave(array $array)
+    public function saveBatch()
     {
         return $this->request->request('POST', $this->endpoint, 'SaveBatch');
     }
-
-//    public function __get($key)
-//    {
-//        if($key === 'analysisCategories'){
-//            return $this->analysisCategory->results;
-//        }
-//        return parent::__get($key);
-//    }
 }
