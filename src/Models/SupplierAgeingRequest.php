@@ -22,6 +22,13 @@ use DarrynTen\SageOne\BaseModel;
 class SupplierAgeingRequest extends BaseModel
 {
     /**
+     * The API Endpoint
+     *
+     * @var string $endpoint
+     */
+    protected $endpoint = 'SupplierAgeingRequest';
+
+    /**
      * @var array $fields
      */
     protected $fields = [
@@ -37,58 +44,58 @@ class SupplierAgeingRequest extends BaseModel
         ],
         'summary' =>[
             'type' => 'boolean',
-            'nullable' => true,
-            'readonly' => true,
+            'nullable' => false,
+            'readonly' => false,
         ],
         'ageingPeriod' =>[
             'type' => 'integer',
-            'nullable' => true,
-            'readonly' => true,
+            'nullable' => false,
+            'readonly' => false,
         ],
         'fromSupplier' =>[
             'type' => 'string',
-            'nullable' => true,
-            'readonly' => true,
+            'nullable' => false,
+            'readonly' => false,
         ],
         'toSupplier' =>[
             'type' => 'string',
-            'nullable' => true,
-            'readonly' => true,
+            'nullable' => false,
+            'readonly' => false,
         ],
         'fromCategory' =>[
             'type' => 'string',
-            'nullable' => true,
-            'readonly' => true,
+            'nullable' => false,
+            'readonly' => false,
         ],
         'toCategory' =>[
             'type' => 'string',
-            'nullable' => true,
-            'readonly' => true,
+            'nullable' => false,
+            'readonly' => false,
         ],
         'includeActive' =>[
             'type' => 'boolean',
-            'nullable' => true,
-            'readonly' => true,
+            'nullable' => false,
+            'readonly' => false,
         ],
         'includeInactive' =>[
             'type' => 'boolean',
-            'nullable' => true,
-            'readonly' => true,
+            'nullable' => false,
+            'readonly' => false,
         ],
         'basedOnDueDate' =>[
             'type' => 'boolean',
-            'nullable' => true,
-            'readonly' => true,
+            'nullable' => false,
+            'readonly' => false,
         ],
         'excludeZeroBalance' =>[
             'type' => 'boolean',
-            'nullable' => true,
-            'readonly' => true,
+            'nullable' => false,
+            'readonly' => false,
         ],
         'useForeignCurrency' =>[
             'type' => 'boolean',
-            'nullable' => true,
-            'readonly' => true,
+            'nullable' => false,
+            'readonly' => false,
         ]
     ];
 

@@ -1,0 +1,15 @@
+{
+  "SupplierId": 1,
+  "ToDate": "2017-07-20",
+  "Summary": true,
+  "AgeingPeriod": 4,
+  "FromSupplier": "sample string 5",
+  "ToSupplier": "sample string 6",
+  "FromCategory": "sample string 7",
+  "ToCategory": "sample string 8",
+  "IncludeActive": true,
+  "IncludeInactive": true,
+  "BasedOnDueDate": true,
+  "ExcludeZeroBalance": true,
+  "UseForeignCurrency": true
+}

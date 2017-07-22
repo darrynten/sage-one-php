@@ -12,6 +12,8 @@
 namespace DarrynTen\SageOne\Models;
 
 use DarrynTen\SageOne\BaseModel;
+use DarrynTen\SageOne\Models\SupplierAgeingRequest;
+
 
 /**
  * SupplierAgeing Model
@@ -38,45 +40,45 @@ class SupplierAgeing extends BaseModel
             'readonly' => false,
         ],
         'date' =>[
-            'type' => 'dateTime',
+            'type' => 'DateTime',
             'nullable' => false,
             'readonly' => false,
         ],
         'ageingTransactions' =>[
-            'type' => 'AgeingTransactions',
-            'nullable' => true,
-            'readonly' => true,
+            'type' => 'AgeingTransaction',
+            'nullable' => false,
+            'readonly' => false,
             'collection' => true,
         ],
         'total' =>[
             'type' => 'double',
-            'nullable' => true,
-            'readonly' => true,
+            'nullable' => false,
+            'readonly' => false,
         ],
         'current' =>[
             'type' => 'double',
-            'nullable' => true,
-            'readonly' => true,
+            'nullable' => false,
+            'readonly' => false,
         ],
         'days30' =>[
             'type' => 'double',
-            'nullable' => true,
-            'readonly' => true,
+            'nullable' => false,
+            'readonly' => false,
         ],
         'days60' =>[
             'type' => 'double',
-            'nullable' => true,
-            'readonly' => true,
+            'nullable' => false,
+            'readonly' => false,
         ],
         'days90' =>[
             'type' => 'double',
-            'nullable' => true,
-            'readonly' => true,
+            'nullable' => false,
+            'readonly' => false,
         ],
         'days120Plus' =>[
             'type' => 'double',
-            'nullable' => true,
-            'readonly' => true,
+            'nullable' => false,
+            'readonly' => false,
         ]
     ];
 
@@ -101,9 +103,9 @@ class SupplierAgeing extends BaseModel
      * @return Supplier Ageing model
      * @link https://accounting.sageone.co.za/api/1.1.2/Help/Api/POST-SupplierAgeing-GetSummary
      */
-    public function getSummary(SupplierAgeingRequest $supplierAgeingRequest)
+    public function getSummary($supplierAgeingRequest)
     {
-        $results = $this->request->request('POST', $this->endpoint, sprintf('GetSummary', $supplierAgeingRequest));
-        return new ModelCollection(SupplierAgeing::class, $this->config, $results);
+        $result = $this->request->request('POST', $this->endpoint, 'GetSummary', $supplierAgeingRequest);
+        return $this->loadResult($result);
     }
 }
