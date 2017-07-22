@@ -1,0 +1,56 @@
+{
+  "TotalResults": 1,
+  "ReturnedResults": 2,
+  "Results": [
+    {
+      "ID": 1,
+      "Type": 1,
+      "Date": "2017-07-19",
+      "Description": "sample string 3",
+      "CategoryId": 4,
+      "CategoryDescription": "sample string 5",
+      "AnalysisCategoryId": 1,
+      "AnalysisCategoryDescription": "sample string 6",
+      "Debit": 1.0,
+      "Credit": 1.0,
+      "Total": 1.0,
+      "BudgetItemPeriods": [
+        {
+          "ID": 1,
+          "Date": "2017-07-19",
+          "Total": 3.0
+        },
+        {
+          "ID": 1,
+          "Date": "2017-07-19",
+          "Total": 3.0
+        }
+      ]
+    },
+    {
+      "ID": 1,
+      "Type": 1,
+      "Date": "2017-07-19",
+      "Description": "sample string 3",
+      "CategoryId": 4,
+      "CategoryDescription": "sample string 5",
+      "AnalysisCategoryId": 1,
+      "AnalysisCategoryDescription": "sample string 6",
+      "Debit": 1.0,
+      "Credit": 1.0,
+      "Total": 1.0,
+      "BudgetItemPeriods": [
+        {
+          "ID": 1,
+          "Date": "2017-07-19",
+          "Total": 3.0
+        },
+        {
+          "ID": 1,
+          "Date": "2017-07-19",
+          "Total": 3.0
+        }
+      ]
+    }
+  ]
+}
