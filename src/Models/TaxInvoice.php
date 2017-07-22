@@ -337,4 +337,75 @@ class TaxInvoice extends BaseModel
         'save' => true,
         'delete' => false
     ];
+
+    /**
+     * Calculates the specified Tax Invoice total fields.
+     *
+     * @return stdClass
+     */
+    public function calculate()
+    {
+        return $this->request->request(
+            'POST',
+            $this->endpoint,
+            'Calculate',
+            $this->toArray()
+        );
+    }
+
+    /**
+     * Emails the specified Tax Invoice.
+     * @param array $parameters
+     *   Example of request
+     *   {
+     *       "ID": 1,
+     *       "EmailAddress": "example@example.com",
+     *       "CCAddress": "sample string 3",
+     *       "BCCAddress": "sample string 4",
+     *       "Subject": "sample string 5",
+     *       "Message": "sample string 6",
+     *       "Attachments": [
+     *           {
+     *           "Key": "sample string 1",
+     *           "Value": "sample string 2"
+     *           },
+     *           {
+     *           "Key": "sample string 1",
+     *           "Value": "sample string 2"
+     *           }
+     *       ]
+     *   }
+     */
+    public function email(array $parameters)
+    {
+        $this->request->request('POST', $this->endpoint, 'Email', $parameters);
+    }
+
+    /**
+     * Emails the delivery note for a specific Tax Invoice
+     * @param array $parameters
+     *   Example of request
+     *   {
+     *       "ID": 1,
+     *       "EmailAddress": "example@example.com",
+     *       "CCAddress": "sample string 3",
+     *       "BCCAddress": "sample string 4",
+     *       "Subject": "sample string 5",
+     *       "Message": "sample string 6",
+     *       "Attachments": [
+     *           {
+     *           "Key": "sample string 1",
+     *           "Value": "sample string 2"
+     *           },
+     *           {
+     *           "Key": "sample string 1",
+     *           "Value": "sample string 2"
+     *           }
+     *       ]
+     *   }
+     */
+    public function emailDeliveryNote(array $parameters)
+    {
+        $this->request->request('POST', $this->endpoint, 'EmailDeliveryNote', $parameters);
+    }
 }

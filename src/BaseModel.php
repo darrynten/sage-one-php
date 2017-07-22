@@ -155,15 +155,16 @@ abstract class BaseModel
      * $account = new Account;
      * $allAccounts = $account->all();
      *
+     * @param array $parameters
      * @return ModelCollection A collection of entities
      */
-    public function all()
+    public function all(array $parameters = [])
     {
         if (!$this->features['all']) {
             $this->throwException(ModelException::NO_GET_ALL_SUPPORT);
         }
 
-        $results = $this->request->request($this->featureMethods['all'], $this->endpoint, 'Get');
+        $results = $this->request->request($this->featureMethods['all'], $this->endpoint, 'Get', $parameters);
 
         return new ModelCollection(static::class, $this->config, $results);
     }
@@ -218,16 +219,18 @@ abstract class BaseModel
      *
      * TODO: Actually perform this action!
      *
+     * @param array $parameters
      * @return stdClass Representaion of response
      */
-    public function save()
+    public function save(array $parameters = [])
     {
         if (!$this->features['save']) {
             $this->throwException(ModelException::NO_SAVE_SUPPORT);
         }
 
         // TODO Submission Body and Validation
-        $data = $this->request->request($this->featureMethods['save'], $this->endpoint, 'Save');
+        $data = $this->request->request($this->featureMethods['save'], $this->endpoint, 'Save', $parameters);
+
         return $data;
     }
 
@@ -241,6 +244,16 @@ abstract class BaseModel
     public function toJson()
     {
         return json_encode($this->toObject(), JSON_PRESERVE_ZERO_FRACTION);
+    }
+
+    /**
+     * Returns array representation of the Model
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return json_decode($this->toJson(), true);
     }
 
     /**
