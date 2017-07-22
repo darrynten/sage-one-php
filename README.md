@@ -267,7 +267,7 @@ Models marked with an asterix are pure CRUD models
     - [x] Company Entity Type *
     - [ ] Company Note
   - [x] Currency *
-  - [ ] Exchange Rates
+  - [x] Exchange Rates
   - [x] Supplier *
     - [x] Supplier Additional Contact Detail
     - [x] Supplier Adjustment
