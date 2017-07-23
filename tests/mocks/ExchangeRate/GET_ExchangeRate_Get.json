@@ -1,0 +1,44 @@
+{
+  "TotalResults": 1,
+  "ReturnedResults": 2,
+  "Results": [
+    {
+      "IsBaseCurrency": true,
+      "BaseCurrencyCode": "sample string 2",
+      "CurrencyCode": "sample string 3",
+      "CurrencyDescription": "sample string 4",
+      "CurrencySymbol": "sample string 5",
+      "HasActivity": true,
+      "IsFutureRate": true,
+      "RateInverse": 0.083333333333333329,
+      "OriginalRateInverse": 0.076923076923076927,
+      "GroupId": "603f71f8-824e-4b3b-9d21-0a94aa06396b",
+      "RateDate": "2017-07-22",
+      "ExchangeRateId": 10,
+      "CurrencyId": 11,
+      "Rate": 12.0,
+      "OriginalRate": 13.0,
+      "HasManualRate": true,
+      "Note": "sample string 15"
+    },
+    {
+      "IsBaseCurrency": true,
+      "BaseCurrencyCode": "sample string 2",
+      "CurrencyCode": "sample string 3",
+      "CurrencyDescription": "sample string 4",
+      "CurrencySymbol": "sample string 5",
+      "HasActivity": true,
+      "IsFutureRate": true,
+      "RateInverse": 0.083333333333333329,
+      "OriginalRateInverse": 0.076923076923076927,
+      "GroupId": "603f71f8-824e-4b3b-9d21-0a94aa06396b",
+      "RateDate": "2017-07-22",
+      "ExchangeRateId": 10,
+      "CurrencyId": 11,
+      "Rate": 12.0,
+      "OriginalRate": 13.0,
+      "HasManualRate": true,
+      "Note": "sample string 15"
+    }
+  ]
+}
