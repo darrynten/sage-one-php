@@ -99,7 +99,7 @@ class AccountBalanceModelTest extends BaseModelTest
     {
         $this->verifyGetAll(AccountBalance::class, function ($results) {
             $this->assertEquals(2, count($results));
-            
+ 
             $model1 = $results[0];
             $model2 = $results[1];
 
