@@ -2,7 +2,7 @@
 
 namespace DarrynTen\SageOne\Tests\SageOne\Models;
 
-use DarrynTen\SageOne\Exception\NotYetImplementedException;
+use DarrynTen\SageOne\Exception\LibraryException;
 use DarrynTen\SageOne\Models\AnalysisType;
 use GuzzleHttp\Client;
 use ReflectionClass;
@@ -136,7 +136,7 @@ class AnalysisTypeModelTest extends BaseModelTest
         );
         $modelData = json_decode(file_get_contents(__DIR__ . '/../../mocks/AnalysisType/POST_AnalysisType_SaveBatch_REQ.json'));
         $model->loadResult($modelData[0]);
-        $this->expectException(NotYetImplementedException::class);
+        $this->expectException(LibraryException::class);
         $this->expectExceptionMessage('Error, "\DarrynTen\SageOne\Models\AnalysisType::saveBatch" Method not yet implemented. This still needs to be added, please consider contributing to the project.');
         $this->expectExceptionCode(10301);
         $model->SaveBatch();

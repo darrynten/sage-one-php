@@ -2,16 +2,16 @@
 
 namespace DarrynTen\SageOne\Tests\SageOne;
 
-use DarrynTen\SageOne\Exception\NotYetImplementedException;
+use DarrynTen\SageOne\Exception\LibraryException;
 
-class NotYetImplementedExceptionTest extends \PHPUnit_Framework_TestCase
+class LibraryExceptionTest extends \PHPUnit_Framework_TestCase
 {
     public function testMethodNotImplemented()
     {
-        $this->expectException(NotYetImplementedException::class);
+        $this->expectException(LibraryException::class);
         $this->expectExceptionMessage('Error, "/path/to/method::here()" Method not yet implemented. This still needs to be added, please consider contributing to the project.');
         $this->expectExceptionCode(10301);
 
-        throw new NotYetImplementedException(10301, '/path/to/method::here()');
+        throw new LibraryException(10301, '/path/to/method::here()');
     }
 }

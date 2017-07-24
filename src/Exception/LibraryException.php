@@ -19,7 +19,7 @@ use DarrynTen\SageOne\Exception\ExceptionMessages;
  *
  * @package SageOne
  */
-class NotYetImplementedException extends Exception
+class LibraryException extends Exception
 {
     const METHOD_NOT_IMPLEMENTED = 10301;
 
@@ -33,7 +33,7 @@ class NotYetImplementedException extends Exception
         $message = sprintf(
             'Error, "%s" %s. This still needs to be added, please consider contributing to the project.',
             $address,
-            ExceptionMessages::$notYetImplementedErrorMessages[$code]
+            ExceptionMessages::$libraryErrorMessages[$code]
         );
         parent::__construct($message, $code);
     }

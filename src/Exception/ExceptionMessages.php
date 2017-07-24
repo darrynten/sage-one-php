@@ -54,7 +54,7 @@ class ExceptionMessages
     /**
      * @var array $modelCollectionErrorMessages [102xx codes]
      */
-    public static $notYetImplementedErrorMessages = [
+    public static $libraryErrorMessages = [
         10300 => 'Not yet implemented',
         10301 => 'Method not yet implemented'
     ];

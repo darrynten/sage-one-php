@@ -12,7 +12,7 @@
 namespace DarrynTen\SageOne\Models;
 
 use DarrynTen\SageOne\BaseModel;
-use DarrynTen\SageOne\Exception\NotYetImplementedException;
+use DarrynTen\SageOne\Exception\LibraryException;
 
 /**
  * AnalysisType model
@@ -78,8 +78,8 @@ class AnalysisType extends BaseModel
      */
     public function saveBatch()
     {
-        throw new NotYetImplementedException(
-            NotYetImplementedException::METHOD_NOT_IMPLEMENTED,
+        throw new LibraryException(
+            LibraryException::METHOD_NOT_IMPLEMENTED,
             '\DarrynTen\SageOne\Models\AnalysisType::saveBatch'
         );
     }
