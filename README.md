@@ -299,7 +299,7 @@ Models marked with an asterix are pure CRUD models
     - [x] Supplier Purchase History
     - [ ] Supplier Return
     - [ ] Supplier Return Attachment
-    - [ ] Supplier Statement *
+    - [x] Supplier Statement *
     - [ ] Supplier Transaction Listing
   - [x] Tax Type *
 
