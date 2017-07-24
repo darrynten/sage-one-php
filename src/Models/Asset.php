@@ -41,6 +41,8 @@ class Asset extends BaseModel
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
+            'min' => 0,
+            'max' => 500,
         ],
         'category' => [
             'type' => 'AssetCategory',
@@ -61,11 +63,15 @@ class Asset extends BaseModel
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
+            'min' => 0,
+            'max' => 100,
         ],
         'boughtFrom' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
+            'min' => 0,
+            'max' => 100,
         ],
         'purchasePrice' => [
             'type' => 'double',
