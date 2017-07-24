@@ -14,7 +14,6 @@ namespace DarrynTen\SageOne\Models;
 use DarrynTen\SageOne\BaseModel;
 use DarrynTen\SageOne\Models\SupplierAgeingRequest;
 
-
 /**
  * SupplierAgeing Model
  *
@@ -106,6 +105,8 @@ class SupplierAgeing extends BaseModel
     public function getSummary($supplierAgeingRequest)
     {
         $result = $this->request->request('POST', $this->endpoint, 'GetSummary', $supplierAgeingRequest);
-        return $this->loadResult($result);
+        $supplierAgeing = new SupplierAgeing($this->config);
+        $supplierAgeing->loadResult($result);
+        return $supplierAgeing;
     }
 }

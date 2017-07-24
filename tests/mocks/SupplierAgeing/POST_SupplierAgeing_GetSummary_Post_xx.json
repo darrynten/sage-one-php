@@ -57,8 +57,8 @@
       "IsDefault": true,
       "HasActivity": true,
       "IsManualTax": true,
-      "Created": "2017-07-22",
-      "Modified": "2017-07-22"
+      "Created": "2017-07-23",
+      "Modified": "2017-07-23"
     },
     "DueDateMethodId": 1,
     "DueDateMethodValue": 1,
@@ -83,20 +83,20 @@
       "Days120Plus": 11.0
     },
     {
-      "DocumentHeaderId": 1,
-      "DocumentTypeId": 2,
-      "DocumentNumber": "sample string 3",
-      "Reference": "sample string 4",
-      "DocumentType": 2,
-      "Comment": "sample string 5",
-      "Date": "2017-07-22T00:00:00Z",
-      "DueDate": "2017-07-22",
-      "Total": 45.0,
-      "Current": 7.0,
-      "Days30": 8.0,
-      "Days60": 9.0,
-      "Days90": 10.0,
-      "Days120Plus": 11.0
+      "DocumentHeaderId": 5,
+      "DocumentTypeId": 6,
+      "DocumentNumber": "sample string 7",
+      "Reference": "sample string 8",
+      "DocumentType": 9,
+      "Comment": "sample string 10",
+      "Date": "2017-07-11T00:00:00Z",
+      "DueDate": "2017-07-12",
+      "Total": 13.0,
+      "Current": 14.0,
+      "Days30": 15.0,
+      "Days60": 16.0,
+      "Days90": 17.0,
+      "Days120Plus": 18.0
     }
   ],
   "Total": 20.0,
