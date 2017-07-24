@@ -444,7 +444,7 @@ abstract class BaseModel
      */
     public function loadResult(\stdClass $result)
     {
-        // We only care about entires that are defined in the model
+        // We only care about entries that are defined in the model
         foreach ($this->fields as $key => $config) {
             $remoteKey = $this->getRemoteKey($key);
 
