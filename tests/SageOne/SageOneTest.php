@@ -78,6 +78,8 @@ class SageOneTest extends \PHPUnit_Framework_TestCase
     public function testMissingUsername()
     {
         $this->expectException(ConfigException::class);
+        $this->expectExceptionMessage('Config Username missing');
+        $this->expectExceptionCode(10401);
         $request = new SageOne([]);
         $this->assertEquals($request->config->version, '1.1.2');
     }
@@ -85,6 +87,8 @@ class SageOneTest extends \PHPUnit_Framework_TestCase
     public function testMissingPassword()
     {
         $this->expectException(ConfigException::class);
+        $this->expectExceptionMessage('Config Password missing');
+        $this->expectExceptionCode(10402);
         $request = new SageOne([
             'username' => 'username'
         ]);
@@ -94,6 +98,8 @@ class SageOneTest extends \PHPUnit_Framework_TestCase
     public function testMissingKey()
     {
         $this->expectException(ConfigException::class);
+        $this->expectExceptionMessage('Config API key missing');
+        $this->expectExceptionCode(10403);
         $request = new SageOne([
             'username' => 'username',
             'password' => 'password'
