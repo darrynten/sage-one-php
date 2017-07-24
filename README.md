@@ -276,7 +276,7 @@ Models marked with an asterix are pure CRUD models
     - [x] Account Payment *
     - [x] Account Receipt *
   - [x] Analysis Category
-  - [ ] Analysis Type
+  - [x] Analysis Type
   - [ ] Company
     - [x] Company Entity Type *
     - [ ] Company Note
