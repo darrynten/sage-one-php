@@ -2,7 +2,6 @@
 
 namespace DarrynTen\SageOne\Tests\SageOne\Models;
 
-use ReflectionClass;
 use DarrynTen\SageOne\Models\TaxType;
 use DarrynTen\SageOne\Models\Supplier;
 use DarrynTen\SageOne\Models\SupplierAgeing;
@@ -30,14 +29,6 @@ class SupplierAgeingModelTest extends BaseModelTest
     public function testCanNotNullify()
     {
         $this->verifyCanNotNullify(SupplierAgeing::class, 'supplier');
-        $this->verifyCanNotNullify(SupplierAgeing::class, 'date');
-        $this->verifyCanNotNullify(SupplierAgeing::class, 'ageingTransactions');
-        $this->verifyCanNotNullify(SupplierAgeing::class, 'total');
-        $this->verifyCanNotNullify(SupplierAgeing::class, 'current');
-        $this->verifyCanNotNullify(SupplierAgeing::class, 'days30');
-        $this->verifyCanNotNullify(SupplierAgeing::class, 'days60');
-        $this->verifyCanNotNullify(SupplierAgeing::class, 'days90');
-        $this->verifyCanNotNullify(SupplierAgeing::class, 'days120Plus');
     }
 
     public function testBadImport()

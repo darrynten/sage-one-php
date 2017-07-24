@@ -271,7 +271,7 @@ Models marked with an asterix are pure CRUD models
   - [x] Supplier *
     - [x] Supplier Additional Contact Detail
     - [x] Supplier Adjustment
-    - [ ] Supplier Ageing
+    - [x] Supplier Ageing
     - [x] Supplier Bank Detail *
     - [x] Supplier Category *
     - [ ] Supplier Invoice

@@ -38,7 +38,7 @@ class SupplierAgeingRequest extends BaseModel
             'readonly' => false,
         ],
         'toDate' =>[
-            'type' => 'dateTime',
+            'type' => 'DateTime',
             'nullable' => false,
             'readonly' => false,
         ],
