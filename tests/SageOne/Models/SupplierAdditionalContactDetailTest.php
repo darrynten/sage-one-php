@@ -217,8 +217,6 @@ class SupplierAdditionalContactDetailTest extends BaseModelTest
 
     public function testDelete()
     {
-        $this->verifyDelete(SupplierAdditionalContactDetail::class, 1, function () {
-            // TODO do actual checks
-        });
+        $this->verifyDelete(SupplierAdditionalContactDetail::class, 1, true);
     }
 }
