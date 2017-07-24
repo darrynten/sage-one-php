@@ -4,7 +4,7 @@
  *
  * @category Exception
  * @package  SageOne
- * @author   Darryn Ten <darrynten@github.com>
+ * @author   Fergus Strangways-Dixon <fergusdixon@github.com>
  * @license  MIT <https://github.com/darrynten/sage-one-php/blob/master/LICENSE>
  * @link     https://github.com/darrynten/sage-one-php
  */
