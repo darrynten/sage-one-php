@@ -510,7 +510,7 @@ class ExampleModelTest extends BaseModelTest
     public function testCollectionWithoutClass()
     {
         $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('Model "Example" class "DarrynTen\SageOne\Models\InvalidClass" ModelCollection is referencing ad undefined, non-primitive class');
+        $this->expectExceptionMessage('Model "Example" class "DarrynTen\SageOne\Models\InvalidClass" ModelCollection is referencing an undefined, non-primitive class');
         $this->expectExceptionCode(10117);
 
         $exampleModel = new Example($this->config);

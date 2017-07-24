@@ -39,7 +39,7 @@ class ExceptionMessages
         10114 => 'Attempting to set a read-only property',
         10115 => 'Unexpected class encountered while preparing row',
         10116 => 'Attempting to get an undefined property',
-        10117 => 'ModelCollection is referencing ad undefined, non-primitive class',
+        10117 => 'ModelCollection is referencing an undefined, non-primitive class',
     ];
 
     /**
