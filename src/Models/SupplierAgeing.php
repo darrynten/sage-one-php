@@ -109,4 +109,17 @@ class SupplierAgeing extends BaseModel
         $supplierAgeing->loadResult($result);
         return $supplierAgeing;
     }
+
+    /**
+     * Gets a list of Supplier Ageing statements based on the request..
+     *
+     * @param SupplierAgeingRequest model
+     * @return Supplier Ageing Collection
+     * @link https://accounting.sageone.co.za/api/1.1.2/Help/Api/POST-SupplierAgeing-GetDetail
+     */
+    public function getDetail($supplierAgeingRequest)
+    {
+        $result = $this->request->request('POST', $this->endpoint, 'GetDetail', $supplierAgeingRequest);
+        return new ModelCollection(SupplierAgeing::class, $this->config, $result);
+    }
 }

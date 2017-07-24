@@ -252,7 +252,6 @@ class SupplierAgeingModelTest extends BaseModelTest
         $this->assertEquals(1, $supplierAgeingSummary->supplier->dueDateMethodId);
         $this->assertEquals(1, $supplierAgeingSummary->supplier->dueDateMethodValue);
         $this->assertEquals('2017-07-20', $supplierAgeingSummary->date->format('Y-m-d'));
-        
         $this->assertEquals(1, $supplierAgeingSummary->ageingTransactions->results[0]->documentHeaderId);
         $this->assertEquals(2, $supplierAgeingSummary->ageingTransactions->results[0]->documentTypeId);
         $this->assertEquals('sample string 3', $supplierAgeingSummary->ageingTransactions->results[0]->documentNumber);
@@ -267,7 +266,6 @@ class SupplierAgeingModelTest extends BaseModelTest
         $this->assertEquals(9.0, $supplierAgeingSummary->ageingTransactions->results[0]->days60);
         $this->assertEquals(10.0, $supplierAgeingSummary->ageingTransactions->results[0]->days90);
         $this->assertEquals(11.0, $supplierAgeingSummary->ageingTransactions->results[0]->days120Plus);
-
         $this->assertEquals(5, $supplierAgeingSummary->ageingTransactions->results[1]->documentHeaderId);
         $this->assertEquals(6, $supplierAgeingSummary->ageingTransactions->results[1]->documentTypeId);
         $this->assertEquals('sample string 7', $supplierAgeingSummary->ageingTransactions->results[1]->documentNumber);
@@ -282,13 +280,238 @@ class SupplierAgeingModelTest extends BaseModelTest
         $this->assertEquals(16.0, $supplierAgeingSummary->ageingTransactions->results[1]->days60);
         $this->assertEquals(17.0, $supplierAgeingSummary->ageingTransactions->results[1]->days90);
         $this->assertEquals(18.0, $supplierAgeingSummary->ageingTransactions->results[1]->days120Plus);
-
         $this->assertEquals(21.0, $supplierAgeingSummary->total);
         $this->assertEquals(3.0, $supplierAgeingSummary->current);
         $this->assertEquals(4.0, $supplierAgeingSummary->days30);
         $this->assertEquals(17.0, $supplierAgeingSummary->days60);
         $this->assertEquals(18.0, $supplierAgeingSummary->days90);
         $this->assertEquals(19.0, $supplierAgeingSummary->days120Plus);
+    }
+
+    public function testGetDetail()
+    {
+        $supplierAgeing = $this->setUpRequestMock('POST', SupplierAgeing::class, 'SupplierAgeing/GetDetail', 'SupplierAgeing/POST_SupplierAgeing_GetDetail_RESP.json', 'SupplierAgeing/POST_SupplierAgeing_GetDetail_REQ.json');
+
+        $supplierAgeingRequest = [
+            'supplierId' => 5,
+            'toDate' => "2016-08-23",
+            'summary' => true,
+            'ageingPeriod' => 6,
+            'fromSupplier' => "str 6",
+            'toSupplier' => "sample 611",
+            'fromCategory' => " string 211",
+            'toCategory' => "sa 151",
+            'includeActive' => true,
+            'includeInactive' => true,
+            'basedOnDueDate' => false,
+            'excludeZeroBalance' => true,
+            'useForeignCurrency' => true
+        ];
+        $supplierAgeingDetail = $supplierAgeing->getDetail($supplierAgeingRequest);
+
+        $this->assertInstanceOf(Supplier::class, $supplierAgeingDetail->results[0]->supplier);
+        $this->assertEquals(33, $supplierAgeingDetail->results[0]->supplier->id);
+        $this->assertEquals('sample string 40', $supplierAgeingDetail->results[0]->supplier->name);
+        $this->assertInstanceOf(SupplierCategory::class, $supplierAgeingDetail->results[0]->supplier->category);
+        $this->assertEquals('sample string 1', $supplierAgeingDetail->results[0]->supplier->category->description);
+        $this->assertEquals(6, $supplierAgeingDetail->results[0]->supplier->category->id);
+        $this->assertEquals('2016-07-24', $supplierAgeingDetail->results[0]->supplier->category->modified->format('Y-m-d'));
+        $this->assertEquals('2016-07-24', $supplierAgeingDetail->results[0]->supplier->category->created->format('Y-m-d'));
+        $this->assertEquals('sample string 2', $supplierAgeingDetail->results[0]->supplier->taxReference);
+        $this->assertEquals('sample string 3', $supplierAgeingDetail->results[0]->supplier->contactName);
+        $this->assertEquals('sample string 4', $supplierAgeingDetail->results[0]->supplier->telephone);
+        $this->assertEquals('sample string 5', $supplierAgeingDetail->results[0]->supplier->fax);
+        $this->assertEquals('sample string 6', $supplierAgeingDetail->results[0]->supplier->mobile);
+        $this->assertEquals('sample string 7', $supplierAgeingDetail->results[0]->supplier->email);
+        $this->assertEquals('sample string 8', $supplierAgeingDetail->results[0]->supplier->webAddress);
+        $this->assertTrue($supplierAgeingDetail->results[0]->supplier->active);
+        $this->assertEquals(10.0, $supplierAgeingDetail->results[0]->supplier->balance);
+        $this->assertEquals(11.0, $supplierAgeingDetail->results[0]->supplier->creditLimit);
+        $this->assertEquals('sample string 12', $supplierAgeingDetail->results[0]->supplier->postalAddress01);
+        $this->assertEquals('sample string 13', $supplierAgeingDetail->results[0]->supplier->postalAddress02);
+        $this->assertEquals('sample string 14', $supplierAgeingDetail->results[0]->supplier->postalAddress03);
+        $this->assertEquals('sample string 15', $supplierAgeingDetail->results[0]->supplier->postalAddress04);
+        $this->assertEquals('sample string 16', $supplierAgeingDetail->results[0]->supplier->postalAddress05);
+        $this->assertEquals('sample string 17', $supplierAgeingDetail->results[0]->supplier->deliveryAddress01);
+        $this->assertEquals('sample string 18', $supplierAgeingDetail->results[0]->supplier->deliveryAddress02);
+        $this->assertEquals('sample string 19', $supplierAgeingDetail->results[0]->supplier->deliveryAddress03);
+        $this->assertEquals('sample string 20', $supplierAgeingDetail->results[0]->supplier->deliveryAddress04);
+        $this->assertEquals('sample string 21', $supplierAgeingDetail->results[0]->supplier->deliveryAddress05);
+        $this->assertTrue($supplierAgeingDetail->results[0]->supplier->autoAllocateToOldestInvoice);
+        $this->assertEquals('sample string 22', $supplierAgeingDetail->results[0]->supplier->textField1);
+        $this->assertEquals('sample string 23', $supplierAgeingDetail->results[0]->supplier->textField2);
+        $this->assertEquals('sample string 24', $supplierAgeingDetail->results[0]->supplier->textField3);
+        $this->assertEquals(1.0, $supplierAgeingDetail->results[0]->supplier->numericField1);
+        $this->assertEquals(1.0, $supplierAgeingDetail->results[0]->supplier->numericField2);
+        $this->assertEquals(1.0, $supplierAgeingDetail->results[0]->supplier->numericField3);
+        $this->assertTrue($supplierAgeingDetail->results[0]->supplier->yesNoField1);
+        $this->assertTrue($supplierAgeingDetail->results[0]->supplier->yesNoField2);
+        $this->assertTrue($supplierAgeingDetail->results[0]->supplier->yesNoField3);
+        $this->assertEquals('2016-07-01', $supplierAgeingDetail->results[0]->supplier->dateField1->format('Y-m-d'));
+        $this->assertEquals('2016-07-02', $supplierAgeingDetail->results[0]->supplier->dateField2->format('Y-m-d'));
+        $this->assertEquals('2016-07-03', $supplierAgeingDetail->results[0]->supplier->dateField3->format('Y-m-d'));
+        $this->assertInstanceOf(\DateTime::class, $supplierAgeingDetail->results[0]->supplier->modified);
+        $this->assertEquals('2016-07-04', $supplierAgeingDetail->results[0]->supplier->modified->format('Y-m-d'));
+        $this->assertEquals('UTC', $supplierAgeingDetail->results[0]->supplier->modified->getTimezone()->getName());
+        $this->assertInstanceOf(\DateTime::class, $supplierAgeingDetail->results[0]->supplier->created);
+        $this->assertEquals('2016-07-05', $supplierAgeingDetail->results[0]->supplier->created->format('Y-m-d'));
+        $this->assertEquals('UTC', $supplierAgeingDetail->results[0]->supplier->created->getTimezone()->getName());
+        $this->assertEquals('sample string 29', $supplierAgeingDetail->results[0]->supplier->businessRegistrationNumber);
+        $this->assertEquals('sample string 30', $supplierAgeingDetail->results[0]->supplier->RMCDApprovalNumber);
+        $this->assertEquals('2017-07-24', $supplierAgeingDetail->results[0]->supplier->taxStatusVerified->format('Y-m-d'));
+        $this->assertEquals(1, $supplierAgeingDetail->results[0]->supplier->currencyId);
+        $this->assertEquals('sample string 31', $supplierAgeingDetail->results[0]->supplier->currencySymbol);
+        $this->assertTrue($supplierAgeingDetail->results[0]->supplier->hasActivity);
+        $this->assertEquals(1.0, $supplierAgeingDetail->results[0]->supplier->defaultDiscountPercentage);
+        $this->assertEquals(1, $supplierAgeingDetail->results[0]->supplier->defaultTaxTypeId);
+        $this->assertInstanceOf(TaxType::class, $supplierAgeingDetail->results[0]->supplier->defaultTaxType);
+        $this->assertEquals(1, $supplierAgeingDetail->results[0]->supplier->defaultTaxType->id);
+        $this->assertEquals('sample string 2', $supplierAgeingDetail->results[0]->supplier->defaultTaxType->name);
+        $this->assertEquals(3.1, $supplierAgeingDetail->results[0]->supplier->defaultTaxType->percentage);
+        $this->assertTrue($supplierAgeingDetail->results[0]->supplier->defaultTaxType->isDefault);
+        $this->assertTrue($supplierAgeingDetail->results[0]->supplier->defaultTaxType->hasActivity);
+        $this->assertTrue($supplierAgeingDetail->results[0]->supplier->defaultTaxType->isManualTax);
+        $this->assertEquals('2017-07-24', $supplierAgeingDetail->results[0]->supplier->defaultTaxType->created->format('Y-m-d'));
+        $this->assertEquals('2017-07-24', $supplierAgeingDetail->results[0]->supplier->defaultTaxType->modified->format('Y-m-d'));
+        $this->assertEquals(1, $supplierAgeingDetail->results[0]->supplier->dueDateMethodId);
+        $this->assertEquals(1, $supplierAgeingDetail->results[0]->supplier->dueDateMethodValue);
+        $this->assertEquals('2017-07-24', $supplierAgeingDetail->results[0]->date->format('Y-m-d'));
+        $this->assertEquals(1, $supplierAgeingDetail->results[0]->ageingTransactions->results[0]->documentHeaderId);
+        $this->assertEquals(2, $supplierAgeingDetail->results[0]->ageingTransactions->results[0]->documentTypeId);
+        $this->assertEquals('sample string 3', $supplierAgeingDetail->results[0]->ageingTransactions->results[0]->documentNumber);
+        $this->assertEquals('sample string 4', $supplierAgeingDetail->results[0]->ageingTransactions->results[0]->reference);
+        $this->assertEquals(2, $supplierAgeingDetail->results[0]->ageingTransactions->results[0]->documentType);
+        $this->assertEquals('sample string 5', $supplierAgeingDetail->results[0]->ageingTransactions->results[0]->comment);
+        $this->assertEquals('2017-07-24', $supplierAgeingDetail->results[0]->ageingTransactions->results[0]->date->format('Y-m-d'));
+        $this->assertEquals('2017-07-24', $supplierAgeingDetail->results[0]->ageingTransactions->results[0]->dueDate->format('Y-m-d'));
+        $this->assertEquals(45.0, $supplierAgeingDetail->results[0]->ageingTransactions->results[0]->total);
+        $this->assertEquals(7.0, $supplierAgeingDetail->results[0]->ageingTransactions->results[0]->current);
+        $this->assertEquals(8.0, $supplierAgeingDetail->results[0]->ageingTransactions->results[0]->days30);
+        $this->assertEquals(9.0, $supplierAgeingDetail->results[0]->ageingTransactions->results[0]->days60);
+        $this->assertEquals(10.0, $supplierAgeingDetail->results[0]->ageingTransactions->results[0]->days90);
+        $this->assertEquals(11.0, $supplierAgeingDetail->results[0]->ageingTransactions->results[0]->days120Plus);
+        $this->assertEquals(1, $supplierAgeingDetail->results[0]->ageingTransactions->results[1]->documentHeaderId);
+        $this->assertEquals(2, $supplierAgeingDetail->results[0]->ageingTransactions->results[1]->documentTypeId);
+        $this->assertEquals('sample string 3', $supplierAgeingDetail->results[0]->ageingTransactions->results[1]->documentNumber);
+        $this->assertEquals('sample string 4', $supplierAgeingDetail->results[0]->ageingTransactions->results[1]->reference);
+        $this->assertEquals(2, $supplierAgeingDetail->results[0]->ageingTransactions->results[1]->documentType);
+        $this->assertEquals('sample string 5', $supplierAgeingDetail->results[0]->ageingTransactions->results[1]->comment);
+        $this->assertEquals('2017-07-11', $supplierAgeingDetail->results[0]->ageingTransactions->results[1]->date->format('Y-m-d'));
+        $this->assertEquals('2017-07-12', $supplierAgeingDetail->results[0]->ageingTransactions->results[1]->dueDate->format('Y-m-d'));
+        $this->assertEquals(45.0, $supplierAgeingDetail->results[0]->ageingTransactions->results[1]->total);
+        $this->assertEquals(7.0, $supplierAgeingDetail->results[0]->ageingTransactions->results[1]->current);
+        $this->assertEquals(8.0, $supplierAgeingDetail->results[0]->ageingTransactions->results[1]->days30);
+        $this->assertEquals(9.0, $supplierAgeingDetail->results[0]->ageingTransactions->results[1]->days60);
+        $this->assertEquals(10.0, $supplierAgeingDetail->results[0]->ageingTransactions->results[1]->days90);
+        $this->assertEquals(11.0, $supplierAgeingDetail->results[0]->ageingTransactions->results[1]->days120Plus);
+        $this->assertEquals(21.0, $supplierAgeingDetail->results[0]->total);
+        $this->assertEquals(2.0, $supplierAgeingDetail->results[0]->current);
+        $this->assertEquals(3.0, $supplierAgeingDetail->results[0]->days30);
+        $this->assertEquals(4.0, $supplierAgeingDetail->results[0]->days60);
+        $this->assertEquals(5.0, $supplierAgeingDetail->results[0]->days90);
+        $this->assertEquals(6.0, $supplierAgeingDetail->results[0]->days120Plus);
+
+        $this->assertInstanceOf(Supplier::class, $supplierAgeingDetail->results[0]->supplier);
+        $this->assertEquals(33, $supplierAgeingDetail->results[1]->supplier->id);
+        $this->assertEquals('Supplier 2', $supplierAgeingDetail->results[1]->supplier->name);
+        $this->assertInstanceOf(SupplierCategory::class, $supplierAgeingDetail->results[1]->supplier->category);
+        $this->assertEquals('sample string 1', $supplierAgeingDetail->results[1]->supplier->category->description);
+        $this->assertEquals(2, $supplierAgeingDetail->results[1]->supplier->category->id);
+        $this->assertEquals('2017-07-24', $supplierAgeingDetail->results[1]->supplier->category->modified->format('Y-m-d'));
+        $this->assertEquals('2017-07-24', $supplierAgeingDetail->results[1]->supplier->category->created->format('Y-m-d'));
+        $this->assertEquals('sample string 2', $supplierAgeingDetail->results[1]->supplier->taxReference);
+        $this->assertEquals('sample string 3', $supplierAgeingDetail->results[1]->supplier->contactName);
+        $this->assertEquals('sample string 4', $supplierAgeingDetail->results[1]->supplier->telephone);
+        $this->assertEquals('sample string 5', $supplierAgeingDetail->results[1]->supplier->fax);
+        $this->assertEquals('sample string 6', $supplierAgeingDetail->results[1]->supplier->mobile);
+        $this->assertEquals('sample string 7', $supplierAgeingDetail->results[1]->supplier->email);
+        $this->assertEquals('sample string 8', $supplierAgeingDetail->results[1]->supplier->webAddress);
+        $this->assertTrue($supplierAgeingDetail->results[1]->supplier->active);
+        $this->assertEquals(10.0, $supplierAgeingDetail->results[1]->supplier->balance);
+        $this->assertEquals(11.0, $supplierAgeingDetail->results[1]->supplier->creditLimit);
+        $this->assertEquals('sample string 12', $supplierAgeingDetail->results[1]->supplier->postalAddress01);
+        $this->assertEquals('sample string 13', $supplierAgeingDetail->results[1]->supplier->postalAddress02);
+        $this->assertEquals('sample string 14', $supplierAgeingDetail->results[1]->supplier->postalAddress03);
+        $this->assertEquals('sample string 15', $supplierAgeingDetail->results[1]->supplier->postalAddress04);
+        $this->assertEquals('sample string 16', $supplierAgeingDetail->results[1]->supplier->postalAddress05);
+        $this->assertEquals('sample string 17', $supplierAgeingDetail->results[1]->supplier->deliveryAddress01);
+        $this->assertEquals('sample string 18', $supplierAgeingDetail->results[1]->supplier->deliveryAddress02);
+        $this->assertEquals('sample string 19', $supplierAgeingDetail->results[1]->supplier->deliveryAddress03);
+        $this->assertEquals('sample string 20', $supplierAgeingDetail->results[1]->supplier->deliveryAddress04);
+        $this->assertEquals('sample string 21', $supplierAgeingDetail->results[1]->supplier->deliveryAddress05);
+        $this->assertTrue($supplierAgeingDetail->results[1]->supplier->autoAllocateToOldestInvoice);
+        $this->assertEquals('sample string 22', $supplierAgeingDetail->results[1]->supplier->textField1);
+        $this->assertEquals('sample string 23', $supplierAgeingDetail->results[1]->supplier->textField2);
+        $this->assertEquals('sample string 24', $supplierAgeingDetail->results[1]->supplier->textField3);
+        $this->assertEquals(1.0, $supplierAgeingDetail->results[1]->supplier->numericField1);
+        $this->assertEquals(1.0, $supplierAgeingDetail->results[1]->supplier->numericField2);
+        $this->assertEquals(1.0, $supplierAgeingDetail->results[1]->supplier->numericField3);
+        $this->assertTrue($supplierAgeingDetail->results[1]->supplier->yesNoField1);
+        $this->assertTrue($supplierAgeingDetail->results[1]->supplier->yesNoField2);
+        $this->assertTrue($supplierAgeingDetail->results[1]->supplier->yesNoField3);
+        $this->assertEquals('2017-07-24', $supplierAgeingDetail->results[1]->supplier->dateField1->format('Y-m-d'));
+        $this->assertEquals('2017-07-24', $supplierAgeingDetail->results[1]->supplier->dateField2->format('Y-m-d'));
+        $this->assertEquals('2017-07-24', $supplierAgeingDetail->results[1]->supplier->dateField3->format('Y-m-d'));
+        $this->assertInstanceOf(\DateTime::class, $supplierAgeingDetail->results[1]->supplier->modified);
+        $this->assertEquals('2017-07-24', $supplierAgeingDetail->results[1]->supplier->modified->format('Y-m-d'));
+        $this->assertEquals('UTC', $supplierAgeingDetail->results[1]->supplier->modified->getTimezone()->getName());
+        $this->assertInstanceOf(\DateTime::class, $supplierAgeingDetail->results[1]->supplier->created);
+        $this->assertEquals('2017-07-24', $supplierAgeingDetail->results[1]->supplier->created->format('Y-m-d'));
+        $this->assertEquals('UTC', $supplierAgeingDetail->results[1]->supplier->created->getTimezone()->getName());
+        $this->assertEquals('sample string 29', $supplierAgeingDetail->results[1]->supplier->businessRegistrationNumber);
+        $this->assertEquals('sample string 30', $supplierAgeingDetail->results[1]->supplier->RMCDApprovalNumber);
+        $this->assertEquals('2017-07-24', $supplierAgeingDetail->results[1]->supplier->taxStatusVerified->format('Y-m-d'));
+        $this->assertEquals(1, $supplierAgeingDetail->results[1]->supplier->currencyId);
+        $this->assertEquals('sample string 31', $supplierAgeingDetail->results[1]->supplier->currencySymbol);
+        $this->assertTrue($supplierAgeingDetail->results[1]->supplier->hasActivity);
+        $this->assertEquals(1.0, $supplierAgeingDetail->results[1]->supplier->defaultDiscountPercentage);
+        $this->assertEquals(1, $supplierAgeingDetail->results[1]->supplier->defaultTaxTypeId);
+        $this->assertInstanceOf(TaxType::class, $supplierAgeingDetail->results[1]->supplier->defaultTaxType);
+        $this->assertEquals(1, $supplierAgeingDetail->results[1]->supplier->defaultTaxType->id);
+        $this->assertEquals('sample string 2', $supplierAgeingDetail->results[1]->supplier->defaultTaxType->name);
+        $this->assertEquals(3.1, $supplierAgeingDetail->results[1]->supplier->defaultTaxType->percentage);
+        $this->assertTrue($supplierAgeingDetail->results[1]->supplier->defaultTaxType->isDefault);
+        $this->assertTrue($supplierAgeingDetail->results[1]->supplier->defaultTaxType->hasActivity);
+        $this->assertTrue($supplierAgeingDetail->results[1]->supplier->defaultTaxType->isManualTax);
+        $this->assertEquals('2017-07-24', $supplierAgeingDetail->results[1]->supplier->defaultTaxType->created->format('Y-m-d'));
+        $this->assertEquals('2017-07-24', $supplierAgeingDetail->results[1]->supplier->defaultTaxType->modified->format('Y-m-d'));
+        $this->assertEquals(1, $supplierAgeingDetail->results[1]->supplier->dueDateMethodId);
+        $this->assertEquals(1, $supplierAgeingDetail->results[1]->supplier->dueDateMethodValue);
+        $this->assertEquals('2017-07-24', $supplierAgeingDetail->results[1]->date->format('Y-m-d'));
+        $this->assertEquals(8, $supplierAgeingDetail->results[1]->ageingTransactions->results[0]->documentHeaderId);
+        $this->assertEquals(9, $supplierAgeingDetail->results[1]->ageingTransactions->results[0]->documentTypeId);
+        $this->assertEquals('sample string 10', $supplierAgeingDetail->results[1]->ageingTransactions->results[0]->documentNumber);
+        $this->assertEquals('sample string 11', $supplierAgeingDetail->results[1]->ageingTransactions->results[0]->reference);
+        $this->assertEquals(12, $supplierAgeingDetail->results[1]->ageingTransactions->results[0]->documentType);
+        $this->assertEquals('sample string 13', $supplierAgeingDetail->results[1]->ageingTransactions->results[0]->comment);
+        $this->assertEquals('2017-07-14', $supplierAgeingDetail->results[1]->ageingTransactions->results[0]->date->format('Y-m-d'));
+        $this->assertEquals('2017-07-15', $supplierAgeingDetail->results[1]->ageingTransactions->results[0]->dueDate->format('Y-m-d'));
+        $this->assertEquals(16.0, $supplierAgeingDetail->results[1]->ageingTransactions->results[0]->total);
+        $this->assertEquals(17.0, $supplierAgeingDetail->results[1]->ageingTransactions->results[0]->current);
+        $this->assertEquals(18.0, $supplierAgeingDetail->results[1]->ageingTransactions->results[0]->days30);
+        $this->assertEquals(19.0, $supplierAgeingDetail->results[1]->ageingTransactions->results[0]->days60);
+        $this->assertEquals(20.0, $supplierAgeingDetail->results[1]->ageingTransactions->results[0]->days90);
+        $this->assertEquals(21.0, $supplierAgeingDetail->results[1]->ageingTransactions->results[0]->days120Plus);
+        $this->assertEquals(10, $supplierAgeingDetail->results[1]->ageingTransactions->results[1]->documentHeaderId);
+        $this->assertEquals(20, $supplierAgeingDetail->results[1]->ageingTransactions->results[1]->documentTypeId);
+        $this->assertEquals('sample DN 3', $supplierAgeingDetail->results[1]->ageingTransactions->results[1]->documentNumber);
+        $this->assertEquals('sample REF 4', $supplierAgeingDetail->results[1]->ageingTransactions->results[1]->reference);
+        $this->assertEquals(30, $supplierAgeingDetail->results[1]->ageingTransactions->results[1]->documentType);
+        $this->assertEquals('sample CMT 5', $supplierAgeingDetail->results[1]->ageingTransactions->results[1]->comment);
+        $this->assertEquals('2017-07-19', $supplierAgeingDetail->results[1]->ageingTransactions->results[1]->date->format('Y-m-d'));
+        $this->assertEquals('2017-07-19', $supplierAgeingDetail->results[1]->ageingTransactions->results[1]->dueDate->format('Y-m-d'));
+        $this->assertEquals(45.0, $supplierAgeingDetail->results[1]->ageingTransactions->results[1]->total);
+        $this->assertEquals(7.0, $supplierAgeingDetail->results[1]->ageingTransactions->results[1]->current);
+        $this->assertEquals(8.0, $supplierAgeingDetail->results[1]->ageingTransactions->results[1]->days30);
+        $this->assertEquals(9.0, $supplierAgeingDetail->results[1]->ageingTransactions->results[1]->days60);
+        $this->assertEquals(10.0, $supplierAgeingDetail->results[1]->ageingTransactions->results[1]->days90);
+        $this->assertEquals(11.0, $supplierAgeingDetail->results[1]->ageingTransactions->results[1]->days120Plus);
+        $this->assertEquals(20.0, $supplierAgeingDetail->results[1]->total);
+        $this->assertEquals(2.0, $supplierAgeingDetail->results[1]->current);
+        $this->assertEquals(3.0, $supplierAgeingDetail->results[1]->days30);
+        $this->assertEquals(4.0, $supplierAgeingDetail->results[1]->days60);
+        $this->assertEquals(5.0, $supplierAgeingDetail->results[1]->days90);
+        $this->assertEquals(6.0, $supplierAgeingDetail->results[1]->days120Plus);
     }
 
     public function testAllException()
