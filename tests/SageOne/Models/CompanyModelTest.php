@@ -547,6 +547,7 @@ class CompanyModelTest extends BaseModelTest
                 'readonly' => false,
                 'min' => 0,
                 'max' => 2,
+                'optional' => true,
             ],
         ]);
     }
@@ -565,6 +566,207 @@ class CompanyModelTest extends BaseModelTest
             Company::class,
             'Company/Get',
             'Company/GET_Company_Get_includeStatus_xx.json'
+        );
+
+        $response = $model->all(['includeStatus' => true]);
+
+        $model1 = $response->results[0];
+        $model2 = $response->results[1];
+
+        $this->assertEquals($model1->id, 1);
+        $this->assertEquals($model1->name, 'sample string 2');
+        $this->assertEquals($model1->currencySymbol, 'abc');
+        $this->assertEquals($model1->currencyDecimalDigits, 4);
+        $this->assertEquals($model1->numberDecimalDigits, 4);
+        $this->assertEquals($model1->decimalSeparator, ',');
+        $this->assertEquals($model1->hoursDecimalDigits, 4);
+        $this->assertEquals($model1->itemCostPriceDecimalDigits, 4);
+        $this->assertEquals($model1->itemSellingPriceDecimalDigits, 4);
+        $this->assertEquals($model1->postalAddress1, 'sample string 10');
+        $this->assertEquals($model1->postalAddress2, 'sample string 11');
+        $this->assertEquals($model1->postalAddress3, 'sample string 12');
+        $this->assertEquals($model1->postalAddress4, 'sample string 13');
+        $this->assertEquals($model1->postalAddress5, 'sample string 14');
+        $this->assertEquals($model1->groupSeparator, '.');
+        $this->assertEquals($model1->roundingValue, 16);
+        $this->assertEquals($model1->taxSystem, 0);
+        $this->assertEquals($model1->roundingType, 0);
+        $this->assertEquals($model1->ageMonthly, true);
+        $this->assertEquals($model1->displayInactiveItems, true);
+        $this->assertEquals($model1->warnWhenItemCostIsZero, true);
+        $this->assertEquals($model1->doNotAllowProcessingIntoNegativeQuantities, true);
+        $this->assertEquals($model1->warnWhenItemQuantityIsZero, true);
+        $this->assertEquals($model1->warnWhenItemSellingBelowCost, true);
+        $this->assertEquals($model1->countryId, 22);
+        $this->assertEquals($model1->companyEntityTypeId, 1);
+        $this->assertEquals($model1->takeOnBalanceDate->format('Y-m-d'), '2017-07-03');
+        $this->assertEquals($model1->enableCustomerZone, true);
+        $this->assertEquals($model1->enableAutomaticBankFeedRefresh, true);
+        $this->assertEquals($model1->contactName, 'sample string 25');
+        $this->assertEquals($model1->telephone, 'sample string 26');
+        $this->assertEquals($model1->fax, 'sample string 27');
+        $this->assertEquals($model1->mobile, 'sample string 28');
+        $this->assertEquals($model1->email, 'user@example.com');
+        $this->assertEquals($model1->isPrimarySendingEmail, true);
+        $this->assertEquals($model1->postalAddress01, 'sample string 31');
+        $this->assertEquals($model1->postalAddress02, 'sample string 32');
+        $this->assertEquals($model1->postalAddress03, 'sample string 33');
+        $this->assertEquals($model1->postalAddress04, 'sample string 34');
+        $this->assertEquals($model1->postalAddress05, 'sample string 35');
+        $this->assertEquals($model1->companyInfo01, 'sample string 36');
+        $this->assertEquals($model1->companyInfo02, 'sample string 37');
+        $this->assertEquals($model1->companyInfo03, 'sample string 38');
+        $this->assertEquals($model1->companyInfo04, 'sample string 39');
+        $this->assertEquals($model1->companyInfo05, 'sample string 40');
+        $this->assertEquals($model1->isOwner, true);
+        $this->assertEquals($model1->useCCEmail, true);
+        $this->assertEquals($model1->cCEmail, 'another@example.com');
+        $this->assertEquals($model1->dateFormatId, 44);
+        $this->assertEquals($model1->checkForDuplicateCustomerReferences, true);
+        $this->assertEquals($model1->checkForDuplicateSupplierReferences, true);
+        $this->assertEquals($model1->displayName, 'sample string 47');
+        $this->assertEquals($model1->displayInactiveCustomers, true);
+        $this->assertEquals($model1->displayInactiveSuppliers, true);
+        $this->assertEquals($model1->displayInactiveTimeProjects, true);
+        $this->assertEquals($model1->useInclusiveProcessingByDefault, true);
+        $this->assertEquals($model1->lockProcessing, true);
+        $this->assertEquals($model1->lockProcessingDate->format('Y-m-d'), '2017-07-03');
+        $this->assertEquals($model1->lockTimesheetProcessing, true);
+        $this->assertEquals($model1->lockTimesheetProcessingDate->format('Y-m-d'), '2017-07-03');
+        $this->assertEquals($model1->taxPeriodFrequency, 1);
+        $this->assertEquals($model1->previousTaxPeriodEndDate->format('Y-m-d'), '2017-07-03');
+        $this->assertEquals($model1->previousTaxReturnDate->format('Y-m-d'), '2017-07-03');
+        $this->assertEquals($model1->useNoreplyEmail, true);
+        $this->assertEquals($model1->ageingBasedOnDueDate, true);
+        $this->assertEquals($model1->useLogoOnEmails, true);
+        $this->assertEquals($model1->useLogoOnCustomerZone, true);
+        $this->assertEquals($model1->city, 'sample string 58');
+        $this->assertEquals($model1->state, 'sample string 59');
+        $this->assertEquals($model1->country, 'sample string 60');
+        $this->assertEquals($model1->homeCurrencyId, 1);
+        $this->assertEquals($model1->currencyId, 1);
+        $this->assertEquals($model1->created->format('Y-m-d'), '2017-07-03');
+        $this->assertEquals($model1->modified->format('Y-m-d'), '2017-07-03');
+        $this->assertEquals($model1->active, true);
+        $this->assertEquals($model1->taxNumber, 'sample string 63');
+        $this->assertEquals($model1->registeredName, 'sample string 64');
+        $this->assertEquals($model1->registrationNumber, 'sample string 65');
+        $this->assertEquals($model1->isPracticeAccount, true);
+        $this->assertEquals($model1->logoPositionID, 67);
+        $this->assertInstanceOf(CompanyLogo::class, $model1->attachment);
+        $this->assertEquals($model1->attachment->id, 1);
+        $this->assertEquals($model1->attachment->image, 'QEA=');
+        $this->assertEquals($model1->attachment->timestamp, 'QEA=');
+        $this->assertEquals($model1->companyTaxNumber, 'sample string 68');
+        $this->assertEquals($model1->taxOffice, 'sample string 69');
+        $this->assertEquals($model1->customerZoneGuid, 'b2d02685-1e94-4b8e-bb7e-359c3bf1d643');
+        $this->assertEquals($model1->clientTypeId, 71);
+        $this->assertEquals($model1->displayTotalTypeId, 72);
+        $this->assertEquals($model1->displayInCompanyConsole, true);
+        $this->assertEquals($model1->lastLoginDate->format('Y-m-d'), '2017-07-03');
+        $this->assertEquals($model1->status, 1);
+
+        $this->assertEquals($model2->id, 1);
+        $this->assertEquals($model2->name, 'sample string 2');
+        $this->assertEquals($model2->currencySymbol, 'abc');
+        $this->assertEquals($model2->currencyDecimalDigits, 4);
+        $this->assertEquals($model2->numberDecimalDigits, 4);
+        $this->assertEquals($model2->decimalSeparator, ',');
+        $this->assertEquals($model2->hoursDecimalDigits, 3);
+        $this->assertEquals($model2->itemCostPriceDecimalDigits, 3);
+        $this->assertEquals($model2->itemSellingPriceDecimalDigits, 3);
+        $this->assertEquals($model2->postalAddress1, 'sample string 10');
+        $this->assertEquals($model2->postalAddress2, 'sample string 11');
+        $this->assertEquals($model2->postalAddress3, 'sample string 12');
+        $this->assertEquals($model2->postalAddress4, 'sample string 13');
+        $this->assertEquals($model2->postalAddress5, 'sample string 14');
+        $this->assertEquals($model2->groupSeparator, '.');
+        $this->assertEquals($model2->roundingValue, 16);
+        $this->assertEquals($model2->taxSystem, 0);
+        $this->assertEquals($model2->roundingType, 0);
+        $this->assertEquals($model2->ageMonthly, true);
+        $this->assertEquals($model2->displayInactiveItems, true);
+        $this->assertEquals($model2->warnWhenItemCostIsZero, true);
+        $this->assertEquals($model2->doNotAllowProcessingIntoNegativeQuantities, true);
+        $this->assertEquals($model2->warnWhenItemQuantityIsZero, true);
+        $this->assertEquals($model2->warnWhenItemSellingBelowCost, true);
+        $this->assertEquals($model2->countryId, 22);
+        $this->assertEquals($model2->companyEntityTypeId, 1);
+        $this->assertEquals($model2->takeOnBalanceDate->format('Y-m-d'), '2017-07-03');
+        $this->assertEquals($model2->enableCustomerZone, true);
+        $this->assertEquals($model2->enableAutomaticBankFeedRefresh, true);
+        $this->assertEquals($model2->contactName, 'sample string 25');
+        $this->assertEquals($model2->telephone, 'sample string 26');
+        $this->assertEquals($model2->fax, 'sample string 27');
+        $this->assertEquals($model2->mobile, 'sample string 28');
+        $this->assertEquals($model2->email, 'user@example.com');
+        $this->assertEquals($model2->isPrimarySendingEmail, true);
+        $this->assertEquals($model2->postalAddress01, 'sample string 31');
+        $this->assertEquals($model2->postalAddress02, 'sample string 32');
+        $this->assertEquals($model2->postalAddress03, 'sample string 33');
+        $this->assertEquals($model2->postalAddress04, 'sample string 34');
+        $this->assertEquals($model2->postalAddress05, 'sample string 35');
+        $this->assertEquals($model2->companyInfo01, 'sample string 36');
+        $this->assertEquals($model2->companyInfo02, 'sample string 37');
+        $this->assertEquals($model2->companyInfo03, 'sample string 38');
+        $this->assertEquals($model2->companyInfo04, 'sample string 39');
+        $this->assertEquals($model2->companyInfo05, 'sample string 40');
+        $this->assertEquals($model2->isOwner, true);
+        $this->assertEquals($model2->useCCEmail, true);
+        $this->assertEquals($model2->cCEmail, 'another@example.com');
+        $this->assertEquals($model2->dateFormatId, 44);
+        $this->assertEquals($model2->checkForDuplicateCustomerReferences, true);
+        $this->assertEquals($model2->checkForDuplicateSupplierReferences, true);
+        $this->assertEquals($model2->displayName, 'sample string 47');
+        $this->assertEquals($model2->displayInactiveCustomers, true);
+        $this->assertEquals($model2->displayInactiveSuppliers, true);
+        $this->assertEquals($model2->displayInactiveTimeProjects, true);
+        $this->assertEquals($model2->useInclusiveProcessingByDefault, true);
+        $this->assertEquals($model2->lockProcessing, true);
+        $this->assertEquals($model2->lockProcessingDate->format('Y-m-d'), '2017-07-03');
+        $this->assertEquals($model2->lockTimesheetProcessing, true);
+        $this->assertEquals($model2->lockTimesheetProcessingDate->format('Y-m-d'), '2017-07-03');
+        $this->assertEquals($model2->taxPeriodFrequency, 1);
+        $this->assertEquals($model2->previousTaxPeriodEndDate->format('Y-m-d'), '2017-07-03');
+        $this->assertEquals($model2->previousTaxReturnDate->format('Y-m-d'), '2017-07-03');
+        $this->assertEquals($model2->useNoreplyEmail, true);
+        $this->assertEquals($model2->ageingBasedOnDueDate, true);
+        $this->assertEquals($model2->useLogoOnEmails, true);
+        $this->assertEquals($model2->useLogoOnCustomerZone, true);
+        $this->assertEquals($model2->city, 'sample string 58');
+        $this->assertEquals($model2->state, 'sample string 59');
+        $this->assertEquals($model2->country, 'sample string 60');
+        $this->assertEquals($model2->homeCurrencyId, 1);
+        $this->assertEquals($model2->currencyId, 1);
+        $this->assertEquals($model2->created->format('Y-m-d'), '2017-07-03');
+        $this->assertEquals($model2->modified->format('Y-m-d'), '2017-07-03');
+        $this->assertEquals($model2->active, true);
+        $this->assertEquals($model2->taxNumber, 'sample string 63');
+        $this->assertEquals($model2->registeredName, 'sample string 64');
+        $this->assertEquals($model2->registrationNumber, 'sample string 65');
+        $this->assertEquals($model2->isPracticeAccount, true);
+        $this->assertEquals($model2->logoPositionID, 67);
+        $this->assertInstanceOf(CompanyLogo::class, $model2->attachment);
+        $this->assertEquals($model2->attachment->id, 1);
+        $this->assertEquals($model2->attachment->image, 'QEA=');
+        $this->assertEquals($model2->attachment->timestamp, 'QEA=');
+        $this->assertEquals($model2->companyTaxNumber, 'sample string 68');
+        $this->assertEquals($model2->taxOffice, 'sample string 69');
+        $this->assertEquals($model2->customerZoneGuid, 'b2d02685-1e94-4b8e-bb7e-359c3bf1d643');
+        $this->assertEquals($model2->clientTypeId, 71);
+        $this->assertEquals($model2->displayTotalTypeId, 72);
+        $this->assertEquals($model2->displayInCompanyConsole, true);
+        $this->assertEquals($model2->lastLoginDate->format('Y-m-d'), '2017-07-03');
+        $this->assertEquals($model2->status, 2);
+    }
+
+    public function testGetAllWithoutStatus()
+    {
+        $model = $this->setUpRequestMock(
+            'GET',
+            Company::class,
+            'Company/Get',
+            'Company/GET_Company_Get_includeStatus_false_xx.json'
         );
 
         $response = $model->all();
@@ -663,7 +865,7 @@ class CompanyModelTest extends BaseModelTest
         $this->assertEquals($model1->displayTotalTypeId, 72);
         $this->assertEquals($model1->displayInCompanyConsole, true);
         $this->assertEquals($model1->lastLoginDate->format('Y-m-d'), '2017-07-03');
-        $this->assertEquals($model1->status, 0);
+        $this->assertEquals($model1->status, 1);
 
         $this->assertEquals($model2->id, 1);
         $this->assertEquals($model2->name, 'sample string 2');
@@ -756,7 +958,7 @@ class CompanyModelTest extends BaseModelTest
         $this->assertEquals($model2->displayTotalTypeId, 72);
         $this->assertEquals($model2->displayInCompanyConsole, true);
         $this->assertEquals($model2->lastLoginDate->format('Y-m-d'), '2017-07-03');
-        $this->assertEquals($model2->status, 0);
+        $this->assertEquals($model2->status, null);
     }
     
     public function testGetId()

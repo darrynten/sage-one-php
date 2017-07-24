@@ -545,6 +545,7 @@ class Company extends BaseModel
             'readonly' => false,
             'min' => 0,
             'max' => 2,
+            'optional' => true,
         ],
     ];
 
