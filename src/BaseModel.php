@@ -53,6 +53,20 @@ abstract class BaseModel
     ];
 
     /**
+     * Features HTTP methods
+     * Not all models follow same conventions like GET for all()
+     * Example AccountBalance all() requires POST method
+     * or SupplierStatement get() requires POST method
+     * @var array $featureMethods
+     */
+    protected $featureMethods = [
+        'all' => 'GET',
+        'get' => 'GET',
+        'save' => 'POST',
+        'delete' => 'DELETE'
+    ];
+
+    /**
      * A models configuration is stored here
      *
      * @var array $config
@@ -142,7 +156,7 @@ abstract class BaseModel
      * $account = new Account;
      * $allAccounts = $account->all();
      *
-     * @param array $parameters
+     * @param array $parameters Some models support passing arguments to all()
      * @return ModelCollection A collection of entities
      */
     public function all(array $parameters = [])
@@ -151,7 +165,7 @@ abstract class BaseModel
             $this->throwException(ModelException::NO_GET_ALL_SUPPORT);
         }
 
-        $results = $this->request->request('GET', $this->endpoint, 'Get', $parameters);
+        $results = $this->request->request($this->featureMethods['all'], $this->endpoint, 'Get', $parameters);
 
         return new ModelCollection(static::class, $this->config, $results);
     }
@@ -173,7 +187,7 @@ abstract class BaseModel
             $this->throwException(ModelException::NO_GET_ONE_SUPPORT, sprintf('id %s', $id));
         }
 
-        $result = $this->request->request('GET', $this->endpoint, sprintf('Get/%s', $id));
+        $result = $this->request->request($this->featureMethods['get'], $this->endpoint, sprintf('Get/%s', $id));
 
         $this->loadResult($result);
     }
@@ -198,7 +212,7 @@ abstract class BaseModel
         }
 
         // TODO Response handle?
-        $this->request->request('DELETE', $this->endpoint, sprintf('Delete/%s', $id));
+        $this->request->request($this->featureMethods['delete'], $this->endpoint, sprintf('Delete/%s', $id));
     }
 
     /**
@@ -206,7 +220,7 @@ abstract class BaseModel
      *
      * TODO: Actually perform this action!
      *
-     * @param array $parameters
+     * @param array $parameters some models support passing arguments to save()
      * @return stdClass Representaion of response
      */
     public function save(array $parameters = [])
@@ -216,7 +230,8 @@ abstract class BaseModel
         }
 
         // TODO Submission Body and Validation
-        $data = $this->request->request('POST', $this->endpoint, 'Save', $parameters);
+        $data = $this->request->request($this->featureMethods['save'], $this->endpoint, 'Save', $parameters);
+
         return $data;
     }
 
@@ -429,7 +444,7 @@ abstract class BaseModel
      */
     public function loadResult(\stdClass $result)
     {
-        // We only care about entires that are defined in the model
+        // We only care about entries that are defined in the model
         foreach ($this->fields as $key => $config) {
             $remoteKey = $this->getRemoteKey($key);
 

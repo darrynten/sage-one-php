@@ -2,8 +2,8 @@
   "ID": 1,
   "SupplierId": 2,
   "BankAccountHolder": "sample string 3",
-  "BankAccountNumber": "sample string 4",
+  "BankAccountNumber": "sample strin2",
   "BankName": "sample string 5",
-  "BankBranchCode": "sample string 6",
+  "BankBranchCode": "123456",
   "BankAccountType": 1
 }

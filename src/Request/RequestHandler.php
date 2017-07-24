@@ -129,7 +129,7 @@ class RequestHandler
      *
      * @see RequestHandler::request()
      *
-     * @return array
+     * @return stdClass
      * @throws ApiException
      */
     public function handleRequest(string $method, string $uri, array $options, array $parameters = [])
@@ -232,7 +232,10 @@ class RequestHandler
         }
 
         // We always add the API key to the URL
-        $options['query']['apikey'] = $this->key;
+        // it has to be in the form %7Bapi-key-here%7D
+        // where %7B is {
+        // and %7D is }
+        $options['query']['apikey'] = urlencode('{' . $this->key . '}');
 
         // Append version to the endpoint
         $uri = sprintf(

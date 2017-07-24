@@ -1,0 +1,7 @@
+{
+  "SupplierId": 1,
+  "IncludeSupplierReturns": true,
+  "GroupingType": 3,
+  "FromDate": "2017-07-24",
+  "ToDate": "2017-07-24"
+}

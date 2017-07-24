@@ -558,18 +558,24 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
      * Verifies that we can load list of models
      *
      * @param string $class Full path to the class
+     * @param string $method HTTP method of call
+     * @param string $requestMock If specified sends data from that file in request
      * @param callable $whatToCheck Verifies fields on result
      */
-    protected function verifyGetAll(string $class, callable $whatToCheck)
+    protected function verifyGetAll(string $class, callable $whatToCheck, string $method = 'GET', string $requestMock = null)
     {
         $className = $this->getClassName($class);
         $path = sprintf('%s/Get', $className);
-        $mockFile = sprintf('%s/GET_%s_Get.json', $className, $className);
+        $responseMock = sprintf('%s/%s_%s_Get.json', $className, $method, $className);
+        if ($requestMock) {
+            $responseMock = sprintf('%s/%s_%s_Get_RESP.json', $className, $method, $className);
+        }
         $model = $this->setUpRequestMock(
-            'GET',
+            $method,
             $class,
             $path,
-            $mockFile
+            $responseMock,
+            $requestMock
         );
 
         $allInstances = $model->all();
@@ -813,7 +819,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
                         'Authorization' => 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=',
                     ],
                     'query' => [
-                        'apikey' => 'key'
+                        'apikey' => '%7Bkey%7D'
                     ]
                 ],
                 []
@@ -838,7 +844,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUpRequestMock(string $method, string $class, string $path, string $mockFileResponse = null, string $mockFileRequest = null, array $parameters = [])
     {
-        $url = sprintf('/1.1.2/%s?apikey=key', $path);
+        $url = sprintf('/1.1.2/%s?apikey=%%7Bkey%%7D', $path);
         $urlWithoutApiKey = sprintf('/1.1.2/%s/', $path);
 
         $responseData = null;
@@ -879,7 +885,9 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
                 'Authorization' => sprintf('%s %s', $tokenType, $token)
             ],
         ];
-        $checkParameters['query']['apikey'] = $this->config['key'];
+        $checkParameters['query']['apikey'] = urlencode(
+            '{' . $this->config['key'] . '}'
+        );
 
         /**
         * $client in RequestHandler receives url without query params

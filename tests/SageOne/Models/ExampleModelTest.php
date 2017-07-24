@@ -357,6 +357,16 @@ class ExampleModelTest extends BaseModelTest
         $this->assertEquals(false, $value['save']);
         $this->assertEquals(false, $value['delete']);
 
+        // Features HTTP methods
+        $reflectValue = $reflect->getProperty('featureMethods');
+        $reflectValue->setAccessible(true);
+        $value = $reflectValue->getValue(new Example($this->config));
+        $this->assertCount(4, $value);
+        $this->assertEquals('GET', $value['all']);
+        $this->assertEquals('GET', $value['get']);
+        $this->assertEquals('POST', $value['save']);
+        $this->assertEquals('DELETE', $value['delete']);
+
         // Test injecting a result
         $data = json_decode(file_get_contents(__DIR__ . '/../../mocks/Example/GET_Example_Get_xx.json'));
         $exampleModel->loadResult($data);
@@ -470,7 +480,7 @@ class ExampleModelTest extends BaseModelTest
                         'Authorization' => 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=',
                     ],
                     'query' => [
-                        'apikey' => 'key'
+                        'apikey' => '%7Bkey%7D'
                     ]
                 ],
                 []
@@ -492,7 +502,7 @@ class ExampleModelTest extends BaseModelTest
                         'Authorization' => 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=',
                     ],
                     'query' => [
-                        'apikey' => 'key'
+                        'apikey' => '%7Bkey%7D'
                     ]
                 ],
                 ['keyx' => 'value']
