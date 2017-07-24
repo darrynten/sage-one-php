@@ -138,7 +138,7 @@ class AnalysisTypeModelTest extends BaseModelTest
         $model->loadResult($modelData[0]);
 
         $this->expectException(NotYetImplementedException::class);
-        $this->expectExceptionMessage("Error, \"\DarrynTen\SageOne\Models\AnalysisType::saveBatch\" Method not yet implemented");
+        $this->expectExceptionMessage("Error, \"\DarrynTen\SageOne\Models\AnalysisType::saveBatch\" Method not yet implemented. This still needs to be added, please consider contributing to the project.");
         $this->expectExceptionCode(10301);
 
         $model->SaveBatch();

@@ -31,7 +31,7 @@ class NotYetImplementedException extends Exception
     public function __construct($code = 10300, $address = '')
     {
         $message = sprintf(
-            'Error, "%s" %s',
+            'Error, "%s" %s. This still needs to be added, please consider contributing to the project.',
             $address,
             ExceptionMessages::$notYetImplementedErrorMessages[$code]
         );
