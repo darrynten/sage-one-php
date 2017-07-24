@@ -126,35 +126,6 @@ class AnalysisTypeModelTest extends BaseModelTest
 
     public function testSaveBatch()
     {
-        $model = $this->setUpRequestMock(
-            'POST',
-            AnalysisType::class,
-            'AnalysisType/SaveBatch',
-            'AnalysisType/POST_AnalysisType_SaveBatch_RESP.json',
-            'AnalysisType/POST_AnalysisType_SaveBatch_REQ.json'
-        );
-        $modelData = json_decode(file_get_contents(__DIR__ . '/../../mocks/AnalysisType/POST_AnalysisType_SaveBatch_REQ.json'));
-        $model->loadResult($modelData[0]);
-        $respModel = $model->SaveBatch();
-        $this->assertEquals(5, $respModel[0]->ID);
-        $this->assertEquals('sample string', $respModel[0]->Description);
-        $this->assertEquals(1, $respModel[0]->AnalysisCategories[0]->ID);
-        $this->assertEquals(8, $respModel[0]->AnalysisCategories[0]->AnalysisTypeId);
-        $this->assertEquals('sample string 3', $respModel[0]->AnalysisCategories[0]->Description);
-        $this->assertEquals(4, $respModel[0]->AnalysisCategories[1]->ID);
-        $this->assertEquals(1, $respModel[0]->AnalysisCategories[1]->AnalysisTypeId);
-        $this->assertEquals('sample string 31', $respModel[0]->AnalysisCategories[1]->Description);
-        $this->assertEquals(true, $respModel[0]->Active);
-        $model->loadResult($modelData[1]);
-        $respModel = $model->SaveBatch();
-        $this->assertEquals(1, $respModel[1]->ID);
-        $this->assertEquals('sample string 2', $respModel[1]->Description);
-        $this->assertEquals(6, $respModel[1]->AnalysisCategories[0]->ID);
-        $this->assertEquals(2, $respModel[1]->AnalysisCategories[0]->AnalysisTypeId);
-        $this->assertEquals('sample string 3', $respModel[1]->AnalysisCategories[0]->Description);
-        $this->assertEquals(2, $respModel[1]->AnalysisCategories[1]->ID);
-        $this->assertEquals(1, $respModel[1]->AnalysisCategories[1]->AnalysisTypeId);
-        $this->assertEquals('sample string 66', $respModel[1]->AnalysisCategories[1]->Description);
-        $this->assertEquals(false, $respModel[1]->Active);
+        //Test exception
     }
 }

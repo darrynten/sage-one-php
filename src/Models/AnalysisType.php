@@ -77,6 +77,6 @@ class AnalysisType extends BaseModel
      */
     public function saveBatch()
     {
-        return $this->request->request('POST', $this->endpoint, 'SaveBatch');
+        //UNSUPPORTED - Exception needs to be thrown here
     }
 }
