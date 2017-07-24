@@ -126,6 +126,15 @@ class AnalysisTypeModelTest extends BaseModelTest
 
     public function testSaveBatch()
     {
-        //Test exception
+        $model = $this->setUpRequestMock(
+            'POST',
+            AnalysisType::class,
+            'AnalysisType/SaveBatch',
+            'AnalysisType/POST_AnalysisType_SaveBatch_RESP.json',
+            'AnalysisType/POST_AnalysisType_SaveBatch_REQ.json'
+        );
+        $modelData = json_decode(file_get_contents(__DIR__ . '/../../mocks/AnalysisType/POST_AnalysisType_SaveBatch_REQ.json'));
+        $model->loadResult($modelData[0]);
+        $respModel = $model->SaveBatch(); // This should check for exception throw
     }
 }
