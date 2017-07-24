@@ -54,7 +54,7 @@ class AssetCategoryModelTest extends BaseModelTest
                 'type' => 'DateTime',
                 'nullable' => true,
                 'readonly' => true,
-            ]
+            ],
         ]);
     }
     public function testFeatures()
