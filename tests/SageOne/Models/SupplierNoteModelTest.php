@@ -67,11 +67,15 @@ class SupplierNoteModelTest extends BaseModelTest
                 'type' => 'integer',
                 'nullable' => false,
                 'readonly' => false,
+                'required' => true,
             ],
             'subject' => [
                 'type' => 'string',
                 'nullable' => false,
                 'readonly' => false,
+                'min' => 0,
+                'max' => 100,
+                'required' => true,
             ],
             'entryDate' => [
                 'type' => 'DateTime',
@@ -82,6 +86,7 @@ class SupplierNoteModelTest extends BaseModelTest
                 'type' => 'DateTime',
                 'nullable' => false,
                 'readonly' => false,
+                'required' => true,
             ],
             'status' => [
                 'type' => 'boolean',
