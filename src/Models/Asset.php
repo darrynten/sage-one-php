@@ -43,6 +43,7 @@ class Asset extends BaseModel
             'readonly' => false,
             'min' => 0,
             'max' => 500,
+            'required' => true,
         ],
         'category' => [
             'type' => 'AssetCategory',
