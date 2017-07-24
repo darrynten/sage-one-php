@@ -10,7 +10,7 @@
 
 namespace DarrynTen\SageOne\Models;
 
-use DarrynTen\SageOne\BaseModel;;
+use DarrynTen\SageOne\BaseModel;
 
 /**
  * Supplier Model
