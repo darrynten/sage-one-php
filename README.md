@@ -221,6 +221,7 @@ class Account extends BaseModel
      * Features HTTP methods
      * Not all models follow same conventions like GET for all()
      * Example AccountBalance all() requires POST method
+     * or SupplierStatement get() requires POST method
      * @var array $featureMethods
      */
     protected $featureMethods = [
