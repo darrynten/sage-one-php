@@ -30,6 +30,7 @@ class AnalysisCategoryModelTest extends BaseModelTest
                 'readonly' => false,
                 'min' => 0,
                 'max' => 100,
+                'required' => true,
             ],
         ]);
     }
