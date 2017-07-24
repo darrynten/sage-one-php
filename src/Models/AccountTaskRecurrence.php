@@ -16,7 +16,7 @@ use DarrynTen\SageOne\BaseModel;;
  * Supplier Model
  *
  * Details on writable properties
- * https://accounting.sageone.co.za/api/1.1.2/Help#bookmark_Supplier
+ * https://accounting.sageone.co.za/api/1.1.2/Help#bookmark_AccountTaskRecurrence
  */
 class AccountTaskRecurrence extends BaseModel
 {
