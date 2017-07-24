@@ -165,8 +165,12 @@ class SupplierAdditionalContactDetailTest extends BaseModelTest
 
     public function testGetAdditionalContactDetails()
     {
-        $additionalContactDetails = $this->setUpRequestMock('GET',
-            SupplierAdditionalContactDetail::class, 'SupplierAdditionalContactDetail/GetAdditionalContactDetails/7', 'SupplierAdditionalContactDetail/GET_SupplierAdditionalContactDetail_GetAdditionalContactDetails.json');
+        $additionalContactDetails = $this->setUpRequestMock(
+            'GET',
+            SupplierAdditionalContactDetail::class,
+            'SupplierAdditionalContactDetail/GetAdditionalContactDetails/7',
+            'SupplierAdditionalContactDetail/GET_SupplierAdditionalContactDetail_GetAdditionalContactDetails.json'
+        );
         $allAdditionalContactDetails = $additionalContactDetails->getAdditionalContactDetails(7);
 
         $this->assertInstanceOf(SupplierAdditionalContactDetail::class, $allAdditionalContactDetails->results[0]);

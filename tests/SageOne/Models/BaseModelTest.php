@@ -855,8 +855,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         string $mockFileRequest = null,
         array $parameters = [],
         int $responseCode = 200
-    )
-    {
+    ) {
         $url = sprintf('/1.1.2/%s?apikey=key', $path);
         $urlWithoutApiKey = sprintf('/1.1.2/%s/', $path);
 
