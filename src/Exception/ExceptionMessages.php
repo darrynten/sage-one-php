@@ -52,11 +52,11 @@ class ExceptionMessages
     ];
 
     /**
-     * @var array $modelCollectionErrorMessages [102xx codes]
+     * @var array $libraryErrorMessages [103xx codes]
      */
     public static $libraryErrorMessages = [
-        10300 => 'Not yet implemented',
-        10301 => 'Method not yet implemented'
+        10300 => 'Library Error',
+        10301 => 'Method not yet implemented. This still needs to be added, please consider contributing to the project.'
     ];
     /**
      * @var array $strings map from http response codes to textual representation of errors

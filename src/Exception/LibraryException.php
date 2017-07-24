@@ -15,7 +15,7 @@ use Exception;
 use DarrynTen\SageOne\Exception\ExceptionMessages;
 
 /**
- * NotYetImplemented exception for SageOne
+ * Library exception for SageOne
  *
  * @package SageOne
  */
@@ -31,7 +31,7 @@ class LibraryException extends Exception
     public function __construct($code = 10300, $address = '')
     {
         $message = sprintf(
-            'Error, "%s" %s. This still needs to be added, please consider contributing to the project.',
+            'Error, "%s" %s.',
             $address,
             ExceptionMessages::$libraryErrorMessages[$code]
         );
