@@ -24,7 +24,9 @@ PHP 7.0+
 
 ## Basic use
 
-# TODO
+Some model's methods are unimplemented as they were inconsistent with other similar models, these methods will throw a "NotYetImplemented" exception with the location of the method stub.
+
+If you require these methods, please add them with updated tests.
 
 ### Definitions
 

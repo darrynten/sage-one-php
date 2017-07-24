@@ -52,6 +52,12 @@ class ExceptionMessages
     ];
 
     /**
+     * @var array $modelCollectionErrorMessages [102xx codes]
+     */
+    public static $notYetImplementedErrorMessages = [
+        10301 => 'Method not yet implemented',
+    ];
+    /**
      * @var array $strings map from http response codes to textual representation of errors
      */
     public static $strings = [
