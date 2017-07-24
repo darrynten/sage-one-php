@@ -33,13 +33,13 @@ class SupplierStatement extends BaseModel
         'supplier' => [
             'type' => 'Supplier',
             'nullable' => false,
-            'readonly' => true
+            'readonly' => true,
         ],
         'statementLines' => [
             'type' => 'SupplierStatementLine',
             'nullable' => false,
             'readonly' => true,
-            'collection' => true
+            'collection' => true,
         ],
         'date' => [
             'type' => 'DateTime',
@@ -90,7 +90,7 @@ class SupplierStatement extends BaseModel
         'all' => true,
         'get' => false,
         'save' => false,
-        'delete' => false
+        'delete' => false,
     ];
 
     /**
@@ -100,6 +100,6 @@ class SupplierStatement extends BaseModel
         'all' => 'POST',
         'get' => 'GET',
         'save' => 'POST',
-        'delete' => 'DELETE'
+        'delete' => 'DELETE',
     ];
 }
