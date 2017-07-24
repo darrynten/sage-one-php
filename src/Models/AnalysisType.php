@@ -80,6 +80,7 @@ class AnalysisType extends BaseModel
     {
         throw new NotYetImplementedException(
             NotYetImplementedException::METHOD_NOT_IMPLEMENTED,
-            '\DarrynTen\SageOne\Models\AnalysisType::saveBatch');
+            '\DarrynTen\SageOne\Models\AnalysisType::saveBatch'
+        );
     }
 }
