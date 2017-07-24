@@ -217,6 +217,20 @@ class Account extends BaseModel
         'delete' => true,
     ];
 
+    /**
+     * Features HTTP methods
+     * Not all models follow same conventions like GET for all()
+     * Example AccountBalance all() requires POST method
+     * or SupplierStatement get() requires POST method
+     * @var array $featureMethods
+     */
+    protected $featureMethods = [
+        'all' => 'GET',
+        'get' => 'GET',
+        'save' => 'POST',
+        'delete' => 'DELETE'
+    ];
+
     // Construct (if you need to modify construction)
     public function __construct(array $config)
     {
@@ -254,7 +268,7 @@ Models marked with an asterix are pure CRUD models
 - [ ] Rate Limiting
 - [ ] Models
   - [x] Account
-    - [ ] Account Balance
+    - [x] Account Balance
     - [x] Account Category *
     - [x] Account Note *
     - [ ] Account Note Attachment
