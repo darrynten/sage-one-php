@@ -558,18 +558,24 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
      * Verifies that we can load list of models
      *
      * @param string $class Full path to the class
+     * @param string $method HTTP method of call
+     * @param string $requestMock If specified sends data from that file in request
      * @param callable $whatToCheck Verifies fields on result
      */
-    protected function verifyGetAll(string $class, callable $whatToCheck)
+    protected function verifyGetAll(string $class, callable $whatToCheck, string $method = 'GET', string $requestMock = null)
     {
         $className = $this->getClassName($class);
         $path = sprintf('%s/Get', $className);
-        $mockFile = sprintf('%s/GET_%s_Get.json', $className, $className);
+        $responseMock = sprintf('%s/%s_%s_Get.json', $className, $method, $className);
+        if ($requestMock) {
+            $responseMock = sprintf('%s/%s_%s_Get_RESP.json', $className, $method, $className);
+        }
         $model = $this->setUpRequestMock(
-            'GET',
+            $method,
             $class,
             $path,
-            $mockFile
+            $responseMock,
+            $requestMock
         );
 
         $allInstances = $model->all();
