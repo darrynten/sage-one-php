@@ -480,7 +480,7 @@ class ExampleModelTest extends BaseModelTest
                         'Authorization' => 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=',
                     ],
                     'query' => [
-                        'apikey' => 'key'
+                        'apikey' => '%7Bkey%7D'
                     ]
                 ],
                 []
@@ -502,7 +502,7 @@ class ExampleModelTest extends BaseModelTest
                         'Authorization' => 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=',
                     ],
                     'query' => [
-                        'apikey' => 'key'
+                        'apikey' => '%7Bkey%7D'
                     ]
                 ],
                 ['keyx' => 'value']
