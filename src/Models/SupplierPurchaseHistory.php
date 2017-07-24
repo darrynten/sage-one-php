@@ -54,7 +54,7 @@ class SupplierPurchaseHistory extends BaseModel
         'all' => true,
         'get' => false,
         'save' => false,
-        'delete' => false
+        'delete' => false,
     ];
 
     /**
@@ -64,6 +64,6 @@ class SupplierPurchaseHistory extends BaseModel
         'all' => 'POST',
         'get' => false,
         'save' => false,
-        'delete' => false
+        'delete' => false,
     ];
 }
