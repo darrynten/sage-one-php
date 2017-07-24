@@ -566,10 +566,9 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     {
         $className = $this->getClassName($class);
         $path = sprintf('%s/Get', $className);
+        $responseMock = sprintf('%s/%s_%s_Get.json', $className, $method, $className);
         if ($requestMock) {
             $responseMock = sprintf('%s/%s_%s_Get_RESP.json', $className, $method, $className);
-        } else {
-            $responseMock = sprintf('%s/%s_%s_Get.json', $className, $method, $className);
         }
         $model = $this->setUpRequestMock(
             $method,

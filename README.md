@@ -221,6 +221,7 @@ class Account extends BaseModel
      * Features HTTP methods
      * Not all models follow same conventions like GET for all()
      * Example AccountBalance all() requires POST method
+     * or SupplierStatement get() requires POST method
      * @var array $featureMethods
      */
     protected $featureMethods = [
@@ -280,7 +281,7 @@ Models marked with an asterix are pure CRUD models
     - [x] Company Entity Type *
     - [ ] Company Note
   - [x] Currency *
-  - [ ] Exchange Rates
+  - [x] Exchange Rates
   - [x] Supplier *
     - [x] Supplier Additional Contact Detail
     - [x] Supplier Adjustment

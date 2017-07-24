@@ -56,6 +56,7 @@ abstract class BaseModel
      * Features HTTP methods
      * Not all models follow same conventions like GET for all()
      * Example AccountBalance all() requires POST method
+     * or SupplierStatement get() requires POST method
      * @var array $featureMethods
      */
     protected $featureMethods = [
@@ -155,7 +156,7 @@ abstract class BaseModel
      * $account = new Account;
      * $allAccounts = $account->all();
      *
-     * @param array $parameters
+     * @param array $parameters Some models support passing arguments to all()
      * @return ModelCollection A collection of entities
      */
     public function all(array $parameters = [])
@@ -219,7 +220,7 @@ abstract class BaseModel
      *
      * TODO: Actually perform this action!
      *
-     * @param array $parameters
+     * @param array $parameters some models support passing arguments to save()
      * @return stdClass Representaion of response
      */
     public function save(array $parameters = [])
