@@ -50,6 +50,9 @@ class AssetModelTest extends BaseModelTest
                 'type' => 'string',
                 'nullable' => false,
                 'readonly' => false,
+                'min' => 0,
+                'max' => 500,
+                'required' => true,
             ],
             'category' => [
                 'type' => 'AssetCategory',
@@ -70,11 +73,15 @@ class AssetModelTest extends BaseModelTest
                 'type' => 'string',
                 'nullable' => false,
                 'readonly' => false,
+                'min' => 0,
+                'max' => 100,
             ],
             'boughtFrom' => [
                 'type' => 'string',
                 'nullable' => false,
                 'readonly' => false,
+                'min' => 0,
+                'max' => 100,
             ],
             'purchasePrice' => [
                 'type' => 'double',

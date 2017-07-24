@@ -42,31 +42,45 @@ class SupplierBankDetailModelTest extends BaseModelTest
                 'type' => 'integer',
                 'nullable' => false,
                 'readonly' => false,
+                'required' => true,
             ],
             'supplierId' => [
                 'type' => 'integer',
                 'nullable' => false,
                 'readonly' => false,
+                'required' => true,
             ],
             'bankAccountHolder' => [
                 'type' => 'string',
                 'nullable' => false,
                 'readonly' => false,
+                'min' => 0,
+                'max' => 100,
+                'required' => true,
             ],
             'bankAccountNumber' => [
                 'type' => 'string',
                 'nullable' => false,
                 'readonly' => false,
+                'min' => 0,
+                'max' => 13,
+                'required' => true,
             ],
             'bankName' => [
                 'type' => 'string',
                 'nullable' => false,
                 'readonly' => false,
+                'min' => 0,
+                'max' => 100,
+                'required' => true,
             ],
             'bankBranchCode' => [
                 'type' => 'string',
                 'nullable' => false,
                 'readonly' => false,
+                'min' => 0,
+                'max' => 6,
+                'required' => true,
             ],
             'bankAccountType' => [
                 'type' => 'integer',
@@ -93,12 +107,12 @@ class SupplierBankDetailModelTest extends BaseModelTest
             $this->assertEquals(12, $results[1]->supplierId);
             $this->assertEquals('sample string 3', $results[0]->bankAccountHolder);
             $this->assertEquals('sample string 26', $results[1]->bankAccountHolder);
-            $this->assertEquals('sample string 4', $results[0]->bankAccountNumber);
-            $this->assertEquals('sample string 41', $results[1]->bankAccountNumber);
+            $this->assertEquals('sample strin', $results[0]->bankAccountNumber);
+            $this->assertEquals('sample string', $results[1]->bankAccountNumber);
             $this->assertEquals('sample string 5', $results[0]->bankName);
             $this->assertEquals('sample string 20', $results[1]->bankName);
-            $this->assertEquals('sample string 6', $results[0]->bankBranchCode);
-            $this->assertEquals('sample string 18', $results[1]->bankBranchCode);
+            $this->assertEquals('300030', $results[0]->bankBranchCode);
+            $this->assertEquals('300033', $results[1]->bankBranchCode);
             $this->assertEquals(1, $results[0]->bankAccountType);
             $this->assertEquals(3, $results[1]->bankAccountType);
         });
@@ -111,9 +125,9 @@ class SupplierBankDetailModelTest extends BaseModelTest
             $this->assertEquals(1, $model->id);
             $this->assertEquals(2, $model->supplierId);
             $this->assertEquals('sample string 3', $model->bankAccountHolder);
-            $this->assertEquals('sample string 4', $model->bankAccountNumber);
+            $this->assertEquals('sample strin2', $model->bankAccountNumber);
             $this->assertEquals('sample string 5', $model->bankName);
-            $this->assertEquals('sample string 6', $model->bankBranchCode);
+            $this->assertEquals('123456', $model->bankBranchCode);
             $this->assertEquals(1, $model->bankAccountType);
         });
     }
@@ -124,18 +138,18 @@ class SupplierBankDetailModelTest extends BaseModelTest
             $model->id = 1;
             $model->supplierId = 2;
             $model->bankAccountHolder = 'sample string 3';
-            $model->bankAccountNumber = 'sample string 4';
+            $model->bankAccountNumber = 'sample strin2';
             $model->bankName = 'sample string 5';
-            $model->bankBranchCode = 'sample string 6';
+            $model->bankBranchCode = '123456';
             $model->bankBranchCode = 1;
         }, function ($savedModel) {
             $this->assertInstanceOf(SupplierBankDetail::class, $savedModel);
             $this->assertEquals(1, $savedModel->id);
             $this->assertEquals(2, $savedModel->supplierId);
             $this->assertEquals('sample string 3', $savedModel->bankAccountHolder);
-            $this->assertEquals('sample string 4', $savedModel->bankAccountNumber);
+            $this->assertEquals('sample strin2', $savedModel->bankAccountNumber);
             $this->assertEquals('sample string 5', $savedModel->bankName);
-            $this->assertEquals('sample string 6', $savedModel->bankBranchCode);
+            $this->assertEquals('123456', $savedModel->bankBranchCode);
             $this->assertEquals(1, $savedModel->bankAccountType);
         });
     }
