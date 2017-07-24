@@ -294,7 +294,7 @@ Models marked with an asterix are pure CRUD models
     - [ ] Supplier Note Attachment
     - [x] Supplier Opening Balance *
     - [ ] Supplier Payment
-    - [ ] Supplier Purchase History
+    - [x] Supplier Purchase History
     - [ ] Supplier Return
     - [ ] Supplier Return Attachment
     - [x] Supplier Statement *

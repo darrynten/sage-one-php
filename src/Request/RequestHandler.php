@@ -129,7 +129,7 @@ class RequestHandler
      *
      * @see RequestHandler::request()
      *
-     * @return array
+     * @return stdClass
      * @throws ApiException
      */
     public function handleRequest(string $method, string $uri, array $options, array $parameters = [])
