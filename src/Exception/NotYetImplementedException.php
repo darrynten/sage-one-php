@@ -26,13 +26,13 @@ class NotYetImplementedException extends Exception
     /**
      * Custom NotYetImplemented exception handler
      * @var int $code default code [10300]
-     * @var string $methodAddress should contain method address.
+     * @var string $address should contain address.
      */
-    public function __construct($code = 10300, $methodAddress = '')
+    public function __construct($code = 10300, $address = '')
     {
         $message = sprintf(
             'Error, "%s" %s',
-            $methodAddress,
+            $address,
             ExceptionMessages::$notYetImplementedErrorMessages[$code]
         );
         parent::__construct($message, $code);
