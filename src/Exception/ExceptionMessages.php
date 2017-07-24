@@ -51,6 +51,17 @@ class ExceptionMessages
         10202 => 'Missing required property in object'
     ];
 
+
+
+    /**
+     * @var array $modelCollectionErrorMessages [102xx codes]
+     */
+    public static $configErrorMessages = [
+        10400 => 'Error',
+        10401 => 'Username missing',
+        10402 => 'Password missing',
+        10403 => 'API key missing'
+    ];
     /**
      * @var array $strings map from http response codes to textual representation of errors
      */

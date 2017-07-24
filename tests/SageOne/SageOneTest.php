@@ -2,6 +2,7 @@
 
 namespace DarrynTen\SageOne\Tests\SageOne;
 
+use DarrynTen\SageOne\Exception\ConfigException;
 use DarrynTen\SageOne\SageOne;
 use DarrynTen\SageOne\Request\RequestHandler;
 use DarrynTen\SageOne\Exception\ApiException;
@@ -76,14 +77,14 @@ class SageOneTest extends \PHPUnit_Framework_TestCase
 
     public function testMissingUsername()
     {
-        $this->expectException(ApiException::class);
+        $this->expectException(ConfigException::class);
         $request = new SageOne([]);
         $this->assertEquals($request->config->version, '1.1.2');
     }
 
     public function testMissingPassword()
     {
-        $this->expectException(ApiException::class);
+        $this->expectException(ConfigException::class);
         $request = new SageOne([
             'username' => 'username'
         ]);
@@ -92,7 +93,7 @@ class SageOneTest extends \PHPUnit_Framework_TestCase
 
     public function testMissingKey()
     {
-        $this->expectException(ApiException::class);
+        $this->expectException(ConfigException::class);
         $request = new SageOne([
             'username' => 'username',
             'password' => 'password'
