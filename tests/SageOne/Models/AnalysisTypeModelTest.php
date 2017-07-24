@@ -108,6 +108,9 @@ class AnalysisTypeModelTest extends BaseModelTest
     public function testSave()
     {
         $this->verifySave(AnalysisType::class, function ($model) {
+            $model->id = 1;
+            $model->description = "sample string 2";
+            $model->active = true;
         }, function ($savedModel) {
             $this->assertEquals(1, $savedModel->id);
             $this->assertEquals('sample string 2', $savedModel->description);
