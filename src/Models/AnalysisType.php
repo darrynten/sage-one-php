@@ -12,6 +12,7 @@
 namespace DarrynTen\SageOne\Models;
 
 use DarrynTen\SageOne\BaseModel;
+use DarrynTen\SageOne\Exception\LibraryException;
 
 /**
  * AnalysisType model
@@ -77,6 +78,9 @@ class AnalysisType extends BaseModel
      */
     public function saveBatch()
     {
-        //UNSUPPORTED - Exception needs to be thrown here
+        throw new LibraryException(
+            LibraryException::METHOD_NOT_IMPLEMENTED,
+            '\DarrynTen\SageOne\Models\AnalysisType::saveBatch'
+        );
     }
 }
