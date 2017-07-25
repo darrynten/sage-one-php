@@ -339,7 +339,6 @@ Please feel free to open PRs for any of the following :)
 - [ ] Accountant Note
 - [ ] Accountant Task
 - [ ] Accountant Task Recurrence
-- [ ] Additional Item Price
 - [x] Additional Price List
 - [ ] Allocation
 - [x] Asset
