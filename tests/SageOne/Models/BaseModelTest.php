@@ -229,10 +229,18 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
             $this->verifyCommonAttributes($className, $name, $options, $value);
             $this->verifyMinMaxAttributes($className, $name, $options, $value);
             $this->verifyRequiredAttribute($className, $name, $options, $value);
+            $this->verifyOptionalAttribute($className, $name, $options, $value);
             $this->verifyRegexAttribute($className, $name, $options, $value);
             $this->verifyFilterVarAttribute($className, $name, $options, $value);
             $this->verifyDefaultAttribute($className, $name, $options, $value);
             $this->verifyCollectionAttribute($className, $name, $options, $value);
+            $this->assertEquals(
+                count($options),
+                count($value[$name]),
+                sprintf('Model %s key %s should have %s options but got %s',
+                    $className, $name, count($options), count($value[$name])
+                )
+            );
         }
     }
 
@@ -247,7 +255,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     {
         $validKeys = array_fill_keys([
             'type', 'nullable', 'readonly', 'default',
-            'required', 'min', 'max', 'regex', 'collection', 'validate'
+            'required', 'min', 'max', 'regex', 'collection', 'validate', 'optional'
         ], true);
         foreach (array_keys($options) as $option) {
             if (!isset($validKeys[$option])) {
@@ -383,6 +391,38 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
             $this->assertTrue(
                 $value[$name]['required'],
                 sprintf('Model %s "required" for %s must be true', $className, $name)
+            );
+        }
+    }
+
+    /**
+     * Verifies that field $name has optional attribute (if any)
+     *
+     * @param string $className name of the class under checking
+     * @param string $name name of the attribute
+     * @param array $options what we check
+     *      Contains data in the following format
+     *      [
+     *          'optional' => true
+     *      ]
+     * @param array $value actual field attributes under check
+     *      has the same format as $options
+     */
+    private function verifyOptionalAttribute($className, $name, $options, $value)
+    {
+        if (isset($options['optional'])) {
+            if ($options['optional'] !== true) {
+                throw new \Exception('You can validate only optional=true');
+            }
+
+            $this->assertTrue(
+                isset($value[$name]['optional']),
+                sprintf('Model %s "optional" for %s is not present', $className, $name)
+            );
+
+            $this->assertTrue(
+                $value[$name]['optional'],
+                sprintf('Model %s "optional" for %s must be true', $className, $name)
             );
         }
     }
