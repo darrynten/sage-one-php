@@ -96,8 +96,6 @@ class CustomerCategoryModelTest extends BaseModelTest
 
     public function testDelete()
     {
-        $this->verifyDelete(CustomerCategory::class, 2, function ($response) {
-            // TODO actual checks
-        });
+        $this->verifyDelete(CustomerCategory::class, 2, true);
     }
 }

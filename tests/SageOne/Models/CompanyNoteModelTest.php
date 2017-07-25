@@ -162,9 +162,7 @@ class CompanyNoteModelTest extends BaseModelTest
 
     public function testDelete()
     {
-        $this->verifyDelete(CompanyNote::class, 1, function () {
-            // TODO do actual checks
-        });
+        $this->verifyDelete(CompanyNote::class, 1, true);
     }
 
     public function testGetCompanyNotes()

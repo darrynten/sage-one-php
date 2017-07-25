@@ -203,7 +203,7 @@ abstract class BaseModel
      *
      * @param integer $id The ID to delete
      *
-     * @return void
+     * @return bool
      */
     public function delete(string $id)
     {
@@ -211,8 +211,16 @@ abstract class BaseModel
             $this->throwException(ModelException::NO_DELETE_SUPPORT, sprintf('id %s', $id));
         }
 
-        // TODO Response handle?
-        $this->request->request($this->featureMethods['delete'], $this->endpoint, sprintf('Delete/%s', $id));
+        // On success it returns 204 HTTP code with empty body
+        $response = $this->request->request(
+            $this->featureMethods['delete'],
+            $this->endpoint,
+            sprintf('Delete/%s', $id)
+        );
+        if ($response->getStatusCode() === 204) {
+            return true;
+        }
+        return false;
     }
 
     /**
