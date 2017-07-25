@@ -120,7 +120,7 @@ class BankAccountOpeningBalanceModelTest extends BaseModelTest
             $this->assertEquals($model1->id, 2);
             $this->assertEquals($model1->balance, 3.0);
             $this->assertEquals($model1->reason, 'sample string 4');
-            $this->assertEquals($model1->date->format('Y-m-d'), '2017-07-25');;
+            $this->assertEquals($model1->date->format('Y-m-d'), '2017-07-25');
 
             $model2 = $results[1];
             $this->assertEquals($model2->bankAccountId, 10);
@@ -166,7 +166,7 @@ class BankAccountOpeningBalanceModelTest extends BaseModelTest
             $this->assertEquals($savedModel->id, 2);
             $this->assertEquals($savedModel->balance, 3.0);
             $this->assertEquals($savedModel->reason, 'sample string 4');
-            $this->assertEquals($savedModel->date->format('Y-m-d'), '2017-07-25');;
+            $this->assertEquals($savedModel->date->format('Y-m-d'), '2017-07-25');
         });
     }
 }
