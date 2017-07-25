@@ -56,7 +56,8 @@ class ExceptionMessages
      */
     public static $libraryErrorMessages = [
         10300 => 'Library Error',
-        10301 => 'Method not yet implemented. This still needs to be added, please consider contributing to the project.',
+        10301 => 'Method not yet implemented. This still needs to be added, ' .
+            'please consider contributing to the project.',
     ];
 
     /**
