@@ -55,6 +55,11 @@ $account = new Account($config);
 $account->all(); // fetches ALL
 $account->get($id); // fetches that ID
 
+// If model supports some query parameters, we can pass it
+$company = new Company($config);
+$company->all(['includeStatus' => true]);
+// Currently get() does not support any query parameters but this might be required in future
+
 // related models
 echo $account->category->id;
 
@@ -163,6 +168,10 @@ class Account extends BaseModel
      *   - `min` / `max` always come together
      *   - `default` is when it's indicated in the docs
      *   - `regex` is generally used with email address fields
+     *   - `optional` is true when this field can be omitted in SageOne response
+     *     - Example is Company's model all() method
+     *       By default when we execute all() it is the same as all(['includeStatus' = false])
+     *       So `status` field is not returned in response
      *
      * Details on writable properties for Account:
      * https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=Account
@@ -197,6 +206,12 @@ class Account extends BaseModel
             'type' => 'boolean',
             'nullable' => false,
             'readonly' => true,
+        ],
+        'status' => [
+            'type' => 'integer',
+            'nullable' => false,
+            'readonly' => true,
+            'optional' => true,
         ],
         // etc etc etc
     ];
