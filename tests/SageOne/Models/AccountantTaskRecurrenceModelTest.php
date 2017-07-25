@@ -2,7 +2,7 @@
 
 namespace DarrynTen\SageOne\Tests\SageOne\Models;
 
-use DarrynTen\SageOne\Models\AccountTaskRecurrence;
+use DarrynTen\SageOne\Models\AccountantTaskRecurrence;
 use DarrynTen\SageOne\Models\ModelCollection;
 use DarrynTen\SageOne\Exception\ModelException;
 use DarrynTen\SageOne\Request\RequestHandler;
@@ -13,37 +13,37 @@ class AccountantTaskRecurrenceModelTest extends BaseModelTest
 {
     public function testInstanceOf()
     {
-        $this->verifyInstanceOf(AccountTaskRecurrence::class);
+        $this->verifyInstanceOf(AccountantTaskRecurrence::class);
     }
 
     public function testSetUndefined()
     {
-        $this->verifySetUndefined(AccountTaskRecurrence::class);
+        $this->verifySetUndefined(AccountantTaskRecurrence::class);
     }
 
     public function testGetUndefined()
     {
-        $this->verifyGetUndefined(AccountTaskRecurrence::class);
+        $this->verifyGetUndefined(AccountantTaskRecurrence::class);
     }
 
     public function testCanNotNullify()
     {
-        $this->verifyCanNotNullify(AccountTaskRecurrence::class, 'id');
+        $this->verifyCanNotNullify(AccountantTaskRecurrence::class, 'id');
     }
 
     public function testCanNullify()
     {
-        $this->verifyCanNullify(AccountTaskRecurrence::class, 'numberOfOccurrences');
+        $this->verifyCanNullify(AccountantTaskRecurrence::class, 'numberOfOccurrences');
     }
 
     public function testBadImport()
     {
-        $this->verifyBadImport(AccountTaskRecurrence::class, 'companyId');
+        $this->verifyBadImport(AccountantTaskRecurrence::class, 'companyId');
     }
 
     public function testAttributes()
     {
-        $this->verifyAttributes(AccountTaskRecurrence::class, [
+        $this->verifyAttributes(AccountantTaskRecurrence::class, [
             'companyId' => [
                 'type' => 'integer',
                 'nullable' => false,
@@ -110,14 +110,14 @@ class AccountantTaskRecurrenceModelTest extends BaseModelTest
 
     public function testFeatures()
     {
-        $this->verifyFeatures(AccountTaskRecurrence::class, [
+        $this->verifyFeatures(AccountantTaskRecurrence::class, [
             'all' => true, 'get' => true, 'delete' => true, 'save' => false
         ]);
     }
 
     public function testInject()
     {
-        $this->verifyInject(AccountTaskRecurrence::class, function ($model) {
+        $this->verifyInject(AccountantTaskRecurrence::class, function ($model) {
             $this->assertEquals($model->companyId, 1);
             $this->assertEquals($model->frequencyType, 2);
             $this->assertEquals($model->frequencyInterval, 3);
@@ -138,11 +138,11 @@ class AccountantTaskRecurrenceModelTest extends BaseModelTest
 
     public function testGetAll()
     {
-        $this->verifyGetAll(AccountTaskRecurrence::class, function ($results) {
+        $this->verifyGetAll(AccountantTaskRecurrence::class, function ($results) {
             $this->assertCount(2, $results);
 
-            $this->assertInstanceOf(AccountTaskRecurrence::class, $results[0]);
-            $this->assertInstanceOf(AccountTaskRecurrence::class, $results[1]);
+            $this->assertInstanceOf(AccountantTaskRecurrence::class, $results[0]);
+            $this->assertInstanceOf(AccountantTaskRecurrence::class, $results[1]);
 
             $model1 = $results[0];
             $this->assertEquals($model1->companyId, 1);
@@ -179,7 +179,7 @@ class AccountantTaskRecurrenceModelTest extends BaseModelTest
 
     public function testGetId()
     {
-        $this->verifyGetId(AccountTaskRecurrence::class, 10, function ($model) {
+        $this->verifyGetId(AccountantTaskRecurrence::class, 10, function ($model) {
             $this->assertEquals($model->companyId, 1);
             $this->assertEquals($model->frequencyType, 2);
             $this->assertEquals($model->frequencyInterval, 3);
