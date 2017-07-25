@@ -229,6 +229,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
             ->methodIs('DELETE')
             ->pathIs('/1.1.2/Account/Delete/11?apikey=%7Bkey%7D')
             ->then()
+            ->statusCode(204)
             ->body(null)
             ->end();
         $this->http->setUp();
@@ -272,10 +273,9 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
         $reflectedClient->setAccessible(true);
         $reflectedClient->setValue($request, $mockClient);
 
-        $this->assertEquals(
-            null,
-            $request->request('DELETE', 'Account', 'Delete/11', [])
-        );
+        $response = $request->request('DELETE', 'Account', 'Delete/11', []);
+        $this->assertEquals(204, $response->getStatusCode());
+        $this->assertEquals(null, (string)$response->getBody());
     }
 
     public function testRequestWithAuth()
