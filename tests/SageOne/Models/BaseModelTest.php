@@ -702,7 +702,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $path = sprintf('%s/Delete/%s', $className, $id);
         $responseCode = 204;
         if (!$success) {
-            $responseCode = 400; // TODO find out actual response code for not allowed deletion
+            $responseCode = 300; // TODO find out actual response code for not allowed deletion
         }
         $model = $this->setUpRequestMock('DELETE', $class, $path, null, null, [], $responseCode);
 
@@ -919,10 +919,6 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         $this->http->setUp();
 
         $request = new RequestHandler($this->config);
-
-        if ($responseCode === 400) {
-            $this->expectException(ClientException::class);
-        }
 
         $localClient = new Client();
         $localResult = $localClient->request(
