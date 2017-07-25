@@ -4,7 +4,6 @@ namespace DarrynTen\SageOne\Tests\SageOne\Models;
 
 use DarrynTen\SageOne\Models\AdditionalItemPrice;
 
-
 class AdditionalItemPriceModelTest extends BaseModelTest
 {
     public function testInstanceOf()
