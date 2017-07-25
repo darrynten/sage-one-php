@@ -123,25 +123,14 @@ class AdditionalItemPriceModelTest extends BaseModelTest
 
     public function testDelete()
     {
-        $this->verifyDelete(AdditionalItemPrice::class, 1, function ($model) {
-            $this->assertEquals($model->id, 1);
-            $this->assertEquals($model->itemId, 2);
-            $this->assertEquals($model->priceInclusive, 3.0);
-            $this->assertEquals($model->priceExclusive, 4.0);
-            $this->assertEquals($model->additionalPriceListId, 5.0);
-        });
+        $this->verifyDelete(AdditionalItemPrice::class, 1, true);
     }
 
     public function testDeleteFails()
     {
-        $this->verifyDelete(AdditionalItemPrice::class, 1, function ($model) {
-            $this->assertEquals($model->id, 1);
-            $this->assertEquals($model->itemId, 2);
-            $this->assertEquals($model->priceInclusive, 3.0);
-            $this->assertEquals($model->priceExclusive, 4.0);
-            $this->assertEquals($model->additionalPriceListId, 5.0);
-        });
+        $this->verifyDelete(AdditionalItemPrice::class, 1, false);
     }
+    
     public function testSave()
     {
         $this->verifySave(AdditionalItemPrice::class, function ($model) {
