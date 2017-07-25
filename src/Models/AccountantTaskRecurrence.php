@@ -13,19 +13,19 @@ namespace DarrynTen\SageOne\Models;
 use DarrynTen\SageOne\BaseModel;
 
 /**
- * AccountTaskRecurrence Model
+ * AccountantTaskRecurrence Model
  *
  * Details on writable properties
- * https://accounting.sageone.co.za/api/1.1.2/Help#bookmark_AccountTaskRecurrence
+ * https://accounting.sageone.co.za/api/1.1.2/Help#bookmark_AccountantTaskRecurrence
  */
-class AccountTaskRecurrence extends BaseModel
+class AccountantTaskRecurrence extends BaseModel
 {
     /**
      * The API Endpoint
      *
      * @var string $endpoint
      */
-    protected $endpoint = 'AccountTaskRecurrence';
+    protected $endpoint = 'AccountantTaskRecurrence';
 
     /**
      * Defines all possible fields.
