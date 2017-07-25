@@ -36,6 +36,7 @@ class AssetCategory extends BaseModel
             'type' => 'integer',
             'nullable' => false,
             'readonly' => false,
+            'required' => true,
         ],
         'description' => [
             'type' => 'string',

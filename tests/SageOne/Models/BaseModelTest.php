@@ -824,7 +824,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
                         'Authorization' => 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=',
                     ],
                     'query' => [
-                        'apikey' => 'key'
+                        'apikey' => '%7Bkey%7D'
                     ]
                 ],
                 []
@@ -902,7 +902,9 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
                 'Authorization' => sprintf('%s %s', $tokenType, $token)
             ],
         ];
-        $checkParameters['query']['apikey'] = $this->config['key'];
+        $checkParameters['query']['apikey'] = urlencode(
+            '{' . $this->config['key'] . '}'
+        );
 
         /**
         * $client in RequestHandler receives url without query params

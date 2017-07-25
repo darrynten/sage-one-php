@@ -50,6 +50,7 @@ class AnalysisCategory extends BaseModel
             'readonly' => false,
             'min' => 0,
             'max' => 100,
+            'required' => true,
         ],
     ];
 
