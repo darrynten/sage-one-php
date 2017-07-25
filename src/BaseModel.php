@@ -212,7 +212,11 @@ abstract class BaseModel
         }
 
         // On success it returns 204 HTTP code with empty body
-        $response = $this->request->request($this->featureMethods['delete'], $this->endpoint, sprintf('Delete/%s', $id));
+        $response = $this->request->request(
+            $this->featureMethods['delete'],
+            $this->endpoint,
+            sprintf('Delete/%s', $id)
+        );
         if ($response->getStatusCode() === 204) {
             return true;
         }
