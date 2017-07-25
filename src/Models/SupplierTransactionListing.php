@@ -37,37 +37,37 @@ class SupplierTransactionListing extends BaseModel
             'nullable' => false,
             'readonly' => false,
         ],
-        'Name' => [
+        'name' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
         ],
-        'CurrencySymbol' => [
+        'currencySymbol' => [
             'type' => 'string',
             'nullable' => true,
             'readonly' => false,
         ],
-        'OpeningBalanceDate' => [
+        'openingBalanceDate' => [
             'type' => 'DateTime',
             'nullable' => true,
             'readonly' => false,
         ],
-        'OpeningBalance' => [
+        'openingBalance' => [
             'type' => 'double',
             'nullable' => false,
             'readonly' => false,
         ],
-        'ClosingBalanceDate' => [
+        'closingBalanceDate' => [
             'type' => 'DateTime',
             'nullable' => false,
             'readonly' => false,
         ],
-        'ClosingBalance' => [
+        'closingBalance' => [
             'type' => 'double',
             'nullable' => false,
             'readonly' => false,
         ],
-        'Transactions' => [
+        'transactions' => [
             'type' => 'TransactionListingDetail',
             'nullable' => false,
             'readonly' => false,
