@@ -197,7 +197,7 @@ class AccountantTaskRecurrenceModelTest extends BaseModelTest
 
     public function testDelete()
     {
-        $this->verifyDelete(AccountantTaskRecurrence::class, 10, function ($model){
+        $this->verifyDelete(AccountantTaskRecurrence::class, 10, function ($model) {
             $this->assertEquals($model->companyId, 1);
             $this->assertEquals($model->frequencyType, 2);
             $this->assertEquals($model->frequencyInterval, 3);
@@ -214,7 +214,7 @@ class AccountantTaskRecurrenceModelTest extends BaseModelTest
     }
     public function testDeleteFails()
     {
-        $this->verifyDelete(AccountantTaskRecurrence::class, 10, function ($model){
+        $this->verifyDelete(AccountantTaskRecurrence::class, 10, function ($model) {
             $this->assertEquals($model->companyId, 1);
             $this->assertEquals($model->frequencyType, 2);
             $this->assertEquals($model->frequencyInterval, 3);
