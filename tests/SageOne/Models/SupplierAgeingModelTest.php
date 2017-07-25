@@ -159,21 +159,22 @@ class SupplierAgeingModelTest extends BaseModelTest
     {
         $supplierAgeing = $this->setUpRequestMock('POST', SupplierAgeing::class, 'SupplierAgeing/GetSummary', 'SupplierAgeing/POST_SupplierAgeing_GetSummary_RESP.json', 'SupplierAgeing/POST_SupplierAgeingRequest_GetSummary_REQ.json');
 
-        $supplierAgeingRequest = [
-            'supplierId' => 1,
-            'toDate' => "2017-07-21",
-            'summary' => true,
-            'ageingPeriod' => 4,
-            'fromSupplier' => "sample string 6",
-            'toSupplier' => "sample string 611",
-            'fromCategory' => "sample string 211",
-            'toCategory' => "sample string 151",
-            'includeActive' => false,
-            'includeInactive' => true,
-            'basedOnDueDate' => false,
-            'excludeZeroBalance' => true,
-            'useForeignCurrency' => true
-        ];
+        $supplierAgeingRequestFields = new \stdClass();
+        $supplierAgeingRequestFields->SupplierId = 1;
+        $supplierAgeingRequestFields->ToDate = "2017-07-21";
+        $supplierAgeingRequestFields->Summary = true;
+        $supplierAgeingRequestFields->AgeingPeriod = 4;
+        $supplierAgeingRequestFields->FromSupplier = "sample string 6";
+        $supplierAgeingRequestFields->ToSupplier = "sample string 611";
+        $supplierAgeingRequestFields->FromCategory = "sample string 211";
+        $supplierAgeingRequestFields->ToCategory = "sample string 151";
+        $supplierAgeingRequestFields->IncludeActive = false;
+        $supplierAgeingRequestFields->IncludeInactive = true;
+        $supplierAgeingRequestFields->BasedOnDueDate = false;
+        $supplierAgeingRequestFields->ExcludeZeroBalance = true;
+        $supplierAgeingRequestFields->UseForeignCurrency = true;
+
+        $supplierAgeingRequest = new SupplierAgeingRequest($this->config, $supplierAgeingRequestFields);
         $supplierAgeingSummary = $supplierAgeing->getSummary($supplierAgeingRequest);
 
         $this->assertInstanceOf(Supplier::class, $supplierAgeingSummary->supplier);
@@ -283,21 +284,22 @@ class SupplierAgeingModelTest extends BaseModelTest
     {
         $supplierAgeing = $this->setUpRequestMock('POST', SupplierAgeing::class, 'SupplierAgeing/GetDetail', 'SupplierAgeing/POST_SupplierAgeing_GetDetail_RESP.json', 'SupplierAgeing/POST_SupplierAgeing_GetDetail_REQ.json');
 
-        $supplierAgeingRequest = [
-            'supplierId' => 5,
-            'toDate' => "2016-08-23",
-            'summary' => true,
-            'ageingPeriod' => 6,
-            'fromSupplier' => "str 6",
-            'toSupplier' => "sample 611",
-            'fromCategory' => " string 211",
-            'toCategory' => "sa 151",
-            'includeActive' => true,
-            'includeInactive' => true,
-            'basedOnDueDate' => false,
-            'excludeZeroBalance' => true,
-            'useForeignCurrency' => true
-        ];
+        $supplierAgeingRequestFields = new \stdClass();
+        $supplierAgeingRequestFields->SupplierId = 5;
+        $supplierAgeingRequestFields->ToDate = "2016-08-23";
+        $supplierAgeingRequestFields->Summary = true;
+        $supplierAgeingRequestFields->AgeingPeriod = 6;
+        $supplierAgeingRequestFields->FromSupplier = "str 6";
+        $supplierAgeingRequestFields->ToSupplier = "sample 611";
+        $supplierAgeingRequestFields->FromCategory = " string 211";
+        $supplierAgeingRequestFields->ToCategory = "sa 151";
+        $supplierAgeingRequestFields->IncludeActive = true;
+        $supplierAgeingRequestFields->IncludeInactive = true;
+        $supplierAgeingRequestFields->BasedOnDueDate = false;
+        $supplierAgeingRequestFields->ExcludeZeroBalance = true;
+        $supplierAgeingRequestFields->UseForeignCurrency = true;
+        $supplierAgeingRequest = new SupplierAgeingRequest($this->config, $supplierAgeingRequestFields);
+
         $supplierAgeingDetail = $supplierAgeing->getDetail($supplierAgeingRequest);
 
         $this->assertInstanceOf(Supplier::class, $supplierAgeingDetail->results[0]->supplier);

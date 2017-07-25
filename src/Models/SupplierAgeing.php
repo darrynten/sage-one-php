@@ -102,9 +102,9 @@ class SupplierAgeing extends BaseModel
      * @return Supplier Ageing model
      * @link https://accounting.sageone.co.za/api/1.1.2/Help/Api/POST-SupplierAgeing-GetSummary
      */
-    public function getSummary($supplierAgeingRequest)
+    public function getSummary($supplierAgeingRq)
     {
-        $result = $this->request->request('POST', $this->endpoint, 'GetSummary', $supplierAgeingRequest);
+        $result = $this->request->request('POST', $this->endpoint, 'GetSummary', $supplierAgeingRq->toArray());
         $supplierAgeing = new SupplierAgeing($this->config);
         $supplierAgeing->loadResult($result);
         return $supplierAgeing;
@@ -117,9 +117,9 @@ class SupplierAgeing extends BaseModel
      * @return Supplier Ageing Collection
      * @link https://accounting.sageone.co.za/api/1.1.2/Help/Api/POST-SupplierAgeing-GetDetail
      */
-    public function getDetail($supplierAgeingRequest)
+    public function getDetail($supplierAgeingRq)
     {
-        $result = $this->request->request('POST', $this->endpoint, 'GetDetail', $supplierAgeingRequest);
+        $result = $this->request->request('POST', $this->endpoint, 'GetDetail', $supplierAgeingRq->toArray());
         return new ModelCollection(SupplierAgeing::class, $this->config, $result);
     }
 }
