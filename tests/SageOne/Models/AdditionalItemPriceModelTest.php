@@ -99,11 +99,11 @@ class AdditionalItemPriceModelTest extends BaseModelTest
             $this->assertEquals($model1->additionalPriceListId, 5.0);
 
             $model2 = $results[1];
-            $this->assertEquals($model2->id, 2);
-            $this->assertEquals($model2->itemId, 2);
-            $this->assertEquals($model2->priceInclusive, 3.0);
-            $this->assertEquals($model2->priceExclusive, 4.0);
-            $this->assertEquals($model2->additionalPriceListId, 5.0);
+            $this->assertEquals($model2->id, 10);
+            $this->assertEquals($model2->itemId, 11);
+            $this->assertEquals($model2->priceInclusive, 12.0);
+            $this->assertEquals($model2->priceExclusive, 13.0);
+            $this->assertEquals($model2->additionalPriceListId, 14.0);
 
             $this->assertCount(5, json_decode($model1->toJson(), true));
             $this->assertCount(5, json_decode($model2->toJson(), true));
