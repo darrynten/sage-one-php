@@ -237,8 +237,12 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals(
                 count($options),
                 count($value[$name]),
-                sprintf('Model %s key %s should have %s options but got %s',
-                    $className, $name, count($options), count($value[$name])
+                sprintf(
+                    'Model %s key %s should have %s options but got %s',
+                    $className,
+                    $name,
+                    count($options),
+                    count($value[$name])
                 )
             );
         }
