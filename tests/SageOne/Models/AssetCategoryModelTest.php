@@ -35,9 +35,10 @@ class AssetCategoryModelTest extends BaseModelTest
     {
         $this->verifyAttributes(AssetCategory::class, [
             'id' => [
-            'type' => 'integer',
-            'nullable' => false,
-            'readonly' => false,
+                'type' => 'integer',
+                'nullable' => false,
+                'readonly' => false,
+                'required' => true,
             ],
             'description' => [
                 'type' => 'string',
