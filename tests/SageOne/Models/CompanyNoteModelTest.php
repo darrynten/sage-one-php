@@ -171,29 +171,27 @@ class CompanyNoteModelTest extends BaseModelTest
     {
         $model1 = $this->setUpRequestMock('GET', CompanyNote::class, 'CompanyNote/GetCompanyNotes/1', 'CompanyNote/GET_CompanyNote_GetCompanyNotes_1.json');
         $allModels = $model1->getCompanyNotes(1);
+        $this->assertEquals(2, $allModels->returnedResults);
         $model1 = $allModels->results[0];
         $model2 = $allModels->results[1];
 
-        $this->assertCount(2, $results);
+        $this->assertInstanceOf(CompanyNote::class, $model1);
+        $this->assertInstanceOf(CompanyNote::class, $model2);
 
-        $this->assertInstanceOf(CompanyNote::class, $results[0]);
-        $this->assertInstanceOf(CompanyNote::class, $results[1]);
+        $this->assertEquals(1, $model1->id);
+        $this->assertEquals('sample string 2', $model1->subject);
+        $this->assertEquals('2017-07-25', $model1->entryDate->format('Y-m-d'));
+        $this->assertEquals('2017-07-25', $model1->actionDate->format('Y-m-d'));
+        $this->assertTrue($model1->status);
+        $this->assertEquals('sample string 3', $model1->note);
+        $this->assertTrue($model1->hasAttachments);
 
-        $this->assertEquals(1, $results[0]->id);
-        $this->assertEquals('sample string 2', $results[0]->subject);
-        $this->assertEquals('2017-07-25', $results[0]->entryDate->format('Y-m-d'));
-        $this->assertEquals('2017-07-25', $results[0]->actionDate->format('Y-m-d'));
-        $this->assertTrue($results[0]->status);
-        $this->assertEquals('sample string 3', $results[0]->note);
-        $this->assertTrue($results[0]->hasAttachments);
-
-        $this->assertEquals(5, $results[1]->id);
-        $this->assertEquals('sample string', $results[1]->subject);
-        $this->assertEquals('2017-07-24', $results[1]->entryDate->format('Y-m-d'));
-        $this->assertEquals('2017-07-29', $results[1]->actionDate->format('Y-m-d'));
-        $this->assertEquals(false, $results[1]->status);
-        $this->assertEquals('sample string 55', $results[1]->note);
-        $this->assertEquals(false, $results[1]->hasAttachments);
-
+        $this->assertEquals(5, $model2->id);
+        $this->assertEquals('sample string', $model2->subject);
+        $this->assertEquals('2017-07-24', $model2->entryDate->format('Y-m-d'));
+        $this->assertEquals('2017-07-29', $model2->actionDate->format('Y-m-d'));
+        $this->assertEquals(false, $model2->status);
+        $this->assertEquals('sample string 55', $model2->note);
+        $this->assertEquals(false, $model2->hasAttachments);
     }
 }
