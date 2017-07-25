@@ -164,9 +164,12 @@ class AssetNoteModelTest extends BaseModelTest
 
     public function testDelete()
     {
-        $this->verifyDelete(AssetNote::class, 2, function () {
-            // TODO do actual checks
-        });
+        $this->verifyDelete(AssetNote::class, 2, true);
+    }
+    
+    public function testDeleteFails()
+    {
+        $this->verifyDelete(AssetNote::class, 2, false);
     }
 
     public function testSave()
