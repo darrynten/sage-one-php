@@ -9,7 +9,7 @@ use DarrynTen\SageOne\Request\RequestHandler;
 use GuzzleHttp\Client;
 use ReflectionClass;
 
-class AccountTaskRecurrenceModelTest extends BaseModelTest
+class AccountantTaskRecurrenceModelTest extends BaseModelTest
 {
     public function testInstanceOf()
     {
@@ -197,8 +197,6 @@ class AccountTaskRecurrenceModelTest extends BaseModelTest
 
     public function testDelete()
     {
-        $this->verifyDelete(AccountTaskRecurrence::class, 33, function () {
-            // TODO do actual checks
-        });
+
     }
 }
