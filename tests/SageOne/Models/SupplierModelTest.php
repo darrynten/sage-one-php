@@ -594,9 +594,7 @@ class SupplierModelTest extends BaseModelTest
 
     public function testDelete()
     {
-        $this->verifyDelete(Supplier::class, 33, function () {
-            // TODO do actual checks
-        });
+        $this->verifyDelete(Supplier::class, 33, true);
     }
 
     public function testSave()

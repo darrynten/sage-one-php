@@ -173,9 +173,7 @@ class SalesRepresentativeModelTest extends BaseModelTest
 
     public function testDelete()
     {
-        $this->verifyDelete(SalesRepresentative::class, 1, function ($response) {
-            // TODO actual checks
-        });
+        $this->verifyDelete(SalesRepresentative::class, 1, true);
     }
 
     public function testHasActivity()
