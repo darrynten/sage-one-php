@@ -66,6 +66,6 @@ class AdditionalItemPrice extends BaseModel
         'all' => true,
         'get' => true,
         'save' => true,
-        'delete' => true
+        'delete' => true,
     ];
 }
