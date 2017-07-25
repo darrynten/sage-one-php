@@ -24,7 +24,9 @@ PHP 7.0+
 
 ## Basic use
 
-# TODO
+Some models' methods are unimplemented as they were inconsistent with other similar models, these methods will throw a "NotYetImplemented" exception with the location of the method stub.
+
+If you require these methods, please add them with updated tests.
 
 ### Definitions
 
@@ -297,7 +299,7 @@ Models marked with an asterix are pure CRUD models
     - [x] Supplier Purchase History
     - [ ] Supplier Return
     - [ ] Supplier Return Attachment
-    - [ ] Supplier Statement *
+    - [x] Supplier Statement *
     - [ ] Supplier Transaction Listing
   - [x] Tax Type *
 
