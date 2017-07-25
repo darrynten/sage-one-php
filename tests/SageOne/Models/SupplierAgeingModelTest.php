@@ -174,7 +174,8 @@ class SupplierAgeingModelTest extends BaseModelTest
         $supplierAgeingRequestFields->ExcludeZeroBalance = true;
         $supplierAgeingRequestFields->UseForeignCurrency = true;
 
-        $supplierAgeingRequest = new SupplierAgeingRequest($this->config, $supplierAgeingRequestFields);
+        $supplierAgeingRequest = new SupplierAgeingRequest($this->config);
+        $supplierAgeingRequest->loadResult($supplierAgeingRequestFields);
         $supplierAgeingSummary = $supplierAgeing->getSummary($supplierAgeingRequest);
 
         $this->assertInstanceOf(Supplier::class, $supplierAgeingSummary->supplier);
@@ -298,8 +299,9 @@ class SupplierAgeingModelTest extends BaseModelTest
         $supplierAgeingRequestFields->BasedOnDueDate = false;
         $supplierAgeingRequestFields->ExcludeZeroBalance = true;
         $supplierAgeingRequestFields->UseForeignCurrency = true;
-        $supplierAgeingRequest = new SupplierAgeingRequest($this->config, $supplierAgeingRequestFields);
 
+        $supplierAgeingRequest = new SupplierAgeingRequest($this->config);
+        $supplierAgeingRequest->loadResult($supplierAgeingRequestFields);
         $supplierAgeingDetail = $supplierAgeing->getDetail($supplierAgeingRequest);
 
         $this->assertInstanceOf(Supplier::class, $supplierAgeingDetail->results[0]->supplier);

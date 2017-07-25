@@ -29,19 +29,6 @@ class SupplierAgeingRequest extends BaseModel
     protected $endpoint = 'SupplierAgeingRequest';
 
     /**
-     * Make a new model
-     *
-     * Setup a request handler and bind the config
-     *
-     * @param array $config The config for the model
-     */
-    public function __construct(array $config, \stdClass $suppierAgeingRq)
-    {
-        parent::__construct($config);
-        $this->loadResult($suppierAgeingRq);
-    }
-
-    /**
      * @var array $fields
      */
     protected $fields = [

@@ -34,8 +34,8 @@ class SupplierAgeingRequestModelTest extends BaseModelTest
 
     public function testInject()
     {
-        $supplierAgeingRequest = new SupplierAgeingRequest($this->config);
         $data = json_decode(file_get_contents(__DIR__ . "/../../mocks/SupplierAgeingRequest/SupplierAgeingRequest_xx.json"));
+        $supplierAgeingRequest = new SupplierAgeingRequest($this->config);
         $supplierAgeingRequest->loadResult($data);
 
         $this->assertInstanceOf(SupplierAgeingRequest::class, $supplierAgeingRequest);
