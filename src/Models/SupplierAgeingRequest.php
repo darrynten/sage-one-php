@@ -32,67 +32,67 @@ class SupplierAgeingRequest extends BaseModel
      * @var array $fields
      */
     protected $fields = [
-        'supplierId' =>[
+        'supplierId' => [
             'type' => 'integer',
             'nullable' => false,
             'readonly' => false,
         ],
-        'toDate' =>[
+        'toDate' => [
             'type' => 'DateTime',
             'nullable' => false,
             'readonly' => false,
         ],
-        'summary' =>[
+        'summary' => [
             'type' => 'boolean',
             'nullable' => false,
             'readonly' => false,
         ],
-        'ageingPeriod' =>[
+        'ageingPeriod' => [
             'type' => 'integer',
             'nullable' => false,
             'readonly' => false,
         ],
-        'fromSupplier' =>[
+        'fromSupplier' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
         ],
-        'toSupplier' =>[
+        'toSupplier' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
         ],
-        'fromCategory' =>[
+        'fromCategory' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
         ],
-        'toCategory' =>[
+        'toCategory' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
         ],
-        'includeActive' =>[
+        'includeActive' => [
             'type' => 'boolean',
             'nullable' => false,
             'readonly' => false,
         ],
-        'includeInactive' =>[
+        'includeInactive' => [
             'type' => 'boolean',
             'nullable' => false,
             'readonly' => false,
         ],
-        'basedOnDueDate' =>[
+        'basedOnDueDate' => [
             'type' => 'boolean',
             'nullable' => false,
             'readonly' => false,
         ],
-        'excludeZeroBalance' =>[
+        'excludeZeroBalance' => [
             'type' => 'boolean',
             'nullable' => false,
             'readonly' => false,
         ],
-        'useForeignCurrency' =>[
+        'useForeignCurrency' => [
             'type' => 'boolean',
             'nullable' => false,
             'readonly' => false,

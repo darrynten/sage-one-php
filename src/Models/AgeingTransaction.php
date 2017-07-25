@@ -32,72 +32,72 @@ class AgeingTransaction extends BaseModel
      * @var array $fields
      */
     protected $fields = [
-        'documentHeaderId'=>[
+        'documentHeaderId' => [
             'type' => 'integer',
             'nullable' => false,
             'readonly' => false,
         ],
-        'documentTypeId'=>[
+        'documentTypeId' => [
             'type' => 'integer',
             'nullable' => false,
             'readonly' => false,
         ],
-        'documentNumber'=>[
+        'documentNumber' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
         ],
-        'reference'=>[
+        'reference' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
         ],
-        'documentType'=>[
+        'documentType' => [
             'type' => 'integer',
             'nullable' => false,
             'readonly' => false,
         ],
-        'comment'=>[
+        'comment' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
         ],
-        'date'=>[
+        'date' => [
             'type' => 'DateTime',
             'nullable' => false,
             'readonly' => false,
         ],
-        'dueDate'=>[
+        'dueDate' => [
             'type' => 'DateTime',
             'nullable' => true,
             'readonly' => false,
         ],
-        'total'=>[
+        'total' => [
             'type' => 'double',
             'nullable' => false,
             'readonly' => false,
         ],
-        'current'=>[
+        'current' => [
             'type' => 'double',
             'nullable' => false,
             'readonly' => false,
         ],
-        'days30'=>[
+        'days30' => [
             'type' => 'double',
             'nullable' => false,
             'readonly' => false,
         ],
-        'days60'=>[
+        'days60' => [
             'type' => 'double',
             'nullable' => false,
             'readonly' => false,
         ],
-        'days90'=>[
+        'days90' => [
             'type' => 'double',
             'nullable' => false,
             'readonly' => false,
         ],
-        'days120Plus'=>[
+        'days120Plus' => [
             'type' => 'double',
             'nullable' => false,
             'readonly' => false,
@@ -123,48 +123,48 @@ class AgeingTransaction extends BaseModel
      *
      * @link https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=DocumentType
      */
-    const Ignored = -1;
-    const CustomerOpeningBalance = 0;
-    const Quote = 1;
-    const TaxInvoice = 2;
-    const CustomerReturn = 3;
-    const Receipt = 4;
-    const WriteOff = 5;
-    const CustomerDiscount = 6;
-    const RecurringTaxInvoice = 7;
-    const DraftTaxInvoice = 8;
-    const CustomerJournal = 9;
-    const CustomerBadDebtRelief = 11;
-    const CustomerBadDebtRecovered = 12;
-    const DeliveryNote = 52;
-    const CustomerDocumentTemplate = 58;
-    const SupplierOpeningBalance = 100;
-    const PurchaseOrder = 101;
-    const SupplierInvoice = 102;
-    const SupplierReturn = 103;
-    const Payment = 104;
-    const SupplierDiscount = 106;
-    const SupplierJournal = 109;
-    const SupplierAdditionalCost = 110;
-    const SupplierBadDebtRelief = 111;
-    const SupplierBadDebtRecovered = 112;
-    const ItemOpeningBalance = 200;
-    const ItemAdjustment = 201;
-    const AccountOpeningBalance = 300;
-    const CashbookReceipt = 301;
-    const CashbookPayment = 302;
-    const JournalEntry = 303;
-    const BankAccountOpeningBalance = 400;
-    const BankAccountTransferFrom = 401;
-    const BankAccountTransferTo = 402;
-    const SplitCashbookPayment = 403;
-    const SplitCashbookReceipt = 404;
-    const SplitPayment = 405;
-    const SplitReceipt = 406;
-    const TaxPayment = 501;
-    const TaxRefund = 502;
-    const InputTaxAdjustment = 503;
-    const OutputTaxAdjustment = 504;
-    const InputTaxProvisionAdjustment = 505;
-    const OutputTaxProvisionAdjustment = 506;
+    const IGNORED = -1;
+    const CUSTOMEROPENINGBALANCE = 0;
+    const QUOTE = 1;
+    const TAXINVOICE = 2;
+    const CUSTOMERRETURN = 3;
+    const RECEIPT = 4;
+    const WRITEOFF = 5;
+    const CUSTOMERDISCOUNT = 6;
+    const RECURRINGTAXINVOICE = 7;
+    const DRAFTTAXINVOICE = 8;
+    const CUSTOMERJOURNAL = 9;
+    const CUSTOMERBADDEBTRELIEF = 11;
+    const CUSTOMERBADDEBTRECOVERED = 12;
+    const DELIVERYNOTE = 52;
+    const CUSTOMERDOCUMENTTEMPLATE = 58;
+    const SUPPLIEROPENINGBALANCE = 100;
+    const PURCHASEORDER = 101;
+    const SUPPLIERINVOICE = 102;
+    const SUPPLIERRETURN = 103;
+    const PAYMENT = 104;
+    const SUPPLIERDISCOUNT = 106;
+    const SUPPLIERJOURNAL = 109;
+    const SUPPLIERADDITIONALCOST = 110;
+    const SUPPLIERBADDEBTRELIEF = 111;
+    const SUPPLIERBADDEBTRECOVERED = 112;
+    const ITEMOPENINGBALANCE = 200;
+    const ITEMADJUSTMENT = 201;
+    const ACCOUNTOPENINGBALANCE = 300;
+    const CASHBOOKRECEIPT = 301;
+    const CASHBOOKPAYMENT = 302;
+    const JOURNALENTRY = 303;
+    const BANKACCOUNTOPENINGBALANCE = 400;
+    const BANKACCOUNTTRANSFERFROM = 401;
+    const BANKACCOUNTTRANSFERTO = 402;
+    const SPLITCASHBOOKPAYMENT = 403;
+    const SPLITCASHBOOKRECEIPT = 404;
+    const SPLITPAYMENT = 405;
+    const SPLITRECEIPT = 406;
+    const TAXPAYMENT = 501;
+    const TAXREFUND = 502;
+    const INPUTTAXADJUSTMENT = 503;
+    const OUTPUTTAXADJUSTMENT = 504;
+    const INPUTTAXPROVISIONADJUSTMENT = 505;
+    const OUTPUTTAXPROVISIONADJUSTMENT = 506;
 }

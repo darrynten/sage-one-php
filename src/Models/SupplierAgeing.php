@@ -33,48 +33,48 @@ class SupplierAgeing extends BaseModel
      * @var array $fields
      */
     protected $fields = [
-        'supplier' =>[
+        'supplier' => [
             'type' => 'Supplier',
             'nullable' => false,
             'readonly' => false,
         ],
-        'date' =>[
+        'date' => [
             'type' => 'DateTime',
             'nullable' => false,
             'readonly' => false,
         ],
-        'ageingTransactions' =>[
+        'ageingTransactions' => [
             'type' => 'AgeingTransaction',
             'nullable' => false,
             'readonly' => false,
             'collection' => true,
         ],
-        'total' =>[
+        'total' => [
             'type' => 'double',
             'nullable' => false,
             'readonly' => false,
         ],
-        'current' =>[
+        'current' => [
             'type' => 'double',
             'nullable' => false,
             'readonly' => false,
         ],
-        'days30' =>[
+        'days30' => [
             'type' => 'double',
             'nullable' => false,
             'readonly' => false,
         ],
-        'days60' =>[
+        'days60' => [
             'type' => 'double',
             'nullable' => false,
             'readonly' => false,
         ],
-        'days90' =>[
+        'days90' => [
             'type' => 'double',
             'nullable' => false,
             'readonly' => false,
         ],
-        'days120Plus' =>[
+        'days120Plus' => [
             'type' => 'double',
             'nullable' => false,
             'readonly' => false,
