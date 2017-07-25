@@ -197,6 +197,36 @@ class AccountantTaskRecurrenceModelTest extends BaseModelTest
 
     public function testDelete()
     {
-
+        $this->verifyDelete(AccountantTaskRecurrence::class, 10, function ($model){
+            $this->assertEquals($model->companyId, 1);
+            $this->assertEquals($model->frequencyType, 2);
+            $this->assertEquals($model->frequencyInterval, 3);
+            $this->assertEquals($model->frequencyRelativeInterval, 4);
+            $this->assertEquals($model->frequencyRecurrenceFactor, 5);
+            $this->assertEquals($model->frequencyYearlyMonth, 6);
+            $this->assertEquals($model->recurrenceRangeType, 7);
+            $this->assertEquals($model->startDate->format('Y-m-d'), "2017-07-24");
+            $this->assertEquals($model->endDate->format('Y-m-d'), "2017-07-24");
+            $this->assertEquals($model->numberOfOccurrences, 1);
+            $this->assertEquals($model->taskDuration, 9);
+            $this->assertEquals($model->id, 10);
+        });
+    }
+    public function testDeleteFails()
+    {
+        $this->verifyDelete(AccountantTaskRecurrence::class, 10, function ($model){
+            $this->assertEquals($model->companyId, 1);
+            $this->assertEquals($model->frequencyType, 2);
+            $this->assertEquals($model->frequencyInterval, 3);
+            $this->assertEquals($model->frequencyRelativeInterval, 4);
+            $this->assertEquals($model->frequencyRecurrenceFactor, 5);
+            $this->assertEquals($model->frequencyYearlyMonth, 6);
+            $this->assertEquals($model->recurrenceRangeType, 7);
+            $this->assertEquals($model->startDate->format('Y-m-d'), "2017-07-24");
+            $this->assertEquals($model->endDate->format('Y-m-d'), "2017-07-24");
+            $this->assertEquals($model->numberOfOccurrences, 1);
+            $this->assertEquals($model->taskDuration, 9);
+            $this->assertEquals($model->id, 10);
+        });
     }
 }
