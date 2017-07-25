@@ -167,8 +167,6 @@ class AccountNoteModelTest extends BaseModelTest
 
     public function testDelete()
     {
-        $this->verifyDelete(AccountNote::class, 11, function () {
-            // TODO do actual checks
-        });
+        $this->verifyDelete(AccountNote::class, 11, true);
     }
 }
