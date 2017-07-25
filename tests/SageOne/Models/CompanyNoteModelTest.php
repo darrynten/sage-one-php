@@ -1,0 +1,177 @@
+<?php
+
+
+namespace DarrynTen\SageOne\Tests\SageOne\Models;
+
+use DarrynTen\SageOne\Models\CompanyNote;
+
+class CompanyNoteModelTest extends BaseModelTest
+{
+    public function testInstanceOf()
+    {
+        $this->verifyInstanceOf(CompanyNote::class);
+    }
+
+    public function testSetUndefined()
+    {
+        $this->verifySetUndefined(CompanyNote::class);
+    }
+
+    public function testGetUndefined()
+    {
+        $this->verifyGetUndefined(CompanyNote::class);
+    }
+
+    public function testCanNotNullify()
+    {
+        $this->verifyCanNotNullify(CompanyNote::class, 'id');
+    }
+
+    public function testCanNullify()
+    {
+        $this->verifyCanNullify(CompanyNote::class, 'entryDate');
+    }
+
+    public function testAttributes()
+    {
+        $this->verifyAttributes(CompanyNote::class, [
+            'id' => [
+                'type' => 'integer',
+                'nullable' => false,
+                'readonly' => false,
+                'required' => true,
+            ],
+            'subject' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+                'required' => true,
+                'min' => 0,
+                'max' => 100,
+            ],
+            'entryDate' => [
+                'type' => 'DateTime',
+                'nullable' => true,
+                'readonly' => false,
+            ],
+            'actionDate' => [
+                'type' => 'DateTime',
+                'nullable' => false,
+                'readonly' => false,
+                'required' => true,
+            ],
+            'status' => [
+                'type' => 'boolean',
+                'nullable' => true,
+                'readonly' => false,
+            ],
+            'note' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'hasAttachments' => [
+                'type' => 'boolean',
+                'nullable' => true,
+                'readonly' => false,
+            ],
+        ]);
+    }
+
+    public function testFeatures()
+    {
+        $this->verifyFeatures(CompanyNote::class, [
+            'all' => true, 'get' => true, 'delete' => true, 'save' => true
+        ]);
+    }
+
+    public function testInject()
+    {
+        $this->verifyInject(CompanyNote::class, function ($model) {
+            $this->assertEquals(1, $model->id);
+            $this->assertEquals('sample string 2', $model->subject);
+            $this->assertEquals('2017-07-25', $model->entryDate->format('Y-m-d'));
+            $this->assertEquals('2017-07-25', $model->actionDate->format('Y-m-d'));
+            $this->assertTrue($model->status);
+            $this->assertEquals('sample string 3', $model->note);
+            $this->assertTrue($model->hasAttachments);
+            $objArray = json_decode($model->toJson(), true);
+            $this->assertCount(7, $objArray);
+        });
+    }
+
+    public function testGetAll()
+    {
+        $this->verifyGetAll(CompanyNote::class, function ($results) {
+            $this->assertCount(2, $results);
+
+            $this->assertInstanceOf(CompanyNote::class, $results[0]);
+            $this->assertInstanceOf(CompanyNote::class, $results[1]);
+
+            $this->assertEquals(1, $results[0]->id);
+            $this->assertEquals('sample string 2', $results[0]->subject);
+            $this->assertEquals('2017-07-25', $results[0]->entryDate->format('Y-m-d'));
+            $this->assertEquals('2017-07-25', $results[0]->actionDate->format('Y-m-d'));
+            $this->assertTrue($results[0]->status);
+            $this->assertEquals('sample string 3', $results[0]->note);
+            $this->assertTrue($results[0]->hasAttachments);
+
+            $this->assertEquals(5, $results[1]->id);
+            $this->assertEquals('sample string', $results[1]->subject);
+            $this->assertEquals('2017-07-24', $results[1]->entryDate->format('Y-m-d'));
+            $this->assertEquals('2017-07-29', $results[1]->actionDate->format('Y-m-d'));
+            $this->assertEquals(false, $results[1]->status);
+            $this->assertEquals('sample string 55', $results[1]->note);
+            $this->assertEquals(false, $results[1]->hasAttachments);
+        });
+    }
+
+    public function testGetId()
+    {
+        $this->verifyGetId(CompanyNote::class, 1, function ($model) {
+            $this->assertEquals(1, $model->id);
+            $this->assertEquals('sample string 2', $model->subject);
+            $this->assertEquals('2017-07-25', $model->entryDate->format('Y-m-d'));
+            $this->assertEquals('2017-07-25', $model->actionDate->format('Y-m-d'));
+            $this->assertTrue($model->status);
+            $this->assertEquals('sample string 3', $model->note);
+            $this->assertTrue($model->hasAttachments);
+        });
+    }
+
+    public function testGetAdditionalContactDetails()
+    {
+
+    }
+
+    public function testSave()
+    {
+        $this->verifySave(CompanyNote::class, function ($model) {
+            $model->id = 1;
+            $model->supplierId = 2;
+            $model->contactName = 'sample string 3';
+            $model->designation = 'sample string 4';
+            $model->telephone = 'sample string 5';
+            $model->fax = 'sample string 6';
+            $model->mobile = 'sample string 7';
+            $model->email = 'sample@live.com';
+        }, function ($savedModel) {
+            $this->assertInstanceOf(CompanyNote::class, $savedModel);
+            $this->assertEquals(1, $savedModel->id);
+            $this->assertEquals(2, $savedModel->supplierId);
+            $this->assertEquals('sample string 3', $savedModel->contactName);
+            $this->assertEquals('sample string 4', $savedModel->designation);
+            $this->assertEquals('sample string 5', $savedModel->telephone);
+            $this->assertEquals('sample string 6', $savedModel->fax);
+            $this->assertEquals('sample string 7', $savedModel->mobile);
+            $this->assertEquals('sample@live.com', $savedModel->email);
+        });
+    }
+
+    public function testDelete()
+    {
+        $this->verifyDelete(CompanyNote::class, 1, function () {
+            // TODO do actual checks
+        });
+    }
+}

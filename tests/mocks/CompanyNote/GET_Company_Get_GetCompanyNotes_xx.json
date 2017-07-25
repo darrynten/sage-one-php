@@ -1,5 +1,5 @@
 {
-  "TotalResults": 1,
+  "TotalResults": 3,
   "ReturnedResults": 2,
   "Results": [
     {
@@ -12,13 +12,13 @@
       "HasAttachments": true
     },
     {
-      "ID": 1,
-      "Subject": "sample string 2",
-      "EntryDate": "2017-07-25",
-      "ActionDate": "2017-07-25",
-      "Status": true,
-      "Note": "sample string 3",
-      "HasAttachments": true
+      "ID": 5,
+      "Subject": "sample string",
+      "EntryDate": "2017-07-24",
+      "ActionDate": "2017-07-29",
+      "Status": false,
+      "Note": "sample string 55",
+      "HasAttachments": false
     }
   ]
 }
