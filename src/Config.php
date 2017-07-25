@@ -2,6 +2,7 @@
 
 namespace DarrynTen\SageOne;
 
+use DarrynTen\SageOne\Exception\ConfigException;
 use Psr\Cache\CacheItemPoolInterface;
 use DarrynTen\SageOne\Exception\ApiException;
 
@@ -128,13 +129,13 @@ class Config
     private function checkAndSetEssentials($config)
     {
         if (!isset($config['username']) || empty($config['username'])) {
-            throw new ApiException('Missing username');
+            throw new ConfigException(ConfigException::MISSING_USERNAME);
         }
         if (!isset($config['password']) || empty($config['password'])) {
-            throw new ApiException('Missing password');
+            throw new ConfigException(ConfigException::MISSING_PASSWORD);
         }
         if (!isset($config['key']) || empty($config['key'])) {
-            throw new ApiException('Missing API key');
+            throw new ConfigException(ConfigException::MISSING_API_KEY);
         }
 
         $this->username = (string)$config['username'];

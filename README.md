@@ -24,7 +24,7 @@ PHP 7.0+
 
 ## Basic use
 
-Some models' methods are unimplemented as they were inconsistent with other similar models, these methods will throw a "NotYetImplemented" exception with the location of the method stub.
+Some models' methods are unimplemented as they were inconsistent with other similar models, these methods will throw a LibraryException with the location of the method stub.
 
 If you require these methods, please add them with updated tests.
 
@@ -297,7 +297,7 @@ Models marked with an asterix are pure CRUD models
   - [x] Analysis Type
   - [x] Company
     - [x] Company Entity Type *
-    - [ ] Company Note
+    - [x] Company Note
   - [x] Currency *
   - [x] Exchange Rates
   - [x] Supplier *
