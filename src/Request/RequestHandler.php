@@ -157,6 +157,12 @@ class RequestHandler
             $this->handleException($exception);
         }
 
+        // For DELETE we should check response's HTTP code
+        // So we return response itself
+        if ($method === 'DELETE') {
+            return $response;
+        }
+
         return json_decode($response->getBody());
     }
 

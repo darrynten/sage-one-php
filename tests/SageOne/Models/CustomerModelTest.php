@@ -813,8 +813,6 @@ class CustomerModelTest extends BaseModelTest
 
     public function testDelete()
     {
-        $this->verifyDelete(Customer::class, 36, function ($response) {
-            // TODO actual checks
-        });
+        $this->verifyDelete(Customer::class, 36, true);
     }
 }

@@ -96,9 +96,7 @@ class AdditionalPriceListModelTest extends BaseModelTest
 
     public function testDelete()
     {
-        $this->verifyDelete(AdditionalPriceList::class, 1, function ($response) {
-            // TODO actual checks
-        });
+        $this->verifyDelete(AdditionalPriceList::class, 1, true);
     }
 
     public function testAllowDelete()

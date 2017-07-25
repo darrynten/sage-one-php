@@ -5,6 +5,7 @@ namespace DarrynTen\SageOne\Tests\SageOne\Models;
 use DarrynTen\SageOne\Request\RequestHandler;
 use InterNations\Component\HttpMock\PHPUnit\HttpMockTrait;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use ReflectionClass;
 
 use DarrynTen\SageOne\Exception\ModelException;
@@ -236,8 +237,12 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
             $this->assertEquals(
                 count($options),
                 count($value[$name]),
-                sprintf('Model %s key %s should have %s options but got %s',
-                    $className, $name, count($options), count($value[$name])
+                sprintf(
+                    'Model %s key %s should have %s options but got %s',
+                    $className,
+                    $name,
+                    count($options),
+                    count($value[$name])
                 )
             );
         }
@@ -695,14 +700,18 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
      * @param int $id Id of the model
      * @param callable $whatToCheck Verifies response
      */
-    public function verifyDelete(string $class, int $id, callable $whatToCheck)
+    public function verifyDelete(string $class, int $id, $success = true)
     {
         $className = $this->getClassName($class);
         $path = sprintf('%s/Delete/%s', $className, $id);
-        $model = $this->setUpRequestMock('DELETE', $class, $path);
+        $responseCode = 204;
+        if (!$success) {
+            $responseCode = 300; // TODO find out actual response code for not allowed deletion
+        }
+        $model = $this->setUpRequestMock('DELETE', $class, $path, null, null, [], $responseCode);
 
-        $model->delete($id);
-        // TODO do actual checks
+        $response = $model->delete($id);
+        $this->assertEquals($success, $response);
     }
 
     /**
@@ -882,9 +891,16 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
      * @var array $parameters checks passed arguments
      * @return BaseModel
      */
-    protected function setUpRequestMock(string $method, string $class, string $path, string $mockFileResponse = null, string $mockFileRequest = null, array $parameters = [])
-    {
-        $url = sprintf('/1.1.2/%s?apikey=%%7Bkey%%7D', $path);
+    protected function setUpRequestMock(
+        string $method,
+        string $class,
+        string $path,
+        string $mockFileResponse = null,
+        string $mockFileRequest = null,
+        array $parameters = [],
+        int $responseCode = 200
+    ) {
+        $url = sprintf('/1.1.2/%s?apikey=key', $path);
         $urlWithoutApiKey = sprintf('/1.1.2/%s/', $path);
 
         $responseData = null;
@@ -901,6 +917,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
             ->methodIs($method)
             ->pathIs($url)
             ->then()
+            ->statusCode($responseCode)
             ->body($responseData)
             ->end();
         $this->http->setUp();
