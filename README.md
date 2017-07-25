@@ -273,7 +273,7 @@ Models marked with an asterix are pure CRUD models
     - [x] Account Balance
     - [x] Account Category *
     - [x] Account Note *
-    - [x] Account Task Recurrence *
+    - [x] Accountant Task Recurrence *
     - [ ] Account Note Attachment
     - [x] Account Opening Balance *
     - [x] Account Payment *
