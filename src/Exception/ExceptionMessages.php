@@ -48,7 +48,7 @@ class ExceptionMessages
     public static $modelCollectionErrorMessages = [
         10200 => 'Undefined model collection exception',
         10201 => 'Attempting to access undefined property',
-        10202 => 'Missing required property in object'
+        10202 => 'Missing required property in object',
     ];
 
     /**
@@ -56,8 +56,20 @@ class ExceptionMessages
      */
     public static $libraryErrorMessages = [
         10300 => 'Library Error',
-        10301 => 'Method not yet implemented. This still needs to be added, please consider contributing to the project.'
+        10301 => 'Method not yet implemented. This still needs to be added, '
+               . 'please consider contributing to the project.',
     ];
+
+    /**
+     * @var array $modelCollectionErrorMessages [104xx codes]
+     */
+    public static $configErrorMessages = [
+        10400 => 'Unknown configuration error',
+        10401 => 'Username missing',
+        10402 => 'Password missing',
+        10403 => 'API key missing',
+    ];
+
     /**
      * @var array $strings map from http response codes to textual representation of errors
      */
