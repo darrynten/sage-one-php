@@ -345,7 +345,6 @@ Please feel free to open PRs for any of the following :)
 - [x] Asset
 - [x] Asset Category
 - [x] Asset Location
-- [ ] Asset Note
 - [ ] Attachment
 - [ ] Bank Account
 - [ ] Bank Account Category
