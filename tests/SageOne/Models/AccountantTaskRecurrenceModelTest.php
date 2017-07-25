@@ -202,6 +202,6 @@ class AccountantTaskRecurrenceModelTest extends BaseModelTest
     
     public function testDeleteFails()
     {
-        $this->verifyDelete(AccountantTaskRecurrence::class, 10 ,false);
+        $this->verifyDelete(AccountantTaskRecurrence::class, 10, false);
     }
 }
