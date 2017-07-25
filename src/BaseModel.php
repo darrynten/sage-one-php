@@ -458,6 +458,10 @@ abstract class BaseModel
 
             // If the payload is missing an item
             if (!property_exists($result, $remoteKey)) {
+                if (isset($config['optional']) && $config['optional'] === true) {
+                    // this field can be omitted in SageOne response
+                    continue;
+                }
                 $this->throwException(ModelException::INVALID_LOAD_RESULT_PAYLOAD, sprintf(
                     'Defined key "%s" not present in payload',
                     $key
