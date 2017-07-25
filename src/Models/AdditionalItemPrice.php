@@ -12,11 +12,12 @@
 namespace DarrynTen\SageOne\Models;
 
 use DarrynTen\SageOne\BaseModel;
+use DarrynTen\SageOne\Models\ModelCollection;
 
 /**
  * Additional Item Price
  *
- * Details on writable properties for Additional Item Price:
+ * Details on writable properties:
  * https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=AdditionalItemPrice
  */
 class AdditionalItemPrice extends BaseModel
