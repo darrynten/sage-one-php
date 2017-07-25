@@ -292,6 +292,7 @@ Models marked with an asterix are pure CRUD models
     - [x] Account Opening Balance *
     - [x] Account Payment *
     - [x] Account Receipt *
+  - [x] Additional Item Price *
   - [x] Analysis Category
   - [x] Analysis Type
   - [x] Company
