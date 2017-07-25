@@ -13,7 +13,7 @@ namespace DarrynTen\SageOne\Models;
 use DarrynTen\SageOne\BaseModel;
 
 /**
- * Supplier Model
+ * AccountTaskRecurrence Model
  *
  * Details on writable properties
  * https://accounting.sageone.co.za/api/1.1.2/Help#bookmark_AccountTaskRecurrence
