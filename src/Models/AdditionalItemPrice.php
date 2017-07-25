@@ -23,7 +23,7 @@ use DarrynTen\SageOne\Models\ModelCollection;
 class AdditionalItemPrice extends BaseModel
 {
     /**
-     * The API Endpoint
+     * API's Endpoint
      *
      * @var string $endpoint
      */
