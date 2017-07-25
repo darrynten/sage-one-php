@@ -141,30 +141,26 @@ class CompanyNoteModelTest extends BaseModelTest
 
     public function testGetAdditionalContactDetails()
     {
-
     }
 
     public function testSave()
     {
         $this->verifySave(CompanyNote::class, function ($model) {
             $model->id = 1;
-            $model->supplierId = 2;
-            $model->contactName = 'sample string 3';
-            $model->designation = 'sample string 4';
-            $model->telephone = 'sample string 5';
-            $model->fax = 'sample string 6';
-            $model->mobile = 'sample string 7';
-            $model->email = 'sample@live.com';
+            $model->subject = 'sample string 2';
+            $model->entryDate = '2017-07-25';
+            $model->actionDate = '2017-07-25';
+            $model->status = true;
+            $model->note = 'sample string 3';
+            $model->hasAttachments = true;
         }, function ($savedModel) {
-            $this->assertInstanceOf(CompanyNote::class, $savedModel);
             $this->assertEquals(1, $savedModel->id);
-            $this->assertEquals(2, $savedModel->supplierId);
-            $this->assertEquals('sample string 3', $savedModel->contactName);
-            $this->assertEquals('sample string 4', $savedModel->designation);
-            $this->assertEquals('sample string 5', $savedModel->telephone);
-            $this->assertEquals('sample string 6', $savedModel->fax);
-            $this->assertEquals('sample string 7', $savedModel->mobile);
-            $this->assertEquals('sample@live.com', $savedModel->email);
+            $this->assertEquals('sample string 2', $savedModel->subject);
+            $this->assertEquals('2017-07-25', $savedModel->entryDate->format('Y-m-d'));
+            $this->assertEquals('2017-07-25', $savedModel->actionDate->format('Y-m-d'));
+            $this->assertTrue($savedModel->status);
+            $this->assertEquals('sample string 3', $savedModel->note);
+            $this->assertTrue($savedModel->hasAttachments);
         });
     }
 
