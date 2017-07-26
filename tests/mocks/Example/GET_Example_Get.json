@@ -9,9 +9,20 @@
         "IntegerRange": 134522342,
         "RequiredString": "required information",
         "EmailAddress": "user@example.com",
+        "GuidRegex": "20d2d110-eac2-45b2-b8f7-b4fbfd9eee81",
         "StringWithDefault": "default string changed",
         "StringWithNullDefault": "another string",
-        "SomeBoolean": true
+        "SomeBoolean": true,
+        "SomeCollection": [
+            {
+                "ID": 1,
+                "Name": "category 1"
+            },
+            {
+                "ID": 2,
+                "Name": "category 2"
+            }
+        ]
     },
     {
         "ID": 2,
@@ -20,9 +31,12 @@
         "IntegerRange": 134522343,
         "RequiredString": "required information 2",
         "EmailAddress": "user2@example.com",
+        "GuidRegex": "20d2d110-eac2-45b2-b8f7-b4fbfd9eee81",
         "StringWithDefault": "default string changed 2",
         "StringWithNullDefault": null,
-        "SomeBoolean": false
+        "SomeBoolean": false,
+        "SomeCollection": [
+        ]
     }
   ]
 }

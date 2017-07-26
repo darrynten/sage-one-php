@@ -120,8 +120,20 @@ class Example extends BaseModel
             'readonly' => false,
             'min' => 0,
             'max' => 100,
-            'regex' => "/^[A-Za-z0-9,!#\$%&'\*\+\/=\?\^_`\{\|}~-]+(\.[A-Za-z0-9,!#\$%&'\*\+\/=\?\^_`\{\|}~-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.([A-Za-z]{2,})$/"
+            'validate' => FILTER_VALIDATE_EMAIL,
         ],
+        'guidRegex' => [
+            'type' => 'string',
+            'nullable' => false,
+            'readonly' => false,
+            'regex' => "/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/",
+        ],
+        'someCollection' => [
+            'type' => 'ExampleCategory',
+            'collection' => true,
+            'nullable' => false,
+            'readonly' => false
+        ]
         // etc ...
     ];
 
@@ -147,6 +159,20 @@ class Example extends BaseModel
         'get' => false,
         'save' => false,
         'delete' => false,
+    ];
+
+    /**
+     * Features HTTP methods
+     * Not all models follow same conventions like GET for all()
+     * Example AccountBalance all() requires POST method
+     * These are default HTTP methods and it works for almost all models
+     * @var array $featureMethods
+     */
+    protected $featureMethods = [
+        'all' => 'GET',
+        'get' => 'GET',
+        'save' => 'POST',
+        'delete' => 'DELETE'
     ];
 
     /**

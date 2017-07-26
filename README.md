@@ -24,7 +24,9 @@ PHP 7.0+
 
 ## Basic use
 
-# TODO
+Some models' methods are unimplemented as they were inconsistent with other similar models, these methods will throw a LibraryException with the location of the method stub.
+
+If you require these methods, please add them with updated tests.
 
 ### Definitions
 
@@ -52,6 +54,11 @@ $account = new Account($config);
 // get
 $account->all(); // fetches ALL
 $account->get($id); // fetches that ID
+
+// If model supports some query parameters, we can pass it
+$company = new Company($config);
+$company->all(['includeStatus' => true]);
+// Currently get() does not support any query parameters but this might be required in future
 
 // related models
 echo $account->category->id;
@@ -106,6 +113,14 @@ a basic model.
 
 As such we only need to focus on the tricky bits.
 
+# NB the project is evolving quickly
+
+## This might be outdated
+
+### If it is and you fix it please update this document
+
+#### The best place to look is the example model
+
 ### Basic model template
 
 [Account Example Docs](https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=Account)
@@ -129,27 +144,6 @@ required)
  * The name of the class is the `modelName=` value from the URL
  */
 class Account extends BaseModel
-{
-    /**
-     * Properties from the table, public
-     *
-     * We lowercase the first letter but leave the rest
-     */
-    public $id;
-    public $name;
-    public $reportingGroupId;
-
-    // If something is read only we mark it in the docblock:
-    /**
-     * Balance
-     *
-     * READ ONLY (these become protected)
-     *
-     * @var double $balance
-     */
-    protected $balance;
-
-    // rest of properties...
 
     // The name of the endpoint (same as filename), protected
     protected $endpoint = 'Account';
@@ -161,7 +155,7 @@ class Account extends BaseModel
      * validation, etc
      *
      * All must include a type, whether or not it's nullable, and whether or
-     * not it's readonly.
+     * not it's readonly, or default, required, min, max, or regex
      *
      * - nullable is `true` if the word 'nullable' is in the 'type' column
      * - readonly is `true` if the word 'Read-Only/System Generated' is in the Additional Info column otherwise it is `false`
@@ -171,6 +165,13 @@ class Account extends BaseModel
      *   - Multiword linked terms are concatenated, eg:
      *     - "Account Category" becomes "AccountCategory"
      *     - "Tax Type" becomes "TaxType"
+     *   - `min` / `max` always come together
+     *   - `default` is when it's indicated in the docs
+     *   - `regex` is generally used with email address fields
+     *   - `optional` is true when this field can be omitted in SageOne response
+     *     - Example is Company's model all() method
+     *       By default when we execute all() it is the same as all(['includeStatus' = false])
+     *       So `status` field is not returned in response
      *
      * Details on writable properties for Account:
      * https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=Account
@@ -186,21 +187,31 @@ class Account extends BaseModel
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
+            'required' => true,
         ],
         'category' => [
             'type' => 'AccountCategory',
             'nullable' => false,
             'readonly' => false,
+            'min' => 0,
+            'max' => 100,
         ],
         'reportingGroupId' => [
             'type' => 'integer',
             'nullable' => true,
             'readonly' => false,
+            'regex' => '/someregex/',
         ],
         'isTaxLocked' => [
             'type' => 'boolean',
             'nullable' => false,
             'readonly' => true,
+        ],
+        'status' => [
+            'type' => 'integer',
+            'nullable' => false,
+            'readonly' => true,
+            'optional' => true,
         ],
         // etc etc etc
     ];
@@ -223,6 +234,20 @@ class Account extends BaseModel
         'delete' => true,
     ];
 
+    /**
+     * Features HTTP methods
+     * Not all models follow same conventions like GET for all()
+     * Example AccountBalance all() requires POST method
+     * or SupplierStatement get() requires POST method
+     * @var array $featureMethods
+     */
+    protected $featureMethods = [
+        'all' => 'GET',
+        'get' => 'GET',
+        'save' => 'POST',
+        'delete' => 'DELETE'
+    ];
+
     // Construct (if you need to modify construction)
     public function __construct(array $config)
     {
@@ -243,6 +268,10 @@ Following that template will very quickly create models for the project.
 There is *also* an example test (ExampleModelTest.php) and an example mock
 folder to help you get going quickly.
 
+A lot of the heavy testing is handled by the BaseModelTest class, and you
+can look into the Example test for insight into the convention. It makes
+testing and getting good defensive coverage quite trivial for most things.
+
 # NB initial delivery consists of only these models:
 
 Models marked with an asterix are pure CRUD models
@@ -256,36 +285,38 @@ Models marked with an asterix are pure CRUD models
 - [ ] Rate Limiting
 - [ ] Models
   - [x] Account
-    - [ ] Account Balance
+    - [x] Account Balance
     - [x] Account Category *
     - [x] Account Note *
+    - [x] Accountant Task Recurrence *
     - [ ] Account Note Attachment
     - [x] Account Opening Balance *
     - [x] Account Payment *
-    - [ ] Account Receipt *
-  - [ ] Analysis Category
-  - [ ] Analysis Type
-  - [ ] Company
-    - [ ] Company Entity Type *
-    - [ ] Company Note
+    - [x] Account Receipt *
+  - [x] Analysis Category
+  - [x] Analysis Type
+  - [x] Asset Note *
+  - [x] Company
+    - [x] Company Entity Type *
+    - [x] Company Note
   - [x] Currency *
-  - [ ] Exchange Rates
-  - [ ] Supplier *
-    - [ ] Supplier Additional Contact Detail
-    - [ ] Supplier Adjustment
+  - [x] Exchange Rates
+  - [x] Supplier *
+    - [x] Supplier Additional Contact Detail
+    - [x] Supplier Adjustment
     - [ ] Supplier Ageing
-    - [ ] Supplier Bank Detail *
-    - [ ] Supplier Category *
+    - [x] Supplier Bank Detail *
+    - [x] Supplier Category *
     - [ ] Supplier Invoice
     - [ ] Supplier Invoice Attachment
-    - [ ] Supplier Note *
+    - [x] Supplier Note *
     - [ ] Supplier Note Attachment
-    - [ ] Supplier Opening Balance *
+    - [x] Supplier Opening Balance *
     - [ ] Supplier Payment
-    - [ ] Supplier Purchase History
+    - [x] Supplier Purchase History
     - [ ] Supplier Return
     - [ ] Supplier Return Attachment
-    - [ ] Supplier Statement *
+    - [x] Supplier Statement *
     - [ ] Supplier Transaction Listing
   - [x] Tax Type *
 
@@ -309,12 +340,11 @@ Please feel free to open PRs for any of the following :)
 - [ ] Accountant Task
 - [ ] Accountant Task Recurrence
 - [ ] Additional Item Price
-- [ ] Additional Price List
+- [x] Additional Price List
 - [ ] Allocation
-- [ ] Asset
-- [ ] Asset Category
-- [ ] Asset Location
-- [ ] Asset Note
+- [x] Asset
+- [x] Asset Category
+- [x] Asset Location
 - [ ] Attachment
 - [ ] Bank Account
 - [ ] Bank Account Category
@@ -333,12 +363,12 @@ Please feel free to open PRs for any of the following :)
 - [ ] Core Tokens
 - [ ] CRM Activity
 - [ ] CRM Activity Category
-- [ ] Currency
-- [ ] Customer
+- [x] Currency
+- [x] Customer
 - [ ] Customer Additional Contact Detail
 - [ ] Customer Adjustment
 - [ ] Customer Ageing
-- [ ] Customer Category
+- [x] Customer Category
 - [ ] Customer Note
 - [ ] Customer Note Attachment
 - [ ] Customer Opening Balance
@@ -388,7 +418,7 @@ Please feel free to open PRs for any of the following :)
 - [ ] Reporting Group
 - [ ] Sales By Item
 - [ ] Sales By Sales Representative
-- [ ] Sales Representative
+- [x] Sales Representative
 - [ ] Sales Representative Note
 - [ ] Schedule Frequency
 - [ ] Secretarial Company Role
@@ -397,7 +427,7 @@ Please feel free to open PRs for any of the following :)
 - [ ] Secretarial Stake Holder
 - [ ] Support Login Audit
 - [ ] Take On Balance
-- [ ] Tax Invoice
+- [x] Tax Invoice
 - [ ] Tax Invoice Attachment
 - [ ] Tax Period
 - [ ] Time Tracking Customer
@@ -462,3 +492,6 @@ if you have any ideas.
 * [Dmitry Semenov](https://github.com/mxnr)
 * [Karolin Gaedeke](https://github.com/KaroZA)
 * [Vitaliy Likhachev](https://github.com/make-it-git)
+* [Igor Sergiichuk](https://github.com/igorsergiichuk)
+* [Fergus Strangways-Dixon](https://github.com/fergusdixon)
+* [Brian Maiyo](https://github.com/kiproping)

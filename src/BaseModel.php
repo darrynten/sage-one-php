@@ -53,6 +53,20 @@ abstract class BaseModel
     ];
 
     /**
+     * Features HTTP methods
+     * Not all models follow same conventions like GET for all()
+     * Example AccountBalance all() requires POST method
+     * or SupplierStatement get() requires POST method
+     * @var array $featureMethods
+     */
+    protected $featureMethods = [
+        'all' => 'GET',
+        'get' => 'GET',
+        'save' => 'POST',
+        'delete' => 'DELETE'
+    ];
+
+    /**
      * A models configuration is stored here
      *
      * @var array $config
@@ -64,7 +78,7 @@ abstract class BaseModel
      *
      * @var array $fieldsData
      */
-    private $fieldsData = [];
+    protected $fieldsData = [];
 
     /**
      * Make a new model
@@ -111,23 +125,23 @@ abstract class BaseModel
      */
     public function __get($key)
     {
-        if (array_key_exists($key, $this->fields)) {
-            // there is some data loaded so we return it
-            if (array_key_exists($key, $this->fieldsData)) {
-                return $this->fieldsData[$key];
-            }
-
-            // there is some default value
-            if (array_key_exists('default', $this->fields[$key])) {
-                return $this->fields[$key]['default'];
-            }
-
-            // Accessing $obj->key when no default data is set returns null
-            // so we return it as default value for any described but not loaded property
-            return null;
+        if (!array_key_exists($key, $this->fields)) {
+            $this->throwException(ModelException::GETTING_UNDEFINED_PROPERTY, sprintf('key %s', $key));
         }
 
-        $this->throwException(ModelException::GETTING_UNDEFINED_PROPERTY, sprintf('key %s', $key));
+        // there is some data loaded so we return it
+        if (array_key_exists($key, $this->fieldsData)) {
+            return $this->fieldsData[$key];
+        }
+
+        // there is some default value
+        if (array_key_exists('default', $this->fields[$key])) {
+            return $this->fields[$key]['default'];
+        }
+
+        // Accessing $obj->key when no default data is set returns null
+        // so we return it as default value for any described but not loaded property
+        return null;
     }
 
     /**
@@ -142,15 +156,16 @@ abstract class BaseModel
      * $account = new Account;
      * $allAccounts = $account->all();
      *
+     * @param array $parameters Some models support passing arguments to all()
      * @return ModelCollection A collection of entities
      */
-    public function all()
+    public function all(array $parameters = [])
     {
         if (!$this->features['all']) {
             $this->throwException(ModelException::NO_GET_ALL_SUPPORT);
         }
 
-        $results = $this->request->request('GET', $this->endpoint, 'Get');
+        $results = $this->request->request($this->featureMethods['all'], $this->endpoint, 'Get', $parameters);
 
         return new ModelCollection(static::class, $this->config, $results);
     }
@@ -172,7 +187,7 @@ abstract class BaseModel
             $this->throwException(ModelException::NO_GET_ONE_SUPPORT, sprintf('id %s', $id));
         }
 
-        $result = $this->request->request('GET', $this->endpoint, sprintf('Get/%s', $id));
+        $result = $this->request->request($this->featureMethods['get'], $this->endpoint, sprintf('Get/%s', $id));
 
         $this->loadResult($result);
     }
@@ -188,7 +203,7 @@ abstract class BaseModel
      *
      * @param integer $id The ID to delete
      *
-     * @return void
+     * @return bool
      */
     public function delete(string $id)
     {
@@ -196,8 +211,16 @@ abstract class BaseModel
             $this->throwException(ModelException::NO_DELETE_SUPPORT, sprintf('id %s', $id));
         }
 
-        // TODO Response handle?
-        $this->request->request('DELETE', $this->endpoint, sprintf('Delete/%s', $id));
+        // On success it returns 204 HTTP code with empty body
+        $response = $this->request->request(
+            $this->featureMethods['delete'],
+            $this->endpoint,
+            sprintf('Delete/%s', $id)
+        );
+        if ($response->getStatusCode() === 204) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -205,24 +228,19 @@ abstract class BaseModel
      *
      * TODO: Actually perform this action!
      *
+     * @param array $parameters some models support passing arguments to save()
      * @return stdClass Representaion of response
      */
-    public function save()
+    public function save(array $parameters = [])
     {
         if (!$this->features['save']) {
             $this->throwException(ModelException::NO_SAVE_SUPPORT);
         }
 
         // TODO Submission Body and Validation
-        $data = $this->request->request('POST', $this->endpoint, 'Save');
-        /**
-         * we do not need to verify results here because loadResult will throuw exception
-         * in case of invalid body
-         * If we reach this string then we expect that API returned valid body with response code 200
-         * otherwise ApiException was thrown and this line can not be reached
-         */
-        $this->loadResult($data);
-        return $this;
+        $data = $this->request->request($this->featureMethods['save'], $this->endpoint, 'Save', $parameters);
+
+        return $data;
     }
 
     /**
@@ -238,6 +256,16 @@ abstract class BaseModel
     }
 
     /**
+     * Returns array representation of the Model
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return json_decode($this->toJson(), true);
+    }
+
+    /**
      * Switches between our id format and sages id format
      *
      * Sage is PascalCase ours is camelCase
@@ -249,6 +277,13 @@ abstract class BaseModel
     private function getRemoteKey($localKey)
     {
         $remoteKey = ucfirst($localKey);
+        /**
+         * Very special case
+         * In CommercialDocumentLine (field '$TrackingCode')
+         */
+        if ($remoteKey[0] === '$') {
+            $remoteKey[1] = strtoupper($remoteKey[1]);
+        }
 
         // Unless id - theirs is uppercase ours is lowercase
         if ($localKey === 'id') {
@@ -290,6 +325,10 @@ abstract class BaseModel
             return $value->format('Y-m-d');
         }
 
+        if (isset($config['collection']) && $config['collection'] === true) {
+            return $this->prepareModelCollection($config, $value);
+        }
+
         // At this stage we would be dealing with a related Model
         $class = $this->getModelWithNamespace($config['type']);
 
@@ -303,6 +342,29 @@ abstract class BaseModel
 
         // And finally return an Object representation of the related Model
         return $value->toObject();
+    }
+
+    /**
+     * Turns the model collection into an array of models
+     *
+     * @param array $config The config for the model
+     * @param ModelCollection $value Collection which is converted into array
+     * @return array
+     */
+    private function prepareModelCollection(array $config, ModelCollection $value)
+    {
+        $class = $this->getModelWithNamespace($config['type']);
+        if (!class_exists($class)) {
+            $this->throwException(ModelException::COLLECTION_WITHOUT_CLASS, sprintf(
+                'Class "%s" for collection does not exist',
+                $class
+            ));
+        }
+        $rows = [];
+        foreach ($value->results as $result) {
+            $rows[] = $result->toObject();
+        }
+        return $rows;
     }
 
     /**
@@ -342,6 +404,17 @@ abstract class BaseModel
             return new \DateTime($resultItem);
         }
 
+        if (isset($config['collection']) && $config['collection'] === true) {
+            $class = $this->getModelWithNamespace($config['type']);
+            if (!class_exists($class)) {
+                $this->throwException(ModelException::COLLECTION_WITHOUT_CLASS, sprintf(
+                    'class "%s"',
+                    $class
+                ));
+            }
+            return new ModelCollection($class, $this->config, $resultItem);
+        }
+
         // If it's null and it's allowed to be null
         if (is_null($resultItem) && ($config['nullable'] === true)) {
             return null;
@@ -379,12 +452,16 @@ abstract class BaseModel
      */
     public function loadResult(\stdClass $result)
     {
-        // We only care about entires that are defined in the model
+        // We only care about entries that are defined in the model
         foreach ($this->fields as $key => $config) {
             $remoteKey = $this->getRemoteKey($key);
 
             // If the payload is missing an item
             if (!property_exists($result, $remoteKey)) {
+                if (isset($config['optional']) && $config['optional'] === true) {
+                    // this field can be omitted in SageOne response
+                    continue;
+                }
                 $this->throwException(ModelException::INVALID_LOAD_RESULT_PAYLOAD, sprintf(
                     'Defined key "%s" not present in payload',
                     $key
@@ -466,6 +543,10 @@ abstract class BaseModel
         // If values have a defined regex then validate
         if (array_key_exists('regex', $this->fields[$key])) {
             $this->validateRegex($value, $this->fields[$key]['regex']);
+        }
+
+        if (array_key_exists('validate', $this->fields[$key])) {
+            $this->validateFilterVar($value, $this->fields[$key]['validate']);
         }
     }
 

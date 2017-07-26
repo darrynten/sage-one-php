@@ -156,8 +156,20 @@ class ExampleModelTest extends BaseModelTest
     public function testBadRegexSet()
     {
         $this->expectException(ValidationException::class);
-        $this->expectExceptionMessage('Validation error value bademail failed to validate String did not match validation regex');
+        $this->expectExceptionMessage('Validation error value badguid failed to validate String did not match validation regex');
         $this->expectExceptionCode(10003);
+
+        $exampleModel = new Example($this->config);
+
+        $exampleModel->id = 1386847;
+        $exampleModel->guidRegex = 'badguid';
+    }
+
+    public function testBadValidation()
+    {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage('Validation error value bademail failed to validate filter_var failed to validate');
+        $this->expectExceptionCode(10005);
 
         $exampleModel = new Example($this->config);
 
@@ -279,7 +291,7 @@ class ExampleModelTest extends BaseModelTest
         $reflectValue->setAccessible(true);
         $value = $reflectValue->getValue(new Example($this->config));
 
-        $this->assertCount(9, $value);
+        $this->assertCount(11, $value);
         $this->assertEquals('integer', $value['id']['type']);
         $this->assertEquals('boolean', gettype($value['exampleWithCamel']['nullable']));
         $this->assertEquals(true, is_array($value['exampleWithCamel']));
@@ -323,10 +335,15 @@ class ExampleModelTest extends BaseModelTest
         $this->assertArrayHasKey('max', $value['emailAddress']);
         $this->assertEquals(100, $value['emailAddress']['max']);
         $this->assertEquals('integer', gettype($value['emailAddress']['max']));
-        $this->assertArrayHasKey('regex', $value['emailAddress']);
-        $this->assertEquals('string', gettype($value['emailAddress']['regex']));
-        $this->assertRegExp($value['emailAddress']['regex'], 'me@example.com');
-        $this->assertRegExp($value['emailAddress']['regex'], 'another.valid+email@example.com');
+        $this->assertArrayHasKey('validate', $value['emailAddress']);
+        $this->assertEquals('integer', gettype($value['emailAddress']['validate']));
+        $this->assertArrayHasKey('regex', $value['guidRegex']);
+        $this->assertEquals(
+            "/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/",
+            $value['guidRegex']['regex']
+        );
+        $this->assertRegExp($value['guidRegex']['regex'], 'e2605371-fa91-4269-9ecb-b0b57bdef52e');
+        $this->assertRegExp($value['guidRegex']['regex'], 'c37fbc7d-0a09-4990-9a55-b889f6699617');
         // etc etc...
 
         // Features mapping
@@ -339,6 +356,16 @@ class ExampleModelTest extends BaseModelTest
         $this->assertEquals(false, $value['get']);
         $this->assertEquals(false, $value['save']);
         $this->assertEquals(false, $value['delete']);
+
+        // Features HTTP methods
+        $reflectValue = $reflect->getProperty('featureMethods');
+        $reflectValue->setAccessible(true);
+        $value = $reflectValue->getValue(new Example($this->config));
+        $this->assertCount(4, $value);
+        $this->assertEquals('GET', $value['all']);
+        $this->assertEquals('GET', $value['get']);
+        $this->assertEquals('POST', $value['save']);
+        $this->assertEquals('DELETE', $value['delete']);
 
         // Test injecting a result
         $data = json_decode(file_get_contents(__DIR__ . '/../../mocks/Example/GET_Example_Get_xx.json'));
@@ -390,6 +417,8 @@ class ExampleModelTest extends BaseModelTest
         $this->assertEquals($exampleModel->modified->getTimezone()->getName(), 'UTC');
         $this->assertEquals($exampleModel->category->format('Y-m-d'), '2017-06-30');
         $this->assertEquals($exampleModel->type->modified->format('Y-m-d'), '2017-06-30');
+
+        $this->assertInstanceOf(ExampleCategory::class, $exampleModel->someCollection->results[0]);
 
         // You must made tests for each of the CRUD calls in use
         // and split each one into its own test method. Do not put
@@ -451,7 +480,7 @@ class ExampleModelTest extends BaseModelTest
                         'Authorization' => 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=',
                     ],
                     'query' => [
-                        'apikey' => 'key'
+                        'apikey' => '%7Bkey%7D'
                     ]
                 ],
                 []
@@ -473,7 +502,7 @@ class ExampleModelTest extends BaseModelTest
                         'Authorization' => 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=',
                     ],
                     'query' => [
-                        'apikey' => 'key'
+                        'apikey' => '%7Bkey%7D'
                     ]
                 ],
                 ['keyx' => 'value']
@@ -486,5 +515,103 @@ class ExampleModelTest extends BaseModelTest
             'OK',
             $result
         );
+    }
+
+    public function testCollectionWithoutClass()
+    {
+        $this->expectException(ModelException::class);
+        $this->expectExceptionMessage('Model "Example" class "DarrynTen\SageOne\Models\InvalidClass" ModelCollection is referencing ad undefined, non-primitive class');
+        $this->expectExceptionCode(10117);
+
+        $exampleModel = new Example($this->config);
+        $exampleBadFields = [
+            'someCollection' => [
+                'type' => 'InvalidClass',
+                'nullable' => false,
+                'readonly' => false,
+                'collection' => true
+            ],
+        ];
+
+        $reflection = new ReflectionClass($exampleModel);
+        $reflectedModel = $reflection->getProperty('fields');
+        $reflectedModel->setAccessible(true);
+        $reflectedModel->setValue($exampleModel, $exampleBadFields);
+
+        $data = json_decode(file_get_contents(__DIR__ . '/../../mocks/Example/GET_Example_Get_xx.json'));
+        $exampleModel->loadResult($data);
+    }
+
+    public function testAttributes()
+    {
+        $this->verifyAttributes(Example::class, [
+            'id' => [
+                'type' => 'integer',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'exampleWithCamel' => [
+                'type' => 'string',
+                'nullable' => true,
+                'readonly' => true,
+            ],
+            'stringRange' => [
+                'type' => 'string',
+                'nullable' => true,
+                'readonly' => false,
+                'min' => 2,
+                'max' => 10,
+            ],
+            'stringWithDefault' => [
+                'type' => 'string',
+                'nullable' => true,
+                'readonly' => false,
+                'default' => 'some default value',
+            ],
+            'stringWithNullDefault' => [
+                'type' => 'string',
+                'nullable' => true,
+                'readonly' => false,
+                'default' => null
+            ],
+            'integerRange' => [
+                'type' => 'integer',
+                'nullable' => false,
+                'readonly' => false,
+                'min' => 1,
+                'max' => 2147483647,
+            ],
+            'someBoolean' => [
+                'type' => 'boolean',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'requiredString' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+                'required' => true,
+            ],
+            'emailAddress' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+                'min' => 0,
+                'max' => 100,
+                'validate' => FILTER_VALIDATE_EMAIL,
+            ],
+            'guidRegex' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+                'regex' => "/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/",
+            ],
+            'someCollection' => [
+                'type' => 'ExampleCategory',
+                'collection' => true,
+                'nullable' => false,
+                'readonly' => false
+            ]
+        ]);
     }
 }
