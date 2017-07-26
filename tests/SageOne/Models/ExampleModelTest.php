@@ -483,7 +483,8 @@ class ExampleModelTest extends BaseModelTest
                         'apikey' => '%7Bkey%7D'
                     ]
                 ],
-                []
+                [],
+                false
             )
             ->andReturn('OK');
 
@@ -505,7 +506,8 @@ class ExampleModelTest extends BaseModelTest
                         'apikey' => '%7Bkey%7D'
                     ]
                 ],
-                ['keyx' => 'value']
+                ['keyx' => 'value'],
+                false
             )
             ->andReturn('OK');
 

@@ -871,7 +871,8 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
                         'apikey' => '%7Bkey%7D'
                     ]
                 ],
-                []
+                [],
+                false
             )
             ->andReturn('OK');
 

@@ -167,7 +167,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
     public function testRequestPostWithJson()
     {
         $parameters = ['data123' => 'value'];
-        $data = '{\'key\':\'data\'}';
+        $data = '{"key":"data"}';
 
         $this->http->mock
             ->when()
@@ -188,11 +188,11 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
          */
         $localClient = new Client();
 
-        $localResult = $localClient->request(
+        $localResult = json_decode($localClient->request(
             'POST',
             'http://localhost:8082/1.1.2/Account/Save?apikey=%7Bkey%7D',
             $parameters
-        );
+        )->getBody()->getContents(), true);
 
         /**
          * We then make a mock client, and tell the mock client that it
@@ -217,9 +217,11 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
         $reflectedClient->setAccessible(true);
         $reflectedClient->setValue($request, $mockClient);
 
+        $response = $request->request('POST', 'Account', 'Save', [], $parameters);
+
         $this->assertEquals(
-            json_decode($data),
-            $request->request('POST', 'Account', 'Save', [], $parameters)
+            json_decode($data, true),
+            $response
         );
     }
 
@@ -311,7 +313,8 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
                         'apikey' => '%7Bkey%7D'
                     ]
                 ],
-                []
+                [],
+                false
             )
             // TODO not the actual response...
             ->andReturn('OK');
@@ -334,7 +337,8 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
                         'apikey' => '%7Bkey%7D'
                     ]
                 ],
-                ['keyx' => 'value']
+                ['keyx' => 'value'],
+                false
             )
             ->andReturn('OK');
 
@@ -380,7 +384,8 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
                         'apikey' => '%7Bkey%7D'
                     ]
                 ],
-                []
+                [],
+                true
             )
             ->andReturn($response);
 
@@ -402,7 +407,8 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
                         'apikey' => '%7Bkey%7D'
                     ]
                 ],
-                ['keyx' => 'value']
+                ['keyx' => 'value'],
+                true
             )
             ->andReturn($response);
 
