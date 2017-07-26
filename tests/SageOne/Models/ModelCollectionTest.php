@@ -122,7 +122,7 @@ class ModelCollectionTest extends BaseModelTest
         $reflectedModel->setValue($exampleModel, $exampleFields);
 
         $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('Model "Example" class "DarrynTen\SageOne\Models\SomeInvalidClass" ModelCollection is referencing ad undefined, non-primitive class');
+        $this->expectExceptionMessage('Model "Example" class "DarrynTen\SageOne\Models\SomeInvalidClass" ModelCollection is referencing an undefined, non-primitive class');
         $this->expectExceptionCode(10117);
 
         $obj = new \stdClass;
@@ -155,7 +155,7 @@ class ModelCollectionTest extends BaseModelTest
         $reflectedModel->setValue($exampleModel, $exampleFieldsData);
 
         $this->expectException(ModelException::class);
-        $this->expectExceptionMessage('Model "Example" Class "DarrynTen\SageOne\Models\SomeInvalidClass" for collection does not exist ModelCollection is referencing ad undefined, non-primitive class');
+        $this->expectExceptionMessage('Model "Example" Class "DarrynTen\SageOne\Models\SomeInvalidClass" for collection does not exist ModelCollection is referencing an undefined, non-primitive class');
         $this->expectExceptionCode(10117);
 
         $exampleModel->toJson();
