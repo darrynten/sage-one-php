@@ -61,6 +61,28 @@ class AccountNoteAttachmentModelTest extends BaseModelTest
         $model->get(1);
     }
 
+    public function testFeatureGetExceptionUnimplemented()
+    {
+        $model = $this->setUpRequestMock(
+            'GET',
+            AccountNoteAttachment::class,
+            'AccountNoteAttachment/Get/1',
+            'AccountNoteAttachment/GET_AccountNoteAttachment_Get_xx.json'
+        );
+
+        $reflect = new ReflectionClass($model);
+        $reflectValue = $reflect->getProperty('featureGetReturns');
+        $reflectValue->setAccessible(true);
+        $value = $reflectValue->getValue($model);
+        $value['collection'] = false;
+        $reflectValue->setValue($model, $value);
+
+        $this->expectException(LibraryException::class);
+        $this->expectExceptionMessage('Error, "DarrynTen\SageOne\Models\AccountNoteAttachment:get()" Method not yet implemented. This still needs to be added, please consider contributing to the project');
+        $this->expectExceptionCode(10301);
+        $model->get(1);
+    }
+
     public function testGetId()
     {
         $this->verifyGetId(AccountNoteAttachment::class, 1, function ($collection) {

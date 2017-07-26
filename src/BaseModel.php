@@ -14,6 +14,7 @@ namespace DarrynTen\SageOne;
 
 use DarrynTen\SageOne\Request\RequestHandler;
 use DarrynTen\SageOne\Exception\ModelException;
+use DarrynTen\SageOne\Exception\LibraryException;
 use DarrynTen\SageOne\Validation;
 use DarrynTen\SageOne\Models\ModelCollection;
 
@@ -213,16 +214,14 @@ abstract class BaseModel
 
         if ($this->featureGetReturns['collection'] === true) {
             return new ModelCollection($class, $this->config, $result);
-        } else {
-            /**
-             * May be other models have something related
-             */
-            throw new \Exception(
-                sprtinf('class "%s", method get() type %s not implemented'),
-                static::class,
-                $class
-            );
         }
+        /**
+        * May be other models have something related
+        */
+        throw new LibraryException(
+            LibraryException::METHOD_NOT_IMPLEMENTED,
+            sprintf('%s:get()', static::class)
+        );
     }
 
     /**
