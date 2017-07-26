@@ -17,7 +17,7 @@ use DarrynTen\SageOne\BaseModel;
  * Bank Account Opening Balance model
  *
  * Details on writable properties
- * https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=ABankAccountOpeningBalance
+ * https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=BankAccountOpeningBalance
  */
 class BankAccountOpeningBalance extends BaseModel
 {
