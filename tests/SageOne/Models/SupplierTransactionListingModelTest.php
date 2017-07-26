@@ -61,7 +61,7 @@ class SupplierTransactionListingModelTest extends BaseModelTest
         $this->assertEquals(4, $supplierTransactionListing->transactions->results[0]->linkId);
         $this->assertEquals('sample name', $supplierTransactionListing->transactions->results[0]->name);
         $this->assertEquals(5, $supplierTransactionListing->transactions->results[0]->currencyId);
-        $this->assertEquals('sample currency symbol',  $supplierTransactionListing->transactions->results[0]->currencySymbol);
+        $this->assertEquals('sample currency symbol', $supplierTransactionListing->transactions->results[0]->currencySymbol);
         $this->assertEquals('sample doc number', $supplierTransactionListing->transactions->results[0]->documentNumber);
         $this->assertEquals('sample reference', $supplierTransactionListing->transactions->results[0]->reference);
         $this->assertEquals('sample currency symbol', $supplierTransactionListing->transactions->results[0]->comment);
@@ -127,7 +127,7 @@ class SupplierTransactionListingModelTest extends BaseModelTest
         $this->assertEquals(44, $supplierTransactionListingReportDetails->results[0]->transactions->results[0]->linkId);
         $this->assertEquals('sample name 4', $supplierTransactionListingReportDetails->results[0]->transactions->results[0]->name);
         $this->assertEquals(544, $supplierTransactionListingReportDetails->results[0]->transactions->results[0]->currencyId);
-        $this->assertEquals('sample currency symbol 4',  $supplierTransactionListingReportDetails->results[0]->transactions->results[0]->currencySymbol);
+        $this->assertEquals('sample currency symbol 4', $supplierTransactionListingReportDetails->results[0]->transactions->results[0]->currencySymbol);
         $this->assertEquals('sample doc number 4', $supplierTransactionListingReportDetails->results[0]->transactions->results[0]->documentNumber);
         $this->assertEquals('sample reference 4', $supplierTransactionListingReportDetails->results[0]->transactions->results[0]->reference);
         $this->assertEquals('sample currency symbol 4', $supplierTransactionListingReportDetails->results[0]->transactions->results[0]->comment);
@@ -173,7 +173,7 @@ class SupplierTransactionListingModelTest extends BaseModelTest
         $this->assertEquals(46, $supplierTransactionListingReportDetails->results[1]->transactions->results[0]->linkId);
         $this->assertEquals('sample name 6', $supplierTransactionListingReportDetails->results[1]->transactions->results[0]->name);
         $this->assertEquals(56, $supplierTransactionListingReportDetails->results[1]->transactions->results[0]->currencyId);
-        $this->assertEquals('sample currency symbol 6',  $supplierTransactionListingReportDetails->results[1]->transactions->results[0]->currencySymbol);
+        $this->assertEquals('sample currency symbol 6', $supplierTransactionListingReportDetails->results[1]->transactions->results[0]->currencySymbol);
         $this->assertEquals('sample doc number 6', $supplierTransactionListingReportDetails->results[1]->transactions->results[0]->documentNumber);
         $this->assertEquals('sample reference 6', $supplierTransactionListingReportDetails->results[1]->transactions->results[0]->reference);
         $this->assertEquals('sample currency symbol 6', $supplierTransactionListingReportDetails->results[1]->transactions->results[0]->comment);
@@ -192,7 +192,7 @@ class SupplierTransactionListingModelTest extends BaseModelTest
         $this->assertEquals(47, $supplierTransactionListingReportDetails->results[1]->transactions->results[1]->linkId);
         $this->assertEquals('sample name 7', $supplierTransactionListingReportDetails->results[1]->transactions->results[1]->name);
         $this->assertEquals(7, $supplierTransactionListingReportDetails->results[1]->transactions->results[1]->currencyId);
-        $this->assertEquals('sample currency symbol 7',  $supplierTransactionListingReportDetails->results[1]->transactions->results[1]->currencySymbol);
+        $this->assertEquals('sample currency symbol 7', $supplierTransactionListingReportDetails->results[1]->transactions->results[1]->currencySymbol);
         $this->assertEquals('sample doc number 7', $supplierTransactionListingReportDetails->results[1]->transactions->results[1]->documentNumber);
         $this->assertEquals('sample reference 7', $supplierTransactionListingReportDetails->results[1]->transactions->results[1]->reference);
         $this->assertEquals('sample currency symbol 7', $supplierTransactionListingReportDetails->results[1]->transactions->results[1]->comment);

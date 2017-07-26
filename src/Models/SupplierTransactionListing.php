@@ -92,9 +92,9 @@ class SupplierTransactionListing extends BaseModel
      * @return Collection of Transaction Listing
      * @link https://accounting.sageone.co.za/api/1.1.2/Help/Api/POST-SupplierTransactionListing-GetSupplierTransactionListingReportingDetail
      */
-    public function getSupplierTransactionListingReportingDetail($SupplierTrLstRq)
+    public function getSupplierTransactionListingReportingDetail($supplierTrLstRq)
     {
-        $results = $this->request->request('POST', $this->endpoint, 'GetSupplierTransactionListingReportingDetail', $SupplierTrLstRq->toArray());
+        $results = $this->request->request('POST', $this->endpoint, 'GetSupplierTransactionListingReportingDetail', $supplierTrLstRq->toArray());
         return new ModelCollection(SupplierTransactionListing::class, $this->config, $results);
     }
 }
