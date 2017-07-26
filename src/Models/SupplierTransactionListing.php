@@ -94,8 +94,12 @@ class SupplierTransactionListing extends BaseModel
      */
     public function getSupplierTransactionListingReportingDetail($requestModel)
     {
-        $results = $this->request->request('POST', $this->endpoint,
-            'GetSupplierTransactionListingReportingDetail', $requestModel->toArray());
+        $results = $this->request->request(
+            'POST',
+            $this->endpoint,
+            'GetSupplierTransactionListingReportingDetail',
+            $requestModel->toArray()
+        );
         return new ModelCollection(SupplierTransactionListing::class, $this->config, $results);
     }
 }
