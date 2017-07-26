@@ -293,6 +293,7 @@ Models marked with an asterix are pure CRUD models
     - [x] Account Opening Balance *
     - [x] Account Payment *
     - [x] Account Receipt *
+  - [x] Additional Item Price *
   - [x] Analysis Category
   - [x] Analysis Type
   - [x] Asset Note *
@@ -339,7 +340,6 @@ Please feel free to open PRs for any of the following :)
 - [ ] Accountant Note
 - [ ] Accountant Task
 - [ ] Accountant Task Recurrence
-- [ ] Additional Item Price
 - [x] Additional Price List
 - [ ] Allocation
 - [x] Asset
