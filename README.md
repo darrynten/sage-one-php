@@ -295,6 +295,7 @@ Models marked with an asterix are pure CRUD models
     - [x] Account Receipt *
   - [x] Analysis Category
   - [x] Analysis Type
+  - [x] Asset Note *
   - [x] Company
     - [x] Company Entity Type *
     - [x] Company Note
@@ -344,7 +345,6 @@ Please feel free to open PRs for any of the following :)
 - [x] Asset
 - [x] Asset Category
 - [x] Asset Location
-- [ ] Asset Note
 - [ ] Attachment
 - [ ] Bank Account
 - [ ] Bank Account Category
