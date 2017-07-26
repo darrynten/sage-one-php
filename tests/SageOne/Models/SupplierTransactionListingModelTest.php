@@ -40,6 +40,53 @@ class SupplierTransactionListingModelTest extends BaseModelTest
         ]);
     }
 
+    public function testAttributes()
+    {
+        $this->verifyAttributes(SupplierTransactionListing::class, [
+            'id' => [
+                'type' => 'integer',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'name' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'currencySymbol' => [
+                'type' => 'string',
+                'nullable' => true,
+                'readonly' => false,
+            ],
+            'openingBalanceDate' => [
+                'type' => 'DateTime',
+                'nullable' => true,
+                'readonly' => false,
+            ],
+            'openingBalance' => [
+                'type' => 'double',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'closingBalanceDate' => [
+                'type' => 'DateTime',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'closingBalance' => [
+                'type' => 'double',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'transactions' => [
+                'type' => 'TransactionListingDetail',
+                'nullable' => false,
+                'readonly' => false,
+                'collection' => true,
+            ]
+        ]);
+    }
+
     public function testInject()
     {
         $supplierTransactionListing = new SupplierTransactionListing($this->config);

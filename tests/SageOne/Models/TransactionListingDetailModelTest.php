@@ -31,6 +31,97 @@ class TransactionListingDetailModelTest extends BaseModelTest
         $this->verifyBadImport(TransactionListingDetail::class, 'businessBaseId');
     }
 
+    public function testAttributes()
+    {
+        $this->verifyAttributes(TransactionListingDetail::class, [
+            'businessBaseId' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'id' => [
+                'type' => 'integer',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'documentTypeId' => [
+                'type' => 'integer',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'linkId' => [
+                'type' => 'integer',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'name' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'currencyId' => [
+                'type' => 'integer',
+                'nullable' => true,
+                'readonly' => false,
+            ],
+            'currencySymbol' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'documentNumber' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'reference' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'comment' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'date' => [
+                'type' => 'DateTime',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'description' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'documentTypeDisplayText' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'total' => [
+                'type' => 'double',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'debit' => [
+                'type' => 'double',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'credit' => [
+                'type' => 'double',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'runningTotal' => [
+                'type' => 'double',
+                'nullable' => false,
+                'readonly' => false,
+            ]
+        ]);
+    }
+
     public function testInject()
     {
         $data = json_decode(file_get_contents(__DIR__ . "/../../mocks/TransactionListingDetail/TransactionListingDetail_xx.json"));

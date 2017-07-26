@@ -96,6 +96,6 @@ class SupplierTransactionListingRequest extends BaseModel
         'all' => false,
         'get' => false,
         'save' => false,
-        'delete' => false
+        'delete' => false,
     ];
 }

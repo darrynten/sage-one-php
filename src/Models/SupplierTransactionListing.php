@@ -82,7 +82,7 @@ class SupplierTransactionListing extends BaseModel
         'all' => false,
         'get' => false,
         'save' => false,
-        'delete' => false
+        'delete' => false,
     ];
 
     /**
@@ -92,9 +92,10 @@ class SupplierTransactionListing extends BaseModel
      * @return Collection of Transaction Listing
      * @link https://accounting.sageone.co.za/api/1.1.2/Help/Api/POST-SupplierTransactionListing-GetSupplierTransactionListingReportingDetail
      */
-    public function getSupplierTransactionListingReportingDetail($supplierTrLstRq)
+    public function getSupplierTransactionListingReportingDetail($requestModel)
     {
-        $results = $this->request->request('POST', $this->endpoint, 'GetSupplierTransactionListingReportingDetail', $supplierTrLstRq->toArray());
+        $results = $this->request->request('POST', $this->endpoint,
+            'GetSupplierTransactionListingReportingDetail', $requestModel->toArray());
         return new ModelCollection(SupplierTransactionListing::class, $this->config, $results);
     }
 }

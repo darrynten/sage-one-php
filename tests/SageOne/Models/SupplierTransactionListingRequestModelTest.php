@@ -31,6 +31,67 @@ class SupplierTransactionListingRequestModelTest extends BaseModelTest
         $this->verifyBadImport(SupplierTransactionListingRequest::class, 'fromSupplier');
     }
 
+    public function testAttributes()
+    {
+        $this->verifyAttributes(SupplierTransactionListingRequest::class, [
+            'fromSupplier' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'toSupplier' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'fromCategory' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'toCategory' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'fromDate' => [
+                'type' => 'DateTime',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'toDate' => [
+                'type' => 'DateTime',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'includeActive' => [
+                'type' => 'boolean',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'includeInactive' => [
+                'type' => 'boolean',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'transactionType' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'showOpeningBalance' => [
+                'type' => 'boolean',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'useForeignCurrency' => [
+                'type' => 'boolean',
+                'nullable' => false,
+                'readonly' => false,
+            ]
+        ]);
+    }
+
     public function testInject()
     {
         $data = json_decode(file_get_contents(__DIR__ . "/../../mocks/SupplierTransactionListingRequest/SupplierTransactionListingRequest_xx.json"));
