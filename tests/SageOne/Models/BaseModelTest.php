@@ -5,6 +5,7 @@ namespace DarrynTen\SageOne\Tests\SageOne\Models;
 use DarrynTen\SageOne\Request\RequestHandler;
 use InterNations\Component\HttpMock\PHPUnit\HttpMockTrait;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use ReflectionClass;
 
 use DarrynTen\SageOne\Exception\ModelException;
@@ -228,10 +229,22 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
             $this->verifyCommonAttributes($className, $name, $options, $value);
             $this->verifyMinMaxAttributes($className, $name, $options, $value);
             $this->verifyRequiredAttribute($className, $name, $options, $value);
+            $this->verifyOptionalAttribute($className, $name, $options, $value);
             $this->verifyRegexAttribute($className, $name, $options, $value);
             $this->verifyFilterVarAttribute($className, $name, $options, $value);
             $this->verifyDefaultAttribute($className, $name, $options, $value);
             $this->verifyCollectionAttribute($className, $name, $options, $value);
+            $this->assertEquals(
+                count($options),
+                count($value[$name]),
+                sprintf(
+                    'Model %s key %s should have %s options but got %s',
+                    $className,
+                    $name,
+                    count($options),
+                    count($value[$name])
+                )
+            );
         }
     }
 
@@ -246,7 +259,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     {
         $validKeys = array_fill_keys([
             'type', 'nullable', 'readonly', 'default',
-            'required', 'min', 'max', 'regex', 'collection', 'validate'
+            'required', 'min', 'max', 'regex', 'collection', 'validate', 'optional'
         ], true);
         foreach (array_keys($options) as $option) {
             if (!isset($validKeys[$option])) {
@@ -382,6 +395,38 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
             $this->assertTrue(
                 $value[$name]['required'],
                 sprintf('Model %s "required" for %s must be true', $className, $name)
+            );
+        }
+    }
+
+    /**
+     * Verifies that field $name has optional attribute (if any)
+     *
+     * @param string $className name of the class under checking
+     * @param string $name name of the attribute
+     * @param array $options what we check
+     *      Contains data in the following format
+     *      [
+     *          'optional' => true
+     *      ]
+     * @param array $value actual field attributes under check
+     *      has the same format as $options
+     */
+    private function verifyOptionalAttribute($className, $name, $options, $value)
+    {
+        if (isset($options['optional'])) {
+            if ($options['optional'] !== true) {
+                throw new \Exception('You can validate only optional=true');
+            }
+
+            $this->assertTrue(
+                isset($value[$name]['optional']),
+                sprintf('Model %s "optional" for %s is not present', $className, $name)
+            );
+
+            $this->assertTrue(
+                $value[$name]['optional'],
+                sprintf('Model %s "optional" for %s must be true', $className, $name)
             );
         }
     }
@@ -558,18 +603,24 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
      * Verifies that we can load list of models
      *
      * @param string $class Full path to the class
+     * @param string $method HTTP method of call
+     * @param string $requestMock If specified sends data from that file in request
      * @param callable $whatToCheck Verifies fields on result
      */
-    protected function verifyGetAll(string $class, callable $whatToCheck)
+    protected function verifyGetAll(string $class, callable $whatToCheck, string $method = 'GET', string $requestMock = null)
     {
         $className = $this->getClassName($class);
         $path = sprintf('%s/Get', $className);
-        $mockFile = sprintf('%s/GET_%s_Get.json', $className, $className);
+        $responseMock = sprintf('%s/%s_%s_Get.json', $className, $method, $className);
+        if ($requestMock) {
+            $responseMock = sprintf('%s/%s_%s_Get_RESP.json', $className, $method, $className);
+        }
         $model = $this->setUpRequestMock(
-            'GET',
+            $method,
             $class,
             $path,
-            $mockFile
+            $responseMock,
+            $requestMock
         );
 
         $allInstances = $model->all();
@@ -646,17 +697,21 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
      * Verifies that we can delete model
      *
      * @param string $class Full path to the class
-     * @param int $id Id of the model
+     * @param string $id Id of the model
      * @param callable $whatToCheck Verifies response
      */
-    public function verifyDelete(string $class, int $id, callable $whatToCheck)
+    public function verifyDelete(string $class, string $id, $success = true)
     {
         $className = $this->getClassName($class);
         $path = sprintf('%s/Delete/%s', $className, $id);
-        $model = $this->setUpRequestMock('DELETE', $class, $path);
+        $responseCode = 204;
+        if (!$success) {
+            $responseCode = 300; // TODO find out actual response code for not allowed deletion
+        }
+        $model = $this->setUpRequestMock('DELETE', $class, $path, null, null, [], $responseCode);
 
-        $model->delete($id);
-        // TODO do actual checks
+        $response = $model->delete($id);
+        $this->assertEquals($success, $response);
     }
 
     /**
@@ -813,7 +868,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
                         'Authorization' => 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=',
                     ],
                     'query' => [
-                        'apikey' => 'key'
+                        'apikey' => '%7Bkey%7D'
                     ]
                 ],
                 []
@@ -836,8 +891,15 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
      * @var array $parameters checks passed arguments
      * @return BaseModel
      */
-    protected function setUpRequestMock(string $method, string $class, string $path, string $mockFileResponse = null, string $mockFileRequest = null, array $parameters = [])
-    {
+    protected function setUpRequestMock(
+        string $method,
+        string $class,
+        string $path,
+        string $mockFileResponse = null,
+        string $mockFileRequest = null,
+        array $parameters = [],
+        int $responseCode = 200
+    ) {
         $url = sprintf('/1.1.2/%s?apikey=key', $path);
         $urlWithoutApiKey = sprintf('/1.1.2/%s/', $path);
 
@@ -855,6 +917,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
             ->methodIs($method)
             ->pathIs($url)
             ->then()
+            ->statusCode($responseCode)
             ->body($responseData)
             ->end();
         $this->http->setUp();
@@ -879,7 +942,9 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
                 'Authorization' => sprintf('%s %s', $tokenType, $token)
             ],
         ];
-        $checkParameters['query']['apikey'] = $this->config['key'];
+        $checkParameters['query']['apikey'] = urlencode(
+            '{' . $this->config['key'] . '}'
+        );
 
         /**
         * $client in RequestHandler receives url without query params

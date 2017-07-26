@@ -5,6 +5,7 @@ namespace DarrynTen\SageOne\Tests\SageOne\Request;
 use DarrynTen\SageOne\Request\RequestHandler;
 use InterNations\Component\HttpMock\PHPUnit\HttpMockTrait;
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Response;
 use ReflectionClass;
 
 class RequestHandlerTest extends \PHPUnit_Framework_TestCase
@@ -53,7 +54,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
         $this->http->mock
             ->when()
                 ->methodIs('GET')
-                ->pathIs('/1.1.2/Account/Get?apikey=key')
+                ->pathIs('/1.1.2/Account/Get?apikey=%7Bkey%7D')
             ->then()
                 ->body($data)
             ->end();
@@ -69,7 +70,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
 
         $localResult = $localClient->request(
             'GET',
-            'http://localhost:8082/1.1.2/Account/Get?apikey=key',
+            'http://localhost:8082/1.1.2/Account/Get?apikey=%7Bkey%7D',
             []
         );
 
@@ -112,7 +113,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
         $this->http->mock
             ->when()
             ->methodIs('GET')
-            ->pathIs('/1.1.2/Account/Get/11?companyId=8&apikey=key')
+            ->pathIs('/1.1.2/Account/Get/11?companyId=8&apikey=%7Bkey%7D')
             ->then()
             ->body($data)
             ->end();
@@ -130,7 +131,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
 
         $localResult = $localClient->request(
             'GET',
-            'http://localhost:8082/1.1.2/Account/Get/11?companyId=8&apikey=key',
+            'http://localhost:8082/1.1.2/Account/Get/11?companyId=8&apikey=%7Bkey%7D',
             [ 'key' => 'value' ]
         );
 
@@ -171,7 +172,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
         $this->http->mock
             ->when()
             ->methodIs('POST')
-            ->pathIs('/1.1.2/Account/Save?apikey=key')
+            ->pathIs('/1.1.2/Account/Save?apikey=%7Bkey%7D')
             ->then()
             ->body($data)
             ->end();
@@ -189,7 +190,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
 
         $localResult = $localClient->request(
             'POST',
-            'http://localhost:8082/1.1.2/Account/Save?apikey=key',
+            'http://localhost:8082/1.1.2/Account/Save?apikey=%7Bkey%7D',
             $parameters
         );
 
@@ -227,8 +228,9 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
         $this->http->mock
             ->when()
             ->methodIs('DELETE')
-            ->pathIs('/1.1.2/Account/Delete/11?apikey=key')
+            ->pathIs('/1.1.2/Account/Delete/11?apikey=%7Bkey%7D')
             ->then()
+            ->statusCode(204)
             ->body(null)
             ->end();
         $this->http->setUp();
@@ -245,7 +247,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
 
         $localResult = $localClient->request(
             'DELETE',
-            'http://localhost:8082/1.1.2/Account/Delete/11?apikey=key',
+            'http://localhost:8082/1.1.2/Account/Delete/11?apikey=%7Bkey%7D',
             []
         );
 
@@ -272,10 +274,9 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
         $reflectedClient->setAccessible(true);
         $reflectedClient->setValue($request, $mockClient);
 
-        $this->assertEquals(
-            null,
-            $request->request('DELETE', 'Account', 'Delete/11', [])
-        );
+        $response = $request->request('DELETE', 'Account', 'Delete/11', []);
+        $this->assertEquals(204, $response->getStatusCode());
+        $this->assertEquals(null, (string)$response->getBody());
     }
 
     public function testRequestWithAuth()
@@ -307,7 +308,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
                         'Authorization' => 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=',
                     ],
                     'query' => [
-                        'apikey' => 'key'
+                        'apikey' => '%7Bkey%7D'
                     ]
                 ],
                 []
@@ -330,7 +331,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
                         'Authorization' => 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=',
                     ],
                     'query' => [
-                        'apikey' => 'key'
+                        'apikey' => '%7Bkey%7D'
                     ]
                 ],
                 ['keyx' => 'value']
@@ -342,6 +343,75 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             'OK',
             $result
+        );
+    }
+
+    public function testRequestResponse()
+    {
+        $config = [
+          'username' => 'username',
+          'password' => 'password',
+          'key' => 'key',
+          'endpoint' => '//accounting.sageone.co.za',
+          'version' => '1.1.2',
+          'clientId' => null
+        ];
+
+        // Creates a partially mock of RequestHandler with mocked `handleRequest` method
+        $request = \Mockery::mock(
+            'DarrynTen\SageOne\Request\RequestHandler[handleRequest]',
+            [
+                $config,
+            ]
+        );
+
+        $response = new Response();
+
+        $request->shouldReceive('handleRequest')
+            ->once()
+            ->with(
+                'POST',
+                '//accounting.sageone.co.za/1.1.2/Account/Save/',
+                [
+                    'headers' => [
+                        'Authorization' => 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=',
+                    ],
+                    'query' => [
+                        'apikey' => '%7Bkey%7D'
+                    ]
+                ],
+                []
+            )
+            ->andReturn($response);
+
+        $this->assertEquals(
+            200,
+            $request->request('POST', 'Account', 'Save', [], true)->getStatusCode()
+        );
+
+        $request->shouldReceive('handleRequest')
+            ->once()
+            ->with(
+                'GET',
+                '//accounting.sageone.co.za/1.1.2/Account/Get/111/',
+                [
+                    'headers' => [
+                        'Authorization' => 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=',
+                    ],
+                    'query' => [
+                        'apikey' => '%7Bkey%7D'
+                    ]
+                ],
+                ['keyx' => 'value']
+            )
+            ->andReturn($response);
+
+        $result = $request->request('GET', 'Account', 'Get/111', ['keyx' => 'value'], true);
+        $this->assertInstanceOf(Response::class, $result);
+
+        $this->assertEquals(
+            200,
+            $result->getStatusCode()
         );
     }
 }

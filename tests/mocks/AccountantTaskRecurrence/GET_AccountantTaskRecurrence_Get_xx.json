@@ -1,0 +1,14 @@
+{
+  "CompanyId": 1,
+  "FrequencyType": 2,
+  "FrequencyInterval": 3,
+  "FrequencyRelativeInterval": 4,
+  "FrequencyRecurrenceFactor": 5,
+  "FrequencyYearlyMonth": 6,
+  "RecurrenceRangeType": 7,
+  "StartDate": "2017-07-24",
+  "EndDate": "2017-07-24",
+  "NumberOfOccurrences": 1,
+  "TaskDuration": 9,
+  "ID": 10
+}

@@ -24,7 +24,9 @@ PHP 7.0+
 
 ## Basic use
 
-# TODO
+Some models' methods are unimplemented as they were inconsistent with other similar models, these methods will throw a LibraryException with the location of the method stub.
+
+If you require these methods, please add them with updated tests.
 
 ### Definitions
 
@@ -52,6 +54,11 @@ $account = new Account($config);
 // get
 $account->all(); // fetches ALL
 $account->get($id); // fetches that ID
+
+// If model supports some query parameters, we can pass it
+$company = new Company($config);
+$company->all(['includeStatus' => true]);
+// Currently get() does not support any query parameters but this might be required in future
 
 // related models
 echo $account->category->id;
@@ -161,6 +168,10 @@ class Account extends BaseModel
      *   - `min` / `max` always come together
      *   - `default` is when it's indicated in the docs
      *   - `regex` is generally used with email address fields
+     *   - `optional` is true when this field can be omitted in SageOne response
+     *     - Example is Company's model all() method
+     *       By default when we execute all() it is the same as all(['includeStatus' = false])
+     *       So `status` field is not returned in response
      *
      * Details on writable properties for Account:
      * https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=Account
@@ -196,6 +207,12 @@ class Account extends BaseModel
             'nullable' => false,
             'readonly' => true,
         ],
+        'status' => [
+            'type' => 'integer',
+            'nullable' => false,
+            'readonly' => true,
+            'optional' => true,
+        ],
         // etc etc etc
     ];
 
@@ -215,6 +232,20 @@ class Account extends BaseModel
         'get' => true,
         'save' => true,
         'delete' => true,
+    ];
+
+    /**
+     * Features HTTP methods
+     * Not all models follow same conventions like GET for all()
+     * Example AccountBalance all() requires POST method
+     * or SupplierStatement get() requires POST method
+     * @var array $featureMethods
+     */
+    protected $featureMethods = [
+        'all' => 'GET',
+        'get' => 'GET',
+        'save' => 'POST',
+        'delete' => 'DELETE'
     ];
 
     // Construct (if you need to modify construction)
@@ -254,22 +285,24 @@ Models marked with an asterix are pure CRUD models
 - [ ] Rate Limiting
 - [ ] Models
   - [x] Account
-    - [ ] Account Balance
+    - [x] Account Balance
     - [x] Account Category *
     - [x] Account Note *
+    - [x] Accountant Task Recurrence *
     - [ ] Account Note Attachment
     - [x] Account Opening Balance *
     - [x] Account Payment *
     - [x] Account Receipt *
   - [x] Analysis Category
-  - [ ] Analysis Type
-  - [ ] Company
+  - [x] Analysis Type
+  - [x] Asset Note *
+  - [x] Company
     - [x] Company Entity Type *
-    - [ ] Company Note
+    - [x] Company Note
   - [x] Currency *
-  - [ ] Exchange Rates
+  - [x] Exchange Rates
   - [x] Supplier *
-    - [ ] Supplier Additional Contact Detail
+    - [x] Supplier Additional Contact Detail
     - [x] Supplier Adjustment
     - [ ] Supplier Ageing
     - [x] Supplier Bank Detail *
@@ -280,10 +313,10 @@ Models marked with an asterix are pure CRUD models
     - [ ] Supplier Note Attachment
     - [x] Supplier Opening Balance *
     - [ ] Supplier Payment
-    - [ ] Supplier Purchase History
+    - [x] Supplier Purchase History
     - [ ] Supplier Return
     - [ ] Supplier Return Attachment
-    - [ ] Supplier Statement *
+    - [x] Supplier Statement *
     - [ ] Supplier Transaction Listing
   - [x] Tax Type *
 
@@ -312,7 +345,6 @@ Please feel free to open PRs for any of the following :)
 - [x] Asset
 - [x] Asset Category
 - [x] Asset Location
-- [ ] Asset Note
 - [ ] Attachment
 - [ ] Bank Account
 - [ ] Bank Account Category

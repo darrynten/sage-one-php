@@ -126,13 +126,14 @@ class RequestHandler
      * @param string $method The services method
      * @param array $options Request options
      * @param array $parameters Request parameters
+     * @param bool $returnResponse if set to true returns actual response
      *
      * @see RequestHandler::request()
      *
-     * @return array
+     * @return stdClass
      * @throws ApiException
      */
-    public function handleRequest(string $method, string $uri, array $options, array $parameters = [])
+    public function handleRequest(string $method, string $uri, array $options, array $parameters = [], $returnResponse = false)
     {
         if (!in_array($method, $this->verbs)) {
             throw new ApiException('405 Bad HTTP Verb', 405);
@@ -157,6 +158,15 @@ class RequestHandler
             $this->handleException($exception);
         }
 
+        // For DELETE we should check response's HTTP code
+        // So we return response itself
+        if ($method === 'DELETE') {
+            return $response;
+        }
+
+        if ($returnResponse) {
+            return $response;
+        }
         return json_decode($response->getBody());
     }
 
@@ -213,12 +223,13 @@ class RequestHandler
      * @param string $method The API method
      * @param string $path The path
      * @param array $parameters The request parameters
+     * @param bool $returnResponse If set to true, returns actual response
      *
      * @return []
      *
      * @throws ApiException
      */
-    public function request(string $verb, string $service, string $method, array $parameters = [])
+    public function request(string $verb, string $service, string $method, array $parameters = [], $returnResponse = false)
     {
         $options = [
             'headers' => [
@@ -232,7 +243,10 @@ class RequestHandler
         }
 
         // We always add the API key to the URL
-        $options['query']['apikey'] = $this->key;
+        // it has to be in the form %7Bapi-key-here%7D
+        // where %7B is {
+        // and %7D is }
+        $options['query']['apikey'] = urlencode('{' . $this->key . '}');
 
         // Append version to the endpoint
         $uri = sprintf(
@@ -247,7 +261,8 @@ class RequestHandler
             $verb,
             $uri,
             $options,
-            $parameters
+            $parameters,
+            $returnResponse
         );
     }
 }

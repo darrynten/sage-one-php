@@ -271,9 +271,12 @@ class AccountModelTest extends BaseModelTest
 
     public function testDelete()
     {
-        $this->verifyDelete(Account::class, 11, function () {
-            // TODO do actual checks
-        });
+        $this->verifyDelete(Account::class, 11, true);
+    }
+
+    public function testDeleteFails()
+    {
+        $this->verifyDelete(Account::class, 11, false);
     }
 
     public function testAuth()

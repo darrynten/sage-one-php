@@ -1,0 +1,18 @@
+{
+  "FromSupplier": "sample string 1",
+  "ToSupplier": "sample string 2",
+  "FromCategory": "sample string 3",
+  "ToCategory": "sample string 4",
+  "IncludeActive": true,
+  "IncludeInactive": true,
+  "ExcludeZeroBalanceAccounts": true,
+  "Detailed": true,
+  "ExcludeFullyAllocated": true,
+  "ShowBalanceBroughtForward": true,
+  "ExcludeNegativeBalance": true,
+  "UseMinimumBalance": true,
+  "MinimumBalance": 13.0,
+  "UseForeignCurrency": true,
+  "FromDate": "2017-07-22",
+  "ToDate": "2017-07-22"
+}
