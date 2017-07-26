@@ -60,12 +60,10 @@ class AccountNoteAttachment extends BaseModel
      */
     public function download($guid)
     {
-        $response = $this->request->request(
+        $response = $this->request->requestRaw(
             'GET',
             $this->endpoint,
-            sprintf('Download/%s', $guid),
-            [],
-            true
+            sprintf('Download/%s', $guid)
         );
         return $response->getBody()->getContents();
     }
@@ -122,12 +120,13 @@ class AccountNoteAttachment extends BaseModel
 
     /**
      * Validates the specified Entity.
+     * @param string $id (not specified until implemented)
      */
-    public function validate($id)
+    public function validate()
     {
         throw new LibraryException(
             LibraryException::METHOD_NOT_IMPLEMENTED,
-            '\DarrynTen\SageOne\Models\AccountNoteAttachment::validate'
+            '\DarrynTen\SageOne\Models\AccountNoteAttachment::validate()'
         );
     }
 }

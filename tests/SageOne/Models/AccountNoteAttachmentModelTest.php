@@ -208,9 +208,9 @@ class AccountNoteAttachmentModelTest extends BaseModelTest
         $model = new AccountNoteAttachment($this->config);
 
         $this->expectException(LibraryException::class);
-        $this->expectExceptionMessage('Error, "\DarrynTen\SageOne\Models\AccountNoteAttachment::validate" Method not yet implemented. This still needs to be added, please consider contributing to the project..');
+        $this->expectExceptionMessage('Error, "\DarrynTen\SageOne\Models\AccountNoteAttachment::validate()" Method not yet implemented. This still needs to be added, please consider contributing to the project..');
         $this->expectExceptionCode(10301);
 
-        $model->validate(1);
+        $model->validate();
     }
 }

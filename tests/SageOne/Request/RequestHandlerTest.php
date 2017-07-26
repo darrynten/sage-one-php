@@ -188,11 +188,11 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
          */
         $localClient = new Client();
 
-        $localResult = json_decode($localClient->request(
+        $localResult = $localClient->request(
             'POST',
             'http://localhost:8082/1.1.2/Account/Save?apikey=%7Bkey%7D',
             $parameters
-        )->getBody()->getContents(), true);
+        );
 
         /**
          * We then make a mock client, and tell the mock client that it
@@ -220,7 +220,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
         $response = $request->request('POST', 'Account', 'Save', [], $parameters);
 
         $this->assertEquals(
-            json_decode($data, true),
+            json_decode($data),
             $response
         );
     }
@@ -313,8 +313,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
                         'apikey' => '%7Bkey%7D'
                     ]
                 ],
-                [],
-                false
+                []
             )
             // TODO not the actual response...
             ->andReturn('OK');
@@ -337,8 +336,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
                         'apikey' => '%7Bkey%7D'
                     ]
                 ],
-                ['keyx' => 'value'],
-                false
+                ['keyx' => 'value']
             )
             ->andReturn('OK');
 
@@ -363,7 +361,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
 
         // Creates a partially mock of RequestHandler with mocked `handleRequest` method
         $request = \Mockery::mock(
-            'DarrynTen\SageOne\Request\RequestHandler[handleRequest]',
+            'DarrynTen\SageOne\Request\RequestHandler[makeRequest]',
             [
                 $config,
             ]
@@ -371,7 +369,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
 
         $response = new Response();
 
-        $request->shouldReceive('handleRequest')
+        $request->shouldReceive('makeRequest')
             ->once()
             ->with(
                 'POST',
@@ -384,17 +382,16 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
                         'apikey' => '%7Bkey%7D'
                     ]
                 ],
-                [],
-                true
+                []
             )
             ->andReturn($response);
 
         $this->assertEquals(
             200,
-            $request->request('POST', 'Account', 'Save', [], true)->getStatusCode()
+            $request->requestRaw('POST', 'Account', 'Save', [])->getStatusCode()
         );
 
-        $request->shouldReceive('handleRequest')
+        $request->shouldReceive('makeRequest')
             ->once()
             ->with(
                 'GET',
@@ -407,12 +404,11 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
                         'apikey' => '%7Bkey%7D'
                     ]
                 ],
-                ['keyx' => 'value'],
-                true
+                ['keyx' => 'value']
             )
             ->andReturn($response);
 
-        $result = $request->request('GET', 'Account', 'Get/111', ['keyx' => 'value'], true);
+        $result = $request->requestRaw('GET', 'Account', 'Get/111', ['keyx' => 'value']);
         $this->assertInstanceOf(Response::class, $result);
 
         $this->assertEquals(
