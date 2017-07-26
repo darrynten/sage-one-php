@@ -14,6 +14,7 @@ namespace DarrynTen\SageOne;
 
 use DarrynTen\SageOne\Request\RequestHandler;
 use DarrynTen\SageOne\Exception\ModelException;
+use DarrynTen\SageOne\Exception\LibraryException;
 use DarrynTen\SageOne\Validation;
 use DarrynTen\SageOne\Models\ModelCollection;
 
@@ -52,6 +53,14 @@ abstract class BaseModel
         'delete' => false
     ];
 
+    /**
+     * Specifies what get() returns
+     * @var array $featureGetReturns
+     */
+    protected $featureGetReturns = [
+        'type' => 'this',
+        'collection' => false
+    ];
     /**
      * Features HTTP methods
      * Not all models follow same conventions like GET for all()
@@ -189,7 +198,31 @@ abstract class BaseModel
 
         $result = $this->request->request($this->featureMethods['get'], $this->endpoint, sprintf('Get/%s', $id));
 
-        $this->loadResult($result);
+        if ($this->featureGetReturns['type'] === 'this') {
+            $this->loadResult($result);
+            return $this;
+        }
+
+        $class = $this->getModelWithNamespace($this->featureGetReturns['type']);
+
+        if (!class_exists($class)) {
+            $this->throwException(ModelException::PROPERTY_WITHOUT_CLASS, sprintf(
+                'Received namespaced class "%s" which does not exist',
+                $class
+            ));
+        }
+
+        if ($this->featureGetReturns['collection'] === true) {
+            return new ModelCollection($class, $this->config, $result);
+        }
+
+        /**
+        * May be other models have something related
+        */
+        throw new LibraryException(
+            LibraryException::METHOD_NOT_IMPLEMENTED,
+            sprintf('%s:get()', static::class)
+        );
     }
 
     /**

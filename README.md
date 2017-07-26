@@ -256,6 +256,18 @@ class Account extends BaseModel
         'delete' => 'DELETE'
     ];
 
+    /**
+     * Specifies what get() returns
+     * 'this' means current class
+     * any other type must exist under src/Models/
+     * 'collection' is true when get() returns collection (very rare case, but SageOne's API works this way)
+     * @var array $featureGetReturns
+     */
+    protected $featureGetReturns = [
+        'type' => 'this',
+        'collection' => false
+    ];
+
     // Construct (if you need to modify construction)
     public function __construct(array $config)
     {
@@ -358,7 +370,7 @@ Please feel free to open PRs for any of the following :)
 - [ ] Bank Account Category
 - [ ] Bank Account Note
 - [ ] Bank Account Note Attachment
-- [ ] Bank Account Opening Balance
+- [x] Bank Account Opening Balance
 - [ ] Bank Account Transaction Listing
 - [ ] Bank Import Mapping
 - [ ] Bank Statement Transaction
