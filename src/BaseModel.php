@@ -55,7 +55,7 @@ abstract class BaseModel
 
     /**
      * Specifies what get() returns
-     * @var string $featureGetReturns
+     * @var array $featureGetReturns
      */
     protected $featureGetReturns = [
         'type' => 'this',
@@ -215,6 +215,7 @@ abstract class BaseModel
         if ($this->featureGetReturns['collection'] === true) {
             return new ModelCollection($class, $this->config, $result);
         }
+
         /**
         * May be other models have something related
         */

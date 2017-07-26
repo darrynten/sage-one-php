@@ -14,8 +14,7 @@ class AccountNoteAttachmentModelTest extends BaseModelTest
 {
     public function testAttributes()
     {
-        $this->verifyAttributes(AccountNoteAttachment::class, [
-        ]);
+        $this->verifyAttributes(AccountNoteAttachment::class, []);
     }
 
     public function testFeatures()

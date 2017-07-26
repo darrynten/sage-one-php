@@ -31,15 +31,14 @@ class AccountNoteAttachment extends BaseModel
     /**
      * @var array $fields
      */
-    protected $fields = [
-    ];
+    protected $fields = [];
 
     /**
      * @var array $featureGetReturns
      */
     protected $featureGetReturns = [
         'type' => 'Attachment',
-        'collection' => true
+        'collection' => true,
     ];
 
     /**
