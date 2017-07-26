@@ -810,6 +810,30 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Verifies that bad enums are caught
+     *
+     * @param string $class Full path to the class
+     * @param string $field string field on class
+     * @param mixed $value value what we are trying to set for field
+     */
+    public function verifyBadEnum(string $class, string $field, $value)
+    {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage(
+            sprintf(
+                'Validation error enum key %s of type %s failed to validate Enum failed to validate',
+                $value,
+                gettype($value)
+            )
+        );
+        $this->expectExceptionCode(10006);
+
+        $model = new $class($this->config);
+
+        $model->{$field} = $value;
+    }
+
+    /**
      * Verifies that ValidationException for string with incorrect length is thrown
      * @param string $class Full path to the class
      * @param string $field string field on class
@@ -819,8 +843,6 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
      */
     public function verifyBadStringLengthException(string $class, string $field, int $min, int $max, string $value)
     {
-        $className = $this->getClassName($class);
-
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage(
             sprintf(

@@ -86,4 +86,9 @@ class AgeingTransactionModelTest extends BaseModelTest
     {
         $this->verifyDeleteException(AgeingTransaction::class);
     }
+
+    public function testBadEnumException()
+    {
+        $this->verifyBadEnum(AgeingTransaction::class, 'documentTypeId', 20);
+    }
 }
