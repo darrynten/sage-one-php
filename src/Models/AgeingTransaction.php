@@ -29,6 +29,108 @@ class AgeingTransaction extends BaseModel
     protected $endpoint = 'AgeingTransaction';
 
     /**
+     * Enums for DocumentType
+     *
+     * @link https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=DocumentType
+     */
+    const IGNORED = -1;
+    const CUSTOMEROPENINGBALANCE = 0;
+    const QUOTE = 1;
+    const TAXINVOICE = 2;
+    const CUSTOMERRETURN = 3;
+    const RECEIPT = 4;
+    const WRITEOFF = 5;
+    const CUSTOMERDISCOUNT = 6;
+    const RECURRINGTAXINVOICE = 7;
+    const DRAFTTAXINVOICE = 8;
+    const CUSTOMERJOURNAL = 9;
+    const CUSTOMERBADDEBTRELIEF = 11;
+    const CUSTOMERBADDEBTRECOVERED = 12;
+    const DELIVERYNOTE = 52;
+    const CUSTOMERDOCUMENTTEMPLATE = 58;
+    const SUPPLIEROPENINGBALANCE = 100;
+    const PURCHASEORDER = 101;
+    const SUPPLIERINVOICE = 102;
+    const SUPPLIERRETURN = 103;
+    const PAYMENT = 104;
+    const SUPPLIERDISCOUNT = 106;
+    const SUPPLIERJOURNAL = 109;
+    const SUPPLIERADDITIONALCOST = 110;
+    const SUPPLIERBADDEBTRELIEF = 111;
+    const SUPPLIERBADDEBTRECOVERED = 112;
+    const ITEMOPENINGBALANCE = 200;
+    const ITEMADJUSTMENT = 201;
+    const ACCOUNTOPENINGBALANCE = 300;
+    const CASHBOOKRECEIPT = 301;
+    const CASHBOOKPAYMENT = 302;
+    const JOURNALENTRY = 303;
+    const BANKACCOUNTOPENINGBALANCE = 400;
+    const BANKACCOUNTTRANSFERFROM = 401;
+    const BANKACCOUNTTRANSFERTO = 402;
+    const SPLITCASHBOOKPAYMENT = 403;
+    const SPLITCASHBOOKRECEIPT = 404;
+    const SPLITPAYMENT = 405;
+    const SPLITRECEIPT = 406;
+    const TAXPAYMENT = 501;
+    const TAXREFUND = 502;
+    const INPUTTAXADJUSTMENT = 503;
+    const OUTPUTTAXADJUSTMENT = 504;
+    const INPUTTAXPROVISIONADJUSTMENT = 505;
+    const OUTPUTTAXPROVISIONADJUSTMENT = 506;
+
+    /**
+     * Array of document types
+     *
+     * @var array $documentTypes
+     */
+    protected $documentTypes = [
+        self::IGNORED => 'Ignored',
+        self::CUSTOMEROPENINGBALANCE => 'CustomerOpeningBalance',
+        self::QUOTE => 'Quote',
+        self::TAXINVOICE => 'TaxInvoice',
+        self::CUSTOMERRETURN => 'CustomerReturn',
+        self::RECEIPT => 'Receipt',
+        self::WRITEOFF => 'WriteOff',
+        self::CUSTOMERDISCOUNT => 'CustomerDiscount',
+        self::RECURRINGTAXINVOICE => 'RecurringTaxInvoice',
+        self::DRAFTTAXINVOICE => 'DraftTaxInvoice',
+        self::CUSTOMERJOURNAL => 'CustomerJournal',
+        self::CUSTOMERBADDEBTRELIEF => 'CustomerBadDebtRelief',
+        self::CUSTOMERBADDEBTRECOVERED => 'CustomerBadDebtRecovered',
+        self::DELIVERYNOTE => 'DeliveryNote',
+        self::CUSTOMERDOCUMENTTEMPLATE => 'CustomerDocumentTemplate',
+        self::SUPPLIEROPENINGBALANCE => 'SupplierOpeningBalance',
+        self::PURCHASEORDER => 'PurchaseOrder',
+        self::SUPPLIERINVOICE => 'SupplierInvoice',
+        self::SUPPLIERRETURN => 'SupplierReturn',
+        self::PAYMENT => 'Payment',
+        self::SUPPLIERDISCOUNT => 'SupplierDiscount',
+        self::SUPPLIERJOURNAL => 'SupplierJournal',
+        self::SUPPLIERADDITIONALCOST => 'SupplierAdditionalCost',
+        self::SUPPLIERBADDEBTRELIEF => 'SupplierBadDebtRelease',
+        self::SUPPLIERBADDEBTRECOVERED => 'SupplierBadDebtRecovered',
+        self::ITEMOPENINGBALANCE => 'ItemOpeningBalance',
+        self::ITEMADJUSTMENT => 'ItemAdjustment',
+        self::ACCOUNTOPENINGBALANCE => 'AccountOpeningBalance',
+        self::CASHBOOKRECEIPT => 'CashBookReceipt',
+        self::CASHBOOKPAYMENT => 'CashBookPayment',
+        self::JOURNALENTRY => 'JournalEntry',
+        self::BANKACCOUNTOPENINGBALANCE => 'BankAccountOpeningBalance',
+        self::BANKACCOUNTTRANSFERFROM => 'BankAccountTransferFrom',
+        self::BANKACCOUNTTRANSFERTO => 'BankAccountTransferTo',
+        self::SPLITCASHBOOKPAYMENT => 'SplitCashbookPayment',
+        self::SPLITCASHBOOKRECEIPT => 'SplitCashbookReceipt',
+        self::SPLITPAYMENT => 'SplitPayment',
+        self::SPLITRECEIPT => 'SplitReceipt',
+        self::TAXPAYMENT => 'TaxPayment',
+        self::TAXREFUND => 'TaxRefund',
+        self::INPUTTAXADJUSTMENT => 'InputTaxAdjustment',
+        self::OUTPUTTAXADJUSTMENT => 'OutputTaxAdjustment',
+        self::INPUTTAXPROVISIONADJUSTMENT => 'InputTaxProvisionedAdjustment',
+        self::OUTPUTTAXPROVISIONADJUSTMENT => 'OutputTaxProvisionAdjustment',
+    ];
+
+    /**
      * @var array $fields
      */
     protected $fields = [
@@ -41,6 +143,7 @@ class AgeingTransaction extends BaseModel
             'type' => 'integer',
             'nullable' => false,
             'readonly' => false,
+            'enum' => 'documentTypes',
         ],
         'documentNumber' => [
             'type' => 'string',
@@ -117,54 +220,4 @@ class AgeingTransaction extends BaseModel
         'save' => false,
         'delete' => false,
     ];
-
-    /**
-     * Enums for DocumentType
-     *
-     * @link https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=DocumentType
-     */
-    const IGNORED = -1;
-    const CUSTOMEROPENINGBALANCE = 0;
-    const QUOTE = 1;
-    const TAXINVOICE = 2;
-    const CUSTOMERRETURN = 3;
-    const RECEIPT = 4;
-    const WRITEOFF = 5;
-    const CUSTOMERDISCOUNT = 6;
-    const RECURRINGTAXINVOICE = 7;
-    const DRAFTTAXINVOICE = 8;
-    const CUSTOMERJOURNAL = 9;
-    const CUSTOMERBADDEBTRELIEF = 11;
-    const CUSTOMERBADDEBTRECOVERED = 12;
-    const DELIVERYNOTE = 52;
-    const CUSTOMERDOCUMENTTEMPLATE = 58;
-    const SUPPLIEROPENINGBALANCE = 100;
-    const PURCHASEORDER = 101;
-    const SUPPLIERINVOICE = 102;
-    const SUPPLIERRETURN = 103;
-    const PAYMENT = 104;
-    const SUPPLIERDISCOUNT = 106;
-    const SUPPLIERJOURNAL = 109;
-    const SUPPLIERADDITIONALCOST = 110;
-    const SUPPLIERBADDEBTRELIEF = 111;
-    const SUPPLIERBADDEBTRECOVERED = 112;
-    const ITEMOPENINGBALANCE = 200;
-    const ITEMADJUSTMENT = 201;
-    const ACCOUNTOPENINGBALANCE = 300;
-    const CASHBOOKRECEIPT = 301;
-    const CASHBOOKPAYMENT = 302;
-    const JOURNALENTRY = 303;
-    const BANKACCOUNTOPENINGBALANCE = 400;
-    const BANKACCOUNTTRANSFERFROM = 401;
-    const BANKACCOUNTTRANSFERTO = 402;
-    const SPLITCASHBOOKPAYMENT = 403;
-    const SPLITCASHBOOKRECEIPT = 404;
-    const SPLITPAYMENT = 405;
-    const SPLITRECEIPT = 406;
-    const TAXPAYMENT = 501;
-    const TAXREFUND = 502;
-    const INPUTTAXADJUSTMENT = 503;
-    const OUTPUTTAXADJUSTMENT = 504;
-    const INPUTTAXPROVISIONADJUSTMENT = 505;
-    const OUTPUTTAXPROVISIONADJUSTMENT = 506;
 }

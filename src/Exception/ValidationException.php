@@ -26,6 +26,7 @@ class ValidationException extends Exception
     const STRING_REGEX_MISMATCH = 10003;
     const VALIDATION_TYPE_ERROR = 10004;
     const FILTER_VAR_FAILED = 10005;
+    const ENUM_FAILED = 10006;
 
     /**
      * Custom Model exception handler
