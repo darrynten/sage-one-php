@@ -143,17 +143,17 @@ class SupplierTransactionListingModelTest extends BaseModelTest
     {
         $supplierTransactionListing = $this->setUpRequestMock('POST', SupplierTransactionListing::class, 'SupplierTransactionListing/GetSupplierTransactionListingReportingDetail', 'SupplierTransactionListing/POST_SupplierTransactionListing_GetSupplierTransactionListingReportingDetail_RESP.json', 'SupplierTransactionListing/POST_SupplierTransactionListing_GetSupplierTransactionListingReportingDetail_REQ.json');
         $supplierTransactionListingRequestFields = new \stdClass();
-        $supplierTransactionListingRequestFields->FromSupplier =  'sample string 1';
-        $supplierTransactionListingRequestFields->ToSupplier =  'sample string 2';
-        $supplierTransactionListingRequestFields->FromCategory =  'sample string 3';
-        $supplierTransactionListingRequestFields->ToCategory =  'sample string 4';
-        $supplierTransactionListingRequestFields->FromDate =  '2017-07-26';
-        $supplierTransactionListingRequestFields->ToDate =  '2017-07-26';
-        $supplierTransactionListingRequestFields->IncludeActive =  true;
-        $supplierTransactionListingRequestFields->IncludeInactive =  true;
-        $supplierTransactionListingRequestFields->TransactionType =  'sample string 9';
-        $supplierTransactionListingRequestFields->ShowOpeningBalance =  true;
-        $supplierTransactionListingRequestFields->UseForeignCurrency =  true;
+        $supplierTransactionListingRequestFields->FromSupplier = 'sample string 1';
+        $supplierTransactionListingRequestFields->ToSupplier = 'sample string 2';
+        $supplierTransactionListingRequestFields->FromCategory = 'sample string 3';
+        $supplierTransactionListingRequestFields->ToCategory = 'sample string 4';
+        $supplierTransactionListingRequestFields->FromDate = '2017-07-26';
+        $supplierTransactionListingRequestFields->ToDate = '2017-07-26';
+        $supplierTransactionListingRequestFields->IncludeActive = true;
+        $supplierTransactionListingRequestFields->IncludeInactive = true;
+        $supplierTransactionListingRequestFields->TransactionType = 'sample string 9';
+        $supplierTransactionListingRequestFields->ShowOpeningBalance = true;
+        $supplierTransactionListingRequestFields->UseForeignCurrency = true;
 
         $supplierTransactionListingRequest = new SupplierTransactionListingRequest($this->config);
         $supplierTransactionListingRequest->loadResult($supplierTransactionListingRequestFields);
