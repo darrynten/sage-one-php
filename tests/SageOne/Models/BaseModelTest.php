@@ -651,9 +651,9 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
             $mockFile
         );
 
-        $model->get($id);
+        $response = $model->get($id);
 
-        $whatToCheck($model);
+        $whatToCheck($response);
     }
 
     /**
@@ -697,10 +697,10 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
      * Verifies that we can delete model
      *
      * @param string $class Full path to the class
-     * @param int $id Id of the model
+     * @param string $id Id of the model
      * @param callable $whatToCheck Verifies response
      */
-    public function verifyDelete(string $class, int $id, $success = true)
+    public function verifyDelete(string $class, string $id, $success = true)
     {
         $className = $this->getClassName($class);
         $path = sprintf('%s/Delete/%s', $className, $id);
