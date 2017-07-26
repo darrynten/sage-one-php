@@ -52,7 +52,7 @@ class RequestHandlerExceptionTest extends \PHPUnit_Framework_TestCase
     public function testBadVerbException()
     {
         $this->expectException(RequestHandlerException::class);
-        $this->expectExceptionCode(405);
+        $this->expectExceptionCode(RequestHandlerException::HTTP_VERB_ERROR);
 
         $request = new RequestHandler($this->config);
         $request->request('XXX', 'Fail', 'Fail', ['foo' => 'bar']);
@@ -61,7 +61,7 @@ class RequestHandlerExceptionTest extends \PHPUnit_Framework_TestCase
     public function testApiException()
     {
         $this->expectException(RequestHandlerException::class);
-        $this->expectExceptionCode(404);
+        $this->expectExceptionCode(RequestHandlerException::ENTITY_NOT_FOUND);
 
         $request = new RequestHandler($this->config);
         $request->request('GET', 'Fail', 'Fail', ['foo' => 'bar']);
@@ -70,7 +70,7 @@ class RequestHandlerExceptionTest extends \PHPUnit_Framework_TestCase
     public function testApiPostException()
     {
         $this->expectException(RequestHandlerException::class);
-        $this->expectExceptionCode(404);
+        $this->expectExceptionCode(RequestHandlerException::ENTITY_NOT_FOUND);
 
         $request = new RequestHandler($this->config);
         $request->request('POST', 'Fail', 'Fail', ['foo' => 'bar']);
@@ -79,7 +79,7 @@ class RequestHandlerExceptionTest extends \PHPUnit_Framework_TestCase
     public function testApiPutException()
     {
         $this->expectException(RequestHandlerException::class);
-        $this->expectExceptionCode(404);
+        $this->expectExceptionCode(RequestHandlerException::ENTITY_NOT_FOUND);
 
         $request = new RequestHandler($this->config);
         $request->request('PUT', 'Fail', 'Fail', ['foo' => 'bar']);
@@ -88,7 +88,7 @@ class RequestHandlerExceptionTest extends \PHPUnit_Framework_TestCase
     public function testApiDeleteException()
     {
         $this->expectException(RequestHandlerException::class);
-        $this->expectExceptionCode(404);
+        $this->expectExceptionCode(RequestHandlerException::ENTITY_NOT_FOUND);
 
         $request = new RequestHandler($this->config);
         $request->request('DELETE', 'Fail', 'Fail', ['foo' => 'bar']);
@@ -176,7 +176,7 @@ class RequestHandlerExceptionTest extends \PHPUnit_Framework_TestCase
 
         $this->expectException(RequestHandlerException::class);
         $this->expectExceptionMessage($expected);
-        $this->expectExceptionCode(400);
+        $this->expectExceptionCode(RequestHandlerException::MALFORMED_REQUEST);
 
         $request->request('GET', 'Fail', '400');
     }
@@ -242,7 +242,7 @@ class RequestHandlerExceptionTest extends \PHPUnit_Framework_TestCase
 
         $this->expectException(RequestHandlerException::class);
         $this->expectExceptionMessage($expected);
-        $this->expectExceptionCode(401);
+        $this->expectExceptionCode(RequestHandlerException::USER_AUTHENTICATION_ERROR);
 
         $request->request('GET', 'Fail', '401');
     }
@@ -307,7 +307,7 @@ class RequestHandlerExceptionTest extends \PHPUnit_Framework_TestCase
 
         $this->expectException(RequestHandlerException::class);
         $this->expectExceptionMessage($expected);
-        $this->expectExceptionCode(402);
+        $this->expectExceptionCode(RequestHandlerException::PAYMENT_REQUIRED);
 
         $request->request('GET', 'Fail', '402');
     }
@@ -373,7 +373,7 @@ class RequestHandlerExceptionTest extends \PHPUnit_Framework_TestCase
 
         $this->expectException(RequestHandlerException::class);
         $this->expectExceptionMessage($expected);
-        $this->expectExceptionCode(404);
+        $this->expectExceptionCode(RequestHandlerException::ENTITY_NOT_FOUND);
 
         $request->request('GET', 'Fail', '404');
     }
@@ -439,7 +439,7 @@ class RequestHandlerExceptionTest extends \PHPUnit_Framework_TestCase
 
         $this->expectException(RequestHandlerException::class);
         $this->expectExceptionMessage($expected);
-        $this->expectExceptionCode(405);
+        $this->expectExceptionCode(RequestHandlerException::HTTP_VERB_ERROR);
 
         $request->request('GET', 'Fail', '405');
     }
@@ -504,7 +504,7 @@ class RequestHandlerExceptionTest extends \PHPUnit_Framework_TestCase
 
         $this->expectException(RequestHandlerException::class);
         $this->expectExceptionMessage($expected);
-        $this->expectExceptionCode(409);
+        $this->expectExceptionCode(RequestHandlerException::DELETING_ITEM_IN_USE);
 
         $request->request('GET', 'Fail', '409');
     }
@@ -569,7 +569,7 @@ class RequestHandlerExceptionTest extends \PHPUnit_Framework_TestCase
 
         $this->expectException(RequestHandlerException::class);
         $this->expectExceptionMessage($expected);
-        $this->expectExceptionCode(415);
+        $this->expectExceptionCode(RequestHandlerException::CONTENT_TYPE_HEADER_ERROR);
 
         $request->request('GET', 'Fail', '415');
     }
@@ -635,7 +635,7 @@ class RequestHandlerExceptionTest extends \PHPUnit_Framework_TestCase
 
         $this->expectException(RequestHandlerException::class);
         $this->expectExceptionMessage($expected);
-        $this->expectExceptionCode(429);
+        $this->expectExceptionCode(RequestHandlerException::REQUEST_OVERLOAD);
 
         $request->request('GET', 'Fail', '429');
     }
@@ -699,7 +699,7 @@ class RequestHandlerExceptionTest extends \PHPUnit_Framework_TestCase
 
         $this->expectException(RequestHandlerException::class);
         $this->expectExceptionMessage($expected);
-        $this->expectExceptionCode(500);
+        $this->expectExceptionCode(RequestHandlerException::INTERNAL_SERVER_ERROR);
 
         $request->request('GET', 'Fail', '500');
     }
