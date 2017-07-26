@@ -19,6 +19,7 @@ class ExceptionMessages
         10003 => 'String did not match validation regex',
         10004 => 'Validation type is invalid',
         10005 => 'filter_var failed to validate',
+        10006 => 'Enum failed to validate',
     ];
 
     /**
@@ -39,7 +40,7 @@ class ExceptionMessages
         10114 => 'Attempting to set a read-only property',
         10115 => 'Unexpected class encountered while preparing row',
         10116 => 'Attempting to get an undefined property',
-        10117 => 'ModelCollection is referencing ad undefined, non-primitive class',
+        10117 => 'ModelCollection is referencing an undefined, non-primitive class',
     ];
 
     /**

@@ -1,0 +1,16 @@
+{
+  "DocumentHeaderId": 1,
+  "DocumentTypeId": 2,
+  "DocumentNumber": "sample string 3",
+  "Reference": "sample string 4",
+  "DocumentType": 2,
+  "Comment": "sample string 5",
+  "Date": "2017-07-24T00:00:00Z",
+  "DueDate": "2017-07-24",
+  "Total": 45.0,
+  "Current": 7.0,
+  "Days30": 8.0,
+  "Days60": 9.0,
+  "Days90": 10.0,
+  "Days120Plus": 11.0
+}
