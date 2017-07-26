@@ -6,12 +6,12 @@ use InterNations\Component\HttpMock\PHPUnit\HttpMockTrait;
 use GuzzleHttp\Client;
 use ReflectionClass;
 use DarrynTen\SageOne\Request\RequestHandler;
-use DarrynTen\SageOne\Exception\ApiException;
+use DarrynTen\SageOne\Exception\RequestHandlerException;
 use DarrynTen\SageOne\Exception\ExceptionMessages;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 
-class ApiExceptionTest extends \PHPUnit_Framework_TestCase
+class RequestHandlerExceptionTest extends \PHPUnit_Framework_TestCase
 {
     use HttpMockTrait;
 
@@ -51,7 +51,7 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
 
     public function testBadVerbException()
     {
-        $this->expectException(ApiException::class);
+        $this->expectException(RequestHandlerException::class);
         $this->expectExceptionCode(405);
 
         $request = new RequestHandler($this->config);
@@ -60,7 +60,7 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
 
     public function testApiException()
     {
-        $this->expectException(ApiException::class);
+        $this->expectException(RequestHandlerException::class);
         $this->expectExceptionCode(404);
 
         $request = new RequestHandler($this->config);
@@ -69,7 +69,7 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
 
     public function testApiPostException()
     {
-        $this->expectException(ApiException::class);
+        $this->expectException(RequestHandlerException::class);
         $this->expectExceptionCode(404);
 
         $request = new RequestHandler($this->config);
@@ -78,7 +78,7 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
 
     public function testApiPutException()
     {
-        $this->expectException(ApiException::class);
+        $this->expectException(RequestHandlerException::class);
         $this->expectExceptionCode(404);
 
         $request = new RequestHandler($this->config);
@@ -87,7 +87,7 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
 
     public function testApiDeleteException()
     {
-        $this->expectException(ApiException::class);
+        $this->expectException(RequestHandlerException::class);
         $this->expectExceptionCode(404);
 
         $request = new RequestHandler($this->config);
@@ -96,11 +96,11 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
 
     public function testApiJsonException()
     {
-        $this->expectException(ApiException::class);
+        $this->expectException(RequestHandlerException::class);
         $this->expectExceptionCode('419');
         $this->expectExceptionMessage('419: I\'m a teapot - Teapot - errors: {"code":419}');
 
-        throw new ApiException(
+        throw new RequestHandlerException(
             json_encode(
                 [
                     'errors' => [
@@ -174,7 +174,7 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
                   . '`GET http://localhost:8082/1.1.2/Fail/400?apikey=key` '
                   . "resulted in a `400 Bad Request` response:\n{}";
 
-        $this->expectException(ApiException::class);
+        $this->expectException(RequestHandlerException::class);
         $this->expectExceptionMessage($expected);
         $this->expectExceptionCode(400);
 
@@ -240,7 +240,7 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
                   . '`GET http://localhost:8082/1.1.2/Fail/401?apikey=key` '
                   . 'resulted in a `401 Unauthorized` response';
 
-        $this->expectException(ApiException::class);
+        $this->expectException(RequestHandlerException::class);
         $this->expectExceptionMessage($expected);
         $this->expectExceptionCode(401);
 
@@ -305,7 +305,7 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
                   . '`GET http://localhost:8082/1.1.2/Fail/402?apikey=key` '
                   . 'resulted in a `402 Payment Required` response';
 
-        $this->expectException(ApiException::class);
+        $this->expectException(RequestHandlerException::class);
         $this->expectExceptionMessage($expected);
         $this->expectExceptionCode(402);
 
@@ -371,7 +371,7 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
                   . '`GET http://localhost:8082/1.1.2/Fail/404?apikey=key` '
                   . 'resulted in a `404 Not Found` response';
 
-        $this->expectException(ApiException::class);
+        $this->expectException(RequestHandlerException::class);
         $this->expectExceptionMessage($expected);
         $this->expectExceptionCode(404);
 
@@ -437,7 +437,7 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
                   . '`GET http://localhost:8082/1.1.2/Fail/405?apikey=key` '
                   . 'resulted in a `405 Method Not Allowed` response';
 
-        $this->expectException(ApiException::class);
+        $this->expectException(RequestHandlerException::class);
         $this->expectExceptionMessage($expected);
         $this->expectExceptionCode(405);
 
@@ -502,7 +502,7 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
                   . '`GET http://localhost:8082/1.1.2/Fail/409?apikey=key` '
                   . 'resulted in a `409 Conflict` response';
 
-        $this->expectException(ApiException::class);
+        $this->expectException(RequestHandlerException::class);
         $this->expectExceptionMessage($expected);
         $this->expectExceptionCode(409);
 
@@ -567,7 +567,7 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
                   . '`GET http://localhost:8082/1.1.2/Fail/415?apikey=key` '
                   . 'resulted in a `415 Unsupported Media Type` response';
 
-        $this->expectException(ApiException::class);
+        $this->expectException(RequestHandlerException::class);
         $this->expectExceptionMessage($expected);
         $this->expectExceptionCode(415);
 
@@ -633,7 +633,7 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
                   . '`GET http://localhost:8082/1.1.2/Fail/429?apikey=key` '
                   . 'resulted in a `429 Too Many Requests` response';
 
-        $this->expectException(ApiException::class);
+        $this->expectException(RequestHandlerException::class);
         $this->expectExceptionMessage($expected);
         $this->expectExceptionCode(429);
 
@@ -697,7 +697,7 @@ class ApiExceptionTest extends \PHPUnit_Framework_TestCase
                   . '`GET http://localhost:8082/1.1.2/Fail/500?apikey=key` '
                   . 'resulted in a `500 Internal Server Error` response';
 
-        $this->expectException(ApiException::class);
+        $this->expectException(RequestHandlerException::class);
         $this->expectExceptionMessage($expected);
         $this->expectExceptionCode(500);
 

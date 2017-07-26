@@ -18,9 +18,19 @@ use Exception;
  *
  * @package SageOne
  */
-class ApiException extends Exception
+class RequestHandlerException extends Exception
 {
 
+    const MALFORMED_REQUEST = 400;
+    const USER_AUTHENTICATION_ERROR = 401;
+    const PAYMENT_REQUIRED = 402;
+    const ENTITY_NOT_FOUND = 404;
+    const HTTP_VERB_ERROR = 405;
+    const DELETING_ITEM_IN_USE = 409;
+    const CONTENT_TYPE_HEADER_ERROR = 415;
+    const REQUEST_OVERLOAD = 429;
+    const INTERNAL_SERVER_ERROR = 500;
+    const SCHEDULED_MAINTENANCE = 503;
     /**
      * @inheritdoc
      */
@@ -43,3 +53,4 @@ class ApiException extends Exception
         parent::__construct($message, $code, $previous);
     }
 }
+
