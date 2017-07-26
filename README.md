@@ -358,7 +358,7 @@ Please feel free to open PRs for any of the following :)
 - [ ] Bank Account Category
 - [ ] Bank Account Note
 - [ ] Bank Account Note Attachment
-- [ ] Bank Account Opening Balance
+- [x] Bank Account Opening Balance
 - [ ] Bank Account Transaction Listing
 - [ ] Bank Import Mapping
 - [ ] Bank Statement Transaction
