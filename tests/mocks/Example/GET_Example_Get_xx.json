@@ -3,6 +3,7 @@
   "ExampleWithCamel": "exampleWithCamel",
   "StringRange": "example",
   "IntegerRange": 134522342,
+  "EnumInteger": 2,
   "RequiredString": "required information",
   "EmailAddress": "user@example.com",
   "GuidRegex": "20d2d110-eac2-45b2-b8f7-b4fbfd9eee81",
