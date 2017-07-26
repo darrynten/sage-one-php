@@ -259,7 +259,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     {
         $validKeys = array_fill_keys([
             'type', 'nullable', 'readonly', 'default',
-            'required', 'min', 'max', 'regex', 'collection', 'validate', 'optional'
+            'required', 'min', 'max', 'regex', 'collection', 'validate', 'optional', 'enum'
         ], true);
         foreach (array_keys($options) as $option) {
             if (!isset($validKeys[$option])) {

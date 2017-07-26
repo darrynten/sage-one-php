@@ -528,4 +528,56 @@ class SupplierAgeingModelTest extends BaseModelTest
     {
         $this->verifyDeleteException(SupplierAgeing::class);
     }
+
+    public function testAttributes()
+    {
+        $this->verifyAttributes(SupplierAgeing::class, [
+            'supplier' => [
+                'type' => 'Supplier',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'date' => [
+                'type' => 'DateTime',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'ageingTransactions' => [
+                'type' => 'AgeingTransaction',
+                'nullable' => false,
+                'readonly' => false,
+                'collection' => true,
+            ],
+            'total' => [
+                'type' => 'double',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'current' => [
+                'type' => 'double',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'days30' => [
+                'type' => 'double',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'days60' => [
+                'type' => 'double',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'days90' => [
+                'type' => 'double',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'days120Plus' => [
+                'type' => 'double',
+                'nullable' => false,
+                'readonly' => false,
+            ]
+        ]);
+    }
 }

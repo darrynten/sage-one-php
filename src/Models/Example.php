@@ -33,6 +33,16 @@ class Example extends BaseModel
     protected $endpoint = 'Example';
 
     /**
+     * Enums used for enum validation
+     *
+     * @var array $validEnums
+     */
+    protected $validEnums = [
+        1 => 'ValidEnum 1',
+        2 => 'ValidEnum 2',
+    ];
+
+    /**
      * Defines all possible fields.
      *
      * This maps to all the public properties you added above
@@ -50,6 +60,9 @@ class Example extends BaseModel
      * - Type has the following rules
      *   - `date` becomes "DateTime"
      *   - `nullable` is removed, i.e. "nullable integer" is only "integer"
+     *   - `regex` goes in the "regex" key
+     *   - PHP filter_var constants can be used in "validate"
+     *   - `min` and `max` go into their own keys
      *   - Multiword linked terms are concatenated, eg:
      *     - "Example Category" becomes "ExampleCategory"
      *     - "Example Type" becomes "ExampleType"
@@ -83,6 +96,12 @@ class Example extends BaseModel
             'readonly' => false,
             'min' => 2,
             'max' => 10,
+        ],
+        'enumInteger' => [
+          'type' => 'integer',
+          'nullable' => true,
+          'readonly' => false,
+          'enum' => 'validEnums',
         ],
         'stringWithDefault' => [
             'type' => 'string',

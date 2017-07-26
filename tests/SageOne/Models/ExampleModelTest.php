@@ -130,6 +130,11 @@ class ExampleModelTest extends BaseModelTest
         $this->verifyBadIntegerRangeException(Example::class, 'integerRange', 1, 2147483647, -1);
     }
 
+    public function testBadEnum()
+    {
+        $this->verifyBadEnum(Example::class, 'enumInteger', 111);
+    }
+
     public function testBadStringLength()
     {
         $this->verifyBadStringLengthException(
@@ -291,7 +296,7 @@ class ExampleModelTest extends BaseModelTest
         $reflectValue->setAccessible(true);
         $value = $reflectValue->getValue(new Example($this->config));
 
-        $this->assertCount(11, $value);
+        $this->assertCount(12, $value);
         $this->assertEquals('integer', $value['id']['type']);
         $this->assertEquals('boolean', gettype($value['exampleWithCamel']['nullable']));
         $this->assertEquals(true, is_array($value['exampleWithCamel']));
@@ -306,6 +311,11 @@ class ExampleModelTest extends BaseModelTest
         $this->assertCount(3, $value['someBoolean']);
         $this->assertFalse($value['someBoolean']['readonly']);
         $this->assertFalse($value['someBoolean']['nullable']);
+        $this->assertCount(4, $value['enumInteger']);
+        $this->assertEquals('integer', $value['enumInteger']['type']);
+        $this->assertTrue($value['enumInteger']['nullable']);
+        $this->assertFalse($value['enumInteger']['readonly']);
+        $this->assertEquals('validEnums', $value['enumInteger']['enum']);
         $this->assertCount(4, $value['requiredString']);
         $this->assertFalse($value['requiredString']['readonly']);
         $this->assertFalse($value['requiredString']['nullable']);
@@ -561,6 +571,12 @@ class ExampleModelTest extends BaseModelTest
                 'readonly' => false,
                 'min' => 2,
                 'max' => 10,
+            ],
+            'enumInteger' => [
+                'type' => 'integer',
+                'nullable' => true,
+                'readonly' => false,
+                'enum' => 'validEnums',
             ],
             'stringWithDefault' => [
                 'type' => 'string',
