@@ -1,0 +1,20 @@
+{
+  "TotalResults": 3,
+  "ReturnedResults": 2,
+  "Results": [
+    {
+      "ID": 1,
+      "ItemId": 2,
+      "PriceInclusive": 3.0,
+      "PriceExclusive": 4.0,
+      "AdditionalPriceListId": 5
+    },
+    {
+      "ID": 10,
+      "ItemId": 11,
+      "PriceInclusive": 12.0,
+      "PriceExclusive": 13.0,
+      "AdditionalPriceListId": 14
+    }
+  ]
+}
