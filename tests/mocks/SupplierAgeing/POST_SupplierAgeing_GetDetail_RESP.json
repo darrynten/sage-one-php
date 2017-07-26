@@ -196,7 +196,7 @@
         },
         {
           "DocumentHeaderId": 10,
-          "DocumentTypeId": 20,
+          "DocumentTypeId": 52,
           "DocumentNumber": "sample DN 3",
           "Reference": "sample REF 4",
           "DocumentType": 30,

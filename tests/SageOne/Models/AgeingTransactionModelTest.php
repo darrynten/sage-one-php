@@ -86,4 +86,86 @@ class AgeingTransactionModelTest extends BaseModelTest
     {
         $this->verifyDeleteException(AgeingTransaction::class);
     }
+
+    public function testBadEnumException()
+    {
+        $this->verifyBadEnum(AgeingTransaction::class, 'documentTypeId', 20);
+    }
+
+    public function testAttributes()
+    {
+        $this->verifyAttributes(AgeingTransaction::class, [
+            'documentHeaderId' => [
+                'type' => 'integer',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'documentTypeId' => [
+                'type' => 'integer',
+                'nullable' => false,
+                'readonly' => false,
+                'enum' => 'documentTypes',
+            ],
+            'documentNumber' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'reference' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'documentType' => [
+                'type' => 'integer',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'comment' => [
+                'type' => 'string',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'date' => [
+                'type' => 'DateTime',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'dueDate' => [
+                'type' => 'DateTime',
+                'nullable' => true,
+                'readonly' => false,
+            ],
+            'total' => [
+                'type' => 'double',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'current' => [
+                'type' => 'double',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'days30' => [
+                'type' => 'double',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'days60' => [
+                'type' => 'double',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'days90' => [
+                'type' => 'double',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+            'days120Plus' => [
+                'type' => 'double',
+                'nullable' => false,
+                'readonly' => false,
+            ],
+        ]);
+    }
 }

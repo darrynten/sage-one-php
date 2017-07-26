@@ -19,6 +19,7 @@ class ExceptionMessages
         10003 => 'String did not match validation regex',
         10004 => 'Validation type is invalid',
         10005 => 'filter_var failed to validate',
+        10006 => 'Enum failed to validate',
     ];
 
     /**

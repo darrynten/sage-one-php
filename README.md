@@ -168,6 +168,7 @@ class Account extends BaseModel
      *   - `min` / `max` always come together
      *   - `default` is when it's indicated in the docs
      *   - `regex` is generally used with email address fields
+     *   - `enum` is for enumerated lists
      *   - `optional` is true when this field can be omitted in SageOne response
      *     - Example is Company's model all() method
      *       By default when we execute all() it is the same as all(['includeStatus' = false])
@@ -188,6 +189,13 @@ class Account extends BaseModel
             'nullable' => false,
             'readonly' => false,
             'required' => true,
+        ],
+        'enum' => [
+            'type' => 'integer',
+            'nullable' => false,
+            'readonly' => true,
+            // $enumList would need to be a property of this model
+            'enum' => 'enumList',
         ],
         'category' => [
             'type' => 'AccountCategory',
