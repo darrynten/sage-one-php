@@ -488,7 +488,7 @@ class SupplierAgeingModelTest extends BaseModelTest
         $this->assertEquals(20.0, $supplierAgeingDetail->results[1]->ageingTransactions->results[0]->days90);
         $this->assertEquals(21.0, $supplierAgeingDetail->results[1]->ageingTransactions->results[0]->days120Plus);
         $this->assertEquals(10, $supplierAgeingDetail->results[1]->ageingTransactions->results[1]->documentHeaderId);
-        $this->assertEquals(20, $supplierAgeingDetail->results[1]->ageingTransactions->results[1]->documentTypeId);
+        $this->assertEquals(52, $supplierAgeingDetail->results[1]->ageingTransactions->results[1]->documentTypeId);
         $this->assertEquals('sample DN 3', $supplierAgeingDetail->results[1]->ageingTransactions->results[1]->documentNumber);
         $this->assertEquals('sample REF 4', $supplierAgeingDetail->results[1]->ageingTransactions->results[1]->reference);
         $this->assertEquals(30, $supplierAgeingDetail->results[1]->ageingTransactions->results[1]->documentType);
