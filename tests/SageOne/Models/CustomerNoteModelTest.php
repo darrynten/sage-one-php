@@ -178,8 +178,6 @@ class CustomerNoteModelTest extends BaseModelTest
             $this->assertTrue($model2->status);
             $this->assertEquals('sample string 19', $model2->note);
             $this->assertTrue($model2->hasAttachments);
-
-
         });
     }
 
