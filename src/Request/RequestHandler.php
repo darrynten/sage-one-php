@@ -127,12 +127,10 @@ class RequestHandler
      * @param array $options Request options
      * @param array $parameters Request parameters
      *
-     * @see RequestHandler::request()
-     *
      * @return stdClass
      * @throws ApiException
      */
-    public function handleRequest(string $method, string $uri, array $options, array $parameters = [])
+    public function makeRequest(string $method, string $uri, array $options, array $parameters)
     {
         if (!in_array($method, $this->verbs)) {
             throw new ApiException('405 Bad HTTP Verb', 405);
@@ -150,12 +148,32 @@ class RequestHandler
             }
         }
 
-        // Let's go
         try {
             $response = $this->client->request($method, $uri, $options);
         } catch (RequestException $exception) {
             $this->handleException($exception);
         }
+
+        return $response;
+    }
+
+    /**
+     * Makes a request using Guzzle
+     *
+     * @param string $verb The HTTP request verb (GET/POST/etc)
+     * @param string $service The api service
+     * @param string $method The services method
+     * @param array $options Request options
+     * @param array $parameters Request parameters
+     *
+     * @see RequestHandler::request()
+     *
+     * @return stdClass
+     * @throws ApiException
+     */
+    public function handleRequest(string $method, string $uri, array $options, array $parameters = [])
+    {
+        $response = $this->makeRequest($method, $uri, $options, $parameters);
 
         // For DELETE we should check response's HTTP code
         // So we return response itself
@@ -214,17 +232,14 @@ class RequestHandler
     }
 
     /**
-     * Makes a request to SageOne
+     * Prepares request
      *
      * @param string $method The API method
-     * @param string $path The path
-     * @param array $parameters The request parameters
+     * @param string $service The path
      *
      * @return []
-     *
-     * @throws ApiException
      */
-    public function request(string $verb, string $service, string $method, array $parameters = [])
+    private function prepareRequest(string $service, string $method)
     {
         $options = [
             'headers' => [
@@ -252,11 +267,47 @@ class RequestHandler
             $method
         );
 
+        return [
+            'uri' => $uri,
+            'options' => $options
+        ];
+    }
+
+    /**
+     * Makes a request to SageOne
+     *
+     * @param string $verb The API method
+     * @param string $path The path
+     * @param array $parameters The request parameters
+     * @param bool $returnResponse If set to true, returns actual response
+     *
+     * @return []
+     *
+     * @throws ApiException
+     */
+    public function request(string $verb, string $service, string $method, array $parameters = [])
+    {
+        $prepared = $this->prepareRequest($service, $method);
+
         return $this->handleRequest(
             $verb,
-            $uri,
-            $options,
+            $prepared['uri'],
+            $prepared['options'],
             $parameters
         );
+    }
+
+    public function requestRaw(string $verb, string $service, string $method, array $parameters = [])
+    {
+        $prepared = $this->prepareRequest($service, $method);
+
+        $response = $this->makeRequest(
+            $verb,
+            $prepared['uri'],
+            $prepared['options'],
+            $parameters
+        );
+
+        return $response;
     }
 }

@@ -259,7 +259,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     {
         $validKeys = array_fill_keys([
             'type', 'nullable', 'readonly', 'default',
-            'required', 'min', 'max', 'regex', 'collection', 'validate', 'optional'
+            'required', 'min', 'max', 'regex', 'collection', 'validate', 'optional', 'enum'
         ], true);
         foreach (array_keys($options) as $option) {
             if (!isset($validKeys[$option])) {
@@ -651,9 +651,9 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
             $mockFile
         );
 
-        $model->get($id);
+        $response = $model->get($id);
 
-        $whatToCheck($model);
+        $whatToCheck($response);
     }
 
     /**
@@ -697,10 +697,10 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
      * Verifies that we can delete model
      *
      * @param string $class Full path to the class
-     * @param int $id Id of the model
+     * @param string $id Id of the model
      * @param callable $whatToCheck Verifies response
      */
-    public function verifyDelete(string $class, int $id, $success = true)
+    public function verifyDelete(string $class, string $id, $success = true)
     {
         $className = $this->getClassName($class);
         $path = sprintf('%s/Delete/%s', $className, $id);
@@ -810,6 +810,30 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Verifies that bad enums are caught
+     *
+     * @param string $class Full path to the class
+     * @param string $field string field on class
+     * @param mixed $value value what we are trying to set for field
+     */
+    public function verifyBadEnum(string $class, string $field, $value)
+    {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage(
+            sprintf(
+                'Validation error enum key %s of type %s failed to validate Enum failed to validate',
+                $value,
+                gettype($value)
+            )
+        );
+        $this->expectExceptionCode(10006);
+
+        $model = new $class($this->config);
+
+        $model->{$field} = $value;
+    }
+
+    /**
      * Verifies that ValidationException for string with incorrect length is thrown
      * @param string $class Full path to the class
      * @param string $field string field on class
@@ -819,8 +843,6 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
      */
     public function verifyBadStringLengthException(string $class, string $field, int $min, int $max, string $value)
     {
-        $className = $this->getClassName($class);
-
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage(
             sprintf(
