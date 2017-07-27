@@ -135,7 +135,7 @@ class RequestHandler
     public function handleRequest(string $method, string $uri, array $options, array $parameters = [])
     {
         if (!in_array($method, $this->verbs)) {
-            throw new RequestHandlerException('405 Bad HTTP Verb', 405);
+            throw new RequestHandlerException('405 Bad HTTP Verb', RequestHandlerException::HTTP_VERB_ERROR);
         }
 
         if (!empty($parameters)) {

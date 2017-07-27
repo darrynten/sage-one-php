@@ -30,7 +30,7 @@ class RequestHandlerException extends Exception
     const REQUEST_OVERLOAD = 429;
     const INTERNAL_SERVER_ERROR = 500;
     const SCHEDULED_MAINTENANCE = 503;
-    
+
     /**
      * @inheritdoc
      */
