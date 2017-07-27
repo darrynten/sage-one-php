@@ -1,0 +1,13 @@
+{
+  "FromSupplier": "sample string 1",
+  "ToSupplier": "sample string 2",
+  "FromCategory": "sample string 3",
+  "ToCategory": "sample string 4",
+  "FromDate": "2017-07-26",
+  "ToDate": "2017-07-26",
+  "IncludeActive": true,
+  "IncludeInactive": true,
+  "TransactionType": "sample string 9",
+  "ShowOpeningBalance": true,
+  "UseForeignCurrency": true
+}
