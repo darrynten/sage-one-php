@@ -301,7 +301,7 @@ Models marked with an asterix are pure CRUD models
 - [x] CRUD
 - [ ] Save Call
 - [ ] Real CRUD Response Mocks
-- [ ] Pagination
+- [x] Pagination
 - [ ] Rate Limiting
 - [ ] Models
   - [x] Account
