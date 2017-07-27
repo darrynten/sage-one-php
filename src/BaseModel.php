@@ -573,6 +573,11 @@ abstract class BaseModel
             $this->validateRange($value, $this->fields[$key]['min'], $this->fields[$key]['max']);
         }
 
+        // If values should be from an enumarable list
+        if (array_key_exists('enum', $this->fields[$key])) {
+            $this->validateEnum($value, $this->{$this->fields[$key]['enum']});
+        }
+
         // If values have a defined regex then validate
         if (array_key_exists('regex', $this->fields[$key])) {
             $this->validateRegex($value, $this->fields[$key]['regex']);
