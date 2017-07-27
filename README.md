@@ -168,6 +168,7 @@ class Account extends BaseModel
      *   - `min` / `max` always come together
      *   - `default` is when it's indicated in the docs
      *   - `regex` is generally used with email address fields
+     *   - `enum` is for enumerated lists
      *   - `optional` is true when this field can be omitted in SageOne response
      *     - Example is Company's model all() method
      *       By default when we execute all() it is the same as all(['includeStatus' = false])
@@ -188,6 +189,13 @@ class Account extends BaseModel
             'nullable' => false,
             'readonly' => false,
             'required' => true,
+        ],
+        'enum' => [
+            'type' => 'integer',
+            'nullable' => false,
+            'readonly' => true,
+            // $enumList would need to be a property of this model
+            'enum' => 'enumList',
         ],
         'category' => [
             'type' => 'AccountCategory',
@@ -248,6 +256,18 @@ class Account extends BaseModel
         'delete' => 'DELETE'
     ];
 
+    /**
+     * Specifies what get() returns
+     * 'this' means current class
+     * any other type must exist under src/Models/
+     * 'collection' is true when get() returns collection (very rare case, but SageOne's API works this way)
+     * @var array $featureGetReturns
+     */
+    protected $featureGetReturns = [
+        'type' => 'this',
+        'collection' => false
+    ];
+
     // Construct (if you need to modify construction)
     public function __construct(array $config)
     {
@@ -288,13 +308,15 @@ Models marked with an asterix are pure CRUD models
     - [x] Account Balance
     - [x] Account Category *
     - [x] Account Note *
-    - [ ] Account Note Attachment
+    - [x] Accountant Task Recurrence *
+    - [x] Account Note Attachment
     - [x] Account Opening Balance *
     - [x] Account Payment *
     - [x] Account Receipt *
+  - [x] Additional Item Price *
   - [x] Analysis Category
   - [x] Analysis Type
-  - [x] Bank Account Category
+  - [x] Asset Note *
   - [x] Company
     - [x] Company Entity Type *
     - [x] Company Note
@@ -303,7 +325,7 @@ Models marked with an asterix are pure CRUD models
   - [x] Supplier *
     - [x] Supplier Additional Contact Detail
     - [x] Supplier Adjustment
-    - [ ] Supplier Ageing
+    - [x] Supplier Ageing
     - [x] Supplier Bank Detail *
     - [x] Supplier Category *
     - [ ] Supplier Invoice
@@ -338,19 +360,17 @@ Please feel free to open PRs for any of the following :)
 - [ ] Accountant Note
 - [ ] Accountant Task
 - [ ] Accountant Task Recurrence
-- [ ] Additional Item Price
 - [x] Additional Price List
 - [ ] Allocation
 - [x] Asset
 - [x] Asset Category
 - [x] Asset Location
-- [ ] Asset Note
 - [ ] Attachment
 - [ ] Bank Account
 - [ ] Bank Account Category
 - [ ] Bank Account Note
 - [ ] Bank Account Note Attachment
-- [ ] Bank Account Opening Balance
+- [x] Bank Account Opening Balance
 - [ ] Bank Account Transaction Listing
 - [ ] Bank Import Mapping
 - [ ] Bank Statement Transaction
@@ -371,7 +391,7 @@ Please feel free to open PRs for any of the following :)
 - [x] Customer Category
 - [ ] Customer Note
 - [ ] Customer Note Attachment
-- [ ] Customer Opening Balance
+- [x] Customer Opening Balance
 - [ ] Customer Receipt
 - [ ] Customer Return
 - [ ] Customer Return Attachment
