@@ -292,6 +292,9 @@ A lot of the heavy testing is handled by the BaseModelTest class, and you
 can look into the Example test for insight into the convention. It makes
 testing and getting good defensive coverage quite trivial for most things.
 
+Currently lots of things are tested againts mocks provided by SageOne's docs.
+They are not always consistent with real responses so in the future they will be replaced.
+
 # NB initial delivery consists of only these models:
 
 Models marked with an asterix are pure CRUD models
