@@ -400,7 +400,7 @@ Please feel free to open PRs for any of the following :)
 - [ ] Customer Transaction Listing
 - [ ] Customer Write Off
 - [ ] Customer Zone
-- [ ] Date Format
+- [x] Date Format
 - [ ] Detailed Ledger Transaction
 - [ ] Developer Data
 - [ ] Document File Attachment
