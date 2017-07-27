@@ -70,7 +70,6 @@ class DateFormatModelTest extends BaseModelTest
     public function testInject()
     {
         $this->verifyInject(DateFormat::class, function ($model) {
-
             $objArray = json_decode($model->toJson(), true);
             $this->assertCount(6, $objArray);
 
