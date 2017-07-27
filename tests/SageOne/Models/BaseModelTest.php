@@ -922,8 +922,17 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         array $parameters = [],
         int $responseCode = 200
     ) {
-        $url = sprintf('/1.1.2/%s?apikey=key', $path);
-        $urlWithoutApiKey = sprintf('/1.1.2/%s/', $path);
+        $parameters['apikey'] = urlencode('{key}');
+        $url = sprintf('/1.1.2/%s?apikey=%s', $path, $parameters['apikey']);
+        if ($method === 'GET') {
+            $queryString = [];
+            foreach ($parameters as $key => $value) {
+                $queryString[] = sprintf('%s=%s', $key, $value);
+            }
+            $queryString = join('&', $queryString);
+            $url = sprintf('/1.1.2/%s?%s', $path, $queryString);
+        }
+        $urlWithoutParams = sprintf('/1.1.2/%s/', $path);
 
         $responseData = null;
         if ($mockFileResponse) {
@@ -968,11 +977,21 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
             '{' . $this->config['key'] . '}'
         );
 
+        if (!empty($parameters)) {
+            if ($method === 'GET') {
+                foreach ($parameters as $key => $value) {
+                    $checkParameters['query'][$key] = $value;
+                }
+            } elseif ($method === 'POST' || $method === 'PUT' || $method === 'DELETE') {
+                // $checkParameters['json'] = (object)$parameters;
+            }
+        }
+
         /**
         * $client in RequestHandler receives url without query params
         * they are passed as last parameter for $client->request
         */
-        $fullUrl = '//localhost:8082' . $urlWithoutApiKey;
+        $fullUrl = '//localhost:8082' . $urlWithoutParams;
         $mockClient->shouldReceive('request')
             ->once()
             ->with($method, $fullUrl, \Mockery::subset($checkParameters))
