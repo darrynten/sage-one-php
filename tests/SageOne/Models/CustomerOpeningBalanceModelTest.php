@@ -4,7 +4,6 @@ namespace DarrynTen\SageOne\Tests\SageOne\Models;
 
 use DarrynTen\SageOne\Models\CustomerOpeningBalance;
 
-
 class CustomerOpeningBalanceModelTest extends BaseModelTest
 {
     public function testInstanceOf()
@@ -116,7 +115,7 @@ class CustomerOpeningBalanceModelTest extends BaseModelTest
             $this->assertEquals($model1->id, 2);
             $this->assertEquals($model1->balance, 3.0);
             $this->assertEquals($model1->reason, 'sample string 4');
-            $this->assertEquals($model1->date->format('Y-m-d'), '2017-07-27');;
+            $this->assertEquals($model1->date->format('Y-m-d'), '2017-07-27');
 
             $model2 = $results[1];
             $this->assertEquals($model2->customerId, 10);
