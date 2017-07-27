@@ -237,8 +237,8 @@ class SupplierInvoiceModelTest extends BaseModelTest
             ],
             'printed' => [
                 'type' => 'boolean',
-                'nullable' => false,
-                'readonly' => false,
+                'nullable' => true,
+                'readonly' => true,
             ],
             'taxPeriodId' => [
                 'type' => 'integer',

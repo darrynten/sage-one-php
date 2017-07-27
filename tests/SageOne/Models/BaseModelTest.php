@@ -982,8 +982,6 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
                 foreach ($parameters as $key => $value) {
                     $checkParameters['query'][$key] = $value;
                 }
-            } elseif ($method === 'POST' || $method === 'PUT' || $method === 'DELETE') {
-                // $checkParameters['json'] = (object)$parameters;
             }
         }
 
@@ -991,7 +989,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         * $client in RequestHandler receives url without query params
         * they are passed as last parameter for $client->request
         */
-        $fullUrl = '//localhost:8082' . $urlWithoutParams;
+        $fullUrl = sprintf('//localhost:8082%s', $urlWithoutParams);
         $mockClient->shouldReceive('request')
             ->once()
             ->with($method, $fullUrl, \Mockery::subset($checkParameters))
