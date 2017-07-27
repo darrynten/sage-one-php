@@ -1,0 +1,8 @@
+{
+  "ID": 1,
+  "DisplayAs": "sample string 2",
+  "DotNetFormat": "sample string 3",
+  "DotNetAltFormats": "sample string 4",
+  "JSFormat": "sample string 5",
+  "JSAltFormats": "sample string 6"
+}
