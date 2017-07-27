@@ -11,7 +11,7 @@
 
 namespace DarrynTen\SageOne\Request;
 
-use DarrynTen\SageOne\Exception\ApiException;
+use DarrynTen\SageOne\Exception\RequestHandlerException;
 use DarrynTen\SageOne\Exception\ExceptionMessages;
 
 use GuzzleHttp\Client;
@@ -128,12 +128,12 @@ class RequestHandler
      * @param array $parameters Request parameters
      *
      * @return stdClass
-     * @throws ApiException
+     * @throws RequestHandlerException
      */
     public function makeRequest(string $method, string $uri, array $options, array $parameters)
     {
         if (!in_array($method, $this->verbs)) {
-            throw new ApiException('405 Bad HTTP Verb', 405);
+            throw new RequestHandlerException('405 Bad HTTP Verb', RequestHandlerException::HTTP_VERB_ERROR);
         }
 
         if (!empty($parameters)) {
@@ -190,7 +190,7 @@ class RequestHandler
      *
      * @param RequestException the original exception
      *
-     * @throws ApiException
+     * @throws RequestHandlerException
      */
     private function handleException($exception)
     {
@@ -204,7 +204,7 @@ class RequestHandler
             $message
         );
 
-        throw new ApiException($title, $exception->getCode(), $exception);
+        throw new RequestHandlerException($title, $exception->getCode(), $exception);
     }
 
     /**
@@ -238,6 +238,8 @@ class RequestHandler
      * @param string $service The path
      *
      * @return []
+     *
+     * @throws RequestHandlerException
      */
     private function prepareRequest(string $service, string $method)
     {
