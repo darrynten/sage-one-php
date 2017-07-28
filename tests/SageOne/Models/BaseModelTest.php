@@ -922,15 +922,19 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         array $parameters = [],
         int $responseCode = 200
     ) {
-        $parameters['apikey'] = urlencode('{key}');
-        $url = sprintf('/1.1.2/%s?apikey=%s', $path, $parameters['apikey']);
+        $apikey = urlencode('{key}');
+
+        $url = sprintf('/1.1.2/%s?apikey=%s', $path, $apikey);
+
         if ($method === 'GET') {
-            $queryString = [];
-            foreach ($parameters as $key => $value) {
-                $queryString[] = sprintf('%s=%s', $key, $value);
+            if (!empty($parameters)) {
+                $queryString = [];
+                foreach ($parameters as $key => $value) {
+                    $queryString[] = sprintf('%s=%s', $key, $value);
+                }
+                $queryString = join('&', $queryString);
+                $url = sprintf('/1.1.2/%s?%s', $path, $queryString);
             }
-            $queryString = join('&', $queryString);
-            $url = sprintf('/1.1.2/%s?%s', $path, $queryString);
         }
         $urlWithoutParams = sprintf('/1.1.2/%s/', $path);
 
@@ -973,15 +977,16 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
                 'Authorization' => sprintf('%s %s', $tokenType, $token)
             ],
         ];
-        $checkParameters['query']['apikey'] = urlencode(
-            '{' . $this->config['key'] . '}'
-        );
+
+        $checkParameters['query']['apikey'] = $apikey;
 
         if (!empty($parameters)) {
             if ($method === 'GET') {
                 foreach ($parameters as $key => $value) {
                     $checkParameters['query'][$key] = $value;
                 }
+            } else {
+                $checkParameters['json'] = $parameters;
             }
         }
 
