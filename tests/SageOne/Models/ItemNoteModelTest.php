@@ -198,7 +198,8 @@ class ItemNoteModelTest extends BaseModelTest
             $this->assertEquals($model->actionDate->Format('Y-m-d'), '2017-07-28');
             $this->assertTrue($model->status);
             $this->assertEquals($model->note, 'sample string 4');
-            $this->assertTrue($model->hasAttachments);        });
+            $this->assertTrue($model->hasAttachments);        
+        });
     }
 
     public function testDelete()
