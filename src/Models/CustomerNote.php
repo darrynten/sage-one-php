@@ -123,6 +123,6 @@ class CustomerNote extends BaseModel
         'all' => true,
         'get' => true,
         'save' => true,
-        'delete' => true
+        'delete' => true,
     ];
 }
