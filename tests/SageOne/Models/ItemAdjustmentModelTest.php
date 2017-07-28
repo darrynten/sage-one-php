@@ -133,7 +133,7 @@ class ItemAdjustmentModelTest extends BaseModelTest
             $this->assertEquals($model2->quantity, 15.0);
             $this->assertEquals($model2->reason, 'sample string 16');
             $this->assertEquals($model2->created->Format('Y-m-d'), '2017-07-28');
-            $this->assertEquals($model2->modified->Format('Y-m-d'), '2017-07-28');;
+            $this->assertEquals($model2->modified->Format('Y-m-d'), '2017-07-28');
 
             $this->assertCount(8, json_decode($model1->toJson(), true));
             $this->assertCount(8, json_decode($model2->toJson(), true));
