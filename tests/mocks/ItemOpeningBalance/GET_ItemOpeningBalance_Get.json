@@ -1,0 +1,26 @@
+{
+  "TotalResults": 1,
+  "ReturnedResults": 2,
+  "Results": [
+    {
+      "ID": 1,
+      "ItemId": 2,
+      "Reason": "sample string 3",
+      "Date": "2017-07-28",
+      "Quantity": 5.0,
+      "Cost": 6.0,
+      "Created": "2017-07-28",
+      "Modified": "2017-07-28"
+    },
+    {
+      "ID": 11,
+      "ItemId": 12,
+      "Reason": "sample string 13",
+      "Date": "2017-07-28",
+      "Quantity": 15.0,
+      "Cost": 16.0,
+      "Created": "2017-07-28",
+      "Modified": "2017-07-28"
+    }
+  ]
+}
