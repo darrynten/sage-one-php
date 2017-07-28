@@ -985,9 +985,14 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
                 foreach ($parameters as $key => $value) {
                     $checkParameters['query'][$key] = $value;
                 }
-            } else {
+            } elseif ($method === 'POST' || $method === 'PUT' || $method === 'DELETE') {
                 $checkParameters['json'] = $parameters;
             }
+        }
+
+        $verbs = ['GET', 'POST', 'PUT', 'DELETE'];
+        if (!in_array($method, $verbs)) {
+            throw new \Exception(sprintf('Only %s HTTP methods are allowed', join(', ', $verbs)));
         }
 
         /**
