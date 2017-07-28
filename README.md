@@ -409,7 +409,7 @@ Please feel free to open PRs for any of the following :)
 - [ ] Document Message
 - [ ] Document User Defined Fields
 - [ ] Email Signature Template
-- [ ] Email Template Place Holder
+- [x] Email Template Place Holder
 - [ ] Final Accounts
 - [ ] Financial Year
 - [ ] Income Vs Expense
