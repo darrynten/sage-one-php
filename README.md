@@ -418,7 +418,7 @@ Please feel free to open PRs for any of the following :)
 - [ ] Item Attachment
 - [ ] Item Category
 - [ ] Item Movement
-- [ ] Item Note
+- [x] Item Note
 - [ ] Item Note Attachment
 - [ ] Item Opening Balance
 - [ ] Item Report Group
