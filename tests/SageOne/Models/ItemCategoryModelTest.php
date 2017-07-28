@@ -110,7 +110,6 @@ class ItemCategoryModelTest extends BaseModelTest
             $this->assertEquals($model->id, 2);
             $this->assertEquals($model->modified->Format('Y-m-d'), '2017-07-28');
             $this->assertEquals($model->created->Format('Y-m-d'), '2017-07-28');
-
         });
     }
 
