@@ -109,7 +109,6 @@ class ItemAdjustmentModelTest extends BaseModelTest
     public function testGetAll()
     {
         $this->verifyGetAll(ItemAdjustment::class, function ($results) {
-
             $this->assertCount(2, $results);
 
             $this->assertInstanceOf(ItemAdjustment::class, $results[0]);
