@@ -404,7 +404,7 @@ Please feel free to open PRs for any of the following :)
 - [ ] Detailed Ledger Transaction
 - [ ] Developer Data
 - [ ] Document File Attachment
-- [ ] Document Header Note
+- [x] Document Header Note
 - [ ] Document History
 - [ ] Document Message
 - [ ] Document User Defined Fields
