@@ -1,0 +1,18 @@
+{
+  "TotalResults": 2,
+  "ReturnedResults": 2,
+  "Results": [
+    {
+      "Description": "sample string 1",
+      "ID": 2,
+      "Modified": "2017-07-28",
+      "Created": "2017-07-28"
+    },
+    {
+      "Description": "sample string 11",
+      "ID": 12,
+      "Modified": "2017-07-28",
+      "Created": "2017-07-28"
+    }
+  ]
+}
