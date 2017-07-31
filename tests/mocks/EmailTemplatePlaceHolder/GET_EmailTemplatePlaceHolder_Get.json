@@ -1,0 +1,20 @@
+{
+  "TotalResults": 2,
+  "ReturnedResults": 2,
+  "Results": [
+    {
+      "ID": 1,
+      "EmailTemplateTypeId": 2,
+      "PlaceHolder": "sample string 3",
+      "PropertyName": "sample string 4",
+      "Type": "sample string 5"
+    },
+    {
+      "ID": 11,
+      "EmailTemplateTypeId": 12,
+      "PlaceHolder": "sample string 13",
+      "PropertyName": "sample string 14",
+      "Type": "sample string 15"
+    }
+  ]
+}
