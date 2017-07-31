@@ -362,7 +362,7 @@ class SupplierPaymentModelTest extends BaseModelTest
 
     public function testGetAll()
     {
-        $this->verifyGetAll(SupplierPayment::class, function($response) {
+        $this->verifyGetAll(SupplierPayment::class, function ($response) {
             $this->assertCount(2, $response);
             $model1 = $response[0];
             $model2 = $response[1];

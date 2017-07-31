@@ -222,7 +222,7 @@ class SupplierPayment extends BaseModel
     ];
 
     /**
-     * Gets a Supplier Payments generated as a PDF. 
+     * Gets a Supplier Payments generated as a PDF.
      *
      * @param string $id
      * @return binary string
