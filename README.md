@@ -419,7 +419,7 @@ Please feel free to open PRs for any of the following :)
 - [ ] Item
 - [ ] Item Adjustment
 - [ ] Item Attachment
-- [ ] Item Category
+- [x] Item Category
 - [ ] Item Movement
 - [ ] Item Note
 - [ ] Item Note Attachment
