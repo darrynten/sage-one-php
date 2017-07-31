@@ -144,7 +144,7 @@ class RequestHandler
                 }
             } elseif ($method === 'POST' || $method === 'PUT' || $method === 'DELETE') {
                 // Otherwise send JSON in the body
-                $options['json'] = (object)$parameters;
+                $options['json'] = $parameters;
             }
         }
 
