@@ -176,7 +176,30 @@ abstract class BaseModel
 
         $results = $this->request->request($this->featureMethods['all'], $this->endpoint, 'Get', $parameters);
 
-        return new ModelCollection(static::class, $this->config, $results);
+        $collection = new ModelCollection(static::class, $this->config, $results);
+
+        if ($collection->totalResults > $collection->returnedResults) {
+            // how many items we should get
+            $leftItems = $collection->totalResults - $collection->returnedResults;
+            // SageApi has limit for 100 items per request
+            // how many times should we run it
+            $runs = (int)($leftItems / 100);
+            // and if there is any items left for last call
+            $runs += ($leftItems % 100 !== 0);
+            for ($i = 1; $i <= $runs; $i++) {
+                $parameters['$skip'] = $i * 100;
+                $results = $this->request->request(
+                    $this->featureMethods['all'],
+                    $this->endpoint,
+                    'Get',
+                    $parameters
+                );
+                $otherCollection = new ModelCollection(static::class, $this->config, $results);
+                $collection->extend($otherCollection);
+            }
+        }
+
+        return $collection;
     }
 
     /**

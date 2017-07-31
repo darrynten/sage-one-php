@@ -292,6 +292,9 @@ A lot of the heavy testing is handled by the BaseModelTest class, and you
 can look into the Example test for insight into the convention. It makes
 testing and getting good defensive coverage quite trivial for most things.
 
+Currently lots of things are tested againts mocks provided by SageOne's docs.
+They are not always consistent with real responses so in the future they will be replaced.
+
 # NB initial delivery consists of only these models:
 
 Models marked with an asterix are pure CRUD models
@@ -301,7 +304,7 @@ Models marked with an asterix are pure CRUD models
 - [x] CRUD
 - [ ] Save Call
 - [ ] Real CRUD Response Mocks
-- [ ] Pagination
+- [x] Pagination
 - [ ] Rate Limiting
 - [ ] Models
   - [x] Account
@@ -328,7 +331,7 @@ Models marked with an asterix are pure CRUD models
     - [x] Supplier Ageing
     - [x] Supplier Bank Detail *
     - [x] Supplier Category *
-    - [ ] Supplier Invoice
+    - [x] Supplier Invoice
     - [ ] Supplier Invoice Attachment
     - [x] Supplier Note *
     - [ ] Supplier Note Attachment
@@ -400,7 +403,7 @@ Please feel free to open PRs for any of the following :)
 - [ ] Customer Transaction Listing
 - [ ] Customer Write Off
 - [ ] Customer Zone
-- [ ] Date Format
+- [x] Date Format
 - [ ] Detailed Ledger Transaction
 - [ ] Developer Data
 - [ ] Document File Attachment
