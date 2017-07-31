@@ -417,7 +417,7 @@ Please feel free to open PRs for any of the following :)
 - [ ] Financial Year
 - [ ] Income Vs Expense
 - [ ] Item
-- [ ] Item Adjustment
+- [x] Item Adjustment
 - [ ] Item Attachment
 - [x] Item Category
 - [ ] Item Movement
