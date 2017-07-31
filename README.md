@@ -392,7 +392,7 @@ Please feel free to open PRs for any of the following :)
 - [ ] Customer Adjustment
 - [ ] Customer Ageing
 - [x] Customer Category
-- [ ] Customer Note
+- [x] Customer Note
 - [ ] Customer Note Attachment
 - [ ] Customer Opening Balance
 - [ ] Customer Receipt

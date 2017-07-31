@@ -1,0 +1,40 @@
+{
+  "TotalResults": 2,
+  "ReturnedResults": 2,
+  "Results": [
+    {
+      "CustomerId": 1,
+      "CustomerName": "sample string 2",
+      "NotePriority": 1,
+      "NoteType": 1,
+      "UserId": 1,
+      "Priority": 1,
+      "NoteCategoryId": 1,
+      "NotifyAssignee": true,
+      "ID": 3,
+      "Subject": "sample string 4",
+      "EntryDate": "2017-07-27",
+      "ActionDate": "2017-07-27",
+      "Status": true,
+      "Note": "sample string 5",
+      "HasAttachments": true
+    },
+    {
+      "CustomerId": 10,
+      "CustomerName": "sample string 11",
+      "NotePriority": 12,
+      "NoteType": 13,
+      "UserId": 14,
+      "Priority": 15,
+      "NoteCategoryId": 16,
+      "NotifyAssignee": true,
+      "ID": 17,
+      "Subject": "sample string 18",
+      "EntryDate": "2017-07-27",
+      "ActionDate": "2017-07-27",
+      "Status": true,
+      "Note": "sample string 19",
+      "HasAttachments": true
+    }
+  ]
+}
