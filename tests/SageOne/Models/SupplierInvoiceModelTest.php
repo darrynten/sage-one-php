@@ -807,6 +807,14 @@ class SupplierInvoiceModelTest extends BaseModelTest
             ['useSystemDocumentNumber' => true]
         );
 
+        $model->loadResult(
+            json_decode(
+                file_get_contents(
+                    __DIR__ . '/../../mocks/SupplierInvoice/POST_SupplierInvoice_Save_useSystemDocumentNumber_xx_REQ.json'
+                )
+            )
+        );
+
         $response = $model->save(['useSystemDocumentNumber' => true]);
         $model = new SupplierInvoice($this->config);
         $model->loadResult($response);
