@@ -1,0 +1,24 @@
+{
+  "TotalResults": 2,
+  "ReturnedResults": 2,
+  "Results": [
+    {
+      "CustomerId": 1,
+      "Customer_CurrencyId": 1,
+      "Customer_ExchangeRate": 1.0,
+      "ID": 2,
+      "Balance": 3.0,
+      "Reason": "sample string 4",
+      "Date": "2017-07-27"
+    },
+    {
+      "CustomerId": 10,
+      "Customer_CurrencyId": 11,
+      "Customer_ExchangeRate": 12.0,
+      "ID": 13,
+      "Balance": 14.0,
+      "Reason": "sample string 15",
+      "Date": "2017-07-27"
+    }
+  ]
+}
