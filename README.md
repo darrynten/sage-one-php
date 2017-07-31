@@ -409,7 +409,7 @@ Please feel free to open PRs for any of the following :)
 - [ ] Document File Attachment
 - [x] Document Header Note
 - [ ] Document History
-- [ ] Document Message
+- [x] Document Message
 - [ ] Document User Defined Fields
 - [ ] Email Signature Template
 - [ ] Email Template Place Holder
