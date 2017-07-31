@@ -143,7 +143,7 @@ class AccountOpeningBalanceModelTest extends BaseModelTest
         $model->loadResult(
             json_decode(
                 file_get_contents(
-                    __DIR__ . '/../../mocks/AccountOpeningBalance//POST_AccountOpeningBalance_Save_REQ.json'
+                    __DIR__ . '/../../mocks/AccountOpeningBalance/POST_AccountOpeningBalance_Save_REQ.json'
                 )
             )
         );
