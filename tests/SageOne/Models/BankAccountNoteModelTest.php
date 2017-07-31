@@ -150,24 +150,24 @@ class BankAccountNoteModelTest extends BaseModelTest
         $this->assertCount(2, $model->results);
 
         $model1 = $model->results[0];
-            $this->assertEquals($model->bankAccountId, 1);
-            $this->assertEquals($model->id, 2);
-            $this->assertEquals($model->subject, 'sample string 3');
-            $this->assertEquals($model->entryDate->format('Y-m-d'), '2017-07-25');
-            $this->assertEquals($model->actionDate->format('Y-m-d'), '2017-07-25');
-            $this->assertTrue($model->status);
-            $this->assertEquals($model->note, 'sample string 4');
-            $this->assertTrue($model->hasAttachments);
+        $this->assertEquals($model->bankAccountId, 1);
+        $this->assertEquals($model->id, 2);
+        $this->assertEquals($model->subject, 'sample string 3');
+        $this->assertEquals($model->entryDate->format('Y-m-d'), '2017-07-25');
+        $this->assertEquals($model->actionDate->format('Y-m-d'), '2017-07-25');
+        $this->assertTrue($model->status);
+        $this->assertEquals($model->note, 'sample string 4');
+        $this->assertTrue($model->hasAttachments);
 
         $model2 = $model->results[0];
-            $this->assertEquals($model->bankAccountId, 10);
-            $this->assertEquals($model->id, 11);
-            $this->assertEquals($model->subject, 'sample string 12');
-            $this->assertEquals($model->entryDate->format('Y-m-d'), '2017-07-25');
-            $this->assertEquals($model->actionDate->format('Y-m-d'), '2017-07-25');
-            $this->assertTrue($model->status);
-            $this->assertEquals($model->note, 'sample string 4');
-            $this->assertTrue($model->hasAttachments);
+        $this->assertEquals($model->bankAccountId, 10);
+        $this->assertEquals($model->id, 11);
+        $this->assertEquals($model->subject, 'sample string 12');
+        $this->assertEquals($model->entryDate->format('Y-m-d'), '2017-07-25');
+        $this->assertEquals($model->actionDate->format('Y-m-d'), '2017-07-25');
+        $this->assertTrue($model->status);
+        $this->assertEquals($model->note, 'sample string 4');
+        $this->assertTrue($model->hasAttachments);
     }
 
     public function testSave()
