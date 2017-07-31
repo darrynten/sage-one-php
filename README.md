@@ -423,7 +423,7 @@ Please feel free to open PRs for any of the following :)
 - [ ] Item Movement
 - [x] Item Note
 - [ ] Item Note Attachment
-- [ ] Item Opening Balance
+- [x] Item Opening Balance
 - [ ] Item Report Group
 - [ ] Journal Entry
 - [ ] Localization
