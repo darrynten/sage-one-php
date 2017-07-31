@@ -31,10 +31,10 @@ class ItemAdjustmentModelTest extends BaseModelTest
         $this->verifyCanNullify(ItemAdjustment::class, 'modified');
     }
 
-/*    public function testBadImport()
+    public function testBadImport()
     {
         $this->verifyBadImport(ItemAdjustment::class, 'date');
-    }*/
+    }
 
     public function testAttributes()
     {
