@@ -394,7 +394,7 @@ Please feel free to open PRs for any of the following :)
 - [x] Customer Category
 - [x] Customer Note
 - [ ] Customer Note Attachment
-- [ ] Customer Opening Balance
+- [x] Customer Opening Balance
 - [ ] Customer Receipt
 - [ ] Customer Return
 - [ ] Customer Return Attachment
