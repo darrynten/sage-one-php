@@ -86,13 +86,13 @@ class ItemAdjustmentModelTest extends BaseModelTest
     {
         $this->verifyInject(ItemAdjustment::class, function ($model) {
             $this->assertEquals($model->id, 1);
-            $this->assertEquals($model->date->Format('Y-m-d'), '2017-07-28');
+            $this->assertEquals($model->date->format('Y-m-d'), '2017-07-28');
             $this->assertEquals($model->itemId, 3);
             $this->assertEquals($model->averageCost, 4.0);
             $this->assertEquals($model->quantity, 5.0);
             $this->assertEquals($model->reason, 'sample string 6');
-            $this->assertEquals($model->created->Format('Y-m-d'), '2017-07-28');
-            $this->assertEquals($model->modified->Format('Y-m-d'), '2017-07-28');
+            $this->assertEquals($model->created->format('Y-m-d'), '2017-07-28');
+            $this->assertEquals($model->modified->format('Y-m-d'), '2017-07-28');
 
             $objArray = json_decode($model->toJson(), true);
             $this->assertCount(8, $objArray);
@@ -116,13 +116,13 @@ class ItemAdjustmentModelTest extends BaseModelTest
 
             $model1 = $results[0];
             $this->assertEquals($model1->id, 1);
-            $this->assertEquals($model1->date->Format('Y-m-d'), '2017-07-28');
+            $this->assertEquals($model1->date->format('Y-m-d'), '2017-07-28');
             $this->assertEquals($model1->itemId, 3);
             $this->assertEquals($model1->averageCost, 4.0);
             $this->assertEquals($model1->quantity, 5.0);
             $this->assertEquals($model1->reason, 'sample string 6');
-            $this->assertEquals($model1->created->Format('Y-m-d'), '2017-07-28');
-            $this->assertEquals($model1->modified->Format('Y-m-d'), '2017-07-28');
+            $this->assertEquals($model1->created->format('Y-m-d'), '2017-07-28');
+            $this->assertEquals($model1->modified->format('Y-m-d'), '2017-07-28');
 
             $model2 = $results[1];
             $this->assertEquals($model2->id, 11);
@@ -131,8 +131,8 @@ class ItemAdjustmentModelTest extends BaseModelTest
             $this->assertEquals($model2->averageCost, 14.0);
             $this->assertEquals($model2->quantity, 15.0);
             $this->assertEquals($model2->reason, 'sample string 16');
-            $this->assertEquals($model2->created->Format('Y-m-d'), '2017-07-28');
-            $this->assertEquals($model2->modified->Format('Y-m-d'), '2017-07-28');
+            $this->assertEquals($model2->created->format('Y-m-d'), '2017-07-28');
+            $this->assertEquals($model2->modified->format('Y-m-d'), '2017-07-28');
 
             $this->assertCount(8, json_decode($model1->toJson(), true));
             $this->assertCount(8, json_decode($model2->toJson(), true));
@@ -143,13 +143,13 @@ class ItemAdjustmentModelTest extends BaseModelTest
     {
         $this->verifyGetId(ItemAdjustment::class, 1, function ($model) {
             $this->assertEquals($model->id, 1);
-            $this->assertEquals($model->date->Format('Y-m-d'), '2017-07-28');
+            $this->assertEquals($model->date->format('Y-m-d'), '2017-07-28');
             $this->assertEquals($model->itemId, 3);
             $this->assertEquals($model->averageCost, 4.0);
             $this->assertEquals($model->quantity, 5.0);
             $this->assertEquals($model->reason, 'sample string 6');
-            $this->assertEquals($model->created->Format('Y-m-d'), '2017-07-28');
-            $this->assertEquals($model->modified->Format('Y-m-d'), '2017-07-28');
+            $this->assertEquals($model->created->format('Y-m-d'), '2017-07-28');
+            $this->assertEquals($model->modified->format('Y-m-d'), '2017-07-28');
         });
     }
 
@@ -166,13 +166,13 @@ class ItemAdjustmentModelTest extends BaseModelTest
             $model->modified = '2017-07-28';
         }, function ($savedModel) {
             $this->assertEquals($savedModel->id, 1);
-            $this->assertEquals($savedModel->date->Format('Y-m-d'), '2017-07-28');
+            $this->assertEquals($savedModel->date->format('Y-m-d'), '2017-07-28');
             $this->assertEquals($savedModel->itemId, 3);
             $this->assertEquals($savedModel->averageCost, 4.0);
             $this->assertEquals($savedModel->quantity, 5.0);
             $this->assertEquals($savedModel->reason, 'sample string 6');
-            $this->assertEquals($savedModel->created->Format('Y-m-d'), '2017-07-28');
-            $this->assertEquals($savedModel->modified->Format('Y-m-d'), '2017-07-28');
+            $this->assertEquals($savedModel->created->format('Y-m-d'), '2017-07-28');
+            $this->assertEquals($savedModel->modified->format('Y-m-d'), '2017-07-28');
         });
     }
 }
