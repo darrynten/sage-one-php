@@ -922,8 +922,21 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         array $parameters = [],
         int $responseCode = 200
     ) {
-        $url = sprintf('/1.1.2/%s?apikey=key', $path);
-        $urlWithoutApiKey = sprintf('/1.1.2/%s/', $path);
+        $apikey = urlencode('{key}');
+
+        $url = sprintf('/1.1.2/%s?apikey=%s', $path, $apikey);
+
+        if ($method === 'GET') {
+            if (!empty($parameters)) {
+                $queryString = [];
+                foreach ($parameters as $key => $value) {
+                    $queryString[] = sprintf('%s=%s', $key, $value);
+                }
+                $queryString = join('&', $queryString);
+                $url = sprintf('/1.1.2/%s?%s', $path, $queryString);
+            }
+        }
+        $urlWithoutParams = sprintf('/1.1.2/%s/', $path);
 
         $responseData = null;
         if ($mockFileResponse) {
@@ -964,15 +977,29 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
                 'Authorization' => sprintf('%s %s', $tokenType, $token)
             ],
         ];
-        $checkParameters['query']['apikey'] = urlencode(
-            '{' . $this->config['key'] . '}'
-        );
+
+        $checkParameters['query']['apikey'] = $apikey;
+
+        if (!empty($parameters)) {
+            if ($method === 'GET') {
+                foreach ($parameters as $key => $value) {
+                    $checkParameters['query'][$key] = $value;
+                }
+            } elseif ($method === 'POST' || $method === 'PUT' || $method === 'DELETE') {
+                $checkParameters['json'] = $parameters;
+            }
+        }
+
+        $verbs = ['GET', 'POST', 'PUT', 'DELETE'];
+        if (!in_array($method, $verbs)) {
+            throw new \Exception(sprintf('Only %s HTTP methods are allowed', join(', ', $verbs)));
+        }
 
         /**
         * $client in RequestHandler receives url without query params
         * they are passed as last parameter for $client->request
         */
-        $fullUrl = '//localhost:8082' . $urlWithoutApiKey;
+        $fullUrl = sprintf('//localhost:8082%s', $urlWithoutParams);
         $mockClient->shouldReceive('request')
             ->once()
             ->with($method, $fullUrl, \Mockery::subset($checkParameters))
