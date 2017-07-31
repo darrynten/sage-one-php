@@ -5,7 +5,7 @@ namespace DarrynTen\SageOne\Tests\SageOne;
 use DarrynTen\SageOne\Exception\ConfigException;
 use DarrynTen\SageOne\SageOne;
 use DarrynTen\SageOne\Request\RequestHandler;
-use DarrynTen\SageOne\Exception\ApiException;
+use DarrynTen\SageOne\Exception\RequestHandlerException;
 use DarrynTen\SageOne\Tests\SageOne\Helpers\DataHelper;
 
 class SageOneTest extends \PHPUnit_Framework_TestCase

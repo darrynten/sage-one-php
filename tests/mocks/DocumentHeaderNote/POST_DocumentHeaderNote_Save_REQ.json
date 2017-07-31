@@ -1,0 +1,12 @@
+{
+  "ID": 1,
+  "CompanyId": 2,
+  "DocumentHeaderId": 3,
+  "NoteTypeId": 4,
+  "UserId": 5,
+  "Username": "sample string 6",
+  "Created": "2017-07-28",
+  "ActionDate": "2017-07-28",
+  "Note": "sample string 8",
+  "Completed": true
+}

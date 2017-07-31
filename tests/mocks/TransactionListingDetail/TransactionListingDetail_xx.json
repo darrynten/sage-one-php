@@ -1,0 +1,19 @@
+{
+  "BusinessBaseId": "sample business id",
+  "ID": 100,
+  "DocumentTypeId": 50,
+  "LinkId": 4,
+  "Name": "sample name",
+  "CurrencyId": 5,
+  "CurrencySymbol": "sample currency symbol",
+  "DocumentNumber": "sample doc number",
+  "Reference": "sample reference",
+  "Comment": "sample currency symbol",
+  "Date": "2017-09-09",
+  "Description": "sample description",
+  "DocumentTypeDisplayText": "sample display",
+  "Total": 60.1,
+  "Debit": 70.2,
+  "Credit": 80.4,
+  "RunningTotal": 90.5
+}

@@ -1,0 +1,100 @@
+[
+  {
+    "ID": 1,
+    "Name": "sample string 2",
+    "CurrencySymbol": "sample string 3",
+    "OpeningBalanceDate": "2017-07-26T00:00:00Z",
+    "OpeningBalance": 5.0,
+    "ClosingBalanceDate": "2017-07-26T00:00:00Z",
+    "ClosingBalance": 7.0,
+    "Transactions": [
+      {
+          "BusinessBaseId": "sample business id 4",
+          "ID": 104,
+          "DocumentTypeId": 54,
+          "LinkId": 44,
+          "Name": "sample name 4",
+          "CurrencyId": 544,
+          "CurrencySymbol": "sample currency symbol 4",
+          "DocumentNumber": "sample doc number 4",
+          "Reference": "sample reference 4",
+          "Comment": "sample currency symbol 4",
+          "Date": "2017-09-04",
+          "Description": "sample description 4",
+          "DocumentTypeDisplayText": "sample display 4",
+          "Total": 64.1,
+          "Debit": 74.2,
+          "Credit": 84.4,
+          "RunningTotal": 94.5
+      },
+      {
+          "BusinessBaseId": "sample business id 5",
+          "ID": 105,
+          "DocumentTypeId": 505,
+          "LinkId": 45,
+          "Name": "sample name 5",
+          "CurrencyId": 55,
+          "CurrencySymbol": "sample currency symbol 5",
+          "DocumentNumber": "sample doc number 5",
+          "Reference": "sample reference 5",
+          "Comment": "sample currency symbol 5",
+          "Date": "2017-09-09",
+          "Description": "sample description 5",
+          "DocumentTypeDisplayText": "sample display 5",
+          "Total": 65.1,
+          "Debit": 75.2,
+          "Credit": 85.4,
+          "RunningTotal": 95.5
+      }
+    ]
+  },
+  {
+    "ID": 40,
+    "Name": "sample string 20",
+    "CurrencySymbol": "sample string 30",
+    "OpeningBalanceDate": "2017-07-27T00:00:00Z",
+    "OpeningBalance": 50.0,
+    "ClosingBalanceDate": "2017-07-27T00:00:00Z",
+    "ClosingBalance": 70.0,
+    "Transactions": [
+      {
+          "BusinessBaseId": "sample business id 6",
+          "ID": 106,
+          "DocumentTypeId": 506,
+          "LinkId": 46,
+          "Name": "sample name 6",
+          "CurrencyId": 56,
+          "CurrencySymbol": "sample currency symbol 6",
+          "DocumentNumber": "sample doc number 6",
+          "Reference": "sample reference 6",
+          "Comment": "sample currency symbol 6",
+          "Date": "2017-09-06",
+          "Description": "sample description 6",
+          "DocumentTypeDisplayText": "sample display 6",
+          "Total": 66.1,
+          "Debit": 76.2,
+          "Credit": 86.4,
+          "RunningTotal": 96.5
+      },
+      {
+          "BusinessBaseId": "sample business id7",
+          "ID": 107,
+          "DocumentTypeId": 57,
+          "LinkId": 47,
+          "Name": "sample name 7",
+          "CurrencyId": 7,
+          "CurrencySymbol": "sample currency symbol 7",
+          "DocumentNumber": "sample doc number 7",
+          "Reference": "sample reference 7",
+          "Comment": "sample currency symbol 7",
+          "Date": "2017-09-07",
+          "Description": "sample description 7",
+          "DocumentTypeDisplayText": "sample display 7",
+          "Total": 67.1,
+          "Debit": 77.2,
+          "Credit": 87.4,
+          "RunningTotal": 97.5
+      }
+    ]
+  }
+]

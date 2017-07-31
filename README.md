@@ -168,6 +168,7 @@ class Account extends BaseModel
      *   - `min` / `max` always come together
      *   - `default` is when it's indicated in the docs
      *   - `regex` is generally used with email address fields
+     *   - `enum` is for enumerated lists
      *   - `optional` is true when this field can be omitted in SageOne response
      *     - Example is Company's model all() method
      *       By default when we execute all() it is the same as all(['includeStatus' = false])
@@ -188,6 +189,13 @@ class Account extends BaseModel
             'nullable' => false,
             'readonly' => false,
             'required' => true,
+        ],
+        'enum' => [
+            'type' => 'integer',
+            'nullable' => false,
+            'readonly' => true,
+            // $enumList would need to be a property of this model
+            'enum' => 'enumList',
         ],
         'category' => [
             'type' => 'AccountCategory',
@@ -248,6 +256,18 @@ class Account extends BaseModel
         'delete' => 'DELETE'
     ];
 
+    /**
+     * Specifies what get() returns
+     * 'this' means current class
+     * any other type must exist under src/Models/
+     * 'collection' is true when get() returns collection (very rare case, but SageOne's API works this way)
+     * @var array $featureGetReturns
+     */
+    protected $featureGetReturns = [
+        'type' => 'this',
+        'collection' => false
+    ];
+
     // Construct (if you need to modify construction)
     public function __construct(array $config)
     {
@@ -272,6 +292,9 @@ A lot of the heavy testing is handled by the BaseModelTest class, and you
 can look into the Example test for insight into the convention. It makes
 testing and getting good defensive coverage quite trivial for most things.
 
+Currently lots of things are tested againts mocks provided by SageOne's docs.
+They are not always consistent with real responses so in the future they will be replaced.
+
 # NB initial delivery consists of only these models:
 
 Models marked with an asterix are pure CRUD models
@@ -281,7 +304,7 @@ Models marked with an asterix are pure CRUD models
 - [x] CRUD
 - [ ] Save Call
 - [ ] Real CRUD Response Mocks
-- [ ] Pagination
+- [x] Pagination
 - [ ] Rate Limiting
 - [ ] Models
   - [x] Account
@@ -289,12 +312,14 @@ Models marked with an asterix are pure CRUD models
     - [x] Account Category *
     - [x] Account Note *
     - [x] Accountant Task Recurrence *
-    - [ ] Account Note Attachment
+    - [x] Account Note Attachment
     - [x] Account Opening Balance *
     - [x] Account Payment *
     - [x] Account Receipt *
+  - [x] Additional Item Price *
   - [x] Analysis Category
   - [x] Analysis Type
+  - [x] Asset Note *
   - [x] Company
     - [x] Company Entity Type *
     - [x] Company Note
@@ -303,10 +328,10 @@ Models marked with an asterix are pure CRUD models
   - [x] Supplier *
     - [x] Supplier Additional Contact Detail
     - [x] Supplier Adjustment
-    - [ ] Supplier Ageing
+    - [x] Supplier Ageing
     - [x] Supplier Bank Detail *
     - [x] Supplier Category *
-    - [ ] Supplier Invoice
+    - [x] Supplier Invoice
     - [ ] Supplier Invoice Attachment
     - [x] Supplier Note *
     - [ ] Supplier Note Attachment
@@ -338,19 +363,17 @@ Please feel free to open PRs for any of the following :)
 - [ ] Accountant Note
 - [ ] Accountant Task
 - [ ] Accountant Task Recurrence
-- [ ] Additional Item Price
 - [x] Additional Price List
 - [ ] Allocation
 - [x] Asset
 - [x] Asset Category
 - [x] Asset Location
-- [ ] Asset Note
 - [ ] Attachment
 - [ ] Bank Account
 - [ ] Bank Account Category
 - [ ] Bank Account Note
 - [ ] Bank Account Note Attachment
-- [ ] Bank Account Opening Balance
+- [x] Bank Account Opening Balance
 - [ ] Bank Account Transaction Listing
 - [ ] Bank Import Mapping
 - [ ] Bank Statement Transaction
@@ -380,27 +403,27 @@ Please feel free to open PRs for any of the following :)
 - [ ] Customer Transaction Listing
 - [ ] Customer Write Off
 - [ ] Customer Zone
-- [ ] Date Format
+- [x] Date Format
 - [ ] Detailed Ledger Transaction
 - [ ] Developer Data
 - [ ] Document File Attachment
-- [ ] Document Header Note
+- [x] Document Header Note
 - [ ] Document History
-- [ ] Document Message
+- [x] Document Message
 - [ ] Document User Defined Fields
 - [ ] Email Signature Template
-- [ ] Email Template Place Holder
+- [x] Email Template Place Holder
 - [ ] Final Accounts
 - [ ] Financial Year
 - [ ] Income Vs Expense
 - [ ] Item
 - [ ] Item Adjustment
 - [ ] Item Attachment
-- [ ] Item Category
+- [x] Item Category
 - [ ] Item Movement
-- [ ] Item Note
+- [x] Item Note
 - [ ] Item Note Attachment
-- [ ] Item Opening Balance
+- [x] Item Opening Balance
 - [ ] Item Report Group
 - [ ] Journal Entry
 - [ ] Localization
