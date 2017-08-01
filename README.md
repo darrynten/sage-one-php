@@ -369,8 +369,8 @@ Please feel free to open PRs for any of the following :)
 - [x] Asset Category
 - [x] Asset Location
 - [ ] Attachment
-- [ ] Bank Account
-- [ ] Bank Account Category
+- [x] Bank Account (partial)
+- [x] Bank Account Category (partial)
 - [ ] Bank Account Note
 - [ ] Bank Account Note Attachment
 - [x] Bank Account Opening Balance
