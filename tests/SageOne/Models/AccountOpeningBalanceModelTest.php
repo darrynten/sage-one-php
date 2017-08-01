@@ -113,6 +113,14 @@ class AccountOpeningBalanceModelTest extends BaseModelTest
         $this->expectExceptionMessage('Model "AccountOpeningBalance" Defined key "reason" not present in payload A property is missing in the loadResult payload');
         $this->expectExceptionCode(10112);
 
+        $model->loadResult(
+            json_decode(
+                file_get_contents(
+                    __DIR__ . '/../../mocks/AccountOpeningBalance/POST_AccountOpeningBalance_Save_REQ.json'
+                )
+            )
+        );
+
         $response = $model->save();
         $savedModel = new AccountOpeningBalance($this->config);
         $savedModel->loadResult($response);
@@ -131,6 +139,14 @@ class AccountOpeningBalanceModelTest extends BaseModelTest
         $this->expectException(ModelException::class);
         $this->expectExceptionMessage('Model "AccountOpeningBalance" Received namespaced class "DarrynTen\SageOne\Models\double" when defined type is "boolean" Property is referencing an undefined, non-primitive class');
         $this->expectExceptionCode(10110);
+
+        $model->loadResult(
+            json_decode(
+                file_get_contents(
+                    __DIR__ . '/../../mocks/AccountOpeningBalance/POST_AccountOpeningBalance_Save_REQ.json'
+                )
+            )
+        );
 
         $response = $model->save();
         $savedModel = new AccountOpeningBalance($this->config);
