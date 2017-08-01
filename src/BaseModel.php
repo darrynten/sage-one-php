@@ -121,7 +121,15 @@ abstract class BaseModel
         $this->checkReadOnly($key, $value);
         $this->checkNullable($key, $value);
         $this->checkValidation($key, $value);
+        $this->setValue($key, $value);
+    }
 
+    protected function setValue($key, $value)
+    {
+        $type = $this->fields[$key]['type'];
+        if ($type === \DateTime::class && !is_null($value)) {
+            $value = new \DateTime($value);
+        }
         $this->fieldsData[$key] = $value;
     }
 
@@ -293,7 +301,8 @@ abstract class BaseModel
             $this->throwException(ModelException::NO_SAVE_SUPPORT);
         }
 
-        // TODO Submission Body and Validation
+        $arr = $this->toArray();
+        $parameters = array_merge($arr, $parameters);
         $data = $this->request->request($this->featureMethods['save'], $this->endpoint, 'Save', $parameters);
 
         return $data;
