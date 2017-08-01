@@ -141,7 +141,7 @@ class SupplierBankDetailModelTest extends BaseModelTest
             $model->bankAccountNumber = 'sample strin2';
             $model->bankName = 'sample string 5';
             $model->bankBranchCode = '123456';
-            $model->bankBranchCode = 1;
+            $model->bankAccountType = 1;
         }, function ($savedModel) {
             $this->assertInstanceOf(SupplierBankDetail::class, $savedModel);
             $this->assertEquals(1, $savedModel->id);
