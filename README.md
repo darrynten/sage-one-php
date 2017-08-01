@@ -302,7 +302,7 @@ Models marked with an asterix are pure CRUD models
 - [x] Base
 - [x] Exception Handling
 - [x] CRUD
-- [ ] Save Call
+- [x] Save Call
 - [ ] Real CRUD Response Mocks
 - [x] Pagination
 - [ ] Rate Limiting
