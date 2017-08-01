@@ -138,7 +138,7 @@ class AdditionalItemPriceModelTest extends BaseModelTest
             $model->itemId = 2;
             $model->priceInclusive = 3.0;
             $model->priceExclusive = 4.0;
-            $model->additionalPriceListId = 5.0;
+            $model->additionalPriceListId = 5;
         }, function ($savedModel) {
             $this->assertEquals($savedModel->id, 1);
             $this->assertEquals($savedModel->itemId, 2);
