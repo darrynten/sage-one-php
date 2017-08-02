@@ -338,7 +338,7 @@ Models marked with an asterix are pure CRUD models
     - [x] Supplier Opening Balance *
     - [ ] Supplier Payment
     - [x] Supplier Purchase History
-    - [ ] Supplier Return
+    - [x] Supplier Return
     - [x] Supplier Return Attachment (partial, validate() not implemented)
     - [x] Supplier Statement *
     - [x] Supplier Transaction Listing
