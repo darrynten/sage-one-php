@@ -332,14 +332,15 @@ Models marked with an asterix are pure CRUD models
     - [x] Supplier Bank Detail *
     - [x] Supplier Category *
     - [x] Supplier Invoice
-    - [x] Supplier Invoice Attachment
+    - [x] Supplier Invoice Attachment (partial, validate() not implemented)
     - [x] Supplier Note *
-    - [x] Supplier Note Attachment
+    - [x] Supplier Note Attachment (partial, validate() not implemented)
     - [x] Supplier Opening Balance *
     - [ ] Supplier Payment
     - [x] Supplier Purchase History
     - [x] Supplier Return
-    - [ ] Supplier Return Attachment
+    - [x] Supplier Return Attachment (partial, validate() not implemented)
+>>>>>>> dev
     - [x] Supplier Statement *
     - [x] Supplier Transaction Listing
   - [x] Tax Type *
