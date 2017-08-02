@@ -377,12 +377,15 @@ abstract class BaseModel
 
         // If null and can't be null then throw
         if (is_null($value) && !$this->fields[$key]['nullable']) {
-            $this->throwException(ModelException::NULL_WITHOUT_NULLABLE, sprintf('key %s', $key));
+            if (!isset($this->fields[$key]['optional']) || $this->fields[$key]['optional'] !== true) {
+                $this->throwException(ModelException::NULL_WITHOUT_NULLABLE, sprintf('key %s', $key));
+            }
+            return null;
         }
 
         // If it's a valid primitive
         if ($this->isValidPrimitive($value, $config['type'])) {
-            return $this->$key;
+            return $value;
         }
 
         // If it's a date we return a valid format
