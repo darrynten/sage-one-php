@@ -89,7 +89,6 @@ class BankFeedAccount extends BaseModel
         ],
     ];
 
-
     /**
      * Features supported by the endpoint
      *
