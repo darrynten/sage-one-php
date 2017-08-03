@@ -3,6 +3,7 @@
 namespace DarrynTen\SageOne\Tests\SageOne\Models;
 
 use DarrynTen\SageOne\Models\BankFeedAccount;
+use DarrynTen\SageOne\Models\BankFeedAccountGroup;
 
 
 class BankFeedAccountModelTest extends BaseModelTest
@@ -95,6 +96,41 @@ class BankFeedAccountModelTest extends BaseModelTest
                 'nullable' => false,
                 'readonly' => false,
             ],
+        ]);
+    }
+
+    public function testInject()
+    {
+        $this->verifyInject(BankFeedAccount::class, function ($model) {
+            $this->assertEquals($model->id, 1);
+            $this->assertEquals($model->bankFeedAccountGroupId, 2);
+            $this->assertInstanceOf(BankFeedAccountGroup::class, $model->bankFeedAccountGroup);
+            $this->assertEquals($model->bankFeedAccountGroup->id, 1);
+            $this->assertEquals($model->bankFeedAccountGroup->bankFeedProviderId, 2);
+            $this->assertEquals($model->bankFeedAccountGroup->bankFeedProviderTypeId, 3);
+            $this->assertEquals($model->bankFeedAccountGroup->description, 'sample string 4');
+            $this->assertEquals($model->bankFeedAccountGroup->identifier, 'sample string 5');
+            $this->assertTrue($model->bankFeedAccountGroup->requiresAdditionalAuthentication);
+            $this->assertEquals($model->bankFeedAccountGroup->lastRefreshStatusId, 7);
+            $this->assertEquals($model->id, 1);
+            $this->assertEquals($model->description, 'sample string 3');
+            $this->assertEquals($model->identifier, 'sample string 4');
+            $this->assertEquals($model->lastRefreshDate->format('Y-m-d'), '2017-08-03');
+            $this->assertEquals($model->firstImportDate->format('Y-m-d'), '2017-08-03');
+            $this->assertEquals($model->balance, 1.0);
+            $this->assertEquals($model->bankAccountId, 1);
+            $this->assertEquals($model->bankAccountName, 'sample string 5');
+            $this->assertEquals($model->lastRefreshStatusId, 6);
+
+            $objArray = json_decode($model->toJson(), true);
+            $this->assertCount(11, $objArray);
+        });
+    }
+
+    public function testFeatures()
+    {
+        $this->verifyFeatures(BankFeedAccount::class, [
+            'all' => false, 'get' => false, 'delete' => false, 'save' => false
         ]);
     }
 }
