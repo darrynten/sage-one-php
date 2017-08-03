@@ -68,4 +68,14 @@ class BankFeedAccountGroup extends BaseModel
             'readonly' => false,
         ],
     ];
+
+    /**
+     * @var array $features
+     */
+    protected $features = [
+        'all' => false,
+        'get' => false,
+        'save' => false,
+        'delete' => false,
+    ];
 }

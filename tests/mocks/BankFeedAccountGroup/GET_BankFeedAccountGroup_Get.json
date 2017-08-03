@@ -1,0 +1,24 @@
+{
+  "TotalResults": 2,
+  "ReturnedResults": 2,
+  "Results": [
+    {
+      "ID": 1,
+      "BankFeedProviderId": 2,
+      "BankFeedProviderTypeId": 3,
+      "Description": "sample string 4",
+      "Identifier": "sample string 5",
+      "RequiresAdditionalAuthentication": true,
+      "LastRefreshStatusId": 7
+    },
+    {
+      "ID": 1,
+      "BankFeedProviderId": 2,
+      "BankFeedProviderTypeId": 3,
+      "Description": "sample string 4",
+      "Identifier": "sample string 5",
+      "RequiresAdditionalAuthentication": true,
+      "LastRefreshStatusId": 7
+    }
+  ]
+}
