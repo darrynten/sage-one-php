@@ -10,7 +10,6 @@ use DarrynTen\SageOne\Exception\LibraryException;
 use DarrynTen\SageOne\Models\ModelCollection;
 use ReflectionClass;
 
-
 class BankAccountModelTest extends BaseModelTest
 {
     public function testInstanceOf()
