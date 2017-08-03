@@ -124,8 +124,8 @@ class BankAccountCategoryModelTest extends BaseModelTest
             $model->description = "sample string 1";
             $model->id = 2;
         }, function ($savedModel) {
-            $this->assertEquals("sample string 1", $savedModel->description);
-            $this->assertEquals(2, $savedModel->id);
+            $this->assertEquals($savedModel->description, "sample string 1");
+            $this->assertEquals($savedModel->id, 2);
         });
     }
 
