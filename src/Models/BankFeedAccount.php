@@ -88,4 +88,18 @@ class BankFeedAccount extends BaseModel
             'readonly' => false,
         ],
     ];
+
+    /**
+     * Features supported by the endpoint
+     *
+     * These features enable and disable certain calls from the base model
+     *
+     * @var array $features
+     */
+    protected $features = [
+        'all' => false,
+        'get' => false,
+        'save' => false,
+        'delete' => false,
+    ];
 }
