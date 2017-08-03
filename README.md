@@ -332,16 +332,16 @@ Models marked with an asterix are pure CRUD models
     - [x] Supplier Bank Detail *
     - [x] Supplier Category *
     - [x] Supplier Invoice
-    - [x] Supplier Invoice Attachment
+    - [x] Supplier Invoice Attachment (partial, validate() not implemented)
     - [x] Supplier Note *
-    - [ ] Supplier Note Attachment
+    - [x] Supplier Note Attachment (partial, validate() not implemented)
     - [x] Supplier Opening Balance *
     - [x] Supplier Payment
     - [x] Supplier Purchase History
-    - [ ] Supplier Return
-    - [ ] Supplier Return Attachment
+    - [x] Supplier Return
+    - [x] Supplier Return Attachment (partial, validate() not implemented)
     - [x] Supplier Statement *
-    - [ ] Supplier Transaction Listing
+    - [x] Supplier Transaction Listing
   - [x] Tax Type *
 
 And any related models not listed, so if ExampleModel has a reference to ExampleCategory but that is not on the list above it too must get processed
