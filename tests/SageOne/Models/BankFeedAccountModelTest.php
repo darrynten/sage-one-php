@@ -5,7 +5,6 @@ namespace DarrynTen\SageOne\Tests\SageOne\Models;
 use DarrynTen\SageOne\Models\BankFeedAccount;
 use DarrynTen\SageOne\Models\BankFeedAccountGroup;
 
-
 class BankFeedAccountModelTest extends BaseModelTest
 {
     public function testInstanceOf()
