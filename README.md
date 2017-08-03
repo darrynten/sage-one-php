@@ -336,7 +336,7 @@ Models marked with an asterix are pure CRUD models
     - [x] Supplier Note *
     - [x] Supplier Note Attachment (partial, validate() not implemented)
     - [x] Supplier Opening Balance *
-    - [ ] Supplier Payment
+    - [x] Supplier Payment
     - [x] Supplier Purchase History
     - [x] Supplier Return
     - [x] Supplier Return Attachment (partial, validate() not implemented)
@@ -369,8 +369,8 @@ Please feel free to open PRs for any of the following :)
 - [x] Asset Category
 - [x] Asset Location
 - [ ] Attachment
-- [ ] Bank Account
-- [ ] Bank Account Category
+- [x] Bank Account (partial)
+- [x] Bank Account Category (partial)
 - [ ] Bank Account Note
 - [ ] Bank Account Note Attachment
 - [x] Bank Account Opening Balance
