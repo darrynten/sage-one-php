@@ -7,7 +7,7 @@ use DarrynTen\SageOne\Models\BankAccountCategory;
 use DarrynTen\SageOne\Models\BankFeedAccount;
 
 
-class BankFeedAccountModelTest extends BaseModelTest
+class BankAccountModelTest extends BaseModelTest
 {
     public function testInstanceOf()
     {
