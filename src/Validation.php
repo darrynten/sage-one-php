@@ -41,6 +41,22 @@ trait Validation
     }
 
     /**
+     * Validates an enumurable list
+     *
+     * @param string $value
+     * @param string $regex
+     */
+    public function validateEnum($value, $validValues)
+    {
+        if (empty($validValues[$value])) {
+            throw new ValidationException(
+                ValidationException::ENUM_FAILED,
+                sprintf('enum key %s of type %s failed to validate', $value, gettype($value))
+            );
+        }
+    }
+
+    /**
      * Validates a regex
      *
      * @param string $value

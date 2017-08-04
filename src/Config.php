@@ -4,7 +4,7 @@ namespace DarrynTen\SageOne;
 
 use DarrynTen\SageOne\Exception\ConfigException;
 use Psr\Cache\CacheItemPoolInterface;
-use DarrynTen\SageOne\Exception\ApiException;
+use DarrynTen\SageOne\Exception\RequestHandlerException;
 
 /**
  * SageOne Config

@@ -5,6 +5,7 @@ namespace DarrynTen\SageOne\Tests\SageOne\Request;
 use DarrynTen\SageOne\Request\RequestHandler;
 use InterNations\Component\HttpMock\PHPUnit\HttpMockTrait;
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Response;
 use ReflectionClass;
 
 class RequestHandlerTest extends \PHPUnit_Framework_TestCase
@@ -166,7 +167,7 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
     public function testRequestPostWithJson()
     {
         $parameters = ['data123' => 'value'];
-        $data = '{\'key\':\'data\'}';
+        $data = '{"key":"data"}';
 
         $this->http->mock
             ->when()
@@ -216,9 +217,11 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
         $reflectedClient->setAccessible(true);
         $reflectedClient->setValue($request, $mockClient);
 
+        $response = $request->request('POST', 'Account', 'Save', [], $parameters);
+
         $this->assertEquals(
             json_decode($data),
-            $request->request('POST', 'Account', 'Save', [], $parameters)
+            $response
         );
     }
 
@@ -342,6 +345,75 @@ class RequestHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             'OK',
             $result
+        );
+    }
+
+    public function testRequestResponse()
+    {
+        $config = [
+          'username' => 'username',
+          'password' => 'password',
+          'key' => 'key',
+          'endpoint' => '//accounting.sageone.co.za',
+          'version' => '1.1.2',
+          'clientId' => null
+        ];
+
+        // Creates a partially mock of RequestHandler with mocked `handleRequest` method
+        $request = \Mockery::mock(
+            'DarrynTen\SageOne\Request\RequestHandler[makeRequest]',
+            [
+                $config,
+            ]
+        );
+
+        $response = new Response();
+
+        $request->shouldReceive('makeRequest')
+            ->once()
+            ->with(
+                'POST',
+                '//accounting.sageone.co.za/1.1.2/Account/Save/',
+                [
+                    'headers' => [
+                        'Authorization' => 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=',
+                    ],
+                    'query' => [
+                        'apikey' => '%7Bkey%7D'
+                    ]
+                ],
+                []
+            )
+            ->andReturn($response);
+
+        $this->assertEquals(
+            200,
+            $request->requestRaw('POST', 'Account', 'Save', [])->getStatusCode()
+        );
+
+        $request->shouldReceive('makeRequest')
+            ->once()
+            ->with(
+                'GET',
+                '//accounting.sageone.co.za/1.1.2/Account/Get/111/',
+                [
+                    'headers' => [
+                        'Authorization' => 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=',
+                    ],
+                    'query' => [
+                        'apikey' => '%7Bkey%7D'
+                    ]
+                ],
+                ['keyx' => 'value']
+            )
+            ->andReturn($response);
+
+        $result = $request->requestRaw('GET', 'Account', 'Get/111', ['keyx' => 'value']);
+        $this->assertInstanceOf(Response::class, $result);
+
+        $this->assertEquals(
+            200,
+            $result->getStatusCode()
         );
     }
 }

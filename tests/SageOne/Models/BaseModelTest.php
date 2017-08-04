@@ -259,7 +259,7 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     {
         $validKeys = array_fill_keys([
             'type', 'nullable', 'readonly', 'default',
-            'required', 'min', 'max', 'regex', 'collection', 'validate', 'optional'
+            'required', 'min', 'max', 'regex', 'collection', 'validate', 'optional', 'enum'
         ], true);
         foreach (array_keys($options) as $option) {
             if (!isset($validKeys[$option])) {
@@ -651,9 +651,9 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
             $mockFile
         );
 
-        $model->get($id);
+        $response = $model->get($id);
 
-        $whatToCheck($model);
+        $whatToCheck($response);
     }
 
     /**
@@ -697,10 +697,10 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
      * Verifies that we can delete model
      *
      * @param string $class Full path to the class
-     * @param int $id Id of the model
+     * @param string $id Id of the model
      * @param callable $whatToCheck Verifies response
      */
-    public function verifyDelete(string $class, int $id, $success = true)
+    public function verifyDelete(string $class, string $id, $success = true)
     {
         $className = $this->getClassName($class);
         $path = sprintf('%s/Delete/%s', $className, $id);
@@ -810,6 +810,30 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Verifies that bad enums are caught
+     *
+     * @param string $class Full path to the class
+     * @param string $field string field on class
+     * @param mixed $value value what we are trying to set for field
+     */
+    public function verifyBadEnum(string $class, string $field, $value)
+    {
+        $this->expectException(ValidationException::class);
+        $this->expectExceptionMessage(
+            sprintf(
+                'Validation error enum key %s of type %s failed to validate Enum failed to validate',
+                $value,
+                gettype($value)
+            )
+        );
+        $this->expectExceptionCode(10006);
+
+        $model = new $class($this->config);
+
+        $model->{$field} = $value;
+    }
+
+    /**
      * Verifies that ValidationException for string with incorrect length is thrown
      * @param string $class Full path to the class
      * @param string $field string field on class
@@ -819,8 +843,6 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
      */
     public function verifyBadStringLengthException(string $class, string $field, int $min, int $max, string $value)
     {
-        $className = $this->getClassName($class);
-
         $this->expectException(ValidationException::class);
         $this->expectExceptionMessage(
             sprintf(
@@ -900,8 +922,21 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
         array $parameters = [],
         int $responseCode = 200
     ) {
-        $url = sprintf('/1.1.2/%s?apikey=key', $path);
-        $urlWithoutApiKey = sprintf('/1.1.2/%s/', $path);
+        $apikey = urlencode('{key}');
+
+        $url = sprintf('/1.1.2/%s?apikey=%s', $path, $apikey);
+
+        if ($method === 'GET') {
+            if (!empty($parameters)) {
+                $queryString = [];
+                foreach ($parameters as $key => $value) {
+                    $queryString[] = sprintf('%s=%s', $key, $value);
+                }
+                $queryString = join('&', $queryString);
+                $url = sprintf('/1.1.2/%s?%s', $path, $queryString);
+            }
+        }
+        $urlWithoutParams = sprintf('/1.1.2/%s/', $path);
 
         $responseData = null;
         if ($mockFileResponse) {
@@ -942,15 +977,29 @@ abstract class BaseModelTest extends \PHPUnit_Framework_TestCase
                 'Authorization' => sprintf('%s %s', $tokenType, $token)
             ],
         ];
-        $checkParameters['query']['apikey'] = urlencode(
-            '{' . $this->config['key'] . '}'
-        );
+
+        $checkParameters['query']['apikey'] = $apikey;
+
+        if (!empty($parameters)) {
+            if ($method === 'GET') {
+                foreach ($parameters as $key => $value) {
+                    $checkParameters['query'][$key] = $value;
+                }
+            } elseif ($method === 'POST' || $method === 'PUT' || $method === 'DELETE') {
+                $checkParameters['json'] = $parameters;
+            }
+        }
+
+        $verbs = ['GET', 'POST', 'PUT', 'DELETE'];
+        if (!in_array($method, $verbs)) {
+            throw new \Exception(sprintf('Only %s HTTP methods are allowed', join(', ', $verbs)));
+        }
 
         /**
         * $client in RequestHandler receives url without query params
         * they are passed as last parameter for $client->request
         */
-        $fullUrl = '//localhost:8082' . $urlWithoutApiKey;
+        $fullUrl = sprintf('//localhost:8082%s', $urlWithoutParams);
         $mockClient->shouldReceive('request')
             ->once()
             ->with($method, $fullUrl, \Mockery::subset($checkParameters))

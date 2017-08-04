@@ -1,0 +1,23 @@
+{
+   "TotalResults":2,
+   "ReturnedResults":2,
+   "Results":[
+      {
+         "AccountId":1,
+         "UserId":1,
+         "ID":3366,
+         "Subject":"testing account note save",
+         "EntryDate":"2017-01-01T00:00:00Z",
+         "ActionDate":"2017-01-01T00:00:00Z",
+         "Status":true,
+         "Note":"here note comes",
+         "HasAttachments":true
+      },
+      {
+         "AccountId":0,
+         "ID":3367,
+         "Subject":"testing account note save",
+         "ActionDate":"2018-01-01T00:00:00Z"
+      }
+   ]
+}

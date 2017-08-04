@@ -1,0 +1,30 @@
+{
+  "TotalResults": 2,
+  "ReturnedResults": 2,
+  "Results": [
+    {
+      "ID": 1,
+      "CompanyId": 2,
+      "DocumentHeaderId": 3,
+      "NoteTypeId": 4,
+      "UserId": 5,
+      "Username": "sample string 6",
+      "Created": "2017-07-28",
+      "ActionDate": "2017-07-28",
+      "Note": "sample string 8",
+      "Completed": true
+    },
+    {
+      "ID": 11,
+      "CompanyId": 12,
+      "DocumentHeaderId": 13,
+      "NoteTypeId": 14,
+      "UserId": 15,
+      "Username": "sample string 16",
+      "Created": "2017-07-28",
+      "ActionDate": "2017-07-28",
+      "Note": "sample string 18",
+      "Completed": true
+    }
+  ]
+}

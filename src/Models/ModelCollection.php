@@ -101,4 +101,10 @@ class ModelCollection
         $this->returnedResults = $collectionObject->ReturnedResults;
         $this->results = $models;
     }
+
+    public function extend(ModelCollection $otherCollection)
+    {
+        $this->returnedResults += $otherCollection->returnedResults;
+        $this->results = array_merge($this->results, $otherCollection->results);
+    }
 }
