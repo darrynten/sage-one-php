@@ -14,9 +14,9 @@ namespace DarrynTen\SageOne\Models;
 use DarrynTen\SageOne\BaseModel;
 
 /**
- * Bank Account Category
+ * Bank Account Category Model
  *
- * Details on writable properties:
+ * Details on writable properties for Bank Account Category:
  * https://accounting.sageone.co.za/api/1.1.2/Help/ResourceModel?modelName=BankAccountCategory
  */
 class BankAccountCategory extends BaseModel
@@ -29,21 +29,18 @@ class BankAccountCategory extends BaseModel
     protected $endpoint = 'BankAccountCategory';
 
     /**
-     * Defines all possible fields.
-     *
      * @var array $fields
      */
     protected $fields = [
-        'description' => [
-            'type' => 'string',
-            'nullable' => false,
-            'readonly' => false,
-        ],
         'id' => [
             'type' => 'integer',
             'nullable' => false,
             'readonly' => false,
-            'required' => true,
+        ],
+        'description' => [
+            'type' => 'string',
+            'nullable' => false,
+            'readonly' => false,
         ],
         'modified' => [
             'type' => 'DateTime',
@@ -58,10 +55,6 @@ class BankAccountCategory extends BaseModel
     ];
 
     /**
-     * Features supported by the endpoint
-     *
-     * These features enable and disable certain calls from the base model
-     *
      * @var array $features
      */
     protected $features = [

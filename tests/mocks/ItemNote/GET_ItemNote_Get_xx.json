@@ -1,0 +1,14 @@
+{
+  "ItemId": 1,
+  "UserId": 1,
+  "Priority": 1,
+  "NoteCategoryId": 1,
+  "NotifyAssignee": true,
+  "ID": 2,
+  "Subject": "sample string 3",
+  "EntryDate": "2017-07-28",
+  "ActionDate": "2017-07-28",
+  "Status": true,
+  "Note": "sample string 4",
+  "HasAttachments": true
+}

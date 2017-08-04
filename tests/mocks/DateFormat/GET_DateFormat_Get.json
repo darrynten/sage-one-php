@@ -1,0 +1,22 @@
+{
+  "TotalResults": 2,
+  "ReturnedResults": 2,
+  "Results": [
+    {
+      "ID": 1,
+      "DisplayAs": "sample string 2",
+      "DotNetFormat": "sample string 3",
+      "DotNetAltFormats": "sample string 4",
+      "JSFormat": "sample string 5",
+      "JSAltFormats": "sample string 6"
+    },
+    {
+      "ID": 11,
+      "DisplayAs": "sample string 12",
+      "DotNetFormat": "sample string 13",
+      "DotNetAltFormats": "sample string 14",
+      "JSFormat": "sample string 15",
+      "JSAltFormats": "sample string 16"
+    }
+  ]
+}

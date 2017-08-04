@@ -1,0 +1,49 @@
+{
+  "ID": 11,
+  "Name": "sample string 21",
+  "CurrencySymbol": "sample string 31",
+  "OpeningBalanceDate": "2017-07-21T00:00:00Z",
+  "OpeningBalance": 5.1,
+  "ClosingBalanceDate": "2017-07-26T00:00:00Z",
+  "ClosingBalance": 7.1,
+  "Transactions": [
+    {
+        "BusinessBaseId": "sample business id",
+        "ID": 100,
+        "DocumentTypeId": 50,
+        "LinkId": 4,
+        "Name": "sample name",
+        "CurrencyId": 5,
+        "CurrencySymbol": "sample currency symbol",
+        "DocumentNumber": "sample doc number",
+        "Reference": "sample reference",
+        "Comment": "sample currency symbol",
+        "Date": "2017-09-09",
+        "Description": "sample description",
+        "DocumentTypeDisplayText": "sample display",
+        "Total": 60.1,
+        "Debit": 70.2,
+        "Credit": 80.4,
+        "RunningTotal": 90.5
+    },
+    {
+        "BusinessBaseId": "sample business id 1",
+        "ID": 1001,
+        "DocumentTypeId": 501,
+        "LinkId": 41,
+        "Name": "sample name 1",
+        "CurrencyId": 51,
+        "CurrencySymbol": "sample currency symbol 1",
+        "DocumentNumber": "sample doc number 1",
+        "Reference": "sample reference 1",
+        "Comment": "sample currency symbol 1",
+        "Date": "2017-09-01",
+        "Description": "sample description 1",
+        "DocumentTypeDisplayText": "sample display 1",
+        "Total": 60.2,
+        "Debit": 70.3,
+        "Credit": 80.7,
+        "RunningTotal": 90.8
+    }
+  ]
+}
