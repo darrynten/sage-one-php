@@ -1,0 +1,48 @@
+{
+  "TotalResults": 2,
+  "ReturnedResults": 2,
+  "Results": [
+    {
+     "ID": 1,
+     "BankFeedAccountGroupId": 2,
+     "BankFeedAccountGroup": {
+         "ID": 1,
+         "BankFeedProviderId": 2,
+         "BankFeedProviderTypeId": 3,
+         "Description": "sample string 4",
+         "Identifier": "sample string 5",
+         "RequiresAdditionalAuthentication": true,
+         "LastRefreshStatusId": 7
+    },
+     "Description": "sample string 3",
+     "Identifier": "sample string 4",
+     "LastRefreshDate": "2017-08-03",
+     "FirstImportDate": "2017-08-03",
+     "Balance": 1.0,
+     "BankAccountId": 1,
+     "BankAccountName": "sample string 5",
+     "LastRefreshStatusId": 6
+    },
+    {
+     "ID": 1,
+     "BankFeedAccountGroupId": 2,
+     "BankFeedAccountGroup": {
+         "ID": 1,
+         "BankFeedProviderId": 2,
+         "BankFeedProviderTypeId": 3,
+         "Description": "sample string 4",
+         "Identifier": "sample string 5",
+         "RequiresAdditionalAuthentication": true,
+         "LastRefreshStatusId": 7
+    },
+     "Description": "sample string 3",
+     "Identifier": "sample string 4",
+     "LastRefreshDate": "2017-08-03",
+     "FirstImportDate": "2017-08-03",
+     "Balance": 1.0,
+     "BankAccountId": 1,
+     "BankAccountName": "sample string 5",
+     "LastRefreshStatusId": 6
+    }
+  ]
+}
