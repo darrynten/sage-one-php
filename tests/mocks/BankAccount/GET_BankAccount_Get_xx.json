@@ -1,0 +1,47 @@
+{
+  "Name": "sample string 2",
+  "BankName": "sample string 3",
+  "AccountNumber": "sample string 4",
+  "BranchName": "sample string 5",
+  "BranchNumber": "sample string 6",
+  "Category": {
+    "Description": "sample string 1",
+    "ID": 2,
+    "Modified": "2017-08-01",
+    "Created": "2017-08-01"
+  },
+  "Active": true,
+  "Default": true,
+  "Balance": 9.0,
+  "Description": "sample string 10",
+  "BankFeedAccount": {
+    "ID": 1,
+    "BankFeedAccountGroupId": 2,
+    "BankFeedAccountGroup": {
+      "ID": 1,
+      "BankFeedProviderId": 2,
+      "BankFeedProviderTypeId": 3,
+      "Description": "sample string 4",
+      "Identifier": "sample string 5",
+      "RequiresAdditionalAuthentication": true,
+      "LastRefreshStatusId": 7
+    },
+    "Description": "sample string 3",
+    "Identifier": "sample string 4",
+    "LastRefreshDate": "2017-08-01",
+    "FirstImportDate": "2017-08-01",
+    "Balance": 1.0,
+    "BankAccountId": 1,
+    "BankAccountName": "sample string 5",
+    "LastRefreshStatusId": 6
+  },
+  "LastTransactionDate": "2017-08-01",
+  "LastImportDate": "2017-08-01",
+  "HasTransactionsWaitingForReview": true,
+  "DefaultPaymentMethodId": 1,
+  "PaymentMethod": 1,
+  "Modified": "2017-08-01",
+  "Created": "2017-08-01",
+  "CurrencyId": 1,
+  "ID": 12
+}
