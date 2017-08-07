@@ -7,7 +7,6 @@ use DarrynTen\SageOne\Models\BankAccountCategory;
 use DarrynTen\SageOne\Models\BankFeedAccount;
 use DarrynTen\SageOne\Models\BankFeedAccountGroup;
 use DarrynTen\SageOne\Exception\LibraryException;
-use DarrynTen\SageOne\Exception\LibraryExceptionTest;
 use DarrynTen\SageOne\Exception\ValidationException;
 use DarrynTen\SageOne\Models\ModelCollection;
 use ReflectionClass;
@@ -467,6 +466,7 @@ class BankAccountModelTest extends BaseModelTest
             $this->assertEquals($savedModel->id, 12);
         });
     }
+
 
     public function testValidate()
     {
