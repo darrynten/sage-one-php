@@ -472,7 +472,7 @@ class BankAccountModelTest extends BaseModelTest
     {
         $model = new BankAccount($this->config);
         $this->expectException(LibraryException::class);
-        $this->expectExceptionMessage('Error, "\DarrynTen\SageOne\Models\BankAccount::validate()" Method not yet implemented. This still needs to be added, please consider contributing to the project..');
+        $this->expectExceptionMessage('Error, "\DarrynTen\SageOne\Models\BankAccount::validate()" Method not yet implemented. This still needs to be added, please consider contributing to the project.');
         $this->expectExceptionCode(10301);
         $model->validate();
     }
