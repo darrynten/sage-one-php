@@ -168,7 +168,7 @@ class BankAccount extends BaseModel
     {
         throw new LibraryException(
             LibraryException::METHOD_NOT_IMPLEMENTED,
-            'Error, "\DarrynTen\SageOne\Models\BankAccount::validate()" Method not yet implemented. This still needs to be added, please consider contributing to the project..'
-        );
+            '\DarrynTen\SageOne\Models\BankAccount::validate()'
+          );
     }
 }
