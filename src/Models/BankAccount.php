@@ -12,6 +12,7 @@
 namespace DarrynTen\SageOne\Models;
 
 use DarrynTen\SageOne\BaseModel;
+use DarrynTen\SageOne\Exception\LibraryException;
 
 /**
  * Bank Account Model
@@ -157,4 +158,17 @@ class BankAccount extends BaseModel
         'save' => true,
         'delete' => true,
     ];
+
+    /**
+     * Validates a Bank Account.
+     *
+     * @return array
+     */
+    public function validate()
+    {
+        throw new LibraryException(
+            LibraryException::METHOD_NOT_IMPLEMENTED,
+            'Error, "\DarrynTen\SageOne\Models\BankAccount::validate()" Method not yet implemented. This still needs to be added, please consider contributing to the project..'
+        );
+    }
 }
