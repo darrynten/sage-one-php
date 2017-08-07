@@ -73,7 +73,7 @@ class BankAccountCategoryModelTest extends BaseModelTest
     public function testInject()
     {
         $this->verifyInject(BankAccountCategory::class, function ($model) {
-            $this->assertEquals($model->description, "sample string 1");
+            $this->assertEquals($model->description, 'sample string 1');
             $this->assertEquals($model->id, 2);
             $this->assertEquals($model->modified->format('Y-m-d'), '2017-07-25');
             $this->assertEquals($model->created->format('Y-m-d'), '2017-07-25');
@@ -92,13 +92,13 @@ class BankAccountCategoryModelTest extends BaseModelTest
             $this->assertInstanceOf(BankAccountCategory::class, $results[1]);
 
             $model1 = $results[0];
-            $this->assertEquals($model1->description, "sample string 1");
+            $this->assertEquals($model1->description, 'sample string 1');
             $this->assertEquals($model1->id, 2);
             $this->assertEquals($model1->modified->format('Y-m-d'), '2017-07-25');
             $this->assertEquals($model1->created->format('Y-m-d'), '2017-07-25');
 
             $model2 = $results[1];
-            $this->assertEquals($model2->description, "sample string 2");
+            $this->assertEquals($model2->description, 'sample string 2');
             $this->assertEquals($model2->id, 3);
             $this->assertEquals($model2->modified->format('Y-m-d'), '2017-07-25');
             $this->assertEquals($model2->created->format('Y-m-d'), '2017-07-25');
@@ -111,7 +111,7 @@ class BankAccountCategoryModelTest extends BaseModelTest
     public function testGetId()
     {
         $this->verifyGetId(BankAccountCategory::class, 2, function ($model) {
-            $this->assertEquals($model->description, "sample string 1");
+            $this->assertEquals($model->description, 'sample string 1');
             $this->assertEquals($model->id, 2);
             $this->assertEquals($model->modified->format('Y-m-d'), '2017-07-25');
             $this->assertEquals($model->created->format('Y-m-d'), '2017-07-25');
@@ -121,10 +121,10 @@ class BankAccountCategoryModelTest extends BaseModelTest
     public function testSave()
     {
         $this->verifySave(BankAccountCategory::class, function ($model) {
-            $model->description = "sample string 1";
+            $model->description = 'sample string 1';
             $model->id = 2;
         }, function ($savedModel) {
-            $this->assertEquals($savedModel->description, "sample string 1");
+            $this->assertEquals($savedModel->description, 'sample string 1');
             $this->assertEquals($savedModel->id, 2);
         });
     }
