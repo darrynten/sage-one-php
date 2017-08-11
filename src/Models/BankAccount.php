@@ -12,6 +12,7 @@
 namespace DarrynTen\SageOne\Models;
 
 use DarrynTen\SageOne\BaseModel;
+use DarrynTen\SageOne\Exception\LibraryException;
 
 /**
  * Bank Account Model
@@ -41,26 +42,36 @@ class BankAccount extends BaseModel
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
+            'min' => 0,
+            'max' => 100,
         ],
         'bankName' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
+            'min' => 0,
+            'max' => 100,
         ],
         'accountNumber' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
+            'min' => 0,
+            'max' => 100,
         ],
         'branchName' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
+            'min' => 0,
+            'max' => 100,
         ],
         'branchNumber' => [
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
+            'min' => 0,
+            'max' => 100,
         ],
         'category' => [
             'type' => 'BankAccountCategory',
@@ -86,6 +97,8 @@ class BankAccount extends BaseModel
             'type' => 'string',
             'nullable' => false,
             'readonly' => false,
+            'min' => 0,
+            'max' => 4000,
         ],
         'bankFeedAccount' => [
             'type' => 'BankFeedAccount',
@@ -145,4 +158,17 @@ class BankAccount extends BaseModel
         'save' => true,
         'delete' => true,
     ];
+
+    /**
+     * Validates a Bank Account.
+     *
+     * @return array
+     */
+    public function validate()
+    {
+        throw new LibraryException(
+            LibraryException::METHOD_NOT_IMPLEMENTED,
+            '\DarrynTen\SageOne\Models\BankAccount::validate()'
+          );
+    }
 }
